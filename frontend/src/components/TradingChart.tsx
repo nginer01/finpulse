@@ -196,9 +196,12 @@ export default function TradingChart() {
 
     // Cleanup previous chart
     if (chartRef.current) {
-      chartRef.current.remove();
+      try { chartRef.current.remove(); } catch { /* already disposed */ }
       chartRef.current = null;
     }
+
+    // Clear container to avoid duplicates from strict mode
+    containerRef.current.innerHTML = "";
 
     const chart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
@@ -379,7 +382,7 @@ export default function TradingChart() {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      chart.remove();
+      try { chart.remove(); } catch { /* already disposed */ }
     };
   }, [range, mode]);
 

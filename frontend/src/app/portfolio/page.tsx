@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
+import dynamic from "next/dynamic";
+
+const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
 
 /* ──────────────────────────────────────────────
    MOCK DATA
@@ -702,9 +705,9 @@ export default function PortfolioPage() {
               </div>
             </div>
 
-            {/* Interactive chart */}
-            <div className="px-5 sm:px-6 pb-5 pt-3">
-              <InteractiveChart />
+            {/* TradingView chart */}
+            <div className="px-3 sm:px-4 pb-4 pt-3">
+              <TradingChart />
             </div>
           </div>
         </section>

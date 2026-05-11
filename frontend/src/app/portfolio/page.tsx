@@ -108,37 +108,363 @@ const operations = [
    SVG HELPERS
    ────────────────────────────────────────────── */
 
-function AreaChart() {
-  // 6-month portfolio value mock data (x: 0-600, y: value scaled)
-  const raw = [
-    [0, 10200], [30, 10400], [60, 10150], [90, 10600], [120, 10550],
-    [150, 10900], [180, 11100], [210, 10800], [240, 11300], [270, 11500],
-    [300, 11200], [330, 11700], [360, 11900], [390, 12100], [420, 11800],
-    [450, 12300], [480, 12500], [510, 12200], [540, 12600], [570, 12700],
-    [600, 12847],
-  ];
-  const minY = 10000;
-  const maxY = 13000;
-  const h = 200;
+type ChartPoint = { x: number; y: number; date: string; value: number };
+type ChartEvent = { x: number; date: string; label: string; impact: "positive" | "negative" | "neutral" };
+
+const chartDataByRange: Record<string, { points: ChartPoint[]; events: ChartEvent[] }> = {
+  "1S": {
+    points: [
+      { x: 0, y: 12520, date: "5 may", value: 12520 },
+      { x: 100, y: 12480, date: "6 may", value: 12480 },
+      { x: 200, y: 12610, date: "7 may", value: 12610 },
+      { x: 300, y: 12580, date: "8 may", value: 12580 },
+      { x: 400, y: 12720, date: "9 may", value: 12720 },
+      { x: 500, y: 12790, date: "10 may", value: 12790 },
+      { x: 600, y: 12847, date: "11 may", value: 12847 },
+    ],
+    events: [
+      { x: 100, date: "6 may", label: "IPC EEUU en linea con expectativas", impact: "neutral" },
+      { x: 200, date: "7 may", label: "Nvidia presenta Blackwell Ultra → SEMI +4.2%", impact: "positive" },
+      { x: 300, date: "8 may", label: "Venta parcial BRT — negociaciones Iran avanzan", impact: "negative" },
+      { x: 400, date: "9 may", label: "Acuerdo EEUU-China oficial → S&P maximos", impact: "positive" },
+    ],
+  },
+  "1M": {
+    points: [
+      { x: 0, y: 11800, date: "11 abr", value: 11800 },
+      { x: 60, y: 11950, date: "15 abr", value: 11950 },
+      { x: 120, y: 12100, date: "19 abr", value: 12100 },
+      { x: 180, y: 11980, date: "23 abr", value: 11980 },
+      { x: 240, y: 12200, date: "27 abr", value: 12200 },
+      { x: 300, y: 12350, date: "1 may", value: 12350 },
+      { x: 360, y: 12280, date: "3 may", value: 12280 },
+      { x: 420, y: 12520, date: "5 may", value: 12520 },
+      { x: 480, y: 12610, date: "7 may", value: 12610 },
+      { x: 540, y: 12720, date: "9 may", value: 12720 },
+      { x: 600, y: 12847, date: "11 may", value: 12847 },
+    ],
+    events: [
+      { x: 60, date: "15 abr", label: "Compra VUAA +10 units — FOMO rally", impact: "neutral" },
+      { x: 180, date: "23 abr", label: "Caida tech por earnings mixtos", impact: "negative" },
+      { x: 240, date: "27 abr", label: "Compra EUNA — tesis BCE dovish", impact: "positive" },
+      { x: 360, date: "3 may", label: "Compra SEMI — ciclo semiconductores", impact: "positive" },
+      { x: 480, date: "7 may", label: "Nvidia Blackwell Ultra → rally semis", impact: "positive" },
+      { x: 540, date: "9 may", label: "Acuerdo EEUU-China → maximos", impact: "positive" },
+    ],
+  },
+  "3M": {
+    points: [
+      { x: 0, y: 10800, date: "11 feb", value: 10800 },
+      { x: 50, y: 11000, date: "21 feb", value: 11000 },
+      { x: 100, y: 10700, date: "3 mar", value: 10700 },
+      { x: 150, y: 10950, date: "13 mar", value: 10950 },
+      { x: 200, y: 11200, date: "23 mar", value: 11200 },
+      { x: 250, y: 11100, date: "2 abr", value: 11100 },
+      { x: 300, y: 11400, date: "12 abr", value: 11400 },
+      { x: 350, y: 11800, date: "22 abr", value: 11800 },
+      { x: 400, y: 12100, date: "2 may", value: 12100 },
+      { x: 500, y: 12520, date: "7 may", value: 12520 },
+      { x: 600, y: 12847, date: "11 may", value: 12847 },
+    ],
+    events: [
+      { x: 100, date: "3 mar", label: "Correccion tech — Nasdaq -3%", impact: "negative" },
+      { x: 200, date: "23 mar", label: "BCE senala posible recorte junio", impact: "positive" },
+      { x: 350, date: "22 abr", label: "Earnings MSFT/GOOGL superan expectativas", impact: "positive" },
+      { x: 500, date: "7 may", label: "Nvidia Blackwell Ultra", impact: "positive" },
+    ],
+  },
+  "6M": {
+    points: [
+      { x: 0, y: 10200, date: "11 nov", value: 10200 },
+      { x: 40, y: 10400, date: "25 nov", value: 10400 },
+      { x: 80, y: 10150, date: "9 dic", value: 10150 },
+      { x: 120, y: 10600, date: "23 dic", value: 10600 },
+      { x: 160, y: 10550, date: "6 ene", value: 10550 },
+      { x: 200, y: 10900, date: "20 ene", value: 10900 },
+      { x: 240, y: 11100, date: "3 feb", value: 11100 },
+      { x: 280, y: 10800, date: "17 feb", value: 10800 },
+      { x: 320, y: 11300, date: "3 mar", value: 11300 },
+      { x: 360, y: 11500, date: "17 mar", value: 11500 },
+      { x: 400, y: 11200, date: "31 mar", value: 11200 },
+      { x: 440, y: 11700, date: "14 abr", value: 11700 },
+      { x: 480, y: 11900, date: "28 abr", value: 11900 },
+      { x: 520, y: 12300, date: "5 may", value: 12300 },
+      { x: 560, y: 12600, date: "9 may", value: 12600 },
+      { x: 600, y: 12847, date: "11 may", value: 12847 },
+    ],
+    events: [
+      { x: 80, date: "9 dic", label: "Fed mantiene tipos — mercado decepciona", impact: "negative" },
+      { x: 200, date: "20 ene", label: "Rally inicio de ano — flujos ETFs record", impact: "positive" },
+      { x: 280, date: "17 feb", label: "Aranceles EEUU-China — caida generalizada", impact: "negative" },
+      { x: 400, date: "31 mar", label: "Correccion Q1 — toma de beneficios", impact: "negative" },
+      { x: 520, date: "5 may", label: "Rumores acuerdo EEUU-China", impact: "positive" },
+      { x: 560, date: "9 may", label: "Acuerdo oficial + Nvidia Blackwell", impact: "positive" },
+    ],
+  },
+  "1A": {
+    points: [
+      { x: 0, y: 8500, date: "may 2025", value: 8500 },
+      { x: 50, y: 8800, date: "jun 2025", value: 8800 },
+      { x: 100, y: 9200, date: "jul 2025", value: 9200 },
+      { x: 150, y: 8900, date: "ago 2025", value: 8900 },
+      { x: 200, y: 9400, date: "sep 2025", value: 9400 },
+      { x: 250, y: 9700, date: "oct 2025", value: 9700 },
+      { x: 300, y: 10000, date: "nov 2025", value: 10000 },
+      { x: 350, y: 10200, date: "dic 2025", value: 10200 },
+      { x: 400, y: 10600, date: "ene 2026", value: 10600 },
+      { x: 450, y: 10900, date: "feb 2026", value: 10900 },
+      { x: 500, y: 11400, date: "mar 2026", value: 11400 },
+      { x: 550, y: 12100, date: "abr 2026", value: 12100 },
+      { x: 600, y: 12847, date: "may 2026", value: 12847 },
+    ],
+    events: [
+      { x: 150, date: "ago 2025", label: "Crisis bancaria regional EEUU", impact: "negative" },
+      { x: 300, date: "nov 2025", label: "Fed primer recorte de tipos", impact: "positive" },
+      { x: 400, date: "ene 2026", label: "Nuevos aranceles EEUU-China", impact: "negative" },
+      { x: 550, date: "abr 2026", label: "Earnings season excepcional Q1", impact: "positive" },
+    ],
+  },
+  "YTD": {
+    points: [
+      { x: 0, y: 10400, date: "1 ene", value: 10400 },
+      { x: 50, y: 10600, date: "15 ene", value: 10600 },
+      { x: 100, y: 10900, date: "1 feb", value: 10900 },
+      { x: 150, y: 10700, date: "15 feb", value: 10700 },
+      { x: 200, y: 11100, date: "1 mar", value: 11100 },
+      { x: 250, y: 11400, date: "15 mar", value: 11400 },
+      { x: 300, y: 11200, date: "1 abr", value: 11200 },
+      { x: 350, y: 11500, date: "15 abr", value: 11500 },
+      { x: 400, y: 11900, date: "1 may", value: 11900 },
+      { x: 500, y: 12520, date: "7 may", value: 12520 },
+      { x: 600, y: 12847, date: "11 may", value: 12847 },
+    ],
+    events: [
+      { x: 50, date: "15 ene", label: "Aranceles EEUU-China anunciados", impact: "negative" },
+      { x: 200, date: "1 mar", label: "BCE confirma tono dovish", impact: "positive" },
+      { x: 300, date: "1 abr", label: "Correccion por toma de beneficios Q1", impact: "negative" },
+      { x: 400, date: "1 may", label: "Compra SEMI antes de evento Nvidia", impact: "positive" },
+      { x: 500, date: "7 may", label: "Nvidia Blackwell Ultra + acuerdo China", impact: "positive" },
+    ],
+  },
+};
+
+const timeRanges = ["1S", "1M", "3M", "6M", "1A", "YTD"] as const;
+
+type ChartType = "line" | "candle";
+
+function LineIcon({ active }: { active: boolean }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <polyline points="2,14 6,8 10,11 14,4 17,6" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function CandleIcon({ active }: { active: boolean }) {
+  const c = active ? "#818cf8" : "#71717a";
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <line x1="4" y1="2" x2="4" y2="16" stroke={c} strokeWidth="1" />
+      <rect x="2" y="5" width="4" height="6" fill={active ? "#22c55e" : c} rx="0.5" />
+      <line x1="10" y1="2" x2="10" y2="16" stroke={c} strokeWidth="1" />
+      <rect x="8" y="7" width="4" height="5" fill={active ? "#ef4444" : c} rx="0.5" />
+      <line x1="16" y1="4" x2="16" y2="14" stroke={c} strokeWidth="1" />
+      <rect x="14" y="6" width="4" height="4" fill={active ? "#22c55e" : c} rx="0.5" />
+    </svg>
+  );
+}
+
+function InteractiveChart() {
+  const [range, setRange] = useState<string>("6M");
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const [activeEvent, setActiveEvent] = useState<ChartEvent | null>(null);
+  const [chartType, setChartType] = useState<ChartType>("line");
+
+  const data = chartDataByRange[range];
+  const { points, events } = data;
+
+  const minY = Math.min(...points.map((p) => p.y)) - 200;
+  const maxY = Math.max(...points.map((p) => p.y)) + 200;
   const w = 600;
-  const points = raw
-    .map(([x, y]) => `${x},${h - ((y - minY) / (maxY - minY)) * h}`)
-    .join(" ");
-  const polygonPoints = `0,${h} ${points} ${w},${h}`;
+  const h = 220;
+
+  const toSvgY = (val: number) => h - 20 - ((val - minY) / (maxY - minY)) * (h - 40);
+  const toSvgX = (x: number) => x;
+
+  const polylinePoints = points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ");
+  const polygonPoints = `0,${h} ${polylinePoints} ${w},${h}`;
+
+  const hoverPoint = hoverIdx !== null ? points[hoverIdx] : null;
+
+  const eventColors = { positive: "#22c55e", negative: "#ef4444", neutral: "#71717a" };
 
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-48 sm:h-56" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#6366f1" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <polygon points={polygonPoints} fill="url(#areaGrad)" />
-      <polyline points={points} fill="none" stroke="#6366f1" strokeWidth="2" />
-      {/* end dot */}
-      <circle cx="600" cy={h - ((12847 - minY) / (maxY - minY)) * h} r="4" fill="#818cf8" />
-    </svg>
+    <div>
+      <div
+        className="relative"
+        onMouseLeave={() => { setHoverIdx(null); setActiveEvent(null); }}
+      >
+        <svg
+          viewBox={`0 0 ${w} ${h}`}
+          className="w-full h-52 sm:h-64"
+          preserveAspectRatio="none"
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const mouseX = ((e.clientX - rect.left) / rect.width) * w;
+            let closest = 0;
+            let closestDist = Infinity;
+            points.forEach((p, i) => {
+              const dist = Math.abs(p.x - mouseX);
+              if (dist < closestDist) { closestDist = dist; closest = i; }
+            });
+            setHoverIdx(closest);
+            const nearEvent = events.find((ev) => Math.abs(ev.x - mouseX) < 25);
+            setActiveEvent(nearEvent || null);
+          }}
+        >
+          <defs>
+            <linearGradient id="interactiveGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#6366f1" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          {/* Grid lines */}
+          {[0.25, 0.5, 0.75].map((pct) => (
+            <line key={pct} x1="0" y1={h * pct} x2={w} y2={h * pct} stroke="#1e1e2e" strokeWidth="0.5" />
+          ))}
+
+          {/* Chart body */}
+          {chartType === "line" ? (
+            <>
+              <polygon points={polygonPoints} fill="url(#interactiveGrad)" />
+              <polyline points={polylinePoints} fill="none" stroke="#6366f1" strokeWidth="2" />
+            </>
+          ) : (
+            /* Candlestick */
+            points.map((p, i) => {
+              if (i === 0) return null;
+              const prev = points[i - 1];
+              const isUp = p.y >= prev.y;
+              const openY = toSvgY(prev.y);
+              const closeY = toSvgY(p.y);
+              const highY = Math.min(openY, closeY) - 8;
+              const lowY = Math.max(openY, closeY) + 8;
+              const candleW = Math.max(8, (w / points.length) * 0.5);
+              const cx = toSvgX(p.x);
+              return (
+                <g key={i}>
+                  {/* Wick */}
+                  <line x1={cx} y1={highY} x2={cx} y2={lowY} stroke={isUp ? "#22c55e" : "#ef4444"} strokeWidth="1" />
+                  {/* Body */}
+                  <rect
+                    x={cx - candleW / 2}
+                    y={Math.min(openY, closeY)}
+                    width={candleW}
+                    height={Math.max(Math.abs(closeY - openY), 2)}
+                    fill={isUp ? "#22c55e" : "#ef4444"}
+                    rx="1"
+                  />
+                </g>
+              );
+            })
+          )}
+
+          {/* Event markers */}
+          {events.map((ev, i) => (
+            <g key={i}>
+              <line
+                x1={ev.x} y1={20} x2={ev.x} y2={h}
+                stroke={eventColors[ev.impact]} strokeWidth="1" strokeDasharray="4,4" opacity="0.5"
+              />
+              <circle
+                cx={ev.x} cy={20} r="5"
+                fill={eventColors[ev.impact]} opacity="0.9"
+                className="cursor-pointer"
+              />
+            </g>
+          ))}
+
+          {/* Hover vertical line */}
+          {hoverPoint && (
+            <>
+              <line
+                x1={toSvgX(hoverPoint.x)} y1={0}
+                x2={toSvgX(hoverPoint.x)} y2={h}
+                stroke="#818cf8" strokeWidth="1" opacity="0.6"
+              />
+              <circle
+                cx={toSvgX(hoverPoint.x)}
+                cy={toSvgY(hoverPoint.y)}
+                r="5" fill="#818cf8" stroke="#0a0a0f" strokeWidth="2"
+              />
+            </>
+          )}
+
+          {/* End dot */}
+          <circle cx={w} cy={toSvgY(points[points.length - 1].y)} r="4" fill="#818cf8" />
+        </svg>
+
+        {/* Hover tooltip */}
+        {hoverPoint && (
+          <div
+            className="absolute top-2 left-1/2 -translate-x-1/2 bg-card border border-card-border rounded-lg px-4 py-2 pointer-events-none z-10 text-center shadow-lg"
+          >
+            <p className="text-xs text-muted">{hoverPoint.date}</p>
+            <p className="text-lg font-bold">{hoverPoint.value.toLocaleString("es-ES")}</p>
+          </div>
+        )}
+
+        {/* Event tooltip */}
+        {activeEvent && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card border border-card-border rounded-lg px-4 py-2.5 pointer-events-none z-10 max-w-sm text-center shadow-lg">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: eventColors[activeEvent.impact] }} />
+              <p className="text-xs text-muted">{activeEvent.date}</p>
+            </div>
+            <p className="text-xs font-medium">{activeEvent.label}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Controls row */}
+      <div className="flex items-center justify-between mt-3">
+        {/* Chart type */}
+        <div className="flex items-center gap-1 bg-card border border-card-border rounded-lg p-0.5">
+          <button
+            onClick={() => setChartType("line")}
+            className={`p-1.5 rounded-md transition-colors ${chartType === "line" ? "bg-accent/20" : "hover:bg-white/[0.03]"}`}
+            title="Grafica de lineas"
+          >
+            <LineIcon active={chartType === "line"} />
+          </button>
+          <button
+            onClick={() => setChartType("candle")}
+            className={`p-1.5 rounded-md transition-colors ${chartType === "candle" ? "bg-accent/20" : "hover:bg-white/[0.03]"}`}
+            title="Candlestick"
+          >
+            <CandleIcon active={chartType === "candle"} />
+          </button>
+        </div>
+
+        {/* Time range selector */}
+        <div className="flex items-center gap-1">
+          {timeRanges.map((r) => (
+            <button
+              key={r}
+              onClick={() => { setRange(r); setHoverIdx(null); setActiveEvent(null); }}
+              className={`px-3 py-1.5 text-xs rounded-lg transition-colors ${
+                range === r
+                  ? "bg-accent/20 text-accent-light font-medium"
+                  : "text-muted hover:text-foreground hover:bg-white/[0.03]"
+              }`}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -376,18 +702,9 @@ export default function PortfolioPage() {
               </div>
             </div>
 
-            {/* Area chart */}
-            <div className="px-5 sm:px-6 pb-5">
-              <div className="flex items-center justify-between text-xs text-muted mb-2 pt-3">
-                <span>Nov 2025</span>
-                <span>Dic</span>
-                <span>Ene 2026</span>
-                <span>Feb</span>
-                <span>Mar</span>
-                <span>Abr</span>
-                <span>May</span>
-              </div>
-              <AreaChart />
+            {/* Interactive chart */}
+            <div className="px-5 sm:px-6 pb-5 pt-3">
+              <InteractiveChart />
             </div>
           </div>
         </section>

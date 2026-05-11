@@ -2,16 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
-function PulseIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="inline-block">
-      <circle cx="16" cy="16" r="14" stroke="#6366f1" strokeWidth="2" opacity="0.3" />
-      <circle cx="16" cy="16" r="8" stroke="#6366f1" strokeWidth="2" opacity="0.6" />
-      <circle cx="16" cy="16" r="3" fill="#6366f1" />
-    </svg>
-  );
-}
+import Nav from "@/components/Nav";
 
 function MockChart() {
   const points = "0,40 15,35 30,42 45,28 55,32 65,18 80,22 95,10 110,15 130,8 150,12 170,5";
@@ -82,14 +73,21 @@ function SourceBadge({ name, type }: { name: string; type: "newsletter" | "podca
   );
 }
 
-function NewsCard({ type, title, tag, delay, image, source }: { type: string; title: string; tag: string; delay: string; image: string; source: string }) {
+function NewsCard({ type, title, tag, delay, image, source, summary, impact, sources }: {
+  type: string; title: string; tag: string; delay: string; image: string; source: string;
+  summary: string; impact: string; sources: string[];
+}) {
+  const [expanded, setExpanded] = useState(false);
   const tagColors: Record<string, string> = {
     "Tu portfolio": "bg-accent/20 text-accent-light",
     "Nuevo": "bg-green/20 text-green",
     "Futuro": "bg-amber-500/20 text-amber-400",
   };
   return (
-    <div className={`bg-card border border-card-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 ${delay}`}>
+    <div
+      className={`bg-card border border-card-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 cursor-pointer ${delay}`}
+      onClick={() => setExpanded(!expanded)}
+    >
       <div className="relative h-36 overflow-hidden">
         <img src={image} alt={title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
@@ -100,8 +98,25 @@ function NewsCard({ type, title, tag, delay, image, source }: { type: string; ti
           <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
           <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
         </div>
-        <h3 className="text-sm font-medium leading-snug mb-3">{title}</h3>
-        <p className="text-xs text-muted">Click para expandir</p>
+        <h3 className="text-sm font-medium leading-snug mb-2">{title}</h3>
+        {!expanded && <p className="text-xs text-accent-light">Click para expandir</p>}
+        {expanded && (
+          <div className="mt-3 space-y-3 animate-fade-in-up">
+            <p className="text-xs text-muted leading-relaxed">{summary}</p>
+            <div className="bg-background rounded-lg p-3 border border-card-border">
+              <p className="text-xs text-accent-light font-medium mb-1">Impacto en tu portfolio</p>
+              <p className="text-xs text-muted">{impact}</p>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {sources.map((s) => (
+                <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-card-border text-muted">{s}</span>
+              ))}
+            </div>
+            <Link href="/resumen" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
+              Profundizar →
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -143,21 +158,7 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-card-border">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <PulseIcon />
-            <span className="text-lg font-semibold tracking-tight">FinPulse</span>
-          </div>
-          <nav className="flex items-center gap-6 text-sm text-muted">
-            <span className="hover:text-foreground cursor-pointer transition-colors">Resumen</span>
-            <span className="hover:text-foreground cursor-pointer transition-colors">Portfolio</span>
-            <span className="hover:text-foreground cursor-pointer transition-colors">Aprendizaje</span>
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs text-accent-light font-medium">NG</div>
-          </nav>
-        </div>
-      </header>
+      <Nav />
 
       {/* Hero: Daily Summary */}
       <section className="max-w-6xl mx-auto px-6 pt-10 pb-8">
@@ -167,7 +168,7 @@ export default function Home() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-4 gap-4 mb-8 animate-fade-in-up-delay">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in-up-delay">
           <div className="bg-card border border-card-border rounded-xl p-4">
             <p className="text-xs text-muted mb-1">Portfolio total</p>
             <p className="text-xl font-bold">12.847,32</p>
@@ -443,19 +444,43 @@ export default function Home() {
       {/* 6 News Windows */}
       <section className="max-w-6xl mx-auto px-6 pb-8">
         <h2 className="font-semibold mb-4">Noticias para profundizar</h2>
-        <div className="grid grid-cols-3 gap-4">
-          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times" />
-          <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=300&fit=crop" source="Reuters" />
-          <NewsCard type="Informacion nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg" />
-          <NewsCard type="Informacion nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot" />
-          <NewsCard type="Vision futura" title="Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine" />
-          <NewsCard type="Vision futura" title="Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times"
+            summary="El acuerdo fase 1 reduce aranceles en un 30% para bienes industriales. Sin embargo, los aranceles tech (semiconductores, IA) se negociaran por separado en Q3. Los mercados celebran la reduccion de incertidumbre — S&P 500 en maximos."
+            impact="Tu IWDA sube +1.8% directamente por esto. VUAA tambien se beneficia (+2.1%). Efecto neto: +~120 en tu portfolio."
+            sources={["Financial Times", "Matt Levine", "Polymarket"]}
+          />
+          <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=300&fit=crop" source="Reuters"
+            summary="El secretario de Estado confirmo avances significativos. Si Iran vuelve al mercado con plena capacidad, 1.5M barriles/dia adicionales presionarian los precios. Polymarket: 58% probabilidad de acuerdo antes de agosto."
+            impact="Tu posicion en BRT pierde 45,60 esta semana. Si el Brent rompe $72, puede caer hasta $68. Considerar reducir exposicion."
+            sources={["Reuters", "UBS On-Air", "Polymarket"]}
+          />
+          <NewsCard type="Informacion nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg"
+            summary="Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Los hyperscalers ya han confirmado pedidos masivos. TSMC aumenta capex un 15%. El ciclo expansivo de semiconductores se extiende 12-18 meses mas."
+            impact="Tu SEMI sube +4.2%, mejor posicion de la semana. Considerar aumentar en proxima caida."
+            sources={["Bloomberg", "@sentimentrader", "Financial Times"]}
+          />
+          <NewsCard type="Informacion nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot"
+            summary="Tras meses de outperformance, India atrae mas capital que China por primera vez en 2026. Sin embargo, el acuerdo EEUU-China esta provocando rotacion inversa — los inversores vuelven a mirar a Shanghai."
+            impact="No tienes exposicion directa a emergentes. Podria ser una oportunidad futura si India corrige."
+            sources={["The Daily Shot", "BBVA Research"]}
+          />
+          <NewsCard type="Vision futura" title="Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine"
+            summary="La UE prepara nuevas restricciones para modelos de IA de alto riesgo. Las multas podrian alcanzar el 6% de los ingresos globales. Meta, Google y Microsoft serian los mas afectados. Implementacion prevista para Q1 2027."
+            impact="Impacto indirecto en tu VUAA y IWDA por el peso de big tech. Monitorizar — no requiere accion inmediata."
+            sources={["Matt Levine", "Financial Times"]}
+          />
+          <NewsCard type="Vision futura" title="Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA"
+            summary="BBVA Research alerta: la demanda de cobre para vehiculos electricos y renovables superara la oferta en 2027-2028. Chile y Peru no pueden aumentar produccion al ritmo necesario. El precio podria duplicarse en 3 anos."
+            impact="No tienes exposicion a cobre. Podria ser oportunidad a medio plazo — radar de oportunidades activado."
+            sources={["Informe BBVA", "Bloomberg"]}
+          />
         </div>
       </section>
 
       {/* Portfolio Preview */}
       <section className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Portfolio */}
           <div className="bg-card border border-card-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
@@ -535,7 +560,7 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-6 py-12 border-t border-card-border">
         <h2 className="text-xl font-bold mb-2 text-center">Lo que hace diferente a FinPulse</h2>
         <p className="text-sm text-muted text-center mb-8">No es solo un tracker. Es tu copiloto financiero.</p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <FeatureCard icon="&#x1f9ec;" title="Investor DNA" description="Tu perfil psicologico como inversor. Sesgos, fortalezas, debilidades. Evoluciona contigo." />
           <FeatureCard icon="&#x1f4d3;" title="Decision Journal" description="Cada operacion se registra con contexto: noticias, sentimiento, recomendacion IA. Review automatico." />
           <FeatureCard icon="&#x1f4e1;" title="Signal vs Noise" description="Mide que fuentes te hacen ganar dinero. Elimina el ruido, enfocate en lo que importa." />
@@ -548,10 +573,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-card-border py-6">
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between text-xs text-muted">
-          <div className="flex items-center gap-2">
-            <PulseIcon />
-            <span>FinPulse — Aprende mientras inviertes</span>
-          </div>
+          <span>FinPulse — Aprende mientras inviertes</span>
           <span>En desarrollo</span>
         </div>
       </footer>

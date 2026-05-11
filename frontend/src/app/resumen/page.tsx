@@ -1,14 +1,5 @@
 import Link from "next/link";
-
-function PulseIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="inline-block">
-      <circle cx="16" cy="16" r="14" stroke="#6366f1" strokeWidth="2" opacity="0.3" />
-      <circle cx="16" cy="16" r="8" stroke="#6366f1" strokeWidth="2" opacity="0.6" />
-      <circle cx="16" cy="16" r="3" fill="#6366f1" />
-    </svg>
-  );
-}
+import Nav from "@/components/Nav";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
   const colors: Record<string, string> = {
@@ -31,16 +22,7 @@ function SectionDivider() {
 export default function ResumenDiario() {
   return (
     <main className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-card-border sticky top-0 bg-background/80 backdrop-blur-md z-10">
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <PulseIcon />
-            <span className="text-lg font-semibold tracking-tight">FinPulse</span>
-          </Link>
-          <span className="text-xs text-muted">Resumen diario completo</span>
-        </div>
-      </header>
+      <Nav />
 
       {/* Reading progress indicator */}
       <div className="max-w-3xl mx-auto px-6">
@@ -71,7 +53,7 @@ export default function ResumenDiario() {
         </div>
 
         {/* Quick status bar */}
-        <div className="grid grid-cols-4 gap-3 py-6 border-b border-card-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 py-6 border-b border-card-border">
           <div>
             <p className="text-xs text-muted">Portfolio</p>
             <p className="text-lg font-bold">12.847,32</p>

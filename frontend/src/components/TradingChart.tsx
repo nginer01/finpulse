@@ -10,6 +10,7 @@ import {
   LineSeries,
   AreaSeries,
   HistogramSeries,
+  createSeriesMarkers,
   type IChartApi,
   type ISeriesApi,
 } from "lightweight-charts";
@@ -290,7 +291,8 @@ export default function TradingChart() {
     mainSeriesRef.current = mainSeries;
 
     // Markers (news/events)
-    mainSeries.setMarkers(
+    createSeriesMarkers(
+      mainSeries,
       markers.map((m) => ({
         time: m.time,
         position: m.position,

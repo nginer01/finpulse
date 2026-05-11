@@ -45,10 +45,18 @@ export default function ResumenDiario() {
       {/* Reading progress indicator */}
       <div className="max-w-3xl mx-auto px-6">
 
+        {/* Hero image */}
+        <div className="relative rounded-xl overflow-hidden mt-8 mb-6">
+          <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=400&fit=crop" alt="Mercados globales" className="w-full h-56 object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <p className="text-muted text-sm mb-1">Domingo, 11 de mayo 2026 — 9:00 AM</p>
+            <h1 className="text-3xl font-bold">Resumen diario</h1>
+          </div>
+        </div>
+
         {/* Title block */}
-        <div className="pt-12 pb-8 border-b border-card-border">
-          <p className="text-muted text-sm mb-2">Domingo, 11 de mayo 2026 — 9:00 AM</p>
-          <h1 className="text-3xl font-bold mb-4">Resumen diario</h1>
+        <div className="pb-8 border-b border-card-border">
           <p className="text-muted text-sm mb-4">14 fuentes procesadas — Tiempo de lectura: ~8 min</p>
           <div className="flex flex-wrap gap-2">
             <SourceBadge name="UBS On-Air" type="podcast" />
@@ -90,7 +98,14 @@ export default function ResumenDiario() {
 
         {/* 1. Lo esencial */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Lo esencial</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=250&fit=crop" alt="Trading floor" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Lo esencial</h2>
+              <p className="text-xs text-muted">Financial Times / Bloomberg</p>
+            </div>
+          </div>
           <div className="text-sm leading-7 text-muted space-y-4">
             <p>
               Semana clave para los mercados globales. El acuerdo comercial preliminar entre EEUU y China impulsa la renta variable mundial, con el <span className="text-foreground font-medium">S&P 500 cerrando en maximos historicos (+1.2%)</span> y los mercados europeos y asiaticos al alza. Es la primera senal concreta de distension comercial desde que se reiniciaron los aranceles a principios de ano, y los mercados lo celebran con volumen.
@@ -111,7 +126,14 @@ export default function ResumenDiario() {
 
         {/* 2. Mercados en detalle */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Mercados en detalle</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=800&h=250&fit=crop" alt="Stock market screens" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Mercados en detalle</h2>
+              <p className="text-xs text-muted">The Daily Shot / Reuters</p>
+            </div>
+          </div>
 
           <div className="space-y-8 text-sm leading-7 text-muted">
             <div>
@@ -169,7 +191,14 @@ export default function ResumenDiario() {
 
         {/* 3. Tu portfolio hoy */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Tu portfolio hoy</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&h=250&fit=crop" alt="Portfolio charts" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Tu portfolio hoy</h2>
+              <p className="text-xs text-muted">Datos de mercado en tiempo real</p>
+            </div>
+          </div>
           <div className="space-y-6 text-sm leading-7">
 
             <div className="bg-card border border-card-border rounded-xl p-5">
@@ -272,7 +301,14 @@ export default function ResumenDiario() {
 
         {/* 4. Temas de seguimiento */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Temas de seguimiento</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=800&h=250&fit=crop" alt="Semiconductores" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Temas de seguimiento</h2>
+              <p className="text-xs text-muted">3 temas activos esta semana</p>
+            </div>
+          </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
 
             <div>
@@ -326,7 +362,14 @@ export default function ResumenDiario() {
 
         {/* 5. Lo que dicen las fuentes */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Lo que dicen tus fuentes</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=800&h=250&fit=crop" alt="News sources" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Lo que dicen tus fuentes</h2>
+              <p className="text-xs text-muted">8 fuentes analizadas hoy</p>
+            </div>
+          </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
 
             <div className="border-l-2 border-purple-500/40 pl-5">
@@ -436,7 +479,14 @@ export default function ResumenDiario() {
 
         {/* 6. Paralelos historicos */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Paralelos historicos</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=250&fit=crop" alt="Historical data" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Paralelos historicos</h2>
+              <p className="text-xs text-muted">Lecciones del pasado para el presente</p>
+            </div>
+          </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
 
             <div className="bg-card border border-card-border rounded-xl p-6">
@@ -477,7 +527,14 @@ export default function ResumenDiario() {
 
         {/* 7. Recomendaciones */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Recomendaciones</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=250&fit=crop" alt="Investment strategy" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Recomendaciones</h2>
+              <p className="text-xs text-muted">2 acciones sugeridas hoy</p>
+            </div>
+          </div>
           <div className="space-y-6 text-sm leading-7">
 
             <div className="bg-card border border-red/20 rounded-xl p-6">
@@ -550,7 +607,14 @@ export default function ResumenDiario() {
 
         {/* 8. Alertas */}
         <section className="py-10">
-          <h2 className="text-xl font-bold mb-6">Alertas y proximos eventos</h2>
+          <div className="relative rounded-xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=250&fit=crop" alt="Calendar events" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <h2 className="text-xl font-bold">Alertas y proximos eventos</h2>
+              <p className="text-xs text-muted">3 alertas activas — 6 eventos esta semana</p>
+            </div>
+          </div>
           <div className="space-y-4 text-sm leading-7">
             <div className="flex items-start gap-4 bg-card border border-red/20 rounded-xl p-5">
               <div className="w-3 h-3 rounded-full bg-red mt-1.5 shrink-0" />

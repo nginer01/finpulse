@@ -82,21 +82,27 @@ function SourceBadge({ name, type }: { name: string; type: "newsletter" | "podca
   );
 }
 
-function NewsCard({ type, title, tag, delay }: { type: string; title: string; tag: string; delay: string }) {
+function NewsCard({ type, title, tag, delay, image, source }: { type: string; title: string; tag: string; delay: string; image: string; source: string }) {
   const tagColors: Record<string, string> = {
     "Tu portfolio": "bg-accent/20 text-accent-light",
     "Nuevo": "bg-green/20 text-green",
     "Futuro": "bg-amber-500/20 text-amber-400",
   };
   return (
-    <div className={`bg-card border border-card-border rounded-xl p-5 hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 ${delay}`}>
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
-        <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
+    <div className={`bg-card border border-card-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 ${delay}`}>
+      <div className="relative h-36 overflow-hidden">
+        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+        <span className="absolute bottom-2 left-3 text-xs text-muted/80">{source}</span>
       </div>
-      <h3 className="text-sm font-medium leading-snug mb-3">{title}</h3>
-      <div className="h-px bg-card-border mb-3" />
-      <p className="text-xs text-muted">Click para expandir</p>
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
+        </div>
+        <h3 className="text-sm font-medium leading-snug mb-3">{title}</h3>
+        <p className="text-xs text-muted">Click para expandir</p>
+      </div>
     </div>
   );
 }
@@ -211,8 +217,14 @@ export default function Home() {
           </div>
 
           {/* Executive summary — always visible */}
+          <div className="relative rounded-lg overflow-hidden mb-5 border border-card-border">
+            <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=300&fit=crop" alt="Mercados globales" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-4">
+              <p className="text-xs text-accent-light font-medium uppercase tracking-wider">Resumen ejecutivo</p>
+            </div>
+          </div>
           <div className="bg-background rounded-lg p-4 border border-card-border mb-5">
-            <p className="text-xs text-accent-light font-medium uppercase tracking-wider mb-2">Resumen ejecutivo</p>
             <p className="text-sm leading-relaxed">
               Semana clave para los mercados globales. El acuerdo comercial preliminar EEUU-China impulsa a la renta variable global, con el S&P 500 cerrando en maximos historicos (+1.2%) y mercados europeos al alza. Sin embargo, el sector energetico se debilita tras avances en las negociaciones Iran-EEUU, con el Brent cayendo un 4.2% en la semana. El BCE mantiene el tono dovish y Polymarket situa al 73% la probabilidad de recorte en junio.
             </p>
@@ -432,12 +444,12 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-6 pb-8">
         <h2 className="font-semibold mb-4">Noticias para profundizar</h2>
         <div className="grid grid-cols-3 gap-4">
-          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" />
-          <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" />
-          <NewsCard type="Informacion nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" />
-          <NewsCard type="Informacion nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" />
-          <NewsCard type="Vision futura" title="Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" />
-          <NewsCard type="Vision futura" title="Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" />
+          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times" />
+          <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=300&fit=crop" source="Reuters" />
+          <NewsCard type="Informacion nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg" />
+          <NewsCard type="Informacion nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot" />
+          <NewsCard type="Vision futura" title="Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine" />
+          <NewsCard type="Vision futura" title="Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA" />
         </div>
       </section>
 

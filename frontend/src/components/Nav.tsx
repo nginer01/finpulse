@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import AlertsPanel, { AlertsBadge } from "./AlertsPanel";
+import SearchModal from "./SearchModal";
 
 function PulseIcon() {
   return (
@@ -27,6 +28,12 @@ export default function Nav() {
   const isResumen = pathname === "/resumen";
   const isNoticia = pathname.startsWith("/noticia");
   const [alertsOpen, setAlertsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Ctrl+K shortcut
+  if (typeof window !== "undefined") {
+    // handled inside SearchModal
+  }
 
   return (
     <>
@@ -54,6 +61,18 @@ export default function Nav() {
               );
             })}
             <div className="flex items-center gap-1 ml-1 sm:ml-2">
+              {/* Search */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="p-1.5 rounded-lg hover:bg-white/[0.03] transition-colors hidden sm:flex items-center gap-2"
+                title="Buscar (Ctrl+K)"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="8" cy="8" r="5.5" stroke="#71717a" strokeWidth="1.5" />
+                  <path d="M12.5 12.5L16 16" stroke="#71717a" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                <kbd className="text-[10px] text-muted bg-card-border px-1.5 py-0.5 rounded hidden lg:inline">Ctrl+K</kbd>
+              </button>
               <AlertsBadge count={3} onClick={() => setAlertsOpen(!alertsOpen)} />
               <Link
                 href="/ajustes"
@@ -73,6 +92,7 @@ export default function Nav() {
         </div>
       </header>
       <AlertsPanel open={alertsOpen} onClose={() => setAlertsOpen(false)} />
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

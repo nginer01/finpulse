@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import AddPosition, { type UserPosition } from "@/components/AddPosition";
+import PortfolioHeatmap from "@/components/PortfolioHeatmap";
 import dynamic from "next/dynamic";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
@@ -433,6 +434,11 @@ export default function PortfolioPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* ─── HEATMAP ─── */}
+        <section>
+          <PortfolioHeatmap />
         </section>
 
         {/* ─── 3. DISTRIBUTION CHARTS ─── */}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Nav from "@/components/Nav";
 import AddPosition, { type UserPosition } from "@/components/AddPosition";
 import PortfolioHeatmap from "@/components/PortfolioHeatmap";
+import BorderCard from "@/components/BorderCard";
 import dynamic from "next/dynamic";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
@@ -137,7 +138,7 @@ function PositionCard({
 }: (typeof positions)[0]) {
   const positive = weekChange >= 0;
   return (
-    <div className="bg-card border border-card-border rounded-xl p-5 hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 flex flex-col gap-3">
+    <BorderCard padding="p-5" className="duration-300 flex flex-col ga">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -173,7 +174,7 @@ function PositionCard({
           {news} noticias vinculadas
         </span>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 
@@ -231,7 +232,7 @@ function MissedTradeCard({
   asset, date, buyPrice, currentPrice, gain, lesson,
 }: (typeof missedTrades)[0]) {
   return (
-    <div className="bg-card border border-card-border rounded-xl overflow-hidden hover:border-red/30 transition-all duration-300">
+    <BorderCard padding="p-5" className="duration-300">
       <div className="p-5">
         <p className="text-xs text-muted mb-1">No compraste en {date}</p>
         <p className="font-semibold mb-3">{asset}</p>
@@ -262,7 +263,7 @@ function MissedTradeCard({
           <p className="text-xs text-muted leading-relaxed">{lesson}</p>
         </div>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 
@@ -484,7 +485,7 @@ export default function PortfolioPage() {
         {/* ─── 4. RENDIMIENTO VS BENCHMARKS ─── */}
         <section>
           <h2 className="text-lg font-bold mb-4">Rendimiento vs Benchmarks (YTD)</h2>
-          <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+          <BorderCard padding="p-5">
             <div className="relative h-32 overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=200&fit=crop"
@@ -504,7 +505,7 @@ export default function PortfolioPage() {
             <div className="p-5">
               <BenchmarkBars />
             </div>
-          </div>
+          </BorderCard>
         </section>
 
         {/* ─── 5. EL CAMINO NO TOMADO ─── */}
@@ -525,11 +526,11 @@ export default function PortfolioPage() {
         {/* ─── 6. HISTORIAL DE OPERACIONES ─── */}
         <section>
           <h2 className="text-lg font-bold mb-4">Historial de operaciones</h2>
-          <div className="bg-card border border-card-border rounded-xl p-5">
+          <BorderCard padding="p-5">
             {operations.map((op, i) => (
               <OperationRow key={i} {...op} />
             ))}
-          </div>
+          </BorderCard>
         </section>
       </div>
 

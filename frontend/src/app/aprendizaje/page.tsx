@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
+import BorderCard from "@/components/BorderCard";
 
 /* ------------------------------------------------------------------ */
 /*  RADAR / SPIDER CHART (SVG)                                        */
@@ -225,7 +226,7 @@ function ConvictionDots({ level }: { level: number }) {
 function DecisionCard({ d }: { d: Decision }) {
   const s = statusConfig[d.status];
   return (
-    <div className="bg-card border border-card-border rounded-xl p-5 space-y-3">
+    <BorderCard padding="p-5" className="space-y-3">
       <div className="flex flex-wrap items-center gap-3">
         <span className="text-xs text-muted">{d.date}</span>
         <span
@@ -268,7 +269,7 @@ function DecisionCard({ d }: { d: Decision }) {
           {d.note}
         </div>
       )}
-    </div>
+    </BorderCard>
   );
 }
 
@@ -352,7 +353,7 @@ function ScenarioNvidia() {
   const now = 1150;
   const max = 1200;
   return (
-    <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+    <BorderCard padding="p-5">
       <img
         src="https://images.unsplash.com/photo-1639754390580-2e7437267698?w=800&h=250&fit=crop"
         alt="GPU / Nvidia"
@@ -397,13 +398,13 @@ function ScenarioNvidia() {
           de vender manualmente.
         </p>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 
 function ScenarioBitcoin() {
   return (
-    <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+    <BorderCard padding="p-5">
       <img
         src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800&h=250&fit=crop"
         alt="Bitcoin"
@@ -445,7 +446,7 @@ function ScenarioBitcoin() {
           crypto encaja en tu perfil de riesgo.
         </p>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 
@@ -574,13 +575,13 @@ export default function AprendizajePage() {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             {/* Chart */}
-            <div className="bg-card border border-card-border rounded-xl p-6 flex items-center justify-center">
+            <BorderCard padding="p-6" className="flex items-center justify-center">
               <RadarChart />
-            </div>
+            </BorderCard>
 
             {/* Summary */}
             <div className="space-y-4">
-              <div className="bg-card border border-card-border rounded-xl p-5 space-y-4">
+              <BorderCard padding="p-5" className="space-y-4">
                 <h3 className="font-bold text-lg">
                   Score total:{" "}
                   <span className="text-accent-light">{(totalScore * 100).toFixed(1)}%</span>
@@ -615,7 +616,7 @@ export default function AprendizajePage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderCard>
 
               {/* Evolution card */}
               <div className="bg-accent/10 border border-accent/30 rounded-xl p-5">
@@ -712,7 +713,7 @@ export default function AprendizajePage() {
             subtitle="Calidad de tus fuentes de información, rankeadas por precision"
           />
 
-          <div className="bg-card border border-card-border rounded-xl p-6 space-y-5">
+          <BorderCard padding="p-6" className="space-y-5">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-muted">Fuente</span>
               <span className="text-xs text-muted">Precision</span>
@@ -730,7 +731,7 @@ export default function AprendizajePage() {
                 de las veces — considera reducir su peso en tu proceso de decision.
               </p>
             </div>
-          </div>
+          </BorderCard>
         </section>
       </div>
     </main>

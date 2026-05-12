@@ -112,7 +112,7 @@ function NewsCard({ type, title, tag, delay, image, source, summary, impact, sou
                 <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-card-border text-muted">{s}</span>
               ))}
             </div>
-            <Link href="/resumen" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
+            <Link href="/noticia" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
               Profundizar →
             </Link>
           </div>
@@ -550,6 +550,96 @@ export default function Home() {
                   Vendiste parte de Brent tras caida del 2%. Resultado: siguio cayendo un 1.8% adicional.
                   <span className="text-green"> Buena decision.</span> Senal clave que detectaste: volumen de venta institucional inusualmente alto.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Radar de Oportunidades */}
+      <section className="max-w-6xl mx-auto px-6 pb-8">
+        <h2 className="font-semibold mb-4">Radar de oportunidades</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Radar visual */}
+          <div className="bg-card border border-card-border rounded-xl p-6 flex flex-col items-center justify-center">
+            <div className="relative w-48 h-48">
+              {/* Radar circles */}
+              <svg viewBox="0 0 200 200" className="w-full h-full">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#1e1e2e" strokeWidth="1" />
+                <circle cx="100" cy="100" r="60" fill="none" stroke="#1e1e2e" strokeWidth="1" />
+                <circle cx="100" cy="100" r="30" fill="none" stroke="#1e1e2e" strokeWidth="1" />
+                <line x1="100" y1="10" x2="100" y2="190" stroke="#1e1e2e" strokeWidth="0.5" />
+                <line x1="10" y1="100" x2="190" y2="100" stroke="#1e1e2e" strokeWidth="0.5" />
+                {/* Sweep line */}
+                <line x1="100" y1="100" x2="170" y2="40" stroke="#6366f1" strokeWidth="1.5" opacity="0.6">
+                  <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="8s" repeatCount="indefinite" />
+                </line>
+                {/* Blips — opportunities */}
+                <circle cx="135" cy="55" r="5" fill="#22c55e" opacity="0.9">
+                  <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="60" cy="70" r="4" fill="#f59e0b" opacity="0.8">
+                  <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="150" cy="120" r="3.5" fill="#6366f1" opacity="0.7">
+                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite" />
+                </circle>
+              </svg>
+            </div>
+            <p className="text-xs text-muted mt-2">3 oportunidades detectadas</p>
+          </div>
+
+          {/* Opportunity cards */}
+          <div className="md:col-span-2 space-y-3">
+            <div className="bg-card border border-green/20 rounded-xl p-4 hover:border-green/40 transition-colors cursor-pointer">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-green animate-pulse" />
+                  <span className="text-sm font-medium">Cobre — escasez global 2027-2028</span>
+                </div>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-green/15 text-green">Alta conviccion</span>
+              </div>
+              <p className="text-xs text-muted leading-relaxed mb-2">BBVA Research y Bloomberg alertan: la demanda de cobre para EVs y renovables superara la oferta. Chile y Peru no pueden escalar produccion. El precio podria duplicarse en 3 anos.</p>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-muted">Detectado hace 3 dias</span>
+                <span className="text-muted">•</span>
+                <span className="text-muted">4 fuentes</span>
+                <span className="text-muted">•</span>
+                <span className="text-green">No mainstream todavia</span>
+              </div>
+            </div>
+            <div className="bg-card border border-amber-500/20 rounded-xl p-4 hover:border-amber-500/40 transition-colors cursor-pointer">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+                  <span className="text-sm font-medium">India — rotacion de capital tras acuerdo China</span>
+                </div>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">Media conviccion</span>
+              </div>
+              <p className="text-xs text-muted leading-relaxed mb-2">Los inversores rotan de India a China por el acuerdo. Si India corrige un 10-15%, podria ser punto de entrada historico para el mercado emergente de mayor crecimiento a largo plazo.</p>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-muted">Detectado hace 1 dia</span>
+                <span className="text-muted">•</span>
+                <span className="text-muted">2 fuentes</span>
+                <span className="text-muted">•</span>
+                <span className="text-amber-400">Emergente</span>
+              </div>
+            </div>
+            <div className="bg-card border border-accent/20 rounded-xl p-4 hover:border-accent/40 transition-colors cursor-pointer">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
+                  <span className="text-sm font-medium">Nuclear — renacimiento por demanda IA</span>
+                </div>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">En observacion</span>
+              </div>
+              <p className="text-xs text-muted leading-relaxed mb-2">Los centros de datos de IA necesitan energia limpia y estable. Microsoft, Google y Amazon firman acuerdos con plantas nucleares. ETFs de uranio suben +18% YTD. Tendencia incipiente.</p>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-muted">Detectado hace 5 dias</span>
+                <span className="text-muted">•</span>
+                <span className="text-muted">3 fuentes</span>
+                <span className="text-muted">•</span>
+                <span className="text-accent-light">Temprano</span>
               </div>
             </div>
           </div>

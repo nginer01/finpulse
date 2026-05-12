@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import BorderCard from "@/components/BorderCard";
 
 function MockChart() {
   const points = "0,40 15,35 30,42 45,28 55,32 65,18 80,22 95,10 110,15 130,8 150,12 170,5";
@@ -147,11 +148,11 @@ function PortfolioPosition({ ticker, name, change, value }: { ticker: string; na
 
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
-    <div className="bg-card border border-card-border rounded-xl p-6 hover:border-accent/30 transition-all duration-300">
+    <BorderCard padding="p-6">
       <div className="text-2xl mb-3">{icon}</div>
       <h3 className="font-semibold mb-2">{title}</h3>
       <p className="text-sm text-muted leading-relaxed">{description}</p>
-    </div>
+    </BorderCard>
   );
 }
 
@@ -169,12 +170,12 @@ export default function Home() {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in-up-delay">
-          <div className="bg-card border border-card-border rounded-xl p-4">
+          <BorderCard padding="p-4">
             <p className="text-xs text-muted mb-1">Portfolio total</p>
             <p className="text-xl font-bold">12.847,32</p>
             <p className="text-xs text-green">+2.4% esta semana</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4">
+          </BorderCard>
+          <BorderCard padding="p-4">
             <p className="text-xs text-muted mb-1">Sentimiento mercado</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex-1 h-2 rounded-full bg-card-border overflow-hidden">
@@ -183,17 +184,17 @@ export default function Home() {
               <span className="text-sm font-medium text-amber-400">62</span>
             </div>
             <p className="text-xs text-muted mt-1">Moderadamente optimista</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4">
+          </BorderCard>
+          <BorderCard padding="p-4">
             <p className="text-xs text-muted mb-1">Recomendación IA</p>
             <p className="text-sm font-medium">Mantener posiciones</p>
             <p className="text-xs text-accent-light">Convicción: 7/10</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4">
+          </BorderCard>
+          <BorderCard padding="p-4">
             <p className="text-xs text-muted mb-1">Tu Investor DNA</p>
             <p className="text-sm font-medium">Perfil equilibrado</p>
             <p className="text-xs text-muted">Acierto: 68% (mejorando)</p>
-          </div>
+          </BorderCard>
         </div>
 
         {/* Daily Summary — Full version */}
@@ -482,7 +483,7 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-6 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Portfolio */}
-          <div className="bg-card border border-card-border rounded-xl p-6">
+          <BorderCard padding="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold">Portfolio</h2>
               <span className="text-xs text-green">+2.4% semanal</span>
@@ -495,11 +496,11 @@ export default function Home() {
               <PortfolioPosition ticker="EUNA" name="iShares Euro Gov Bond" change={0.5} value="2.400,00" />
               <PortfolioPosition ticker="SEMI" name="VanEck Semiconductor" change={4.2} value="1.867,32" />
             </div>
-          </div>
+          </BorderCard>
 
           {/* Investor DNA + Learning */}
           <div className="space-y-6">
-            <div className="bg-card border border-card-border rounded-xl p-6">
+            <BorderCard padding="p-6">
               <h2 className="font-semibold mb-4">Investor DNA</h2>
               <div className="space-y-3">
                 <div>
@@ -540,9 +541,9 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-xs text-muted mt-4">Tendencia: mejorando en disciplina, trabajar en timing de entrada.</p>
-            </div>
+            </BorderCard>
 
-            <div className="bg-card border border-card-border rounded-xl p-6">
+            <BorderCard padding="p-6">
               <h2 className="font-semibold mb-3">Última lección aprendida</h2>
               <div className="bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-accent-light mb-2">Hace 3 dias — Venta de BRT</p>
@@ -551,7 +552,7 @@ export default function Home() {
                   <span className="text-green"> Buena decision.</span> Señal clave que detectaste: volumen de venta institucional inusualmente alto.
                 </p>
               </div>
-            </div>
+            </BorderCard>
           </div>
         </div>
       </section>
@@ -561,7 +562,7 @@ export default function Home() {
         <h2 className="font-semibold mb-4">Radar de oportunidades</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Radar visual */}
-          <div className="bg-card border border-card-border rounded-xl p-6 flex flex-col items-center justify-center">
+          <BorderCard padding="p-6" className="flex flex-col items-center justify-center">
             <div className="relative w-48 h-48">
               {/* Radar circles */}
               <svg viewBox="0 0 200 200" className="w-full h-full">
@@ -587,7 +588,7 @@ export default function Home() {
               </svg>
             </div>
             <p className="text-xs text-muted mt-2">3 oportunidades detectadas</p>
-          </div>
+          </BorderCard>
 
           {/* Opportunity cards */}
           <div className="md:col-span-2 space-y-3">

@@ -184,11 +184,13 @@ export default function Home() {
             </div>
             <p className="text-xs text-muted mt-1">Moderadamente optimista</p>
           </BorderCard>
-          <BorderCard padding="p-4">
-            <p className="text-xs text-muted mb-1">Recomendación IA</p>
-            <p className="text-sm font-medium">Mantener posiciones</p>
-            <p className="text-xs text-accent-light">Convicción: 7/10</p>
-          </BorderCard>
+          <Link href="/recomendaciones">
+            <BorderCard padding="p-4">
+              <p className="text-xs text-muted mb-1">Recomendación IA</p>
+              <p className="text-sm font-medium">Mantener posiciones</p>
+              <p className="text-xs text-accent-light">Convicción: 7/10 →</p>
+            </BorderCard>
+          </Link>
           <BorderCard padding="p-4">
             <p className="text-xs text-muted mb-1">Tu Investor DNA</p>
             <p className="text-sm font-medium">Perfil equilibrado</p>

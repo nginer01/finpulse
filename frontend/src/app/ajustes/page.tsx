@@ -190,11 +190,11 @@ export default function AjustesPage() {
   const [nombre, setNombre] = useState("Nico Giner");
   const [email, setEmail] = useState("nico.giner@email.com");
   const [timezone, setTimezone] = useState("Europa/Madrid");
-  const [idioma, setIdioma] = useState("Espanol");
+  const [idioma, setIdioma] = useState("Español");
 
   // -- Temas de seguimiento --
   const [topics, setTopics] = useState<Topic[]>([
-    { name: "Petroleo", priority: "ALTA" },
+    { name: "Petróleo", priority: "ALTA" },
     { name: "Semiconductores", priority: "ALTA" },
     { name: "IA", priority: "MEDIA" },
     { name: "BCE/Tipos", priority: "MEDIA" },
@@ -253,7 +253,7 @@ export default function AjustesPage() {
   // -- Resumen diario --
   const [resumenHora, setResumenHora] = useState("09:00");
   const [resumenTimezone, setResumenTimezone] = useState("Europa/Madrid");
-  const [historicos, setHistoricos] = useState(true);
+  const [históricos, setHistoricos] = useState(true);
   const [contraargumentos, setContraargumentos] = useState(true);
   const [resumenSemanal, setResumenSemanal] = useState(false);
 
@@ -268,7 +268,7 @@ export default function AjustesPage() {
   });
   const [divisa, setDivisa] = useState("EUR");
 
-  // -- Notificaciones --
+  // -- Notificaciónes --
   const [notifAlerts, setNotifAlerts] = useState(true);
   const [notifRecomendaciones, setNotifRecomendaciones] = useState(true);
   const [notifResumen, setNotifResumen] = useState(true);
@@ -341,7 +341,7 @@ export default function AjustesPage() {
                 value={idioma}
                 onChange={setIdioma}
                 options={[
-                  { value: "Espanol", label: "Espanol" },
+                  { value: "Español", label: "Español" },
                   { value: "English", label: "English" },
                   { value: "Portugues", label: "Portugues" },
                 ]}
@@ -411,7 +411,7 @@ export default function AjustesPage() {
               onClick={addTopic}
               className="px-4 py-2 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-colors"
             >
-              Anadir
+              Añadir
             </button>
           </div>
 
@@ -425,7 +425,7 @@ export default function AjustesPage() {
         {/* ============================================================= */}
         {/* 3. FUENTES DE INFORMACION                                      */}
         {/* ============================================================= */}
-        <SectionCard title="Fuentes de informacion">
+        <SectionCard title="Fuentes de información">
           {/* Gmail */}
           <div className="mb-6 pb-6 border-b border-card-border">
             <div className="flex items-center gap-2 mb-3">
@@ -507,7 +507,7 @@ export default function AjustesPage() {
                 onClick={addTwitter}
                 className="px-4 py-2 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-colors"
               >
-                Anadir
+                Añadir
               </button>
             </div>
           </div>
@@ -594,8 +594,8 @@ export default function AjustesPage() {
             />
           </FieldRow>
           <ToggleRow
-            label="Incluir paralelos historicos"
-            checked={historicos}
+            label="Incluir paralelos históricos"
+            checked={históricos}
             onChange={setHistoricos}
           />
           <ToggleRow
@@ -696,7 +696,7 @@ export default function AjustesPage() {
         {/* ============================================================= */}
         {/* 6. NOTIFICACIONES                                              */}
         {/* ============================================================= */}
-        <SectionCard title="Notificaciones">
+        <SectionCard title="Notificaciónes">
           <ToggleRow
             label="Alertas de portfolio (caidas >3%)"
             checked={notifAlerts}
@@ -730,7 +730,7 @@ export default function AjustesPage() {
                   Exportar todos mis datos
                 </p>
                 <p className="text-xs text-muted mt-0.5">
-                  Descarga un archivo JSON con toda tu informacion
+                  Descarga un archivo JSON con toda tu información
                 </p>
               </div>
               <button className="px-4 py-2 border border-card-border text-sm font-medium rounded-lg hover:bg-card-border/30 transition-colors text-foreground shrink-0">
@@ -742,7 +742,7 @@ export default function AjustesPage() {
                 <p className="text-sm font-medium text-red">Eliminar cuenta</p>
                 <p className="text-xs text-muted mt-0.5">
                   Esta accion es irreversible. Se eliminaran todos tus datos,
-                  configuraciones y resumen historico.
+                  configuraciónes y resumen histórico.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-2">

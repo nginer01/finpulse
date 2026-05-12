@@ -88,7 +88,7 @@ const missedTrades = [
     currentPrice: "68.500",
     gain: "+63%",
     lesson:
-      "El miedo a la volatilidad crypto te hizo dudar. Leccion: asignar un % pequeno (2-5%) a activos de alta conviccion reduce el arrepentimiento sin comprometer el portfolio.",
+      "El miedo a la volatilidad crypto te hizo dudar.Lección: asignar un % pequeño (2-5%) a activos de alta convicción reduce el arrepentimiento sin comprometer el portfolio.",
   },
   {
     asset: "Oro (GLD)",
@@ -97,7 +97,7 @@ const missedTrades = [
     currentPrice: "2.340",
     gain: "+14%",
     lesson:
-      "Priorizaste renta variable sobre refugio. Leccion: el oro actua como cobertura — incluso un 5% de exposicion habria reducido la volatilidad de tu portfolio un 8%.",
+      "Priorizaste renta variable sobre refugio.Lección: el oro actua como cobertura — incluso un 5% de exposición habria reducido la volatilidad de tu portfolio un 8%.",
   },
 ];
 
@@ -391,7 +391,7 @@ export default function PortfolioPage() {
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
-              Anadir posicion
+              Añadir posicion
             </button>
           </div>
 
@@ -443,7 +443,7 @@ export default function PortfolioPage() {
 
         {/* ─── 3. DISTRIBUTION CHARTS ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Distribucion del portfolio</h2>
+          <h2 className="text-lg font-bold mb-4">Distribución del portfolio</h2>
 
           {/* Tabs on small screens, side by side on md+ */}
           <div className="md:hidden flex gap-2 mb-4">

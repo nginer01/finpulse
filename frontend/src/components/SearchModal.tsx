@@ -15,7 +15,7 @@ const allResults: SearchResult[] = [
   { type: "noticia", title: "Acuerdo comercial EEUU-China", subtitle: "Impacto en ETFs globales", href: "/noticia", icon: "N" },
   { type: "noticia", title: "Negociaciones Iran-EEUU", subtitle: "Brent cae 4% en la semana", href: "/noticia", icon: "N" },
   { type: "noticia", title: "Nvidia Blackwell Ultra", subtitle: "Semiconductores se reconfiguran", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "Regulacion IA en Europa", subtitle: "Nuevo marco legal 2027", href: "/noticia", icon: "N" },
+  { type: "noticia", title: "Regulación IA en Europa", subtitle: "Nuevo marco legal 2027", href: "/noticia", icon: "N" },
   { type: "noticia", title: "Escasez global de cobre", subtitle: "Transicion energetica en riesgo", href: "/noticia", icon: "N" },
   { type: "noticia", title: "India vs China emergentes", subtitle: "Rotacion de capital", href: "/noticia", icon: "N" },
   { type: "posicion", title: "IWDA — iShares MSCI World", subtitle: "4.230,00 — +1.8%", href: "/portfolio", icon: "P" },
@@ -30,9 +30,9 @@ const allResults: SearchResult[] = [
   { type: "pagina", title: "Portfolio", subtitle: "Tus posiciones e inversiones", href: "/portfolio", icon: "R" },
   { type: "pagina", title: "Aprendizaje", subtitle: "Investor DNA, decisiones, sesgos", href: "/aprendizaje", icon: "R" },
   { type: "pagina", title: "Resumen semanal", subtitle: "Review de la semana", href: "/semanal", icon: "R" },
-  { type: "pagina", title: "Stress Test", subtitle: "Simula escenarios historicos", href: "/stress-test", icon: "R" },
+  { type: "pagina", title: "Stress Test", subtitle: "Simula escenarios históricos", href: "/stress-test", icon: "R" },
   { type: "pagina", title: "Comparador", subtitle: "Compara activos lado a lado", href: "/comparador", icon: "R" },
-  { type: "pagina", title: "Ajustes", subtitle: "Configuracion de la app", href: "/ajustes", icon: "R" },
+  { type: "pagina", title: "Ajustes", subtitle: "Configuración de la app", href: "/ajustes", icon: "R" },
 ];
 
 const typeColors: Record<string, string> = {

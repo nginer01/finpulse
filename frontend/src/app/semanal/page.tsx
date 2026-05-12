@@ -30,7 +30,7 @@ const timeline: TimelineEvent[] = [
   { day: "Martes", date: "6 mayo", text: "IPC EEUU en linea con expectativas, mercados estables", color: "amber", impact: "+0.1%" },
   { day: "Miercoles", date: "7 mayo", text: "Nvidia presenta Blackwell Ultra, semiconductores disparan", color: "green", impact: "+1.2%" },
   { day: "Jueves", date: "8 mayo", text: "Financial Times filtra actas BCE, vendiste parte de BRT", color: "red", impact: "-0.3%" },
-  { day: "Viernes", date: "9 mayo", text: "Acuerdo EEUU-China oficial, S&P maximos historicos", color: "green", impact: "+0.6%" },
+  { day: "Viernes", date: "9 mayo", text: "Acuerdo EEUU-China oficial, S&P máximos históricos", color: "green", impact: "+0.6%" },
 ];
 
 const decisions = [
@@ -52,7 +52,7 @@ const decisions = [
 
 const recommendations = [
   { text: 'Semana pasada recomendamos "mantener VUAA"', result: "+2.1% esta semana", status: "ACERTADA" as const },
-  { text: 'Semana pasada recomendamos "vigilar petroleo"', result: "Brent -3.8%", status: "ACERTADA" as const },
+  { text: 'Semana pasada recomendamos "vigilar petróleo"', result: "Brent -3.8%", status: "ACERTADA" as const },
   { text: 'Hace 2 semanas recomendamos "comprar SEMI"', result: "+4.2% acumulado", status: "ACERTADA" as const },
 ];
 
@@ -60,7 +60,7 @@ const dnaTraits = [
   { name: "Disciplina", now: 78, lastWeek: 74, monthAgo: 65 },
   { name: "Control emocional", now: 65, lastWeek: 62, monthAgo: 58 },
   { name: "Analisis tecnico", now: 71, lastWeek: 66, monthAgo: 54 },
-  { name: "Gestion de riesgo", now: 82, lastWeek: 80, monthAgo: 75 },
+  { name: "Gestión de riesgo", now: 82, lastWeek: 80, monthAgo: 75 },
   { name: "Paciencia", now: 60, lastWeek: 58, monthAgo: 50 },
 ];
 
@@ -379,7 +379,7 @@ export default function SemanalPage() {
                 Tu venta de BRT el jueves fue excelente: detectaste el volumen institucional de venta antes de la caida.
                 Esto demuestra que tu analisis tecnico esta mejorando.{" "}
                 <span style={{ color: "var(--color-foreground)" }}>
-                  Hace 2 meses, habrias mantenido la posicion por miedo a vender demasiado pronto.
+                  Hace 2 meses, habrias mantenido la posición por miedo a vender demasiado pronto.
                 </span>{" "}
                 El crecimiento es claro y tu instinto cada vez esta mas alineado con los datos.
               </p>
@@ -395,7 +395,7 @@ export default function SemanalPage() {
 
         {/* ---- 8. OBJECTIVES ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Objetivos para la proxima semana</h2>
+          <h2 className="text-2xl font-bold mb-8">Objetivos para la próxima semana</h2>
           <div className="space-y-4">
             {objectives.map((obj, i) => {
               const priorityStyles: Record<string, { bg: string; text: string; label: string }> = {

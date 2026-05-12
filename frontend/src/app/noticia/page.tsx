@@ -111,9 +111,9 @@ const timelineEvents = [
     date: "9 mayo",
     title: "Anuncio oficial del acuerdo fase 1",
     description:
-      "La Casa Blanca y el Consejo de Estado chino anuncian simultaneamente el acuerdo. Reduccion de aranceles en bienes de consumo e industriales. Se establece un calendario de negociaciones para semiconductores en Q3. El S&P 500 cierra en maximos historicos.",
+      "La Casa Blanca y el Consejo de Estado chino anuncian simultaneamente el acuerdo. Reduccion de aranceles en bienes de consumo e industriales. Se establece un calendario de negociaciones para semiconductores en Q3. El S&P 500 cierra en máximos históricos.",
     impact: "green" as const,
-    impactLabel: "S&P 500 +1.2%, maximos historicos",
+    impactLabel: "S&P 500 +1.2%, máximos históricos",
   },
   {
     date: "11 mayo",
@@ -167,7 +167,7 @@ export default function NoticiaPage() {
           <div className="bg-card border border-card-border rounded-xl p-4 text-center">
             <p className="text-xs text-muted mb-1">S&P 500</p>
             <p className="text-xl font-bold text-green">+1.2%</p>
-            <p className="text-xs text-muted">Maximos historicos</p>
+            <p className="text-xs text-muted">Máximos históricos</p>
           </div>
           <div className="bg-card border border-card-border rounded-xl p-4 text-center">
             <p className="text-xs text-muted mb-1">Acuerdo</p>
@@ -214,8 +214,8 @@ export default function NoticiaPage() {
             </p>
 
             <p>
-              El <span className="text-green font-medium">S&P 500 cerro en maximos historicos
-              (+1.2%)</span>, el Nasdaq subio un +1.8% liderado por mega-caps con exposicion a China,
+              El <span className="text-green font-medium">S&P 500 cerro en máximos históricos
+              (+1.2%)</span>, el Nasdaq subio un +1.8% liderado por mega-caps con exposición a China,
               y los mercados asiaticos respondieron con subidas del 1.5-2.3% en la sesion del lunes.
               El Shanghai Composite fue el mayor beneficiario directo (+2.3%), mientras que el Nikkei
               subio un +1.5% impulsado por exportadoras japonesas.
@@ -259,9 +259,9 @@ export default function NoticiaPage() {
             </div>
 
             <p>
-              Sin embargo, hay senales de precaucion. El{" "}
+              Sin embargo, hay señales de precaucion. El{" "}
               <span className="text-amber-400 font-medium">VIX cayo a 13.2</span>, niveles de
-              complacencia no vistos desde enero 2024. Historicamente, cuando el VIX se mantiene por
+              complacencia no vistos desde enero 2024. Históricamente, cuando el VIX se mantiene por
               debajo de 14 durante mas de 10 sesiones consecutivas, el S&P 500 ha sufrido correcciones
               del 3-5% en las semanas siguientes. Ya llevamos 8 sesiones — no es momento de perseguir
               el rally, sino de dejar correr las posiciones existentes.
@@ -426,8 +426,8 @@ export default function NoticiaPage() {
                 <span className="text-green font-bold text-lg">+2.1%</span>
               </div>
               <p className="text-xs text-muted mb-3">
-                Maximos historicos. Las mega-caps con exposicion a China (Apple, Nvidia, Tesla)
-                lideran el rally. Atencion al VIX en 13.2 — no es momento de anadir, pero tampoco de
+                Máximos históricos. Las mega-caps con exposición a China (Apple, Nvidia, Tesla)
+                lideran el rally. Atención al VIX en 13.2 — no es momento de añadir, pero tampoco de
                 vender. Dejar correr la posicion.
               </p>
               <div className="rounded-lg overflow-hidden border border-card-border bg-background p-2">
@@ -470,12 +470,12 @@ export default function NoticiaPage() {
           <div className="relative rounded-xl overflow-hidden mb-8">
             <img
               src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&h=300&fit=crop"
-              alt="Datos historicos"
+              alt="Datos históricos"
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Paralelo historico</h2>
+              <h2 className="text-2xl font-bold">Paralelo histórico</h2>
               <p className="text-xs text-muted">2019 vs 2026: dos acuerdos, dos contextos</p>
             </div>
           </div>
@@ -545,7 +545,7 @@ export default function NoticiaPage() {
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 shrink-0" />
-                    <p>VIX en 13.2 — complacencia extrema, historicamente precede correcciones</p>
+                    <p>VIX en 13.2 — complacencia extrema, históricamente precede correcciones</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-red mt-2 shrink-0" />
@@ -626,7 +626,7 @@ export default function NoticiaPage() {
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-green mt-2 shrink-0" />
                   <span>
-                    La reduccion de incertidumbre comercial libera inversion empresarial represada,
+                    La reduccion de incertidumbre comercial libera inversión empresarial represada,
                     impulsando el crecimiento real
                   </span>
                 </li>
@@ -677,8 +677,8 @@ export default function NoticiaPage() {
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-red mt-2 shrink-0" />
                   <span>
-                    VIX en 13.2 es una senal de complacencia extrema — correcciones del 3-5% son
-                    historicamente probables desde estos niveles
+                    VIX en 13.2 es una señal de complacencia extrema — correcciones del 3-5% son
+                    históricamente probables desde estos niveles
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -741,7 +741,7 @@ export default function NoticiaPage() {
               <div className="relative h-36 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=400&h=200&fit=crop"
-                  alt="Petroleo"
+                  alt="Petróleo"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />

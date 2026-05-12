@@ -28,7 +28,7 @@ export default function PortfolioHeatmap() {
     <div className="bg-card border border-card-border rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold">Mapa de calor</h3>
-        <span className="text-xs text-muted">Tamano = peso, color = rendimiento</span>
+        <span className="text-xs text-muted">Tamaño = peso, color = rendimiento</span>
       </div>
 
       {/* Treemap layout */}

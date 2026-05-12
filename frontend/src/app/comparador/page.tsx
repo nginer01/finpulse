@@ -243,7 +243,7 @@ const ASSETS: Record<string, AssetData> = {
     beta: 0.8,
     pe: 0,
     sectors: [
-      { label: "Petroleo crudo", pct: 85, color: "#ef4444" },
+      { label: "Petróleo crudo", pct: 85, color: "#ef4444" },
       { label: "Gas natural", pct: 10, color: "#f59e0b" },
       { label: "Otros", pct: 5, color: "#71717a" },
     ],
@@ -273,15 +273,15 @@ function correlationLabel(c: number): { text: string; color: string } {
 
 function correlationAdvice(a: string, b: string, corr: number): string {
   if (corr >= 0.7) {
-    return `Correlacion alta -- ambos activos tienden a moverse en la misma direccion. Diversificacion limitada.`;
+    return `Correlación alta -- ambos activos tienden a moverse en la misma direccion. Diversificación limitada.`;
   }
   if (corr >= 0.4) {
-    return `Correlacion moderada -- cierta diversificacion, pero siguen compartiendo factores de riesgo comunes.`;
+    return `Correlación moderada -- cierta diversificación, pero siguen compartiendo factores de riesgo comunes.`;
   }
   if (corr >= 0) {
-    return `Correlacion baja -- excelente para diversificacion. Los movimientos de ${a} y ${b} son relativamente independientes.`;
+    return `Correlación baja -- excelente para diversificación. Los movimientos de ${a} y ${b} son relativamente independientes.`;
   }
-  return `Correlacion negativa -- cuando uno sube, el otro tiende a bajar. Muy util como cobertura.`;
+  return `Correlación negativa -- cuando uno sube, el otro tiende a bajar. Muy util como cobertura.`;
 }
 
 /* ──────────────────────────────────────────────
@@ -551,7 +551,7 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
 
   return (
     <div className="bg-card border border-card-border rounded-xl p-5 sm:p-6">
-      <h3 className="text-sm font-semibold mb-4">Analisis de correlacion</h3>
+      <h3 className="text-sm font-semibold mb-4">Analisis de correlación</h3>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
         {/* Big number */}
@@ -560,7 +560,7 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
             {corr.toFixed(2)}
           </p>
           <p className="text-sm font-medium mt-1" style={{ color }}>
-            Correlacion {text}
+            Correlación {text}
           </p>
         </div>
 
@@ -691,7 +691,7 @@ export default function ComparadorPage() {
               Comparador de activos
             </h1>
             <p className="text-sm text-muted">
-              Compara rendimiento, riesgo y composicion de dos activos lado a lado.
+              Compara rendimiento, riesgo y composición de dos activos lado a lado.
             </p>
           </div>
 
@@ -785,7 +785,7 @@ export default function ComparadorPage() {
 
         {/* ─── 5. SECTOR/COMPOSITION BREAKDOWN ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Composicion por sector</h2>
+          <h2 className="text-lg font-bold mb-4">Composición por sector</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-card border border-card-border rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
@@ -816,29 +816,29 @@ export default function ComparadorPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-semibold mb-2">Recomendacion de diversificacion</h3>
+                <h3 className="text-sm font-semibold mb-2">Recomendación de diversificación</h3>
                 <p className="text-sm text-muted leading-relaxed">
-                  Si buscas mayor diversificacion, considera combinar{" "}
-                  <span className="text-accent-light font-medium">{tickerA}</span> con un activo de baja correlacion
+                  Si buscas mayor diversificación, considera combinar{" "}
+                  <span className="text-accent-light font-medium">{tickerA}</span> con un activo de baja correlación
                   {suggestions.length > 0 && (
                     <>
                       {" "}como{" "}
                       <span className="text-green font-medium">
                         {suggestions[0].ticker}
                       </span>{" "}
-                      (correlacion {suggestions[0].corr.toFixed(2)})
+                      (correlación {suggestions[0].corr.toFixed(2)})
                       {suggestions.length > 1 && (
                         <>
                           {" "}o{" "}
                           <span className="text-green font-medium">
                             {suggestions[1].ticker}
                           </span>{" "}
-                          (correlacion {suggestions[1].corr.toFixed(2)})
+                          (correlación {suggestions[1].corr.toFixed(2)})
                         </>
                       )}
                     </>
                   )}
-                  . Combinar activos con baja correlacion reduce la volatilidad total del portfolio sin sacrificar rendimiento esperado.
+                  . Combinar activos con baja correlación reduce la volatilidad total del portfolio sin sacrificar rendimiento esperado.
                 </p>
 
                 {/* Quick correlation table for suggestions */}

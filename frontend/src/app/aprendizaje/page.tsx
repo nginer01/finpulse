@@ -10,10 +10,10 @@ import Nav from "@/components/Nav";
 const dnaAxes = [
   { label: "Disciplina", value: 0.78 },
   { label: "Control emocional", value: 0.65 },
-  { label: "Diversificacion", value: 0.82 },
+  { label: "Diversificación", value: 0.82 },
   { label: "Timing", value: 0.54 },
   { label: "A. fundamental", value: 0.71 },
-  { label: "Gestion riesgo", value: 0.68 },
+  { label: "Gestión riesgo", value: 0.68 },
 ];
 
 function polarToXY(cx: number, cy: number, r: number, angleDeg: number) {
@@ -179,7 +179,7 @@ const decisions: Decision[] = [
     thesis: "FOMO after S&P rally",
     result: "+2.1%",
     status: "risky",
-    note: "Tu conviction era baja. Historicamente tus compras con conviction <6 pierden el 60% de las veces.",
+    note: "Tu conviction era baja. Históricamente tus compras con conviction <6 pierden el 60% de las veces.",
   },
   {
     date: "1 abril 2026",
@@ -295,7 +295,7 @@ const biases: Bias[] = [
     name: "Venta prematura",
     count: 5,
     description:
-      "Vendes ganadores demasiado pronto. En 7 de 10 casos, la posicion siguio subiendo despues.",
+      "Vendes ganadores demasiado pronto. En 7 de 10 casos, la posición siguio subiendo despues.",
     severity: "high",
   },
   {
@@ -393,7 +393,7 @@ function ScenarioNvidia() {
           {(now - sold).toLocaleString()} por accion)
         </p>
         <p className="text-xs text-muted">
-          Leccion: la venta prematura es tu sesgo mas frecuente. Considera usar trailing stops en vez
+         Lección: la venta prematura es tu sesgo mas frecuente. Considera usar trailing stops en vez
           de vender manualmente.
         </p>
       </div>
@@ -441,7 +441,7 @@ function ScenarioBitcoin() {
         </div>
         <p className="text-accent-light text-sm font-semibold">Ganancia potencial: +67.5%</p>
         <p className="text-xs text-muted">
-          Con una inversion de $1,000 en enero, hoy tendrias $1,675. Considera si un pequeno % en
+          Con una inversión de $1,000 en enero, hoy tendrias $1,675. Considera si un pequeño % en
           crypto encaja en tu perfil de riesgo.
         </p>
       </div>
@@ -592,7 +592,7 @@ export default function AprendizajePage() {
                     <div>
                       <span className="font-semibold">Fortalezas:</span>{" "}
                       <span className="text-muted">
-                        Diversificacion (82%) y Disciplina (78%). Mantienes un portfolio balanceado
+                        Diversificación (82%) y Disciplina (78%). Mantienes un portfolio balanceado
                         y seguis tu plan.
                       </span>
                     </div>
@@ -709,7 +709,7 @@ export default function AprendizajePage() {
           <SectionHeader
             number="05"
             title="Signal vs Noise Score"
-            subtitle="Calidad de tus fuentes de informacion, rankeadas por precision"
+            subtitle="Calidad de tus fuentes de información, rankeadas por precision"
           />
 
           <div className="bg-card border border-card-border rounded-xl p-6 space-y-5">

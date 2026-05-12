@@ -183,7 +183,7 @@ export default function AddPosition({
       <div className="relative bg-card border border-card-border rounded-2xl w-full max-w-lg mx-4 max-h-[85vh] overflow-y-auto shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-card-border">
-          <h2 className="font-semibold text-lg">Anadir posiciones</h2>
+          <h2 className="font-semibold text-lg">Añadir posiciones</h2>
           <button onClick={onClose} className="text-muted hover:text-foreground transition-colors text-xl leading-none">&times;</button>
         </div>
 
@@ -303,7 +303,7 @@ export default function AddPosition({
                 disabled={!ticker || !quantity || !buyPrice}
                 className="w-full py-2.5 rounded-lg text-sm font-medium transition-colors bg-accent text-white hover:bg-accent-light disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                Anadir posicion
+                Añadir posicion
               </button>
             </div>
           ) : (

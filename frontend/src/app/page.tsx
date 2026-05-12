@@ -185,9 +185,9 @@ export default function Home() {
             <p className="text-xs text-muted mt-1">Moderadamente optimista</p>
           </div>
           <div className="bg-card border border-card-border rounded-xl p-4">
-            <p className="text-xs text-muted mb-1">Recomendacion IA</p>
+            <p className="text-xs text-muted mb-1">Recomendación IA</p>
             <p className="text-sm font-medium">Mantener posiciones</p>
-            <p className="text-xs text-accent-light">Conviccion: 7/10</p>
+            <p className="text-xs text-accent-light">Convicción: 7/10</p>
           </div>
           <div className="bg-card border border-card-border rounded-xl p-4">
             <p className="text-xs text-muted mb-1">Tu Investor DNA</p>
@@ -227,11 +227,11 @@ export default function Home() {
           </div>
           <div className="bg-background rounded-lg p-4 border border-card-border mb-5">
             <p className="text-sm leading-relaxed">
-              Semana clave para los mercados globales. El acuerdo comercial preliminar EEUU-China impulsa a la renta variable global, con el S&P 500 cerrando en maximos historicos (+1.2%) y mercados europeos al alza. Sin embargo, el sector energetico se debilita tras avances en las negociaciones Iran-EEUU, con el Brent cayendo un 4.2% en la semana. El BCE mantiene el tono dovish y Polymarket situa al 73% la probabilidad de recorte en junio.
+              Semana clave para los mercados globales. El acuerdo comercial preliminar EEUU-China impulsa a la renta variable global, con el S&P 500 cerrando en máximos históricos (+1.2%) y mercados europeos al alza. Sin embargo, el sector energetico se debilita tras avances en las negociaciones Iran-EEUU, con el Brent cayendo un 4.2% en la semana. El BCE mantiene el tono dovish y Polymarket situa al 73% la probabilidad de recorte en junio.
             </p>
             <p className="text-sm leading-relaxed mt-3">
-              <span className="text-green font-medium">Para tu portfolio:</span> balance neto positivo (+2.4%). Tus posiciones en MSCI World y S&P 500 capturan la subida. Tu exposicion a Brent es el punto debil — considera reducirla o cubrir.
-              <span className="text-accent-light"> Semiconductores destaca como la mejor posicion (+4.2%) </span> tras el anuncio de Nvidia.
+              <span className="text-green font-medium">Para tu portfolio:</span> balance neto positivo (+2.4%). Tus posiciones en MSCI World y S&P 500 capturan la subida. Tu exposición a Brent es el punto debil — considera reducirla o cubrir.
+              <span className="text-accent-light"> Semiconductores destaca como la mejor posición (+4.2%) </span> tras el anuncio de Nvidia.
             </p>
           </div>
 
@@ -243,7 +243,7 @@ export default function Home() {
                   <span className="text-foreground font-medium">EEUU:</span> El S&P 500 cerro el viernes en 5.847 puntos (+1.2%), impulsado por el anuncio del acuerdo comercial fase 1 con China. El Nasdaq subio un +1.8% liderado por semiconductores y mega-caps tech. Los futuros apuntan a apertura plana el lunes — el mercado ya ha descontado gran parte de la noticia. El VIX cayo a 13.2, niveles de complacencia no vistos desde enero 2024.
                 </p>
                 <p>
-                  <span className="text-foreground font-medium">Europa:</span> Stoxx 600 +0.8%. El BCE no ha hablado oficialmente, pero las actas de la ultima reunion filtradas por Financial Times confirman que la mayoria del consejo apoya un recorte de 25pb en junio. El euro se debilita frente al dolar (1.076), lo cual es positivo para exportadoras europeas.
+                  <span className="text-foreground font-medium">Europa:</span> Stoxx 600 +0.8%. El BCE no ha hablado oficialmente, pero las actas de la última reunion filtradas por Financial Times confirman que la mayoria del consejo apoya un recorte de 25pb en junio. El euro se debilita frente al dolar (1.076), lo cual es positivo para exportadoras europeas.
                 </p>
                 <p>
                   <span className="text-foreground font-medium">Asia:</span> Nikkei +1.5% (yen debil favorece exportadoras). Shanghai Composite +2.3% celebra el acuerdo comercial. India (Nifty 50) plana — los inversores rotan hacia China tras meses de outperformance indio.
@@ -260,35 +260,35 @@ export default function Home() {
                   <span className="text-green mt-0.5">&#x25B2;</span>
                   <div>
                     <p><span className="text-foreground font-medium">IWDA (iShares MSCI World) +1.8%</span></p>
-                    <p className="text-muted">Se beneficia directamente del rally global. El acuerdo EEUU-China reduce riesgo geopolitico, que era el principal freno para mercados desarrollados. Con el BCE dovish, el componente europeo tambien tira al alza. <span className="text-accent-light">Esta posicion esta en su mejor momento en 3 meses.</span></p>
+                    <p className="text-muted">Se beneficia directamente del rally global. El acuerdo EEUU-China reduce riesgo geopolitico, que era el principal freno para mercados desarrollados. Con el BCE dovish, el componente europeo tambien tira al alza. <span className="text-accent-light">Esta posición esta en su mejor momento en 3 meses.</span></p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
                   <span className="text-green mt-0.5">&#x25B2;</span>
                   <div>
                     <p><span className="text-foreground font-medium">VUAA (Vanguard S&P 500) +2.1%</span></p>
-                    <p className="text-muted">Maximos historicos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposicion a China (Apple, Nvidia, Tesla). Atencion: el VIX en 13.2 indica complacencia extrema — historicamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</p>
+                    <p className="text-muted">Máximos históricos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposición a China (Apple, Nvidia, Tesla). Atención: el VIX en 13.2 indica complacencia extrema — históricamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
                   <span className="text-red mt-0.5">&#x25BC;</span>
                   <div>
                     <p><span className="text-foreground font-medium">BRT (Brent Crude Oil) -3.8%</span></p>
-                    <p className="text-muted">Las negociaciones Iran-EEUU avanzan mas rapido de lo esperado. Si Iran vuelve al mercado con plena capacidad, se estiman 1.5M barriles/dia adicionales. Esto presionaria al Brent hacia los $68-70. <span className="text-red">Tu posicion pierde 45,60 esta semana. Considerar stop-loss en $72 o reducir exposicion un 50%.</span></p>
+                    <p className="text-muted">Las negociaciones Iran-EEUU avanzan mas rapido de lo esperado. Si Iran vuelve al mercado con plena capacidad, se estiman 1.5M barriles/dia adicionales. Esto presionaria al Brent hacia los $68-70. <span className="text-red">Tu posición pierde 45,60 esta semana. Considerar stop-loss en $72 o reducir exposición un 50%.</span></p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
                   <span className="text-green mt-0.5">&#x25B2;</span>
                   <div>
                     <p><span className="text-foreground font-medium">EUNA (iShares Euro Gov Bond) +0.5%</span></p>
-                    <p className="text-muted">Beneficiado por el tono dovish del BCE. Si se confirma el recorte en junio, esta posicion podria subir un 1-2% adicional. Paul Donovan (UBS) confirma que la inflacion europea no sera problema hasta Q4 2026.</p>
+                    <p className="text-muted">Beneficiado por el tono dovish del BCE. Si se confirma el recorte en junio, esta posición podria subir un 1-2% adicional. Paul Donovan (UBS) confirma que la inflacion europea no sera problema hasta Q4 2026.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
                   <span className="text-green mt-0.5">&#x25B2;</span>
                   <div>
                     <p><span className="text-foreground font-medium">SEMI (VanEck Semiconductor) +4.2%</span></p>
-                    <p className="text-muted">Mejor posicion de la semana. Nvidia presento la nueva arquitectura Blackwell Ultra y los pedidos anticipados superan expectativas. TSMC confirma aumento de capex del 15%. El sector esta en un ciclo expansivo que podria durar 12-18 meses mas. <span className="text-green">Considerar aumentar posicion en caidas.</span></p>
+                    <p className="text-muted">Mejor posición de la semana. Nvidia presento la nueva arquitectura Blackwell Ultra y los pedidos anticipados superan expectativas. TSMC confirma aumento de capex del 15%. El sector esta en un ciclo expansivo que podria durar 12-18 meses mas. <span className="text-green">Considerar aumentar posición en caidas.</span></p>
                   </div>
                 </div>
               </div>
@@ -301,11 +301,11 @@ export default function Home() {
                     <span className="font-medium text-foreground">Semiconductores</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA (subida dinamica)</span>
                   </div>
-                  <p className="text-muted">Prioridad base: MEDIA. Subida a ALTA por el evento de Nvidia. La nueva arquitectura Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Esto reconfigura la cadena de valor: TSMC, ASML, Samsung y SK Hynix suben entre 2-6%. Tu posicion en SEMI esta bien posicionada. Proximos catalistas: earnings de TSMC (22 mayo) y guidance de ASML (28 mayo).</p>
+                  <p className="text-muted">Prioridad base: MEDIA. Subida a ALTA por el evento de Nvidia. La nueva arquitectura Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Esto reconfigura la cadena de valor: TSMC, ASML, Samsung y SK Hynix suben entre 2-6%. Tu posición en SEMI esta bien posicionada. Próximos catalistas: earnings de TSMC (22 mayo) y guidance de ASML (28 mayo).</p>
                 </div>
                 <div className="bg-background rounded-lg p-4 border border-card-border">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-foreground">Petroleo y energia</span>
+                    <span className="font-medium text-foreground">Petróleo y energia</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA (subida dinamica)</span>
                   </div>
                   <p className="text-muted">Prioridad base: MEDIA. Subida a ALTA por la caida del Brent. Las negociaciones Iran-EEUU son el driver principal. Arabia Saudi aun no ha reaccionado — si recorta produccion, el impacto se amortigua. Si no, el Brent puede caer hasta $68. La OPEC+ se reune el 1 de junio. Fecha clave.</p>
@@ -341,34 +341,34 @@ export default function Home() {
                     <SourceBadge name="Polymarket" type="polymarket" />
                     <span className="text-xs text-muted">Datos en vivo</span>
                   </div>
-                  <p className="text-muted">Recorte BCE junio: <span className="text-green">73%</span> (+8% vs semana pasada). Acuerdo Iran-EEUU antes de agosto: <span className="text-amber-400">58%</span> (+15% vs semana pasada). Recesion EEUU en 2026: <span className="text-green">12%</span> (minimo del ano). S&P 500 sobre 6000 antes de diciembre: <span className="text-amber-400">61%</span>.</p>
+                  <p className="text-muted">Recorte BCE junio: <span className="text-green">73%</span> (+8% vs semana pasada). Acuerdo Iran-EEUU antes de agosto: <span className="text-amber-400">58%</span> (+15% vs semana pasada). Recesion EEUU en 2026: <span className="text-green">12%</span> (mínimo del ano). S&P 500 sobre 6000 antes de diciembre: <span className="text-amber-400">61%</span>.</p>
                 </div>
                 <div className="border-l-2 border-zinc-500/40 pl-4">
                   <div className="flex items-center gap-2 mb-1">
                     <SourceBadge name="@zerohedge" type="x" />
                     <span className="text-xs text-muted">Hilo destacado — sabado</span>
                   </div>
-                  <p className="text-muted">Alerta sobre la complacencia del mercado: &quot;VIX en 13 con earnings season terminando y el acuerdo China ya descontado. El proximo catalizador es a la baja, no al alza. Historicamente, VIX sub-14 durante mas de 2 semanas precede correcciones.&quot; <span className="text-accent-light">Dato relevante para tu S&P 500.</span></p>
+                  <p className="text-muted">Alerta sobre la complacencia del mercado: &quot;VIX en 13 con earnings season terminando y el acuerdo China ya descontado. El próximo catalizador es a la baja, no al alza. Históricamente, VIX sub-14 durante mas de 2 semanas precede correcciones.&quot; <span className="text-accent-light">Dato relevante para tu S&P 500.</span></p>
                 </div>
                 <div className="border-l-2 border-amber-500/40 pl-4">
                   <div className="flex items-center gap-2 mb-1">
                     <SourceBadge name="Informe BBVA" type="bank" />
                     <span className="text-xs text-muted">Informe semanal — viernes</span>
                   </div>
-                  <p className="text-muted">BBVA Research revisa al alza su prevision de PIB eurozona para 2026: de 1.1% a 1.4%. Mejora perspectivas para exportadoras alemanas y sector financiero europeo. Mantiene prevision de 2 recortes del BCE este ano (junio y septiembre).</p>
+                  <p className="text-muted">BBVA Research revisa al alza su previsión de PIB eurozona para 2026: de 1.1% a 1.4%. Mejora perspectivas para exportadoras alemanas y sector financiero europeo. Mantiene previsión de 2 recortes del BCE este año (junio y septiembre).</p>
                 </div>
               </div>
             </SummarySection>
 
-            <SummarySection title="Paralelos historicos" icon="&#x1f4da;">
+            <SummarySection title="Paralelos históricos" icon="&#x1f4da;">
               <div className="space-y-4 text-sm text-muted">
                 <div className="bg-background rounded-lg p-4 border border-card-border">
                   <p className="text-foreground font-medium mb-2">Acuerdo comercial EEUU-China (2019 vs 2026)</p>
-                  <p>En diciembre 2019, el acuerdo fase 1 impulso al S&P 500 un +3.2% en las 2 semanas siguientes. Sin embargo, los aranceles clave nunca se eliminaron realmente y el rally se agoto en febrero 2020 (antes del COVID). <span className="text-accent-light">Patron similar: el mercado celebra la reduccion de incertidumbre, pero los detalles importan.</span> Recomendacion: disfrutar el rally pero no perseguirlo — tomar beneficios parciales si sube un +3% adicional.</p>
+                  <p>En diciembre 2019, el acuerdo fase 1 impulso al S&P 500 un +3.2% en las 2 semanas siguientes. Sin embargo, los aranceles clave nunca se eliminaron realmente y el rally se agoto en febrero 2020 (antes del COVID). <span className="text-accent-light">Patron similar: el mercado celebra la reduccion de incertidumbre, pero los detalles importan.</span> Recomendación: disfrutar el rally pero no perseguirlo — tomar beneficios parciales si sube un +3% adicional.</p>
                 </div>
                 <div className="bg-background rounded-lg p-4 border border-card-border">
                   <p className="text-foreground font-medium mb-2">Iran volviendo al mercado (2015-2016)</p>
-                  <p>Cuando se firmo el JCPOA en 2015, el Brent cayo de $65 a $45 en 6 meses (-30%). La produccion iraniana aumento en 1M barriles/dia. Arabia Saudi respondio manteniendo su produccion para defender cuota de mercado, lo que intensifico la caida. <span className="text-red">Si el patron se repite, tu posicion en Brent tiene riesgo significativo a la baja.</span> Diferencia clave: en 2026 la demanda global es mayor y la OPEC+ tiene mas disciplina que en 2015.</p>
+                  <p>Cuando se firmo el JCPOA en 2015, el Brent cayo de $65 a $45 en 6 meses (-30%). La produccion iraniana aumento en 1M barriles/dia. Arabia Saudi respondio manteniendo su produccion para defender cuota de mercado, lo que intensifico la caida. <span className="text-red">Si el patron se repite, tu posición en Brent tiene riesgo significativo a la baja.</span> Diferencia clave: en 2026 la demanda global es mayor y la OPEC+ tiene mas disciplina que en 2015.</p>
                 </div>
               </div>
             </SummarySection>
@@ -378,13 +378,13 @@ export default function Home() {
                 <div className="bg-background rounded-lg p-4 border border-red/20">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-foreground font-medium">Reducir Brent un 50%</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Conviccion: 8/10</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Convicción: 8/10</span>
                   </div>
-                  <p className="text-muted mb-3">Las negociaciones Iran-EEUU, el paralelo historico de 2015, y la falta de reaccion de Arabia Saudi apuntan a mas caidas. Reducir a la mitad para limitar perdidas y mantener exposicion por si la OPEC+ reacciona.</p>
+                  <p className="text-muted mb-3">Las negociaciones Iran-EEUU, el paralelo histórico de 2015, y la falta de reaccion de Arabia Saudi apuntan a mas caidas. Reducir a la mitad para limitar perdidas y mantener exposición por si la OPEC+ reacciona.</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-card rounded p-3 border border-card-border">
                       <p className="text-xs text-green mb-1 font-medium">A favor</p>
-                      <p className="text-xs text-muted">Paralelo 2015 (Brent -30%). Iran puede anadir 1.5M bbl/dia. Polymarket da 58% a acuerdo. Tu portfolio ya tiene bastante riesgo energy.</p>
+                      <p className="text-xs text-muted">Paralelo 2015 (Brent -30%). Iran puede añadir 1.5M bbl/dia. Polymarket da 58% a acuerdo. Tu portfolio ya tiene bastante riesgo energy.</p>
                     </div>
                     <div className="bg-card rounded p-3 border border-card-border">
                       <p className="text-xs text-red mb-1 font-medium">En contra</p>
@@ -394,14 +394,14 @@ export default function Home() {
                 </div>
                 <div className="bg-background rounded-lg p-4 border border-green/20">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-foreground font-medium">Anadir SEMI en caidas (si baja &gt;2%)</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Conviccion: 7/10</span>
+                    <span className="text-foreground font-medium">Añadir SEMI en caidas (si baja &gt;2%)</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Convicción: 7/10</span>
                   </div>
                   <p className="text-muted mb-3">El ciclo de semiconductores es expansivo (12-18 meses). Nvidia Blackwell Ultra confirma la demanda. TSMC aumenta capex. Pero el sector ya ha subido mucho — esperar una caida para comprar con mejor riesgo/recompensa.</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-card rounded p-3 border border-card-border">
                       <p className="text-xs text-green mb-1 font-medium">A favor</p>
-                      <p className="text-xs text-muted">Ciclo expansivo confirmado. Demanda IA insaciable. Capex TSMC +15%. Tu posicion actual es pequena (14% del portfolio).</p>
+                      <p className="text-xs text-muted">Ciclo expansivo confirmado. Demanda IA insaciable. Capex TSMC +15%. Tu posición actual es pequena (14% del portfolio).</p>
                     </div>
                     <div className="bg-card rounded p-3 border border-card-border">
                       <p className="text-xs text-red mb-1 font-medium">En contra</p>
@@ -412,26 +412,26 @@ export default function Home() {
               </div>
             </SummarySection>
 
-            <SummarySection title="Alertas y proximos eventos" icon="&#x26a0;&#xfe0f;" tag="3 alertas" tagColor="bg-red/15 text-red">
+            <SummarySection title="Alertas y próximos eventos" icon="&#x26a0;&#xfe0f;" tag="3 alertas" tagColor="bg-red/15 text-red">
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
                   <span className="text-red mt-0.5">&#x25CF;</span>
                   <div>
                     <p className="text-foreground font-medium">VIX en zona de complacencia (13.2)</p>
-                    <p className="text-muted">Historicamente, VIX sub-14 durante +2 semanas precede correcciones del 3-5%. No vender, pero no anadir riesgo agresivamente. Tu S&P 500 es la posicion mas expuesta.</p>
+                    <p className="text-muted">Históricamente, VIX sub-14 durante +2 semanas precede correcciones del 3-5%. No vender, pero no añadir riesgo agresivamente. Tu S&P 500 es la posición mas expuesta.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-amber-400 mt-0.5">&#x25CF;</span>
                   <div>
                     <p className="text-foreground font-medium">Brent — vigilar nivel $72</p>
-                    <p className="text-muted">Si rompe los $72 a la baja, el siguiente soporte esta en $68. Considerar stop-loss o reduccion de posicion antes de esa ruptura.</p>
+                    <p className="text-muted">Si rompe los $72 a la baja, el siguiente soporte esta en $68. Considerar stop-loss o reduccion de posición antes de esa ruptura.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-accent-light mt-0.5">&#x25CF;</span>
                   <div>
-                    <p className="text-foreground font-medium">Proximos eventos clave</p>
+                    <p className="text-foreground font-medium">Próximos eventos clave</p>
                     <p className="text-muted">IPC EEUU (martes 13). Earnings TSMC (22 mayo). Reunion OPEC+ (1 junio). Reunion BCE (5 junio). Cualquiera de estos puede mover tu portfolio significativamente.</p>
                   </div>
                 </div>
@@ -445,34 +445,34 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-6 pb-8">
         <h2 className="font-semibold mb-4">Noticias para profundizar</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times"
-            summary="El acuerdo fase 1 reduce aranceles en un 30% para bienes industriales. Sin embargo, los aranceles tech (semiconductores, IA) se negociaran por separado en Q3. Los mercados celebran la reduccion de incertidumbre — S&P 500 en maximos."
+          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posición en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times"
+            summary="El acuerdo fase 1 reduce aranceles en un 30% para bienes industriales. Sin embargo, los aranceles tech (semiconductores, IA) se negociaran por separado en Q3. Los mercados celebran la reduccion de incertidumbre — S&P 500 en máximos."
             impact="Tu IWDA sube +1.8% directamente por esto. VUAA tambien se beneficia (+2.1%). Efecto neto: +~120 en tu portfolio."
             sources={["Financial Times", "Matt Levine", "Polymarket"]}
           />
           <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=300&fit=crop" source="Reuters"
             summary="El secretario de Estado confirmo avances significativos. Si Iran vuelve al mercado con plena capacidad, 1.5M barriles/dia adicionales presionarian los precios. Polymarket: 58% probabilidad de acuerdo antes de agosto."
-            impact="Tu posicion en BRT pierde 45,60 esta semana. Si el Brent rompe $72, puede caer hasta $68. Considerar reducir exposicion."
+            impact="Tu posición en BRT pierde 45,60 esta semana. Si el Brent rompe $72, puede caer hasta $68. Considerar reducir exposición."
             sources={["Reuters", "UBS On-Air", "Polymarket"]}
           />
-          <NewsCard type="Informacion nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg"
+          <NewsCard type="Información nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg"
             summary="Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Los hyperscalers ya han confirmado pedidos masivos. TSMC aumenta capex un 15%. El ciclo expansivo de semiconductores se extiende 12-18 meses mas."
-            impact="Tu SEMI sube +4.2%, mejor posicion de la semana. Considerar aumentar en proxima caida."
+            impact="Tu SEMI sube +4.2%, mejor posición de la semana. Considerar aumentar en próxima caida."
             sources={["Bloomberg", "@sentimentrader", "Financial Times"]}
           />
-          <NewsCard type="Informacion nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot"
+          <NewsCard type="Información nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot"
             summary="Tras meses de outperformance, India atrae mas capital que China por primera vez en 2026. Sin embargo, el acuerdo EEUU-China esta provocando rotacion inversa — los inversores vuelven a mirar a Shanghai."
-            impact="No tienes exposicion directa a emergentes. Podria ser una oportunidad futura si India corrige."
+            impact="No tienes exposición directa a emergentes. Podria ser una oportunidad futura si India corrige."
             sources={["The Daily Shot", "BBVA Research"]}
           />
-          <NewsCard type="Vision futura" title="Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine"
+          <NewsCard type="Vision futura" title="Regulación IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine"
             summary="La UE prepara nuevas restricciones para modelos de IA de alto riesgo. Las multas podrian alcanzar el 6% de los ingresos globales. Meta, Google y Microsoft serian los mas afectados. Implementacion prevista para Q1 2027."
             impact="Impacto indirecto en tu VUAA y IWDA por el peso de big tech. Monitorizar — no requiere accion inmediata."
             sources={["Matt Levine", "Financial Times"]}
           />
-          <NewsCard type="Vision futura" title="Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA"
-            summary="BBVA Research alerta: la demanda de cobre para vehiculos electricos y renovables superara la oferta en 2027-2028. Chile y Peru no pueden aumentar produccion al ritmo necesario. El precio podria duplicarse en 3 anos."
-            impact="No tienes exposicion a cobre. Podria ser oportunidad a medio plazo — radar de oportunidades activado."
+          <NewsCard type="Vision futura" title="Escasez global de cobre: la próxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA"
+            summary="BBVA Research alerta: la demanda de cobre para vehículos eléctricos y renovables superara la oferta en 2027-2028. Chile y Peru no pueden aumentar produccion al ritmo necesario. El precio podria duplicarse en 3 años."
+            impact="No tienes exposición a cobre. Podria ser oportunidad a medio plazo — radar de oportunidades activado."
             sources={["Informe BBVA", "Bloomberg"]}
           />
         </div>
@@ -522,7 +522,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted">Diversificacion</span>
+                    <span className="text-muted">Diversificación</span>
                     <span>82%</span>
                   </div>
                   <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
@@ -543,12 +543,12 @@ export default function Home() {
             </div>
 
             <div className="bg-card border border-card-border rounded-xl p-6">
-              <h2 className="font-semibold mb-3">Ultima leccion aprendida</h2>
+              <h2 className="font-semibold mb-3">Última lección aprendida</h2>
               <div className="bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-accent-light mb-2">Hace 3 dias — Venta de BRT</p>
                 <p className="text-sm text-muted leading-relaxed">
                   Vendiste parte de Brent tras caida del 2%. Resultado: siguio cayendo un 1.8% adicional.
-                  <span className="text-green"> Buena decision.</span> Senal clave que detectaste: volumen de venta institucional inusualmente alto.
+                  <span className="text-green"> Buena decision.</span> Señal clave que detectaste: volumen de venta institucional inusualmente alto.
                 </p>
               </div>
             </div>
@@ -597,9 +597,9 @@ export default function Home() {
                   <div className="w-2.5 h-2.5 rounded-full bg-green animate-pulse" />
                   <span className="text-sm font-medium">Cobre — escasez global 2027-2028</span>
                 </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-green/15 text-green">Alta conviccion</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-green/15 text-green">Alta convicción</span>
               </div>
-              <p className="text-xs text-muted leading-relaxed mb-2">BBVA Research y Bloomberg alertan: la demanda de cobre para EVs y renovables superara la oferta. Chile y Peru no pueden escalar produccion. El precio podria duplicarse en 3 anos.</p>
+              <p className="text-xs text-muted leading-relaxed mb-2">BBVA Research y Bloomberg alertan: la demanda de cobre para EVs y renovables superara la oferta. Chile y Peru no pueden escalar produccion. El precio podria duplicarse en 3 años.</p>
               <div className="flex items-center gap-2 text-xs">
                 <span className="text-muted">Detectado hace 3 dias</span>
                 <span className="text-muted">•</span>
@@ -614,9 +614,9 @@ export default function Home() {
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
                   <span className="text-sm font-medium">India — rotacion de capital tras acuerdo China</span>
                 </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">Media conviccion</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">Media convicción</span>
               </div>
-              <p className="text-xs text-muted leading-relaxed mb-2">Los inversores rotan de India a China por el acuerdo. Si India corrige un 10-15%, podria ser punto de entrada historico para el mercado emergente de mayor crecimiento a largo plazo.</p>
+              <p className="text-xs text-muted leading-relaxed mb-2">Los inversores rotan de India a China por el acuerdo. Si India corrige un 10-15%, podria ser punto de entrada histórico para el mercado emergente de mayor crecimiento a largo plazo.</p>
               <div className="flex items-center gap-2 text-xs">
                 <span className="text-muted">Detectado hace 1 dia</span>
                 <span className="text-muted">•</span>
@@ -652,9 +652,9 @@ export default function Home() {
         <p className="text-sm text-muted text-center mb-8">No es solo un tracker. Es tu copiloto financiero.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <FeatureCard icon="&#x1f9ec;" title="Investor DNA" description="Tu perfil psicologico como inversor. Sesgos, fortalezas, debilidades. Evoluciona contigo." />
-          <FeatureCard icon="&#x1f4d3;" title="Decision Journal" description="Cada operacion se registra con contexto: noticias, sentimiento, recomendacion IA. Review automatico." />
+          <FeatureCard icon="&#x1f4d3;" title="Decision Journal" description="Cada operación se registra con contexto: noticias, sentimiento, recomendación IA. Review automatico." />
           <FeatureCard icon="&#x1f4e1;" title="Signal vs Noise" description="Mide que fuentes te hacen ganar dinero. Elimina el ruido, enfocate en lo que importa." />
-          <FeatureCard icon="&#x1f300;" title="Stress Test" description="Simula escenarios historicos contra tu portfolio. Que pasa si se repite 2008? Y 2020?" />
+          <FeatureCard icon="&#x1f300;" title="Stress Test" description="Simula escenarios históricos contra tu portfolio. Que pasa si se repite 2008? Y 2020?" />
           <FeatureCard icon="&#x1f6e4;&#xfe0f;" title="El camino no tomado" description="Registra oportunidades que descartaste. Ve como habrian ido. Aprende de lo que no hiciste." />
           <FeatureCard icon="&#x1f3af;" title="Conviction Tracker" description="Registra tu nivel de confianza en cada decision. Descubre cuando confiar en tu instinto." />
         </div>

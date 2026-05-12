@@ -125,7 +125,7 @@ const experienceLevels = [
 const portfolioOptions = [
   { id: "revolut", label: "Revolut", desc: "Importar CSV de operaciones", Icon: RevolutIcon, badge: "Recomendado" },
   { id: "broker", label: "Otro broker", desc: "Interactive Brokers, DEGIRO, Trade Republic...", Icon: BrokerIcon, badge: null },
-  { id: "manual", label: "Empezar de cero", desc: "Anadire posiciones manualmente", Icon: ManualIcon, badge: null },
+  { id: "manual", label: "Empezar de cero", desc: "Añadire posiciones manualmente", Icon: ManualIcon, badge: null },
 ] as const;
 
 const allTopics = [
@@ -134,7 +134,7 @@ const allTopics = [
   "Mercados emergentes",
   "Semiconductores",
   "Inteligencia artificial",
-  "Energia y petroleo",
+  "Energia y petróleo",
   "Criptomonedas",
   "Renta fija",
   "Materias primas",
@@ -159,7 +159,7 @@ export default function OnboardingPage() {
   const [experience, setExperience] = useState("intermedio");
   const [portfolio, setPortfolio] = useState("revolut");
   const [topics, setTopics] = useState<Set<string>>(
-    new Set(["Renta variable EEUU", "Inteligencia artificial", "Semiconductores", "Renta variable Europa", "Energia y petroleo", "Criptomonedas"])
+    new Set(["Renta variable EEUU", "Inteligencia artificial", "Semiconductores", "Renta variable Europa", "Energia y petróleo", "Criptomonedas"])
   );
 
   const totalSteps = 5;

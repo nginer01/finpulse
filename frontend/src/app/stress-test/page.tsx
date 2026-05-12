@@ -55,14 +55,14 @@ const scenarios: Scenario[] = [
     portfolioChange: -55.6,
     recoveryMonths: 14,
     positions: [
-      { ticker: "IWDA", name: "iShares MSCI World", currentValue: 4230, change: -52, note: "Correlacion alta con mercado", sparkline: [100, 88, 72, 60, 55, 50, 48] },
+      { ticker: "IWDA", name: "iShares MSCI World", currentValue: 4230, change: -52, note: "Correlación alta con mercado", sparkline: [100, 88, 72, 60, 55, 50, 48] },
       { ticker: "VUAA", name: "Vanguard S&P 500", currentValue: 3150, change: -56, note: "Epicentro de la crisis", sparkline: [100, 82, 65, 52, 48, 45, 44] },
-      { ticker: "BRT", name: "Brent Crude Oil", currentValue: 1200, change: -68, note: "Petroleo colapsa", sparkline: [100, 75, 55, 42, 35, 33, 32] },
+      { ticker: "BRT", name: "Brent Crude Oil", currentValue: 1200, change: -68, note: "Petróleo colapsa", sparkline: [100, 75, 55, 42, 35, 33, 32] },
       { ticker: "EUNA", name: "iShares Euro Govt Bond", currentValue: 2467, change: 8, note: "Bonos como refugio", sparkline: [100, 102, 103, 105, 106, 107, 108] },
       { ticker: "SEMI", name: "Semiconductors ETF", currentValue: 1800, change: -62, note: "Tech golpeada", sparkline: [100, 78, 60, 48, 42, 39, 38] },
     ],
     actions: [
-      { title: "Reducir exposicion a renta variable al 50%", simulatedLoss: -32, description: "Rebalancear hacia activos defensivos antes del colapso" },
+      { title: "Reducir exposición a renta variable al 50%", simulatedLoss: -32, description: "Rebalancear hacia activos defensivos antes del colapso" },
       { title: "Aumentar bonos al 40%", simulatedLoss: -28, description: "Los bonos gubernamentales actuaron como refugio seguro" },
       { title: "Stop-loss al -15%", simulatedLoss: -15, description: "Limita perdidas pero pierde la recuperacion posterior" },
     ],
@@ -70,7 +70,7 @@ const scenarios: Scenario[] = [
     riskScore: 6.2,
     riskLabel: "Riesgo moderado-alto",
     recommendations: [
-      "Considera aumentar tu exposicion a bonos de gobierno (10-15%) para amortiguar caidas severas.",
+      "Considera aumentar tu exposición a bonos de gobierno (10-15%) para amortiguar caidas severas.",
       "Tu concentracion en renta variable (>80%) te expone a perdidas superiores al 50% en crisis sistemicas.",
       "Implementa un rebalanceo trimestral automatico para mantener tu perfil de riesgo objetivo.",
     ],
@@ -95,9 +95,9 @@ const scenarios: Scenario[] = [
       { ticker: "SEMI", name: "Semiconductors ETF", currentValue: 1800, change: -28, note: "Cadena de suministro afectada", sparkline: [100, 88, 76, 72, 72] },
     ],
     actions: [
-      { title: "Reducir exposicion a renta variable al 50%", simulatedLoss: -20, description: "Menor exposicion limita el golpe inicial" },
+      { title: "Reducir exposición a renta variable al 50%", simulatedLoss: -20, description: "Menor exposición limita el golpe inicial" },
       { title: "Aumentar bonos al 40%", simulatedLoss: -17, description: "Bonos compensan parcialmente las perdidas" },
-      { title: "Stop-loss al -15%", simulatedLoss: -15, description: "Venta temprana pero pierdes el rally historico posterior" },
+      { title: "Stop-loss al -15%", simulatedLoss: -15, description: "Venta temprana pero pierdes el rally histórico posterior" },
     ],
     declineCurve: [100, 93, 82, 70, 66],
     riskScore: 5.4,
@@ -105,7 +105,7 @@ const scenarios: Scenario[] = [
     recommendations: [
       "En crashes rapidos como COVID, la velocidad de caida no permite reaccionar. Preparate antes.",
       "Mantener 3-6 meses de liquidez te permite comprar en las caidas en vez de vender en panico.",
-      "Los semiconductores se recuperaron con fuerza post-COVID. Diversificacion temporal es clave.",
+      "Los semiconductores se recuperaron con fuerza post-COVID. Diversificación temporal es clave.",
     ],
   },
   {
@@ -128,7 +128,7 @@ const scenarios: Scenario[] = [
       { ticker: "SEMI", name: "Semiconductors ETF", currentValue: 1800, change: -82, note: "Epicentro absoluto de la burbuja", sparkline: [100, 72, 50, 32, 22, 19, 18] },
     ],
     actions: [
-      { title: "Reducir exposicion a renta variable al 50%", simulatedLoss: -38, description: "Aun asi doloroso por la magnitud de la burbuja" },
+      { title: "Reducir exposición a renta variable al 50%", simulatedLoss: -38, description: "Aun asi doloroso por la magnitud de la burbuja" },
       { title: "Aumentar bonos al 40%", simulatedLoss: -30, description: "Bonos brillaron durante este periodo" },
       { title: "Stop-loss al -15%", simulatedLoss: -15, description: "Proteccion temprana pero la recuperacion tardo 4 anios" },
     ],
@@ -136,7 +136,7 @@ const scenarios: Scenario[] = [
     riskScore: 7.8,
     riskLabel: "Riesgo alto",
     recommendations: [
-      "Tu exposicion a semiconductores (SEMI) habria sufrido perdidas del 82%. Considera reducir concentracion sectorial.",
+      "Tu exposición a semiconductores (SEMI) habria sufrido perdidas del 82%. Considera reducir concentracion sectorial.",
       "En burbujas prolongadas, la recuperacion puede tardar anios. Asegura tener horizonte temporal largo.",
       "Aumentar bonos al 25%+ habria reducido significativamente la volatilidad de tu cartera.",
     ],
@@ -156,12 +156,12 @@ const scenarios: Scenario[] = [
     positions: [
       { ticker: "IWDA", name: "iShares MSCI World", currentValue: 4230, change: -20, note: "Caida moderada global", sparkline: [100, 94, 88, 83, 80] },
       { ticker: "VUAA", name: "Vanguard S&P 500", currentValue: 3150, change: -25, note: "Inflacion y subida de tasas", sparkline: [100, 92, 84, 78, 75] },
-      { ticker: "BRT", name: "Brent Crude Oil", currentValue: 1200, change: 35, note: "Petroleo sube por crisis energetica", sparkline: [100, 115, 128, 132, 135] },
+      { ticker: "BRT", name: "Brent Crude Oil", currentValue: 1200, change: 35, note: "Petróleo sube por crisis energetica", sparkline: [100, 115, 128, 132, 135] },
       { ticker: "EUNA", name: "iShares Euro Govt Bond", currentValue: 2467, change: -18, note: "Bonos caen por subida de tasas", sparkline: [100, 95, 88, 84, 82] },
       { ticker: "SEMI", name: "Semiconductors ETF", currentValue: 1800, change: -35, note: "Tech castigada por tasas altas", sparkline: [100, 88, 76, 68, 65] },
     ],
     actions: [
-      { title: "Reducir exposicion a renta variable al 50%", simulatedLoss: -14, description: "Menor exposicion en entorno de tasas altas" },
+      { title: "Reducir exposición a renta variable al 50%", simulatedLoss: -14, description: "Menor exposición en entorno de tasas altas" },
       { title: "Aumentar commodities al 20%", simulatedLoss: -10, description: "Energia sube cuando todo baja" },
       { title: "Stop-loss al -15%", simulatedLoss: -15, description: "Venta antes del piso pero perdidas similares" },
     ],
@@ -170,7 +170,7 @@ const scenarios: Scenario[] = [
     riskLabel: "Riesgo moderado",
     recommendations: [
       "En 2022, bonos y acciones cayeron juntos. Diversificar con commodities habria sido mas efectivo.",
-      "Tu posicion en BRT habria sido la unica ganadora. Considera mantener algo de exposicion a energia.",
+      "Tu posición en BRT habria sido la unica ganadora. Considera mantener algo de exposición a energia.",
       "Las crisis de tasas afectan diferente. No siempre los refugios clasicos funcionan.",
     ],
   },
@@ -343,7 +343,7 @@ export default function StressTestPage() {
         {/* ── SCENARIO SELECTOR ── */}
         <section className="mb-12">
           <h2 className="text-xl font-semibold text-[var(--color-foreground)] mb-4">
-            Selecciona un escenario historico
+            Selecciona un escenario histórico
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {scenarios.map((s) => {
@@ -536,7 +536,7 @@ export default function StressTestPage() {
             <RiskGauge score={scenario.riskScore} label={scenario.riskLabel} />
             <p className="text-lg font-bold text-[var(--color-foreground)]">{scenario.riskLabel}</p>
             <p className="text-sm text-[var(--color-muted)] text-center max-w-md">
-              Basado en la composicion actual de tu portfolio y su comportamiento historico frente a {scenario.name.toLowerCase()}.
+              Basado en la composición actual de tu portfolio y su comportamiento histórico frente a {scenario.name.toLowerCase()}.
             </p>
           </div>
         </section>

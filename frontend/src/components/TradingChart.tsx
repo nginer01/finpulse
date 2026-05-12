@@ -38,7 +38,7 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-06", label: "IPC EEUU en linea", color: "#71717a", position: "belowBar", shape: "circle" },
         { time: "2026-05-07", label: "Nvidia Blackwell Ultra → SEMI +4.2%", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
         { time: "2026-05-08", label: "Venta BRT — Iran avanza", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-05-09", label: "Acuerdo EEUU-China → S&P maximos", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-09", label: "Acuerdo EEUU-China → S&P máximos", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "1M": {
@@ -86,7 +86,7 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
       ],
       markers: [
         { time: "2026-02-25", label: "Correccion tech — Nasdaq -3%", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-03-11", label: "BCE senala recorte junio", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-03-11", label: "BCE señala recorte junio", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
         { time: "2026-04-15", label: "Earnings MSFT/GOOGL superan", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
         { time: "2026-05-06", label: "Nvidia + Acuerdo China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
       ],
@@ -112,7 +112,7 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
       ],
       markers: [
         { time: "2025-12-09", label: "Fed mantiene tipos", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-01-20", label: "Rally inicio de ano — flujos ETFs", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-01-20", label: "Rally inicio de año — flujos ETFs", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
         { time: "2026-02-17", label: "Aranceles EEUU-China", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
         { time: "2026-03-31", label: "Correccion Q1", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
         { time: "2026-05-05", label: "Rumores acuerdo EEUU-China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },

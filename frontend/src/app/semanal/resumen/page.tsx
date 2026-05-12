@@ -35,7 +35,7 @@ export default function ResumenSemanalCompleto() {
               <span className="text-xs px-3 py-1 rounded-full bg-accent/25 text-accent-light font-medium">Resumen Semanal</span>
               <span className="text-xs text-muted">12 mayo 2026</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3">La semana que cambio el tablero: acuerdo China, Nvidia, y un mercado en maximos</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3">La semana que cambio el tablero: acuerdo China, Nvidia, y un mercado en máximos</h1>
             <p className="text-muted text-sm">87 noticias procesadas — 14 fuentes — Tiempo de lectura: ~12 min</p>
           </div>
         </div>
@@ -46,7 +46,7 @@ export default function ResumenSemanalCompleto() {
 
         {/* Lead paragraph */}
         <p className="text-lg leading-8 mb-8">
-          Ha sido, sin exagerar, una de las semanas mas importantes del ano para los mercados globales. Dos eventos de gran calado convergieron en apenas 48 horas: el anuncio de la arquitectura Blackwell Ultra de Nvidia y la confirmacion del acuerdo comercial fase 1 entre Estados Unidos y China. El resultado: el S&P 500 cerrando en maximos historicos, tu portfolio subiendo un <span className="text-green font-semibold">+2.4%</span>, y una leccion valiosa sobre el timing de las decisiones.
+          Ha sido, sin exagerar, una de las semanas mas importantes del año para los mercados globales. Dos eventos de gran calado convergieron en apenas 48 horas: el anuncio de la arquitectura Blackwell Ultra de Nvidia y la confirmacion del acuerdo comercial fase 1 entre Estados Unidos y China. El resultado: el S&P 500 cerrando en máximos históricos, tu portfolio subiendo un <span className="text-green font-semibold">+2.4%</span>, y una lección valiosa sobre el timing de las decisiones.
         </p>
 
         {/* Stats strip */}
@@ -73,7 +73,7 @@ export default function ResumenSemanalCompleto() {
         <h2 className="text-2xl font-bold mt-12 mb-6">El lunes arranco con un susurro</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Los primeros rumores de un posible acuerdo comercial entre Washington y Pekin empezaron a circular el domingo por la noche en circulos diplomaticos asiaticos. Para cuando abrio Wall Street el lunes, el S&P 500 ya descontaba parte de la noticia con una subida del 0.4%. Tu posicion en IWDA capturo el movimiento inmediatamente — es la ventaja de tener exposicion global diversificada.
+          Los primeros rumores de un posible acuerdo comercial entre Washington y Pekin empezaron a circular el domingo por la noche en circulos diplomaticos asiaticos. Para cuando abrio Wall Street el lunes, el S&P 500 ya descontaba parte de la noticia con una subida del 0.4%. Tu posición en IWDA capturo el movimiento inmediatamente — es la ventaja de tener exposición global diversificada.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
           Pero el verdadero catalizador del lunes no fue China, sino algo mucho mas sutil: los flujos de capital. Segun datos de EPFR que recoge The Daily Shot, los ETFs de renta variable global recibieron $12.800 millones en la semana — el mayor flujo desde enero. El dinero institucional estaba posicionandose antes del anuncio oficial.
@@ -95,7 +95,7 @@ export default function ResumenSemanalCompleto() {
             alt="Trading floor"
             className="w-full h-56 sm:h-72 object-cover rounded-none sm:rounded-xl"
           />
-          <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">Wall Street cerro la semana en maximos historicos tras el acuerdo comercial. Foto: Financial Times</figcaption>
+          <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">Wall Street cerro la semana en máximos históricos tras el acuerdo comercial. Foto: Financial Times</figcaption>
         </figure>
 
         <h2 className="text-2xl font-bold mt-12 mb-6">Nvidia encendio la mecha el miercoles</h2>
@@ -104,7 +104,7 @@ export default function ResumenSemanalCompleto() {
           Si el acuerdo comercial fue el evento macro de la semana, el anuncio de Nvidia fue el evento sectorial. La presentacion de Blackwell Ultra el miercoles no fue una mejora incremental — fue un salto generacional. Rendimiento 4x superior en inferencia de IA. Los hyperscalers (Amazon, Google, Microsoft) confirmaron pedidos masivos antes de que Jensen Huang bajara del escenario.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
-          Tu posicion en SEMI (VanEck Semiconductor) fue la gran beneficiada: <span className="text-green font-semibold">+4.2% en la semana</span>, la mejor de tu portfolio. Pero lo mas interesante no es el rendimiento en si, sino la decision que tomaste: compraste SEMI el 2 de mayo, cinco dias antes del evento, con una conviccion de 7/10. Tu tesis era que el ciclo de semiconductores se estaba acelerando. Los datos te dieron la razon.
+          Tu posición en SEMI (VanEck Semiconductor) fue la gran beneficiada: <span className="text-green font-semibold">+4.2% en la semana</span>, la mejor de tu portfolio. Pero lo mas interesante no es el rendimiento en si, sino la decisión que tomaste: compraste SEMI el 2 de mayo, cinco dias antes del evento, con una convicción de 7/10. Tu tesis era que el ciclo de semiconductores se estaba acelerando. Los datos te dieron la razon.
         </p>
 
         {/* Inline chart — portfolio week performance */}
@@ -150,13 +150,13 @@ export default function ResumenSemanalCompleto() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">La decision de la semana: vender Brent</h2>
+        <h2 className="text-2xl font-bold mt-12 mb-6">La decisión de la semana: vender Brent</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          El jueves por la manana, Financial Times publico las actas filtradas del BCE. Pero tu atencion estaba en otro sitio: las negociaciones entre Iran y Estados Unidos avanzaban mas rapido de lo esperado. El secretario de Estado confirmo &ldquo;avances significativos&rdquo; — el lenguaje mas positivo hasta la fecha.
+          El jueves por la mañana, Financial Times publico las actas filtradas del BCE. Pero tu atención estaba en otro sitio: las negociaciones entre Iran y Estados Unidos avanzaban mas rapido de lo esperado. El secretario de Estado confirmo &ldquo;avances significativos&rdquo; — el lenguaje mas positivo hasta la fecha.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
-          Tomaste la decision de vender el 50% de tu posicion en Brent a $76.20. Tu conviccion era alta (8/10) y tu tesis clara: si Iran vuelve al mercado con plena capacidad, el petroleo caera significativamente. <span className="text-green font-semibold">Resultado: el Brent cerro la semana en $74.30, cayendo un 1.8% adicional despues de tu venta.</span> Fue una buena decision.
+          Tomaste la decisión de vender el 50% de tu posición en Brent a $76.20. Tu convicción era alta (8/10) y tu tesis clara: si Iran vuelve al mercado con plena capacidad, el petróleo caera significativamente. <span className="text-green font-semibold">Resultado: el Brent cerro la semana en $74.30, cayendo un 1.8% adicional despues de tu venta.</span> Fue una buena decision.
         </p>
 
         {/* Decision card */}
@@ -166,13 +166,13 @@ export default function ResumenSemanalCompleto() {
               <div className="w-10 h-10 rounded-full bg-green/15 flex items-center justify-center text-green text-lg">&#10003;</div>
               <div>
                 <p className="text-sm font-semibold">Venta parcial BRT — Score: 9/10</p>
-                <p className="text-xs text-muted">8 mayo — Conviccion: 8/10</p>
+                <p className="text-xs text-muted">8 mayo — Convicción: 8/10</p>
               </div>
             </div>
             <span className="text-xs px-3 py-1 rounded-full bg-green/15 text-green font-medium">Buena decision</span>
           </div>
           <p className="text-xs text-muted leading-relaxed">
-            Lo que hizo esta decision especialmente buena: detectaste el volumen de venta institucional antes de que la noticia se reflejara en el precio. Hace dos meses, habrias mantenido la posicion por miedo a vender demasiado pronto. Tu timing esta mejorando.
+            Lo que hizo esta decisión especialmente buena: detectaste el volumen de venta institucional antes de que la noticia se reflejara en el precio. Hace dos meses, habrias mantenido la posición por miedo a vender demasiado pronto. Tu timing esta mejorando.
           </p>
         </div>
 
@@ -188,7 +188,7 @@ export default function ResumenSemanalCompleto() {
         <h2 className="text-2xl font-bold mt-12 mb-6">Lo que dicen las fuentes clave</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Paul Donovan, economista jefe de UBS, dedico su podcast del domingo a analizar el acuerdo comercial. Su lectura es cauta pero constructiva: celebra la reduccion de incertidumbre, pero advierte que los aranceles tecnologicos — semiconductores, IA, datos — se negociaran por separado en el tercer trimestre. Para tu posicion en SEMI, esto es un matiz relevante que Matt Levine tambien destaca en su newsletter del viernes.
+          Paul Donovan, economista jefe de UBS, dedico su podcast del domingo a analizar el acuerdo comercial. Su lectura es cauta pero constructiva: celebra la reduccion de incertidumbre, pero advierte que los aranceles tecnologicos — semiconductores, IA, datos — se negociaran por separado en el tercer trimestre. Para tu posición en SEMI, esto es un matiz relevante que Matt Levine tambien destaca en su newsletter del viernes.
         </p>
 
         <blockquote className="border-l-4 border-purple-500/40 pl-6 py-4 my-8">
@@ -200,7 +200,7 @@ export default function ResumenSemanalCompleto() {
         </blockquote>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Polymarket, por su parte, sigue siendo la fuente mas fiable para medir expectativas. Esta semana ha movido tres indicadores importantes: la probabilidad de recorte del BCE en junio sube al 73% (+8 puntos), la de acuerdo Iran-EEUU antes de agosto al 58% (+15 puntos), y la de recesion en EEUU baja al 12%, minimo del ano. Los tres movimientos son consistentes con un escenario de &ldquo;goldilocks&rdquo; — ni demasiado caliente, ni demasiado frio.
+          Polymarket, por su parte, sigue siendo la fuente mas fiable para medir expectativas. Esta semana ha movido tres indicadores importantes: la probabilidad de recorte del BCE en junio sube al 73% (+8 puntos), la de acuerdo Iran-EEUU antes de agosto al 58% (+15 puntos), y la de recesion en EEUU baja al 12%, mínimo del año. Los tres movimientos son consistentes con un escenario de &ldquo;goldilocks&rdquo; — ni demasiado caliente, ni demasiado frio.
         </p>
 
         {/* Polymarket data */}
@@ -253,13 +253,13 @@ export default function ResumenSemanalCompleto() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">La senal de precaucion que no debes ignorar</h2>
+        <h2 className="text-2xl font-bold mt-12 mb-6">La señal de precaucion que no debes ignorar</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Con todo lo positivo de la semana, hay un dato que merece atencion: el VIX cerro en 13.2, niveles de complacencia no vistos desde enero de 2024. Tanto The Daily Shot como @zerohedge coinciden en la misma senal: cuando el VIX se mantiene por debajo de 14 durante mas de dos semanas, el S&P 500 sufre una correccion media del 4.2% en las siguientes seis semanas. Ya llevamos ocho sesiones.
+          Con todo lo positivo de la semana, hay un dato que merece atención: el VIX cerro en 13.2, niveles de complacencia no vistos desde enero de 2024. Tanto The Daily Shot como @zerohedge coinciden en la misma señal: cuando el VIX se mantiene por debajo de 14 durante mas de dos semanas, el S&P 500 sufre una correccion media del 4.2% en las siguientes seis semanas. Ya llevamos ocho sesiones.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
-          Esto no significa que debas vender. @sentimentrader aporta un matiz importante: su indicador compuesto de sentimiento esta en &ldquo;optimismo elevado&rdquo; pero no extremo. Historicamente, este nivel produce retornos mediocres a un mes (+0.3%) pero buenos a tres meses (+4.2%). <span className="text-amber-400 font-semibold">La traduccion practica: no es momento de comprar agresivamente, pero tampoco de vender.</span>
+          Esto no significa que debas vender. @sentimentrader aporta un matiz importante: su indicador compuesto de sentimiento esta en &ldquo;optimismo elevado&rdquo; pero no extremo. Históricamente, este nivel produce retornos mediocres a un mes (+0.3%) pero buenos a tres meses (+4.2%). <span className="text-amber-400 font-semibold">La traduccion practica: no es momento de comprar agresivamente, pero tampoco de vender.</span>
         </p>
 
         <figure className="my-10 -mx-6 sm:mx-0">
@@ -268,13 +268,13 @@ export default function ResumenSemanalCompleto() {
             alt="Market analysis"
             className="w-full h-56 sm:h-72 object-cover rounded-none sm:rounded-xl"
           />
-          <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">El VIX en zona de complacencia: una senal que historicamente precede correcciones moderadas. Fuente: The Daily Shot</figcaption>
+          <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">El VIX en zona de complacencia: una señal que históricamente precede correcciones moderadas. Fuente: The Daily Shot</figcaption>
         </figure>
 
         <h2 className="text-2xl font-bold mt-12 mb-6">Tu evolucion como inversor</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Esta semana tu score de aprendizaje sube a 72/100, cinco puntos mas que la semana anterior. El mayor avance esta en disciplina (78%, +4) y en timing (54%, +3). La venta de Brent es el ejemplo perfecto: hace tres meses habrias dudado, habrias esperado &ldquo;un poco mas&rdquo;, y habrias visto como la caida se comia tus beneficios. Esta vez actuaste con decision, basandote en datos (volumen institucional, Polymarket, paralelo historico 2015).
+          Esta semana tu score de aprendizaje sube a 72/100, cinco puntos mas que la semana anterior. El mayor avance esta en disciplina (78%, +4) y en timing (54%, +3). La venta de Brent es el ejemplo perfecto: hace tres meses habrias dudado, habrias esperado &ldquo;un poco mas&rdquo;, y habrias visto como la caida se comia tus beneficios. Esta vez actuaste con decision, basandote en datos (volumen institucional, Polymarket, paralelo histórico 2015).
         </p>
 
         {/* Investor DNA mini */}
@@ -284,7 +284,7 @@ export default function ResumenSemanalCompleto() {
             {[
               { name: "Disciplina", now: 78, prev: 74, color: "#6366f1" },
               { name: "Control emocional", now: 65, prev: 62, color: "#f59e0b" },
-              { name: "Diversificacion", now: 82, prev: 82, color: "#22c55e" },
+              { name: "Diversificación", now: 82, prev: 82, color: "#22c55e" },
               { name: "Timing", now: 54, prev: 51, color: "#ef4444" },
             ].map((t) => (
               <div key={t.name}>
@@ -302,25 +302,25 @@ export default function ResumenSemanalCompleto() {
         </div>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          El area que mas necesita trabajo sigue siendo el control emocional (65%). La compra de VUAA el 15 de abril con conviccion 5/10 es el ejemplo: fue una compra por FOMO, y aunque ha subido un 2.1%, el proceso de decision no fue el correcto. Tus compras con conviccion menor a 6 pierden dinero el 60% de las veces. Esta vez tuviste suerte, pero la estadistica no esta a tu favor.
+          El area que mas necesita trabajo sigue siendo el control emocional (65%). La compra de VUAA el 15 de abril con convicción 5/10 es el ejemplo: fue una compra por FOMO, y aunque ha subido un 2.1%, el proceso de decisión no fue el correcto. Tus compras con convicción menor a 6 pierden dinero el 60% de las veces. Esta vez tuviste suerte, pero la estadistica no esta a tu favor.
         </p>
 
         <h2 className="text-2xl font-bold mt-12 mb-6">La semana que viene</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
-          Hay cuatro eventos que pueden mover tu portfolio significativamente. El martes 13 sale el IPC de Estados Unidos — si sorprende al alza, el rally se frena. El 22 de mayo, earnings de TSMC: si confirman el aumento de capex del 15%, tu posicion en SEMI tiene mas recorrido. El 30 de mayo, dato de inflacion eurozona — el ultimo antes de la reunion del BCE del 5 de junio, donde se decidira si recortan tipos.
+          Hay cuatro eventos que pueden mover tu portfolio significativamente. El martes 13 sale el IPC de Estados Unidos — si sorprende al alza, el rally se frena. El 22 de mayo, earnings de TSMC: si confirman el aumento de capex del 15%, tu posición en SEMI tiene mas recorrido. El 30 de mayo, dato de inflacion eurozona — el último antes de la reunion del BCE del 5 de junio, donde se decidira si recortan tipos.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
-          Y en el fondo, la pregunta que define las proximas semanas: <span className="text-accent-light font-semibold">&iquest;ha descontado ya el mercado todo lo bueno, o queda mas recorrido?</span> Matt Levine diria que el mercado celebra la reduccion de incertidumbre, no los terminos. @zerohedge diria que el proximo catalizador es a la baja. La verdad, como siempre, estara en algun punto intermedio.
+          Y en el fondo, la pregunta que define las próximas semanas: <span className="text-accent-light font-semibold">&iquest;ha descontado ya el mercado todo lo bueno, o queda mas recorrido?</span> Matt Levine diria que el mercado celebra la reduccion de incertidumbre, no los terminos. @zerohedge diria que el próximo catalizador es a la baja. La verdad, como siempre, estara en algun punto intermedio.
         </p>
 
         {/* Calendar */}
         <div className="bg-card border border-card-border rounded-xl p-5 my-8">
-          <p className="text-sm font-semibold mb-4">Calendario — proxima semana</p>
+          <p className="text-sm font-semibold mb-4">Calendario — próxima semana</p>
           <div className="space-y-3">
             {[
               { date: "Mar 13", event: "IPC EEUU", impact: "Puede frenar el rally si sale alto", priority: "alta" },
-              { date: "Jue 22", event: "Earnings TSMC", impact: "Clave para tu posicion en SEMI", priority: "alta" },
+              { date: "Jue 22", event: "Earnings TSMC", impact: "Clave para tu posición en SEMI", priority: "alta" },
               { date: "Vie 30", event: "Inflacion eurozona", impact: "Ultimo dato antes del BCE", priority: "media" },
               { date: "Dom 1 jun", event: "Reunion OPEC+", impact: "Reaccion de Arabia Saudi a Iran", priority: "alta" },
               { date: "Jue 5 jun", event: "Reunion BCE", impact: "Decision sobre recorte de tipos", priority: "alta" },
@@ -340,7 +340,7 @@ export default function ResumenSemanalCompleto() {
         {/* Closing */}
         <div className="border-t border-card-border pt-10 mt-12">
           <p className="text-sm text-muted leading-7 mb-6">
-            Esta semana te deja con un portfolio mas fuerte (+2.4%), una leccion aprendida sobre timing, y tres oportunidades en el radar (cobre, India, nuclear) que podrian definir los proximos meses. El score de aprendizaje sube a 72. La tendencia es clara: estas mejorando como inversor. La clave ahora es no dejar que la euforia del mercado te haga bajar la guardia.
+            Esta semana te deja con un portfolio mas fuerte (+2.4%), una lección aprendida sobre timing, y tres oportunidades en el radar (cobre, India, nuclear) que podrian definir los próximos meses. El score de aprendizaje sube a 72. La tendencia es clara: estas mejorando como inversor. La clave ahora es no dejar que la euforia del mercado te haga bajar la guardia.
           </p>
 
           {/* Sources used */}

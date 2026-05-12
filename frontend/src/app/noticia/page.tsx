@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import BorderCard from "@/components/BorderCard";
 
 /* ───── helpers ───── */
 
@@ -164,26 +165,26 @@ export default function NoticiaPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* ───── 2. KEY DATA BAR ───── */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-3 py-8 border-b border-card-border">
-          <div className="bg-card border border-card-border rounded-xl p-4 text-center">
+          <BorderCard padding="p-4" className="text-center">
             <p className="text-xs text-muted mb-1">S&P 500</p>
             <p className="text-xl font-bold text-green">+1.2%</p>
             <p className="text-xs text-muted">Máximos históricos</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4 text-center">
+          </BorderCard>
+          <BorderCard padding="p-4" className="text-center">
             <p className="text-xs text-muted mb-1">Acuerdo</p>
             <p className="text-xl font-bold text-accent-light">Fase 1</p>
             <p className="text-xs text-muted">Bienes consumo e industrial</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4 text-center">
+          </BorderCard>
+          <BorderCard padding="p-4" className="text-center">
             <p className="text-xs text-muted mb-1">Polymarket BCE</p>
             <p className="text-xl font-bold text-green">73%</p>
             <p className="text-xs text-muted">Recorte junio</p>
-          </div>
-          <div className="bg-card border border-card-border rounded-xl p-4 text-center">
+          </BorderCard>
+          <BorderCard padding="p-4" className="text-center">
             <p className="text-xs text-muted mb-1">VIX</p>
             <p className="text-xl font-bold text-amber-400">13.2</p>
             <p className="text-xs text-muted">Complacencia</p>
-          </div>
+          </BorderCard>
         </section>
 
         <SectionDivider />
@@ -276,7 +277,7 @@ export default function NoticiaPage() {
               expansiva en Europa complementa la mejora del sentimiento comercial global.
             </p>
 
-            <div className="bg-card border border-card-border rounded-xl p-5 text-foreground">
+            <BorderCard padding="p-5" className="text-foreground">
               <p className="font-semibold mb-2">Impacto neto en tu portfolio</p>
               <p className="text-muted">
                 El efecto combinado del acuerdo comercial, el BCE dovish y el rally de semiconductores
@@ -287,7 +288,7 @@ export default function NoticiaPage() {
                 global — pero esa caida responde mas a las negociaciones Iran-EEUU que al acuerdo con
                 China.
               </p>
-            </div>
+            </BorderCard>
           </div>
         </section>
 
@@ -480,7 +481,7 @@ export default function NoticiaPage() {
             </div>
           </div>
 
-          <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+          <BorderCard padding="p-5">
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* 2019 */}
               <div className="p-6 border-b md:border-b-0 md:border-r border-card-border">
@@ -568,7 +569,7 @@ export default function NoticiaPage() {
                 parciales.
               </p>
             </div>
-          </div>
+          </BorderCard>
         </section>
 
         <SectionDivider />

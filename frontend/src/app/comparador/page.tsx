@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
+import BorderCard from "@/components/BorderCard";
 
 /* ──────────────────────────────────────────────
    MOCK DATA — Assets
@@ -550,7 +551,7 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
   const pct = ((corr + 1) / 2) * 100; // map -1..1 to 0..100
 
   return (
-    <div className="bg-card border border-card-border rounded-xl p-5 sm:p-6">
+    <BorderCard padding="p-5" className="sm:">
       <h3 className="text-sm font-semibold mb-4">Analisis de correlación</h3>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -596,7 +597,7 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
           </div>
         </div>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 
@@ -695,7 +696,7 @@ export default function ComparadorPage() {
             </p>
           </div>
 
-          <div className="bg-card border border-card-border rounded-xl p-4 sm:p-5">
+          <BorderCard padding="p-4" className="sm:">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <AssetSelector
                 value={tickerA}
@@ -727,13 +728,13 @@ export default function ComparadorPage() {
                 <span className="text-xs text-muted">{assetB.name}</span>
               </div>
             </div>
-          </div>
+          </BorderCard>
         </section>
 
         {/* ─── 2. PRICE CHART OVERLAY ─── */}
         <section>
           <h2 className="text-lg font-bold mb-4">Rendimiento comparado (6 meses)</h2>
-          <div className="bg-card border border-card-border rounded-xl p-4 sm:p-5">
+          <BorderCard padding="p-4" className="sm:">
             {/* Legend */}
             <div className="flex items-center gap-5 mb-4">
               <div className="flex items-center gap-2">
@@ -759,7 +760,7 @@ export default function ComparadorPage() {
             <p className="text-[10px] text-muted mt-2 text-center">
               Base 100 al inicio del periodo. Datos simulados con fines educativos.
             </p>
-          </div>
+          </BorderCard>
         </section>
 
         {/* ─── 3. KEY METRICS COMPARISON ─── */}
@@ -787,22 +788,22 @@ export default function ComparadorPage() {
         <section>
           <h2 className="text-lg font-bold mb-4">Composición por sector</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-card border border-card-border rounded-xl p-5">
+            <BorderCard padding="p-5">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2.5 h-2.5 rounded-full bg-accent" />
                 <h3 className="text-sm font-semibold">{assetA.ticker}</h3>
                 <span className="text-xs text-muted">{assetA.name}</span>
               </div>
               <DonutChart data={assetA.sectors} label={assetA.ticker} />
-            </div>
-            <div className="bg-card border border-card-border rounded-xl p-5">
+            </BorderCard>
+            <BorderCard padding="p-5">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2.5 h-2.5 rounded-full bg-green" />
                 <h3 className="text-sm font-semibold">{assetB.ticker}</h3>
                 <span className="text-xs text-muted">{assetB.name}</span>
               </div>
               <DonutChart data={assetB.sectors} label={assetB.ticker} />
-            </div>
+            </BorderCard>
           </div>
         </section>
 

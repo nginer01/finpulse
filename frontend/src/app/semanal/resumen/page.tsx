@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import BorderCard from "@/components/BorderCard";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
   const colors: Record<string, string> = {
@@ -108,7 +109,7 @@ export default function ResumenSemanalCompleto() {
         </p>
 
         {/* Inline chart — portfolio week performance */}
-        <div className="bg-card border border-card-border rounded-xl p-5 my-8">
+        <BorderCard padding="p-5" className="my-8">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium">Rendimiento de tu portfolio esta semana</span>
             <span className="text-xs text-green font-medium">+2.4%</span>
@@ -148,7 +149,7 @@ export default function ResumenSemanalCompleto() {
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red" /> Venta BRT</span>
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-muted" /> IPC neutral</span>
           </div>
-        </div>
+        </BorderCard>
 
         <h2 className="text-2xl font-bold mt-12 mb-6">La decisión de la semana: vender Brent</h2>
 
@@ -204,7 +205,7 @@ export default function ResumenSemanalCompleto() {
         </p>
 
         {/* Polymarket data */}
-        <div className="bg-card border border-card-border rounded-xl p-5 my-8">
+        <BorderCard padding="p-5" className="my-8">
           <div className="flex items-center gap-2 mb-4">
             <SourceBadge name="Polymarket" type="polymarket" />
             <span className="text-xs text-muted">Datos de la semana</span>
@@ -251,7 +252,7 @@ export default function ResumenSemanalCompleto() {
               </div>
             </div>
           </div>
-        </div>
+        </BorderCard>
 
         <h2 className="text-2xl font-bold mt-12 mb-6">La señal de precaucion que no debes ignorar</h2>
 
@@ -278,7 +279,7 @@ export default function ResumenSemanalCompleto() {
         </p>
 
         {/* Investor DNA mini */}
-        <div className="bg-card border border-card-border rounded-xl p-5 my-8">
+        <BorderCard padding="p-5" className="my-8">
           <p className="text-sm font-semibold mb-4">Investor DNA — esta semana vs anterior</p>
           <div className="space-y-3">
             {[
@@ -299,7 +300,7 @@ export default function ResumenSemanalCompleto() {
               </div>
             ))}
           </div>
-        </div>
+        </BorderCard>
 
         <p className="text-sm text-muted leading-7 mb-4">
           El area que mas necesita trabajo sigue siendo el control emocional (65%). La compra de VUAA el 15 de abril con convicción 5/10 es el ejemplo: fue una compra por FOMO, y aunque ha subido un 2.1%, el proceso de decisión no fue el correcto. Tus compras con convicción menor a 6 pierden dinero el 60% de las veces. Esta vez tuviste suerte, pero la estadistica no esta a tu favor.
@@ -315,7 +316,7 @@ export default function ResumenSemanalCompleto() {
         </p>
 
         {/* Calendar */}
-        <div className="bg-card border border-card-border rounded-xl p-5 my-8">
+        <BorderCard padding="p-5" className="my-8">
           <p className="text-sm font-semibold mb-4">Calendario — próxima semana</p>
           <div className="space-y-3">
             {[
@@ -335,7 +336,7 @@ export default function ResumenSemanalCompleto() {
               </div>
             ))}
           </div>
-        </div>
+        </BorderCard>
 
         {/* Closing */}
         <div className="border-t border-card-border pt-10 mt-12">

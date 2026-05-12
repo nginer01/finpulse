@@ -137,12 +137,12 @@ export function AlertsBadge({ count, onClick }: { count: number; onClick: () => 
   return (
     <button
       onClick={onClick}
-      className="relative p-1.5 rounded-lg hover:bg-white/[0.03] transition-colors"
+      className="relative p-1.5 rounded-lg hover:bg-black/[0.05] transition-colors"
       title="Alertas"
     >
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M13.5 6.75a4.5 4.5 0 1 0-9 0c0 4.5-2.25 5.625-2.25 5.625h13.5s-2.25-1.125-2.25-5.625" stroke="#71717a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M10.297 14.625a1.5 1.5 0 0 1-2.594 0" stroke="#71717a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M13.5 6.75a4.5 4.5 0 1 0-9 0c0 4.5-2.25 5.625-2.25 5.625h13.5s-2.25-1.125-2.25-5.625" stroke="#86868b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10.297 14.625a1.5 1.5 0 0 1-2.594 0" stroke="#86868b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       {count > 0 && (
         <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red text-white text-[10px] font-bold flex items-center justify-center">

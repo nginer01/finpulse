@@ -85,41 +85,40 @@ function NewsCard({ type, title, tag, delay, image, source, summary, impact, sou
     "Futuro": "bg-amber-500/20 text-amber-400",
   };
   return (
-    <div
-      className={`bg-card border border-card-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 cursor-pointer ${delay}`}
-      onClick={() => setExpanded(!expanded)}
-    >
-      <div className="relative h-36 overflow-hidden">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-        <span className="absolute bottom-2 left-3 text-xs text-muted/80">{source}</span>
-      </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
-          <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
+    <BorderCard className={`cursor-pointer ${delay}`} padding="p-0">
+      <div onClick={() => setExpanded(!expanded)}>
+        <div className="relative h-36 overflow-hidden rounded-t-2xl">
+          <img src={image} alt={title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+          <span className="absolute bottom-2 left-3 text-xs text-muted/80">{source}</span>
         </div>
-        <h3 className="text-sm font-medium leading-snug mb-2">{title}</h3>
-        {!expanded && <p className="text-xs text-accent-light">Click para expandir</p>}
-        {expanded && (
-          <div className="mt-3 space-y-3 animate-fade-in-up">
-            <p className="text-xs text-muted leading-relaxed">{summary}</p>
-            <div className="bg-background rounded-lg p-3 border border-card-border">
-              <p className="text-xs text-accent-light font-medium mb-1">Impacto en tu portfolio</p>
-              <p className="text-xs text-muted">{impact}</p>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {sources.map((s) => (
-                <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-card-border text-muted">{s}</span>
-              ))}
-            </div>
-            <Link href="/noticia" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
-              Profundizar →
-            </Link>
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
+            <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
           </div>
-        )}
+          <h3 className="text-sm font-medium leading-snug mb-2">{title}</h3>
+          {!expanded && <p className="text-xs text-accent-light">Click para expandir</p>}
+          {expanded && (
+            <div className="mt-3 space-y-3 animate-fade-in-up">
+              <p className="text-xs text-muted leading-relaxed">{summary}</p>
+              <div className="bg-background rounded-lg p-3 border border-card-border">
+                <p className="text-xs text-accent-light font-medium mb-1">Impacto en tu portfolio</p>
+                <p className="text-xs text-muted">{impact}</p>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {sources.map((s) => (
+                  <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-card-border text-muted">{s}</span>
+                ))}
+              </div>
+              <Link href="/noticia" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
+                Profundizar →
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </BorderCard>
   );
 }
 

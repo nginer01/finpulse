@@ -64,7 +64,7 @@ const mockAlerts: Alert[] = [
 
 const typeStyles = {
   critical: { dot: "bg-red", border: "border-red/20", bg: "bg-red/5", icon: "!" },
-  warning: { dot: "bg-amber-400", border: "border-amber-400/20", bg: "bg-amber-400/5", icon: "⚠" },
+  warning: { dot: "bg-[#ffd60a]", border: "border-[#ffd60a]/20", bg: "bg-[#ffd60a]/5", icon: "⚠" },
   info: { dot: "bg-accent", border: "border-accent/20", bg: "bg-accent/5", icon: "i" },
 };
 

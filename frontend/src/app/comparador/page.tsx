@@ -36,11 +36,11 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.0,
     pe: 22,
     sectors: [
-      { label: "Tecnologia", pct: 31, color: "#6366f1" },
-      { label: "Salud", pct: 13, color: "#22c55e" },
-      { label: "Financiero", pct: 13, color: "#818cf8" },
+      { label: "Tecnologia", pct: 31, color: "#f5f5f7" },
+      { label: "Salud", pct: 13, color: "#30d158" },
+      { label: "Financiero", pct: 13, color: "#f5f5f7" },
       { label: "Consumo", pct: 11, color: "#f59e0b" },
-      { label: "Otros", pct: 32, color: "#71717a" },
+      { label: "Otros", pct: 32, color: "#86868b" },
     ],
     correlations: { SEMI: 0.72, EUNA: 0.15, GLD: 0.08, IWDA: 0.95, AAPL: 0.82, MSFT: 0.85, NVDA: 0.68, TSLA: 0.55, SPY: 0.99, QQQ: 0.92, BRT: 0.25 },
   },
@@ -56,9 +56,9 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.6,
     pe: 32,
     sectors: [
-      { label: "Semiconductores", pct: 82, color: "#6366f1" },
-      { label: "Equipamiento", pct: 12, color: "#818cf8" },
-      { label: "Otros tech", pct: 6, color: "#71717a" },
+      { label: "Semiconductores", pct: 82, color: "#f5f5f7" },
+      { label: "Equipamiento", pct: 12, color: "#f5f5f7" },
+      { label: "Otros tech", pct: 6, color: "#86868b" },
     ],
     correlations: { VUAA: 0.72, EUNA: 0.05, GLD: -0.02, IWDA: 0.68, AAPL: 0.75, MSFT: 0.78, NVDA: 0.92, TSLA: 0.48, SPY: 0.71, QQQ: 0.88, BRT: 0.12 },
   },
@@ -74,11 +74,11 @@ const ASSETS: Record<string, AssetData> = {
     beta: 0.95,
     pe: 20,
     sectors: [
-      { label: "Tecnologia", pct: 24, color: "#6366f1" },
-      { label: "Financiero", pct: 16, color: "#818cf8" },
-      { label: "Salud", pct: 12, color: "#22c55e" },
+      { label: "Tecnologia", pct: 24, color: "#f5f5f7" },
+      { label: "Financiero", pct: 16, color: "#f5f5f7" },
+      { label: "Salud", pct: 12, color: "#30d158" },
       { label: "Industrial", pct: 11, color: "#f59e0b" },
-      { label: "Otros", pct: 37, color: "#71717a" },
+      { label: "Otros", pct: 37, color: "#86868b" },
     ],
     correlations: { VUAA: 0.95, SEMI: 0.68, EUNA: 0.20, GLD: 0.10, AAPL: 0.78, MSFT: 0.80, NVDA: 0.62, TSLA: 0.50, SPY: 0.96, QQQ: 0.88, BRT: 0.30 },
   },
@@ -94,9 +94,9 @@ const ASSETS: Record<string, AssetData> = {
     beta: 0.1,
     pe: 0,
     sectors: [
-      { label: "Bonos Gobierno", pct: 72, color: "#22c55e" },
-      { label: "Bonos Corporativos", pct: 18, color: "#818cf8" },
-      { label: "Otros RF", pct: 10, color: "#71717a" },
+      { label: "Bonos Gobierno", pct: 72, color: "#30d158" },
+      { label: "Bonos Corporativos", pct: 18, color: "#f5f5f7" },
+      { label: "Otros RF", pct: 10, color: "#86868b" },
     ],
     correlations: { VUAA: 0.15, SEMI: 0.05, IWDA: 0.20, GLD: 0.35, AAPL: 0.10, MSFT: 0.12, NVDA: 0.02, TSLA: -0.05, SPY: 0.14, QQQ: 0.08, BRT: -0.10 },
   },
@@ -128,10 +128,10 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.1,
     pe: 28,
     sectors: [
-      { label: "Hardware", pct: 52, color: "#6366f1" },
-      { label: "Servicios", pct: 28, color: "#22c55e" },
-      { label: "Wearables", pct: 12, color: "#818cf8" },
-      { label: "Otros", pct: 8, color: "#71717a" },
+      { label: "Hardware", pct: 52, color: "#f5f5f7" },
+      { label: "Servicios", pct: 28, color: "#30d158" },
+      { label: "Wearables", pct: 12, color: "#f5f5f7" },
+      { label: "Otros", pct: 8, color: "#86868b" },
     ],
     correlations: { VUAA: 0.82, SEMI: 0.75, IWDA: 0.78, EUNA: 0.10, GLD: 0.05, MSFT: 0.88, NVDA: 0.72, TSLA: 0.45, SPY: 0.83, QQQ: 0.90, BRT: 0.18 },
   },
@@ -147,10 +147,10 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.15,
     pe: 34,
     sectors: [
-      { label: "Cloud", pct: 42, color: "#6366f1" },
-      { label: "Productividad", pct: 32, color: "#818cf8" },
-      { label: "Gaming", pct: 14, color: "#22c55e" },
-      { label: "Otros", pct: 12, color: "#71717a" },
+      { label: "Cloud", pct: 42, color: "#f5f5f7" },
+      { label: "Productividad", pct: 32, color: "#f5f5f7" },
+      { label: "Gaming", pct: 14, color: "#30d158" },
+      { label: "Otros", pct: 12, color: "#86868b" },
     ],
     correlations: { VUAA: 0.85, SEMI: 0.78, IWDA: 0.80, EUNA: 0.12, GLD: 0.06, AAPL: 0.88, NVDA: 0.80, TSLA: 0.42, SPY: 0.86, QQQ: 0.92, BRT: 0.15 },
   },
@@ -166,10 +166,10 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.9,
     pe: 55,
     sectors: [
-      { label: "Data Center / AI", pct: 65, color: "#6366f1" },
-      { label: "Gaming", pct: 22, color: "#22c55e" },
-      { label: "Auto", pct: 8, color: "#818cf8" },
-      { label: "Otros", pct: 5, color: "#71717a" },
+      { label: "Data Center / AI", pct: 65, color: "#f5f5f7" },
+      { label: "Gaming", pct: 22, color: "#30d158" },
+      { label: "Auto", pct: 8, color: "#f5f5f7" },
+      { label: "Otros", pct: 5, color: "#86868b" },
     ],
     correlations: { VUAA: 0.68, SEMI: 0.92, IWDA: 0.62, EUNA: 0.02, GLD: -0.05, AAPL: 0.72, MSFT: 0.80, TSLA: 0.55, SPY: 0.67, QQQ: 0.85, BRT: 0.08 },
   },
@@ -185,10 +185,10 @@ const ASSETS: Record<string, AssetData> = {
     beta: 2.1,
     pe: 65,
     sectors: [
-      { label: "Automotriz", pct: 55, color: "#6366f1" },
-      { label: "Energia", pct: 25, color: "#22c55e" },
-      { label: "AI / Autonomo", pct: 15, color: "#818cf8" },
-      { label: "Otros", pct: 5, color: "#71717a" },
+      { label: "Automotriz", pct: 55, color: "#f5f5f7" },
+      { label: "Energia", pct: 25, color: "#30d158" },
+      { label: "AI / Autonomo", pct: 15, color: "#f5f5f7" },
+      { label: "Otros", pct: 5, color: "#86868b" },
     ],
     correlations: { VUAA: 0.55, SEMI: 0.48, IWDA: 0.50, EUNA: -0.05, GLD: -0.10, AAPL: 0.45, MSFT: 0.42, NVDA: 0.55, SPY: 0.54, QQQ: 0.60, BRT: 0.20 },
   },
@@ -204,11 +204,11 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.0,
     pe: 22,
     sectors: [
-      { label: "Tecnologia", pct: 31, color: "#6366f1" },
-      { label: "Salud", pct: 13, color: "#22c55e" },
-      { label: "Financiero", pct: 13, color: "#818cf8" },
+      { label: "Tecnologia", pct: 31, color: "#f5f5f7" },
+      { label: "Salud", pct: 13, color: "#30d158" },
+      { label: "Financiero", pct: 13, color: "#f5f5f7" },
       { label: "Consumo", pct: 11, color: "#f59e0b" },
-      { label: "Otros", pct: 32, color: "#71717a" },
+      { label: "Otros", pct: 32, color: "#86868b" },
     ],
     correlations: { VUAA: 0.99, SEMI: 0.71, IWDA: 0.96, EUNA: 0.14, GLD: 0.07, AAPL: 0.83, MSFT: 0.86, NVDA: 0.67, TSLA: 0.54, QQQ: 0.93, BRT: 0.26 },
   },
@@ -224,11 +224,11 @@ const ASSETS: Record<string, AssetData> = {
     beta: 1.25,
     pe: 30,
     sectors: [
-      { label: "Tecnologia", pct: 50, color: "#6366f1" },
-      { label: "Comunicaciones", pct: 16, color: "#818cf8" },
+      { label: "Tecnologia", pct: 50, color: "#f5f5f7" },
+      { label: "Comunicaciones", pct: 16, color: "#f5f5f7" },
       { label: "Consumo", pct: 15, color: "#f59e0b" },
-      { label: "Salud", pct: 7, color: "#22c55e" },
-      { label: "Otros", pct: 12, color: "#71717a" },
+      { label: "Salud", pct: 7, color: "#30d158" },
+      { label: "Otros", pct: 12, color: "#86868b" },
     ],
     correlations: { VUAA: 0.92, SEMI: 0.88, IWDA: 0.88, EUNA: 0.08, GLD: 0.02, AAPL: 0.90, MSFT: 0.92, NVDA: 0.85, TSLA: 0.60, SPY: 0.93, BRT: 0.18 },
   },
@@ -244,9 +244,9 @@ const ASSETS: Record<string, AssetData> = {
     beta: 0.8,
     pe: 0,
     sectors: [
-      { label: "Petróleo crudo", pct: 85, color: "#ef4444" },
+      { label: "Petróleo crudo", pct: 85, color: "#ff453a" },
       { label: "Gas natural", pct: 10, color: "#f59e0b" },
-      { label: "Otros", pct: 5, color: "#71717a" },
+      { label: "Otros", pct: 5, color: "#86868b" },
     ],
     correlations: { VUAA: 0.25, SEMI: 0.12, IWDA: 0.30, EUNA: -0.10, GLD: 0.22, AAPL: 0.18, MSFT: 0.15, NVDA: 0.08, TSLA: 0.20, SPY: 0.26, QQQ: 0.18 },
   },
@@ -267,9 +267,9 @@ function getCorrelation(a: string, b: string): number {
 
 function correlationLabel(c: number): { text: string; color: string } {
   const abs = Math.abs(c);
-  if (abs >= 0.7) return { text: "Alta", color: "#ef4444" };
+  if (abs >= 0.7) return { text: "Alta", color: "#ff453a" };
   if (abs >= 0.4) return { text: "Moderada", color: "#f59e0b" };
-  return { text: "Baja", color: "#22c55e" };
+  return { text: "Baja", color: "#30d158" };
 }
 
 function correlationAdvice(a: string, b: string, corr: number): string {
@@ -332,12 +332,12 @@ function PriceChart({ assetA, assetB }: { assetA: AssetData; assetB: AssetData }
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-64" preserveAspectRatio="none">
         <defs>
           <linearGradient id="gradA" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+            <stop offset="0%" stopColor="#f5f5f7" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#f5f5f7" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="gradB" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#22c55e" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+            <stop offset="0%" stopColor="#30d158" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#30d158" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -346,8 +346,8 @@ function PriceChart({ assetA, assetB }: { assetA: AssetData; assetB: AssetData }
           const y = padY + chartH - ((v - minVal) / range) * chartH;
           return (
             <g key={i}>
-              <line x1={padX} y1={y} x2={padX + chartW} y2={y} stroke="#1e1e2e" strokeWidth="1" />
-              <text x={W - 4} y={y - 4} fill="#71717a" fontSize="10" textAnchor="end">
+              <line x1={padX} y1={y} x2={padX + chartW} y2={y} stroke="#2d2d2d" strokeWidth="1" />
+              <text x={W - 4} y={y - 4} fill="#86868b" fontSize="10" textAnchor="end">
                 {v.toFixed(0)}
               </text>
             </g>
@@ -359,15 +359,15 @@ function PriceChart({ assetA, assetB }: { assetA: AssetData; assetB: AssetData }
         <polygon points={toAreaPoints(dataB)} fill="url(#gradB)" />
 
         {/* Lines */}
-        <polyline points={toPoints(dataA)} fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinejoin="round" />
-        <polyline points={toPoints(dataB)} fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinejoin="round" />
+        <polyline points={toPoints(dataA)} fill="none" stroke="#f5f5f7" strokeWidth="2.5" strokeLinejoin="round" />
+        <polyline points={toPoints(dataB)} fill="none" stroke="#30d158" strokeWidth="2.5" strokeLinejoin="round" />
 
         {/* End dots */}
         {[dataA, dataB].map((data, idx) => {
           const lastI = data.length - 1;
           const x = padX + (lastI / (data.length - 1)) * chartW;
           const y = padY + chartH - ((data[lastI] - minVal) / range) * chartH;
-          const color = idx === 0 ? "#6366f1" : "#22c55e";
+          const color = idx === 0 ? "#f5f5f7" : "#30d158";
           return (
             <g key={idx}>
               <circle cx={x} cy={y} r="4" fill={color} />
@@ -434,7 +434,7 @@ function DonutChart({ data, label }: { data: { label: string; pct: number; color
         <text x={cx} y={cy - 4} textAnchor="middle" fill="#e5e5e5" fontSize="13" fontWeight="600">
           {label}
         </text>
-        <text x={cx} y={cy + 12} textAnchor="middle" fill="#71717a" fontSize="9">
+        <text x={cx} y={cy + 12} textAnchor="middle" fill="#86868b" fontSize="9">
           Composicion
         </text>
       </svg>
@@ -483,8 +483,8 @@ function MetricComparisonTable({ metrics }: { metrics: MetricRow[] }) {
           winnerB = Math.abs(m.valueB) < Math.abs(m.valueA);
         }
 
-        const colorA = winnerA ? "#6366f1" : "#71717a";
-        const colorB = winnerB ? "#22c55e" : "#71717a";
+        const colorA = winnerA ? "#f5f5f7" : "#86868b";
+        const colorB = winnerB ? "#30d158" : "#86868b";
 
         return (
           <div key={m.label} className="bg-card border border-card-border rounded-lg p-3 sm:p-4">
@@ -495,7 +495,7 @@ function MetricComparisonTable({ metrics }: { metrics: MetricRow[] }) {
                 <div className="flex items-center justify-between mb-1.5">
                   <span
                     className="text-sm font-bold"
-                    style={{ color: winnerA ? "#6366f1" : "#e5e5e5" }}
+                    style={{ color: winnerA ? "#f5f5f7" : "#e5e5e5" }}
                   >
                     {m.format(m.valueA)}
                   </span>
@@ -517,7 +517,7 @@ function MetricComparisonTable({ metrics }: { metrics: MetricRow[] }) {
                 <div className="flex items-center justify-between mb-1.5">
                   <span
                     className="text-sm font-bold"
-                    style={{ color: winnerB ? "#22c55e" : "#e5e5e5" }}
+                    style={{ color: winnerB ? "#30d158" : "#e5e5e5" }}
                   >
                     {m.format(m.valueB)}
                   </span>
@@ -643,7 +643,7 @@ function AssetSelector({
           viewBox="0 0 14 14"
           fill="none"
         >
-          <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="#71717a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="#86868b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </div>
@@ -701,7 +701,7 @@ export default function ComparadorPage() {
               <AssetSelector
                 value={tickerA}
                 onChange={setTickerA}
-                color="#6366f1"
+                color="#f5f5f7"
                 label="Activo A"
               />
               <div className="hidden sm:flex items-end pb-2.5">
@@ -710,7 +710,7 @@ export default function ComparadorPage() {
               <AssetSelector
                 value={tickerB}
                 onChange={setTickerB}
-                color="#22c55e"
+                color="#30d158"
                 label="Activo B"
               />
             </div>
@@ -813,7 +813,7 @@ export default function ComparadorPage() {
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-accent/15 flex items-center justify-center shrink-0 mt-0.5">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 2L12.09 7.26L18 8.27L14 12.14L14.18 18L10 15.77L5.82 18L6 12.14L2 8.27L7.91 7.26L10 2Z" fill="#6366f1" opacity="0.8" />
+                  <path d="M10 2L12.09 7.26L18 8.27L14 12.14L14.18 18L10 15.77L5.82 18L6 12.14L2 8.27L7.91 7.26L10 2Z" fill="#f5f5f7" opacity="0.8" />
                 </svg>
               </div>
               <div>

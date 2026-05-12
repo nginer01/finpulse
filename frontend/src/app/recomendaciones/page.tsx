@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
+import Tooltip from "@/components/Tooltip";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -235,7 +236,7 @@ function SourceBadge({ name, type }: { name: string; type: string }) {
     podcast: "bg-purple-500/15 text-purple-400",
     polymarket: "bg-emerald-500/15 text-emerald-400",
     x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-amber-400",
+    bank: "bg-amber-500/15 text-[#ffd60a]",
     news: "bg-rose-500/15 text-rose-400",
   };
   return (
@@ -292,11 +293,15 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
           {/* Quick metrics */}
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div>
-              <p className="text-[11px] text-[#48484a] mb-1">Convicción</p>
+              <Tooltip text="Nivel de seguridad en la recomendación basado en número de fuentes, datos de Polymarket y paralelos históricos.">
+                <p className="text-[11px] text-[#48484a] mb-1 border-b border-dashed border-[#48484a]/30">Convicción</p>
+              </Tooltip>
               <ConvictionDots value={r.conviction} />
             </div>
             <div>
-              <p className="text-[11px] text-[#48484a] mb-1">Riesgo</p>
+              <Tooltip text="Volatilidad y probabilidad de pérdida. 0 = sin riesgo, 10 = riesgo extremo. Basado en el tipo de activo, condiciones del mercado y horizonte temporal.">
+                <p className="text-[11px] text-[#48484a] mb-1 border-b border-dashed border-[#48484a]/30">Riesgo</p>
+              </Tooltip>
               <RiskGauge value={r.risk} />
             </div>
           </div>

@@ -171,13 +171,13 @@ interface Topic {
 
 const priorityColor: Record<Priority, string> = {
   ALTA: "bg-red/15 text-red border-red/30",
-  MEDIA: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+  MEDIA: "bg-amber-500/15 text-[#ffd60a] border-amber-500/30",
   BAJA: "bg-green/15 text-green border-green/30",
 };
 
 const priorityBadge: Record<Priority, string> = {
   ALTA: "bg-red/25 text-red",
-  MEDIA: "bg-amber-500/25 text-amber-400",
+  MEDIA: "bg-amber-500/25 text-[#ffd60a]",
   BAJA: "bg-green/25 text-green",
 };
 

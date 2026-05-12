@@ -62,23 +62,23 @@ const positions = [
 ];
 
 const sectorData = [
-  { label: "Tech", pct: 39, color: "#6366f1" },
-  { label: "Index Global", pct: 33, color: "#818cf8" },
-  { label: "Energia", pct: 9, color: "#ef4444" },
-  { label: "Renta Fija", pct: 19, color: "#22c55e" },
+  { label: "Tech", pct: 39, color: "#f5f5f7" },
+  { label: "Index Global", pct: 33, color: "#f5f5f7" },
+  { label: "Energia", pct: 9, color: "#ff453a" },
+  { label: "Renta Fija", pct: 19, color: "#30d158" },
 ];
 
 const geoData = [
-  { label: "Global", pct: 33, color: "#818cf8" },
-  { label: "EEUU", pct: 39, color: "#6366f1" },
-  { label: "Europa", pct: 19, color: "#22c55e" },
-  { label: "Commodities", pct: 9, color: "#ef4444" },
+  { label: "Global", pct: 33, color: "#f5f5f7" },
+  { label: "EEUU", pct: 39, color: "#f5f5f7" },
+  { label: "Europa", pct: 19, color: "#30d158" },
+  { label: "Commodities", pct: 9, color: "#ff453a" },
 ];
 
 const benchmarks = [
-  { label: "Tu portfolio", value: 7.1, color: "#6366f1" },
-  { label: "S&P 500", value: 12.3, color: "#818cf8" },
-  { label: "MSCI World", value: 8.7, color: "#22c55e" },
+  { label: "Tu portfolio", value: 7.1, color: "#f5f5f7" },
+  { label: "S&P 500", value: 12.3, color: "#f5f5f7" },
+  { label: "MSCI World", value: 8.7, color: "#30d158" },
 ];
 
 const missedTrades = [
@@ -111,7 +111,7 @@ const operations = [
 ];
 
 function Sparkline({ points, positive }: { points: string; positive: boolean }) {
-  const color = positive ? "#22c55e" : "#ef4444";
+  const color = positive ? "#30d158" : "#ff453a";
   return (
     <svg viewBox="0 0 108 40" className="w-full h-8" preserveAspectRatio="none">
       <defs>
@@ -512,7 +512,7 @@ export default function PortfolioPage() {
         <section>
           <div className="flex items-center gap-3 mb-4">
             <h2 className="text-lg font-bold">El camino no tomado</h2>
-            <span className="text-xs px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-400">
+            <span className="text-xs px-2.5 py-1 rounded-full bg-amber-500/15 text-[#ffd60a]">
               Inversiones no realizadas
             </span>
           </div>

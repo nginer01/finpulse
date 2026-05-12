@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import ScrollProgress from "@/components/ScrollProgress";
 import BorderCard from "@/components/BorderCard";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
@@ -8,7 +9,7 @@ function SourceBadge({ name, type }: { name: string; type: string }) {
     podcast: "bg-purple-500/15 text-purple-400",
     polymarket: "bg-emerald-500/15 text-emerald-400",
     x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-amber-400",
+    bank: "bg-amber-500/15 text-[#ffd60a]",
     news: "bg-rose-500/15 text-rose-400",
     finpulse: "bg-accent/15 text-accent-light",
   };
@@ -20,6 +21,7 @@ function SourceBadge({ name, type }: { name: string; type: string }) {
 export default function ResumenSemanalCompleto() {
   return (
     <main className="min-h-screen">
+      <ScrollProgress />
       <Nav />
 
       {/* Hero */}
@@ -61,7 +63,7 @@ export default function ResumenSemanalCompleto() {
             <p className="text-xs text-muted">S&P 500 (max)</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-amber-400">13.2</p>
+            <p className="text-2xl font-bold text-[#ffd60a]">13.2</p>
             <p className="text-xs text-muted">VIX (complacencia)</p>
           </div>
           <div className="text-center">
@@ -117,24 +119,24 @@ export default function ResumenSemanalCompleto() {
           <svg viewBox="0 0 600 120" className="w-full h-28" preserveAspectRatio="none">
             <defs>
               <linearGradient id="weekGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+                <stop offset="0%" stopColor="#30d158" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#30d158" stopOpacity="0" />
               </linearGradient>
             </defs>
             {/* Grid */}
-            <line x1="0" y1="30" x2="600" y2="30" stroke="#1e1e2e" strokeWidth="0.5" />
-            <line x1="0" y1="60" x2="600" y2="60" stroke="#1e1e2e" strokeWidth="0.5" />
-            <line x1="0" y1="90" x2="600" y2="90" stroke="#1e1e2e" strokeWidth="0.5" />
+            <line x1="0" y1="30" x2="600" y2="30" stroke="#2d2d2d" strokeWidth="0.5" />
+            <line x1="0" y1="60" x2="600" y2="60" stroke="#2d2d2d" strokeWidth="0.5" />
+            <line x1="0" y1="90" x2="600" y2="90" stroke="#2d2d2d" strokeWidth="0.5" />
             {/* Area */}
             <polygon points="0,120 0,80 100,85 200,70 300,55 400,75 500,40 600,30 600,120" fill="url(#weekGrad)" />
-            <polyline points="0,80 100,85 200,70 300,55 400,75 500,40 600,30" fill="none" stroke="#22c55e" strokeWidth="2" />
+            <polyline points="0,80 100,85 200,70 300,55 400,75 500,40 600,30" fill="none" stroke="#30d158" strokeWidth="2" />
             {/* Event markers */}
-            <circle cx="100" cy="85" r="4" fill="#71717a" />
-            <circle cx="200" cy="70" r="5" fill="#22c55e" />
-            <circle cx="300" cy="55" r="4" fill="#22c55e" />
-            <circle cx="400" cy="75" r="4" fill="#ef4444" />
-            <circle cx="500" cy="40" r="5" fill="#22c55e" />
-            <circle cx="600" cy="30" r="4" fill="#818cf8" />
+            <circle cx="100" cy="85" r="4" fill="#86868b" />
+            <circle cx="200" cy="70" r="5" fill="#30d158" />
+            <circle cx="300" cy="55" r="4" fill="#30d158" />
+            <circle cx="400" cy="75" r="4" fill="#ff453a" />
+            <circle cx="500" cy="40" r="5" fill="#30d158" />
+            <circle cx="600" cy="30" r="4" fill="#f5f5f7" />
           </svg>
           <div className="flex justify-between text-xs text-muted mt-2">
             <span>Lun 5</span>
@@ -225,9 +227,9 @@ export default function ResumenSemanalCompleto() {
               <span className="text-sm text-muted">Acuerdo Iran antes agosto</span>
               <div className="flex items-center gap-2">
                 <div className="w-32 h-2 rounded-full bg-card-border overflow-hidden">
-                  <div className="h-full rounded-full bg-amber-400" style={{ width: "58%" }} />
+                  <div className="h-full rounded-full bg-[#ffd60a]" style={{ width: "58%" }} />
                 </div>
-                <span className="text-sm text-amber-400 font-medium w-12 text-right">58%</span>
+                <span className="text-sm text-[#ffd60a] font-medium w-12 text-right">58%</span>
                 <span className="text-xs text-green">+15</span>
               </div>
             </div>
@@ -245,9 +247,9 @@ export default function ResumenSemanalCompleto() {
               <span className="text-sm text-muted">S&P sobre 6.000 antes dic</span>
               <div className="flex items-center gap-2">
                 <div className="w-32 h-2 rounded-full bg-card-border overflow-hidden">
-                  <div className="h-full rounded-full bg-amber-400" style={{ width: "61%" }} />
+                  <div className="h-full rounded-full bg-[#ffd60a]" style={{ width: "61%" }} />
                 </div>
-                <span className="text-sm text-amber-400 font-medium w-12 text-right">61%</span>
+                <span className="text-sm text-[#ffd60a] font-medium w-12 text-right">61%</span>
                 <span className="text-xs text-green">+5</span>
               </div>
             </div>
@@ -260,7 +262,7 @@ export default function ResumenSemanalCompleto() {
           Con todo lo positivo de la semana, hay un dato que merece atención: el VIX cerro en 13.2, niveles de complacencia no vistos desde enero de 2024. Tanto The Daily Shot como @zerohedge coinciden en la misma señal: cuando el VIX se mantiene por debajo de 14 durante mas de dos semanas, el S&P 500 sufre una correccion media del 4.2% en las siguientes seis semanas. Ya llevamos ocho sesiones.
         </p>
         <p className="text-sm text-muted leading-7 mb-4">
-          Esto no significa que debas vender. @sentimentrader aporta un matiz importante: su indicador compuesto de sentimiento esta en &ldquo;optimismo elevado&rdquo; pero no extremo. Históricamente, este nivel produce retornos mediocres a un mes (+0.3%) pero buenos a tres meses (+4.2%). <span className="text-amber-400 font-semibold">La traduccion practica: no es momento de comprar agresivamente, pero tampoco de vender.</span>
+          Esto no significa que debas vender. @sentimentrader aporta un matiz importante: su indicador compuesto de sentimiento esta en &ldquo;optimismo elevado&rdquo; pero no extremo. Históricamente, este nivel produce retornos mediocres a un mes (+0.3%) pero buenos a tres meses (+4.2%). <span className="text-[#ffd60a] font-semibold">La traduccion practica: no es momento de comprar agresivamente, pero tampoco de vender.</span>
         </p>
 
         <figure className="my-10 -mx-6 sm:mx-0">
@@ -283,10 +285,10 @@ export default function ResumenSemanalCompleto() {
           <p className="text-sm font-semibold mb-4">Investor DNA — esta semana vs anterior</p>
           <div className="space-y-3">
             {[
-              { name: "Disciplina", now: 78, prev: 74, color: "#6366f1" },
+              { name: "Disciplina", now: 78, prev: 74, color: "#f5f5f7" },
               { name: "Control emocional", now: 65, prev: 62, color: "#f59e0b" },
-              { name: "Diversificación", now: 82, prev: 82, color: "#22c55e" },
-              { name: "Timing", now: 54, prev: 51, color: "#ef4444" },
+              { name: "Diversificación", now: 82, prev: 82, color: "#30d158" },
+              { name: "Timing", now: 54, prev: 51, color: "#ff453a" },
             ].map((t) => (
               <div key={t.name}>
                 <div className="flex justify-between text-xs mb-1">
@@ -331,7 +333,7 @@ export default function ResumenSemanalCompleto() {
                 <span className="font-medium w-40 shrink-0">{e.event}</span>
                 <span className="text-muted text-xs flex-1">{e.impact}</span>
                 <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
-                  e.priority === "alta" ? "bg-red/15 text-red" : "bg-amber-500/15 text-amber-400"
+                  e.priority === "alta" ? "bg-red/15 text-red" : "bg-amber-500/15 text-[#ffd60a]"
                 }`}>{e.priority}</span>
               </div>
             ))}

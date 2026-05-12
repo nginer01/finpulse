@@ -10,9 +10,9 @@ import Link from "next/link";
 function PulseLogoLarge() {
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-      <circle cx="40" cy="40" r="36" stroke="#6366f1" strokeWidth="2.5" opacity="0.25" />
-      <circle cx="40" cy="40" r="22" stroke="#6366f1" strokeWidth="2.5" opacity="0.55" />
-      <circle cx="40" cy="40" r="9" fill="#6366f1" />
+      <circle cx="40" cy="40" r="36" stroke="#f5f5f7" strokeWidth="2.5" opacity="0.25" />
+      <circle cx="40" cy="40" r="22" stroke="#f5f5f7" strokeWidth="2.5" opacity="0.55" />
+      <circle cx="40" cy="40" r="9" fill="#f5f5f7" />
     </svg>
   );
 }
@@ -48,8 +48,8 @@ function AdvancedIcon() {
 function RevolutIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect x="2" y="2" width="24" height="24" rx="6" stroke="#818cf8" strokeWidth="1.5" />
-      <text x="14" y="18" textAnchor="middle" fill="#818cf8" fontSize="12" fontWeight="700">R</text>
+      <rect x="2" y="2" width="24" height="24" rx="6" stroke="#f5f5f7" strokeWidth="1.5" />
+      <text x="14" y="18" textAnchor="middle" fill="#f5f5f7" fontSize="12" fontWeight="700">R</text>
     </svg>
   );
 }
@@ -81,7 +81,7 @@ function CheckmarkAnimated() {
           cy="40"
           r="36"
           fill="none"
-          stroke="#22c55e"
+          stroke="#30d158"
           strokeWidth="3"
           className="animate-[circle-draw_0.6s_ease-out_forwards]"
           strokeDasharray="226"
@@ -91,7 +91,7 @@ function CheckmarkAnimated() {
         <path
           d="M24 40l10 10 22-22"
           fill="none"
-          stroke="#22c55e"
+          stroke="#30d158"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"

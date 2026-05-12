@@ -38,7 +38,7 @@ const allResults: SearchResult[] = [
 const typeColors: Record<string, string> = {
   noticia: "bg-rose-500/15 text-rose-400",
   posicion: "bg-green/15 text-green",
-  decision: "bg-amber-500/15 text-amber-400",
+  decision: "bg-amber-500/15 text-[#ffd60a]",
   pagina: "bg-accent/15 text-accent-light",
 };
 

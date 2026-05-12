@@ -39,10 +39,10 @@ export default function Nav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-2 sm:px-3 py-1.5 rounded-lg transition-colors ${
+                  className={`relative px-2 sm:px-3 py-1.5 rounded-lg transition-all duration-300 ${
                     isActive
-                      ? "text-[#1d1d1f] font-medium bg-black/[0.05]"
-                      : "text-[#86868b] hover:text-[#1d1d1f] hover:bg-black/[0.03]"
+                      ? "text-[#1d1d1f] font-medium after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-[2px] after:bg-[#1d1d1f] after:rounded-full"
+                      : "text-[#86868b] hover:text-[#1d1d1f]"
                   }`}
                 >
                   {link.label}

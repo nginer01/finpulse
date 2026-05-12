@@ -9,10 +9,10 @@ const tabs = [
     label: "Resumen",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <rect x="3" y="3" width="7" height="7" rx="1.5" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <rect x="12" y="3" width="7" height="7" rx="1.5" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <rect x="3" y="12" width="7" height="7" rx="1.5" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <rect x="12" y="12" width="7" height="7" rx="1.5" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
+        <rect x="3" y="3" width="7" height="7" rx="1.5" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <rect x="12" y="3" width="7" height="7" rx="1.5" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <rect x="3" y="12" width="7" height="7" rx="1.5" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <rect x="12" y="12" width="7" height="7" rx="1.5" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
       </svg>
     ),
   },
@@ -21,8 +21,8 @@ const tabs = [
     label: "Portfolio",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path d="M3 17V9l4-3 4 5 4-7 4 4v9" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3 19h16" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M3 17V9l4-3 4 5 4-7 4 4v9" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 19h16" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -31,8 +31,8 @@ const tabs = [
     label: "Aprender",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <circle cx="11" cy="11" r="8" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <path d="M11 7v4l3 2" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="11" cy="11" r="8" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <path d="M11 7v4l3 2" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -41,9 +41,9 @@ const tabs = [
     label: "Semanal",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <rect x="3" y="4" width="16" height="14" rx="2" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <path d="M3 8h16" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" />
-        <path d="M7 4V2M15 4V2" stroke={active ? "#818cf8" : "#71717a"} strokeWidth="1.5" strokeLinecap="round" />
+        <rect x="3" y="4" width="16" height="14" rx="2" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <path d="M3 8h16" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" />
+        <path d="M7 4V2M15 4V2" stroke={active ? "#f5f5f7" : "#86868b"} strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -52,9 +52,9 @@ const tabs = [
     label: "Mas",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <circle cx="11" cy="5" r="1.5" fill={active ? "#818cf8" : "#71717a"} />
-        <circle cx="11" cy="11" r="1.5" fill={active ? "#818cf8" : "#71717a"} />
-        <circle cx="11" cy="17" r="1.5" fill={active ? "#818cf8" : "#71717a"} />
+        <circle cx="11" cy="5" r="1.5" fill={active ? "#f5f5f7" : "#86868b"} />
+        <circle cx="11" cy="11" r="1.5" fill={active ? "#f5f5f7" : "#86868b"} />
+        <circle cx="11" cy="17" r="1.5" fill={active ? "#f5f5f7" : "#86868b"} />
       </svg>
     ),
   },

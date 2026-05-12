@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
+import Tooltip from "@/components/Tooltip";
 
 function MockChart() {
   const points = "0,40 15,35 30,42 45,28 55,32 65,18 80,22 95,10 110,15 130,8 150,12 170,5";
@@ -11,12 +12,12 @@ function MockChart() {
     <svg viewBox="0 0 170 50" className="w-full h-16" preserveAspectRatio="none">
       <defs>
         <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+          <stop offset="0%" stopColor="#30d158" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#30d158" stopOpacity="0" />
         </linearGradient>
       </defs>
       <polygon points={`0,50 ${points} 170,50`} fill="url(#chartGrad)" />
-      <polyline points={points} fill="none" stroke="#22c55e" strokeWidth="1.5" />
+      <polyline points={points} fill="none" stroke="#30d158" strokeWidth="1.5" />
     </svg>
   );
 }
@@ -66,7 +67,7 @@ function SourceBadge({ name, type }: { name: string; type: "newsletter" | "podca
     podcast: "bg-purple-500/15 text-purple-400",
     polymarket: "bg-emerald-500/15 text-emerald-400",
     x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-amber-400",
+    bank: "bg-amber-500/15 text-[#ffd60a]",
     news: "bg-rose-500/15 text-rose-400",
   };
   return (
@@ -82,7 +83,7 @@ function NewsCard({ type, title, tag, delay, image, source, summary, impact, sou
   const tagColors: Record<string, string> = {
     "Tu portfolio": "bg-accent/20 text-accent-light",
     "Nuevo": "bg-green/20 text-green",
-    "Futuro": "bg-amber-500/20 text-amber-400",
+    "Futuro": "bg-amber-500/20 text-[#ffd60a]",
   };
   return (
     <BorderCard className={`cursor-pointer ${delay}`} padding="p-0">
@@ -175,12 +176,14 @@ export default function Home() {
             <p className="text-xs text-green">+2.4% esta semana</p>
           </BorderCard>
           <BorderCard padding="p-4">
-            <p className="text-xs text-muted mb-1">Sentimiento mercado</p>
+            <Tooltip text="Índice de sentimiento basado en Polymarket, VIX y flujos de capital. 0 = pánico extremo, 100 = euforia máxima.">
+              <p className="text-xs text-muted mb-1 border-b border-dashed border-muted/30">Sentimiento mercado</p>
+            </Tooltip>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex-1 h-2 rounded-full bg-card-border overflow-hidden">
                 <div className="h-full w-3/5 rounded-full bg-gradient-to-r from-red to-amber-400" />
               </div>
-              <span className="text-sm font-medium text-amber-400">62</span>
+              <span className="text-sm font-medium text-[#ffd60a]">62</span>
             </div>
             <p className="text-xs text-muted mt-1">Moderadamente optimista</p>
           </BorderCard>
@@ -192,7 +195,9 @@ export default function Home() {
             </BorderCard>
           </Link>
           <BorderCard padding="p-4">
-            <p className="text-xs text-muted mb-1">Tu Investor DNA</p>
+            <Tooltip text="Tu perfil psicológico como inversor. Mide disciplina, control emocional, diversificación y timing. Evoluciona con cada decisión.">
+              <p className="text-xs text-muted mb-1 border-b border-dashed border-muted/30">Tu Investor DNA</p>
+            </Tooltip>
             <p className="text-sm font-medium">Perfil equilibrado</p>
             <p className="text-xs text-muted">Acierto: 68% (mejorando)</p>
           </BorderCard>
@@ -315,7 +320,7 @@ export default function Home() {
                 <div className="bg-background rounded-lg p-4 border border-card-border">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-foreground">Politica monetaria BCE</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">MEDIA</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">MEDIA</span>
                   </div>
                   <p className="text-muted">Sin cambios de prioridad. Reunion del BCE el 5 de junio. Polymarket: 73% probabilidad de recorte 25pb. Impacto en tu portfolio: positivo para EUNA (bonos), positivo para IWDA (componente europeo), neutral para el resto.</p>
                 </div>
@@ -343,7 +348,7 @@ export default function Home() {
                     <SourceBadge name="Polymarket" type="polymarket" />
                     <span className="text-xs text-muted">Datos en vivo</span>
                   </div>
-                  <p className="text-muted">Recorte BCE junio: <span className="text-green">73%</span> (+8% vs semana pasada). Acuerdo Iran-EEUU antes de agosto: <span className="text-amber-400">58%</span> (+15% vs semana pasada). Recesion EEUU en 2026: <span className="text-green">12%</span> (mínimo del ano). S&P 500 sobre 6000 antes de diciembre: <span className="text-amber-400">61%</span>.</p>
+                  <p className="text-muted">Recorte BCE junio: <span className="text-green">73%</span> (+8% vs semana pasada). Acuerdo Iran-EEUU antes de agosto: <span className="text-[#ffd60a]">58%</span> (+15% vs semana pasada). Recesion EEUU en 2026: <span className="text-green">12%</span> (mínimo del ano). S&P 500 sobre 6000 antes de diciembre: <span className="text-[#ffd60a]">61%</span>.</p>
                 </div>
                 <div className="border-l-2 border-zinc-500/40 pl-4">
                   <div className="flex items-center gap-2 mb-1">
@@ -424,7 +429,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-amber-400 mt-0.5">&#x25CF;</span>
+                  <span className="text-[#ffd60a] mt-0.5">&#x25CF;</span>
                   <div>
                     <p className="text-foreground font-medium">Brent — vigilar nivel $72</p>
                     <p className="text-muted">Si rompe los $72 a la baja, el siguiente soporte esta en $68. Considerar stop-loss o reduccion de posición antes de esa ruptura.</p>
@@ -519,7 +524,7 @@ export default function Home() {
                     <span>65%</span>
                   </div>
                   <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
-                    <div className="h-full rounded-full bg-amber-400" style={{ width: "65%" }} />
+                    <div className="h-full rounded-full bg-[#ffd60a]" style={{ width: "65%" }} />
                   </div>
                 </div>
                 <div>
@@ -567,23 +572,23 @@ export default function Home() {
             <div className="relative w-48 h-48">
               {/* Radar circles */}
               <svg viewBox="0 0 200 200" className="w-full h-full">
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#1e1e2e" strokeWidth="1" />
-                <circle cx="100" cy="100" r="60" fill="none" stroke="#1e1e2e" strokeWidth="1" />
-                <circle cx="100" cy="100" r="30" fill="none" stroke="#1e1e2e" strokeWidth="1" />
-                <line x1="100" y1="10" x2="100" y2="190" stroke="#1e1e2e" strokeWidth="0.5" />
-                <line x1="10" y1="100" x2="190" y2="100" stroke="#1e1e2e" strokeWidth="0.5" />
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#2d2d2d" strokeWidth="1" />
+                <circle cx="100" cy="100" r="60" fill="none" stroke="#2d2d2d" strokeWidth="1" />
+                <circle cx="100" cy="100" r="30" fill="none" stroke="#2d2d2d" strokeWidth="1" />
+                <line x1="100" y1="10" x2="100" y2="190" stroke="#2d2d2d" strokeWidth="0.5" />
+                <line x1="10" y1="100" x2="190" y2="100" stroke="#2d2d2d" strokeWidth="0.5" />
                 {/* Sweep line */}
-                <line x1="100" y1="100" x2="170" y2="40" stroke="#6366f1" strokeWidth="1.5" opacity="0.6">
+                <line x1="100" y1="100" x2="170" y2="40" stroke="#f5f5f7" strokeWidth="1.5" opacity="0.6">
                   <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="8s" repeatCount="indefinite" />
                 </line>
                 {/* Blips — opportunities */}
-                <circle cx="135" cy="55" r="5" fill="#22c55e" opacity="0.9">
+                <circle cx="135" cy="55" r="5" fill="#30d158" opacity="0.9">
                   <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
                 </circle>
                 <circle cx="60" cy="70" r="4" fill="#f59e0b" opacity="0.8">
                   <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="150" cy="120" r="3.5" fill="#6366f1" opacity="0.7">
+                <circle cx="150" cy="120" r="3.5" fill="#f5f5f7" opacity="0.7">
                   <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite" />
                 </circle>
               </svg>
@@ -613,10 +618,10 @@ export default function Home() {
             <div className="bg-card border border-amber-500/20 rounded-xl p-4 hover:border-amber-500/40 transition-colors cursor-pointer">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ffd60a] animate-pulse" />
                   <span className="text-sm font-medium">India — rotacion de capital tras acuerdo China</span>
                 </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">Media convicción</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">Media convicción</span>
               </div>
               <p className="text-xs text-muted leading-relaxed mb-2">Los inversores rotan de India a China por el acuerdo. Si India corrige un 10-15%, podria ser punto de entrada histórico para el mercado emergente de mayor crecimiento a largo plazo.</p>
               <div className="flex items-center gap-2 text-xs">
@@ -624,7 +629,7 @@ export default function Home() {
                 <span className="text-muted">•</span>
                 <span className="text-muted">2 fuentes</span>
                 <span className="text-muted">•</span>
-                <span className="text-amber-400">Emergente</span>
+                <span className="text-[#ffd60a]">Emergente</span>
               </div>
             </div>
             <div className="bg-card border border-accent/20 rounded-xl p-4 hover:border-accent/40 transition-colors cursor-pointer">

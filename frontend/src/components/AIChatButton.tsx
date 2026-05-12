@@ -134,14 +134,14 @@ export default function AIChatButton() {
       >
         {open ? (
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M5 5l10 10M15 5L5 15" stroke="#71717a" strokeWidth="2" strokeLinecap="round" />
+            <path d="M5 5l10 10M15 5L5 15" stroke="#86868b" strokeWidth="2" strokeLinecap="round" />
           </svg>
         ) : (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 3C7.03 3 3 6.58 3 11c0 2.52 1.37 4.76 3.5 6.2V21l3.2-1.78c.73.18 1.5.28 2.3.28 4.97 0 9-3.58 9-8s-4.03-8-9-8z" fill="white" />
-            <circle cx="8.5" cy="11" r="1" fill="#6366f1" />
-            <circle cx="12" cy="11" r="1" fill="#6366f1" />
-            <circle cx="15.5" cy="11" r="1" fill="#6366f1" />
+            <circle cx="8.5" cy="11" r="1" fill="#f5f5f7" />
+            <circle cx="12" cy="11" r="1" fill="#f5f5f7" />
+            <circle cx="15.5" cy="11" r="1" fill="#f5f5f7" />
           </svg>
         )}
       </button>

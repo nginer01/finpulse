@@ -35,10 +35,10 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12790, high: 12880, low: 12780, close: 12847, volume: 2900 },
       ],
       markers: [
-        { time: "2026-05-06", label: "IPC EEUU en linea", color: "#71717a", position: "belowBar", shape: "circle" },
-        { time: "2026-05-07", label: "Nvidia Blackwell Ultra → SEMI +4.2%", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-08", label: "Venta BRT — Iran avanza", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-05-09", label: "Acuerdo EEUU-China → S&P máximos", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-06", label: "IPC EEUU en linea", color: "#86868b", position: "belowBar", shape: "circle" },
+        { time: "2026-05-07", label: "Nvidia Blackwell Ultra → SEMI +4.2%", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-08", label: "Venta BRT — Iran avanza", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-05-09", label: "Acuerdo EEUU-China → S&P máximos", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "1M": {
@@ -59,12 +59,12 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12720, high: 12880, low: 12700, close: 12847, volume: 3500 },
       ],
       markers: [
-        { time: "2026-04-15", label: "Compra VUAA — FOMO rally", color: "#71717a", position: "belowBar", shape: "circle" },
-        { time: "2026-04-23", label: "Caida tech earnings mixtos", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-04-25", label: "Compra EUNA — tesis BCE dovish", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-02", label: "Compra SEMI — ciclo semis", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-07", label: "Nvidia Blackwell Ultra", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-09", label: "Acuerdo EEUU-China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-04-15", label: "Compra VUAA — FOMO rally", color: "#86868b", position: "belowBar", shape: "circle" },
+        { time: "2026-04-23", label: "Caida tech earnings mixtos", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-04-25", label: "Compra EUNA — tesis BCE dovish", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-02", label: "Compra SEMI — ciclo semis", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-07", label: "Nvidia Blackwell Ultra", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-09", label: "Acuerdo EEUU-China", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "3M": {
@@ -85,10 +85,10 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12520, high: 12880, low: 12500, close: 12847, volume: 5200 },
       ],
       markers: [
-        { time: "2026-02-25", label: "Correccion tech — Nasdaq -3%", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-03-11", label: "BCE señala recorte junio", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-04-15", label: "Earnings MSFT/GOOGL superan", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-06", label: "Nvidia + Acuerdo China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-02-25", label: "Correccion tech — Nasdaq -3%", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-03-11", label: "BCE señala recorte junio", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-04-15", label: "Earnings MSFT/GOOGL superan", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-06", label: "Nvidia + Acuerdo China", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "6M": {
@@ -111,12 +111,12 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12600, high: 12880, low: 12580, close: 12847, volume: 4200 },
       ],
       markers: [
-        { time: "2025-12-09", label: "Fed mantiene tipos", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-01-20", label: "Rally inicio de año — flujos ETFs", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-02-17", label: "Aranceles EEUU-China", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-03-31", label: "Correccion Q1", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-05-05", label: "Rumores acuerdo EEUU-China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-09", label: "Acuerdo oficial + Nvidia", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2025-12-09", label: "Fed mantiene tipos", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-01-20", label: "Rally inicio de año — flujos ETFs", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-02-17", label: "Aranceles EEUU-China", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-03-31", label: "Correccion Q1", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-05-05", label: "Rumores acuerdo EEUU-China", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-09", label: "Acuerdo oficial + Nvidia", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "1A": {
@@ -137,10 +137,10 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12100, high: 12880, low: 12050, close: 12847, volume: 6800 },
       ],
       markers: [
-        { time: "2025-08-04", label: "Crisis bancaria regional EEUU", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2025-10-27", label: "Fed primer recorte de tipos", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-01-19", label: "Nuevos aranceles EEUU-China", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-04-13", label: "Earnings Q1 excepcionales", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2025-08-04", label: "Crisis bancaria regional EEUU", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2025-10-27", label: "Fed primer recorte de tipos", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-01-19", label: "Nuevos aranceles EEUU-China", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-04-13", label: "Earnings Q1 excepcionales", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
     "YTD": {
@@ -158,11 +158,11 @@ function generateData(range: string): { candles: OHLCV[]; markers: EventMarker[]
         { time: "2026-05-11", open: 12520, high: 12880, low: 12500, close: 12847, volume: 5200 },
       ],
       markers: [
-        { time: "2026-01-13", label: "Aranceles EEUU-China anunciados", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-02-24", label: "BCE confirma tono dovish", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-03-24", label: "Toma de beneficios Q1", color: "#ef4444", position: "aboveBar", shape: "arrowDown" },
-        { time: "2026-04-21", label: "Compra SEMI pre-Nvidia", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
-        { time: "2026-05-05", label: "Nvidia + Acuerdo China", color: "#22c55e", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-01-13", label: "Aranceles EEUU-China anunciados", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-02-24", label: "BCE confirma tono dovish", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-03-24", label: "Toma de beneficios Q1", color: "#ff453a", position: "aboveBar", shape: "arrowDown" },
+        { time: "2026-04-21", label: "Compra SEMI pre-Nvidia", color: "#30d158", position: "belowBar", shape: "arrowUp" },
+        { time: "2026-05-05", label: "Nvidia + Acuerdo China", color: "#30d158", position: "belowBar", shape: "arrowUp" },
       ],
     },
   };
@@ -207,35 +207,35 @@ export default function TradingChart() {
       width: containerRef.current.clientWidth,
       height: 380,
       layout: {
-        background: { type: ColorType.Solid, color: "#12121a" },
-        textColor: "#71717a",
+        background: { type: ColorType.Solid, color: "#1d1d1f" },
+        textColor: "#86868b",
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: "#1e1e2e" },
-        horzLines: { color: "#1e1e2e" },
+        vertLines: { color: "#2d2d2d" },
+        horzLines: { color: "#2d2d2d" },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
         vertLine: {
-          color: "#6366f1",
+          color: "#f5f5f7",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#6366f1",
+          labelBackgroundColor: "#f5f5f7",
         },
         horzLine: {
-          color: "#6366f1",
+          color: "#f5f5f7",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#6366f1",
+          labelBackgroundColor: "#f5f5f7",
         },
       },
       rightPriceScale: {
-        borderColor: "#1e1e2e",
+        borderColor: "#2d2d2d",
         scaleMargins: { top: 0.1, bottom: 0.25 },
       },
       timeScale: {
-        borderColor: "#1e1e2e",
+        borderColor: "#2d2d2d",
         timeVisible: false,
         rightOffset: 5,
         barSpacing: mode === "candle" ? 12 : 6,
@@ -253,12 +253,12 @@ export default function TradingChart() {
 
     if (mode === "candle") {
       mainSeries = chart.addSeries(CandlestickSeries, {
-        upColor: "#22c55e",
-        downColor: "#ef4444",
-        borderDownColor: "#ef4444",
-        borderUpColor: "#22c55e",
-        wickDownColor: "#ef4444",
-        wickUpColor: "#22c55e",
+        upColor: "#30d158",
+        downColor: "#ff453a",
+        borderDownColor: "#ff453a",
+        borderUpColor: "#30d158",
+        wickDownColor: "#ff453a",
+        wickUpColor: "#30d158",
       });
       mainSeries.setData(candles.map((c: OHLCV) => ({
         time: c.time,
@@ -269,24 +269,24 @@ export default function TradingChart() {
       })));
     } else if (mode === "line") {
       mainSeries = chart.addSeries(LineSeries, {
-        color: "#6366f1",
+        color: "#f5f5f7",
         lineWidth: 2,
         crosshairMarkerVisible: true,
         crosshairMarkerRadius: 5,
-        crosshairMarkerBackgroundColor: "#818cf8",
-        crosshairMarkerBorderColor: "#0a0a0f",
+        crosshairMarkerBackgroundColor: "#f5f5f7",
+        crosshairMarkerBorderColor: "#000000",
       });
       mainSeries.setData(candles.map((c: OHLCV) => ({ time: c.time, value: c.close })));
     } else {
       mainSeries = chart.addSeries(AreaSeries, {
         topColor: "rgba(99, 102, 241, 0.4)",
         bottomColor: "rgba(99, 102, 241, 0.0)",
-        lineColor: "#6366f1",
+        lineColor: "#f5f5f7",
         lineWidth: 2,
         crosshairMarkerVisible: true,
         crosshairMarkerRadius: 5,
-        crosshairMarkerBackgroundColor: "#818cf8",
-        crosshairMarkerBorderColor: "#0a0a0f",
+        crosshairMarkerBackgroundColor: "#f5f5f7",
+        crosshairMarkerBorderColor: "#000000",
       });
       mainSeries.setData(candles.map((c: OHLCV) => ({ time: c.time, value: c.close })));
     }
@@ -420,9 +420,9 @@ export default function TradingChart() {
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="inline mr-1">
               <line x1="4" y1="1" x2="4" y2="15" stroke="currentColor" strokeWidth="1" />
-              <rect x="2" y="4" width="4" height="6" fill={mode === "candle" ? "#22c55e" : "currentColor"} rx="0.5" />
+              <rect x="2" y="4" width="4" height="6" fill={mode === "candle" ? "#30d158" : "currentColor"} rx="0.5" />
               <line x1="12" y1="2" x2="12" y2="14" stroke="currentColor" strokeWidth="1" />
-              <rect x="10" y="5" width="4" height="5" fill={mode === "candle" ? "#ef4444" : "currentColor"} rx="0.5" />
+              <rect x="10" y="5" width="4" height="5" fill={mode === "candle" ? "#ff453a" : "currentColor"} rx="0.5" />
             </svg>
             Velas
           </button>

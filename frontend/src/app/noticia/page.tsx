@@ -33,11 +33,11 @@ function ChartUp() {
     <svg viewBox="0 0 120 40" className="w-full h-10" preserveAspectRatio="none">
       <defs>
         <linearGradient id="gUp" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+          <stop offset="0%" stopColor="#30d158" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#30d158" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path d="M0,32 L10,30 L20,28 L30,30 L40,26 L50,22 L60,24 L70,18 L80,14 L90,12 L100,8 L110,6 L120,4" fill="none" stroke="#22c55e" strokeWidth="2" />
+      <path d="M0,32 L10,30 L20,28 L30,30 L40,26 L50,22 L60,24 L70,18 L80,14 L90,12 L100,8 L110,6 L120,4" fill="none" stroke="#30d158" strokeWidth="2" />
       <path d="M0,32 L10,30 L20,28 L30,30 L40,26 L50,22 L60,24 L70,18 L80,14 L90,12 L100,8 L110,6 L120,4 L120,40 L0,40 Z" fill="url(#gUp)" />
     </svg>
   );
@@ -48,11 +48,11 @@ function ChartUpStrong() {
     <svg viewBox="0 0 120 40" className="w-full h-10" preserveAspectRatio="none">
       <defs>
         <linearGradient id="gUpS" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+          <stop offset="0%" stopColor="#30d158" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#30d158" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path d="M0,35 L10,33 L20,34 L30,30 L40,28 L50,26 L60,20 L70,18 L80,12 L90,10 L100,6 L110,4 L120,2" fill="none" stroke="#22c55e" strokeWidth="2" />
+      <path d="M0,35 L10,33 L20,34 L30,30 L40,28 L50,26 L60,20 L70,18 L80,12 L90,10 L100,6 L110,4 L120,2" fill="none" stroke="#30d158" strokeWidth="2" />
       <path d="M0,35 L10,33 L20,34 L30,30 L40,28 L50,26 L60,20 L70,18 L80,12 L90,10 L100,6 L110,4 L120,2 L120,40 L0,40 Z" fill="url(#gUpS)" />
     </svg>
   );
@@ -63,11 +63,11 @@ function ChartFlat() {
     <svg viewBox="0 0 120 40" className="w-full h-10" preserveAspectRatio="none">
       <defs>
         <linearGradient id="gFlat" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#71717a" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#71717a" stopOpacity="0" />
+          <stop offset="0%" stopColor="#86868b" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#86868b" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path d="M0,20 L10,22 L20,18 L30,20 L40,19 L50,21 L60,17 L70,20 L80,22 L90,19 L100,21 L110,18 L120,20" fill="none" stroke="#71717a" strokeWidth="2" />
+      <path d="M0,20 L10,22 L20,18 L30,20 L40,19 L50,21 L60,17 L70,20 L80,22 L90,19 L100,21 L110,18 L120,20" fill="none" stroke="#86868b" strokeWidth="2" />
       <path d="M0,20 L10,22 L20,18 L30,20 L40,19 L50,21 L60,17 L70,20 L80,22 L90,19 L100,21 L110,18 L120,20 L120,40 L0,40 Z" fill="url(#gFlat)" />
     </svg>
   );
@@ -182,7 +182,7 @@ export default function NoticiaPage() {
           </BorderCard>
           <BorderCard padding="p-4" className="text-center">
             <p className="text-xs text-muted mb-1">VIX</p>
-            <p className="text-xl font-bold text-amber-400">13.2</p>
+            <p className="text-xl font-bold text-[#ffd60a]">13.2</p>
             <p className="text-xs text-muted">Complacencia</p>
           </BorderCard>
         </section>
@@ -261,7 +261,7 @@ export default function NoticiaPage() {
 
             <p>
               Sin embargo, hay señales de precaucion. El{" "}
-              <span className="text-amber-400 font-medium">VIX cayo a 13.2</span>, niveles de
+              <span className="text-[#ffd60a] font-medium">VIX cayo a 13.2</span>, niveles de
               complacencia no vistos desde enero 2024. Históricamente, cuando el VIX se mantiene por
               debajo de 14 durante mas de 10 sesiones consecutivas, el S&P 500 ha sufrido correcciones
               del 3-5% en las semanas siguientes. Ya llevamos 8 sesiones — no es momento de perseguir
@@ -545,7 +545,7 @@ export default function NoticiaPage() {
                     <p>BCE dovish refuerza el caso — contexto macro mas favorable para renta variable</p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#ffd60a] mt-2 shrink-0" />
                     <p>VIX en 13.2 — complacencia extrema, históricamente precede correcciones</p>
                   </div>
                   <div className="flex items-start gap-2">
@@ -599,7 +599,7 @@ export default function NoticiaPage() {
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#22c55e"
+                    stroke="#30d158"
                     strokeWidth="2"
                     strokeLinecap="round"
                   >
@@ -657,7 +657,7 @@ export default function NoticiaPage() {
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#ef4444"
+                    stroke="#ff453a"
                     strokeWidth="2"
                     strokeLinecap="round"
                   >

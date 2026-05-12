@@ -197,8 +197,8 @@ const decisions: Decision[] = [
 
 const statusConfig: Record<DecisionStatus, { label: string; color: string; bg: string }> = {
   good: { label: "GOOD", color: "text-green", bg: "bg-green/15" },
-  neutral: { label: "NEUTRAL", color: "text-amber-400", bg: "bg-amber-400/15" },
-  risky: { label: "RISKY ENTRY", color: "text-amber-400", bg: "bg-amber-400/15" },
+  neutral: { label: "NEUTRAL", color: "text-[#ffd60a]", bg: "bg-[#ffd60a]/15" },
+  risky: { label: "RISKY ENTRY", color: "text-[#ffd60a]", bg: "bg-[#ffd60a]/15" },
 };
 
 function ConvictionDots({ level }: { level: number }) {
@@ -212,7 +212,7 @@ function ConvictionDots({ level }: { level: number }) {
               ? level >= 8
                 ? "bg-green"
                 : level >= 6
-                ? "bg-amber-400"
+                ? "bg-[#ffd60a]"
                 : "bg-red"
               : "bg-card-border"
           }`}
@@ -264,7 +264,7 @@ function DecisionCard({ d }: { d: Decision }) {
       </div>
 
       {d.note && (
-        <div className="bg-amber-400/10 border border-amber-400/30 rounded-lg p-3 text-xs text-amber-300">
+        <div className="bg-[#ffd60a]/10 border border-[#ffd60a]/30 rounded-lg p-3 text-xs text-amber-300">
           <span className="font-bold">Alerta: </span>
           {d.note}
         </div>
@@ -310,7 +310,7 @@ const biases: Bias[] = [
 
 const severityConfig: Record<string, { color: string; bg: string; label: string }> = {
   high: { color: "text-red", bg: "bg-red/15 border-red/30", label: "Alta" },
-  medium: { color: "text-amber-400", bg: "bg-amber-400/15 border-amber-400/30", label: "Media" },
+  medium: { color: "text-[#ffd60a]", bg: "bg-[#ffd60a]/15 border-[#ffd60a]/30", label: "Media" },
   low: { color: "text-green", bg: "bg-green/15 border-green/30", label: "Baja (mejorando)" },
 };
 
@@ -333,7 +333,7 @@ function BiasCard({ b }: { b: Bias }) {
             b.severity === "high"
               ? "bg-red"
               : b.severity === "medium"
-              ? "bg-amber-400"
+              ? "bg-[#ffd60a]"
               : "bg-green"
           }`}
           style={{ width: b.severity === "high" ? "85%" : b.severity === "medium" ? "50%" : "25%" }}

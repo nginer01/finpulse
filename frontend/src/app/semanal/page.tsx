@@ -151,17 +151,17 @@ export default function SemanalPage() {
           <Link
             href="/semanal/resumen"
             className="group inline-flex items-center gap-3 px-6 py-3 mb-5 rounded-2xl text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-accent/20"
-            style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.35) 0%, rgba(129,140,248,0.2) 100%)", border: "1px solid rgba(99,102,241,0.3)" }}
+            style={{ background: "linear-gradient(135deg, rgba(245,245,247,0.15) 0%, rgba(245,245,247,0.08) 100%)", border: "1px solid rgba(245,245,247,0.2)" }}
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="shrink-0">
-              <rect x="2" y="3" width="16" height="14" rx="2" stroke="#818cf8" strokeWidth="1.5" />
-              <path d="M2 7h16" stroke="#818cf8" strokeWidth="1.5" />
-              <path d="M6 3V1M14 3V1" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M6 11h4M6 14h7" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" />
+              <rect x="2" y="3" width="16" height="14" rx="2" stroke="#f5f5f7" strokeWidth="1.5" />
+              <path d="M2 7h16" stroke="#f5f5f7" strokeWidth="1.5" />
+              <path d="M6 3V1M14 3V1" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M6 11h4M6 14h7" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
             <span className="text-accent-light">Leer resumen semanal completo</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
           <h1 className="text-3xl md:text-5xl font-bold mb-3">Semana del 5 al 11 de mayo 2026</h1>

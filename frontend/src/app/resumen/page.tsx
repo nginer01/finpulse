@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import ScrollProgress from "@/components/ScrollProgress";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
   const colors: Record<string, string> = {
@@ -7,7 +8,7 @@ function SourceBadge({ name, type }: { name: string; type: string }) {
     podcast: "bg-purple-500/15 text-purple-400",
     polymarket: "bg-emerald-500/15 text-emerald-400",
     x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-amber-400",
+    bank: "bg-amber-500/15 text-[#ffd60a]",
     news: "bg-rose-500/15 text-rose-400",
   };
   return (
@@ -22,6 +23,7 @@ function SectionDivider() {
 export default function ResumenDiario() {
   return (
     <main className="min-h-screen">
+      <ScrollProgress />
       <Nav />
 
       {/* Reading progress indicator */}
@@ -61,7 +63,7 @@ export default function ResumenDiario() {
           </div>
           <div>
             <p className="text-xs text-muted">Sentimiento</p>
-            <p className="text-lg font-bold text-amber-400">62/100</p>
+            <p className="text-lg font-bold text-[#ffd60a]">62/100</p>
             <p className="text-xs text-muted">Optimismo moderado</p>
           </div>
           <div>
@@ -127,7 +129,7 @@ export default function ResumenDiario() {
                 Los futuros apuntan a apertura plana el lunes. El mercado ya ha descontado gran parte de la noticia — como apunta Matt Levine, <span className="text-accent-light">&quot;los mercados celebran la reduccion de incertidumbre, no los terminos especificos del acuerdo&quot;</span>. La letra pequena muestra que los aranceles a semiconductores e inteligencia artificial se negociaran por separado en Q3.
               </p>
               <p className="mt-3">
-                <span className="text-amber-400 font-medium">Senal de precaucion:</span> El VIX cayo a 13.2, niveles de complacencia no vistos desde enero 2024. @zerohedge advierte en un hilo muy compartido: &quot;VIX sub-14 durante mas de 2 semanas históricamente precede correcciones del 3-5% en las siguientes 4-6 semanas.&quot; No es momento de entrar agresivamente.
+                <span className="text-[#ffd60a] font-medium">Senal de precaucion:</span> El VIX cayo a 13.2, niveles de complacencia no vistos desde enero 2024. @zerohedge advierte en un hilo muy compartido: &quot;VIX sub-14 durante mas de 2 semanas históricamente precede correcciones del 3-5% en las siguientes 4-6 semanas.&quot; No es momento de entrar agresivamente.
               </p>
             </div>
 
@@ -211,7 +213,7 @@ export default function ResumenDiario() {
                 <span className="text-green font-medium">+2.1%</span>
               </div>
               <p className="text-muted">
-                Máximos históricos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposición a China (Apple, Nvidia, Tesla). <span className="text-amber-400">Atención: el VIX en 13.2 indica complacencia extrema — históricamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</span> No vender, pero tampoco añadir aqui ahora. Dejar correr.
+                Máximos históricos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposición a China (Apple, Nvidia, Tesla). <span className="text-[#ffd60a]">Atención: el VIX en 13.2 indica complacencia extrema — históricamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</span> No vender, pero tampoco añadir aqui ahora. Dejar correr.
               </p>
             </div>
 
@@ -328,7 +330,7 @@ export default function ResumenDiario() {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <h3 className="text-foreground font-semibold text-base">Politica monetaria BCE</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">MEDIA</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">MEDIA</span>
               </div>
               <p>
                 Sin cambios de prioridad esta semana, pero la probabilidad de recorte sigue subiendo. Polymarket: 73% para junio (+8% en una semana). Las actas filtradas y las declaraciones de Donovan lo confirman. El dato de inflacion eurozona del 30 de mayo sera la última pieza del puzzle — si sale en linea o por debajo de lo esperado, el recorte es practicamente seguro.
@@ -402,7 +404,7 @@ export default function ResumenDiario() {
                 </div>
                 <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
                   <span>Acuerdo Iran-EEUU antes de agosto</span>
-                  <span className="text-amber-400 font-medium">58% <span className="text-xs text-muted">(+15%)</span></span>
+                  <span className="text-[#ffd60a] font-medium">58% <span className="text-xs text-muted">(+15%)</span></span>
                 </div>
                 <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
                   <span>Recesion EEUU en 2026</span>
@@ -410,7 +412,7 @@ export default function ResumenDiario() {
                 </div>
                 <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
                   <span>S&P 500 sobre 6.000 antes de diciembre</span>
-                  <span className="text-amber-400 font-medium">61% <span className="text-xs text-muted">(+5%)</span></span>
+                  <span className="text-[#ffd60a] font-medium">61% <span className="text-xs text-muted">(+5%)</span></span>
                 </div>
               </div>
             </div>
@@ -606,7 +608,7 @@ export default function ResumenDiario() {
               </div>
             </div>
             <div className="flex items-start gap-4 bg-card border border-amber-500/20 rounded-xl p-5">
-              <div className="w-3 h-3 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+              <div className="w-3 h-3 rounded-full bg-[#ffd60a] mt-1.5 shrink-0" />
               <div>
                 <p className="text-foreground font-medium">Brent — vigilar nivel $72</p>
                 <p className="text-muted mt-1">Soporte tecnico clave. Si el Brent cierra por debajo de $72 en las próximas sesiones, el siguiente soporte esta en $68. Esto representaria una caida adicional del 5-8% desde el nivel actual. Si tienes intencion de reducir posicion, mejor hacerlo antes de que rompa ese soporte.</p>

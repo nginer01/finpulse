@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
 import Tooltip from "@/components/Tooltip";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import dynamic from "next/dynamic";
+import { usePortfolioSnapshot } from "@/hooks/useMarketData";
+import type { Quote } from "@/lib/api";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
 
@@ -144,7 +146,43 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
   );
 }
 
+// Holdings: quantity per ticker (from user's portfolio)
+const HOLDINGS: Record<string, { qty: number; name: string }> = {
+  IWDA: { qty: 35, name: "iShares MSCI World" },
+  VUAA: { qty: 10, name: "Vanguard S&P 500" },
+  BRT: { qty: 15, name: "Brent Crude Oil" },
+  EUNA: { qty: 50, name: "iShares Euro Gov Bond" },
+  SEMI: { qty: 100, name: "VanEck Semiconductor" },
+};
+
+function formatEUR(n: number) {
+  return n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 export default function Home() {
+  const { data: snapshot, loading: marketLoading } = usePortfolioSnapshot();
+
+  // Compute portfolio positions from real market data
+  const positions = Object.entries(HOLDINGS).map(([ticker, { qty, name }]) => {
+    const quote = snapshot?.positions[ticker];
+    const price = quote?.price || 0;
+    const value = price * qty;
+    const changePct = quote?.changePct || 0;
+    return { ticker, name, value, changePct, price, qty };
+  });
+
+  const totalValue = positions.reduce((sum, p) => sum + p.value, 0);
+
+  // Compute weighted weekly change
+  const weightedChange = totalValue > 0
+    ? positions.reduce((sum, p) => sum + (p.changePct * p.value / totalValue), 0)
+    : 0;
+
+  // Format current date
+  const now = new Date();
+  const dateStr = now.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const timeStr = now.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+
   return (
     <main className="min-h-screen overflow-x-hidden">
       <Nav />
@@ -152,7 +190,7 @@ export default function Home() {
       {/* Hero: Daily Summary */}
       <section className="max-w-6xl mx-auto px-6 pt-10 pb-8">
         <div className="stagger-1">
-          <p className="text-muted text-sm mb-1">Domingo, 11 de mayo 2026 — 9:00 AM</p>
+          <p className="text-muted text-sm mb-1 capitalize">{dateStr} — {timeStr}</p>
           <h1 className="text-2xl font-bold mb-4">Buenos días, Nico</h1>
         </div>
 
@@ -161,8 +199,10 @@ export default function Home() {
           <div className="stagger-2">
             <BorderCard padding="p-4">
               <p className="text-xs text-muted mb-1">Portfolio total</p>
-              <AnimatedCounter value={12847.32} className="text-xl font-bold" />
-              <p className="text-xs text-green">+2.4% esta semana</p>
+              <AnimatedCounter value={totalValue} className="text-xl font-bold" />
+              <p className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>
+                {weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy
+              </p>
             </BorderCard>
           </div>
           <div className="stagger-3">
@@ -231,9 +271,6 @@ export default function Home() {
             <div className="w-2 h-2 rounded-full bg-[#30d158] animate-pulse" />
             <h2 className="font-semibold">Resumen diario</h2>
             <span className="text-[10px] text-[#30d158] ml-1">Actualizado hace 2h</span>
-            <Link href="/resumen" className="text-xs text-accent-light hover:text-accent transition-colors ml-auto">
-              Leer resumen completo →
-            </Link>
           </div>
           <div className="flex flex-wrap gap-2 mb-5">
             <SourceBadge name="UBS On-Air" type="podcast" />
@@ -263,6 +300,62 @@ export default function Home() {
               <span className="text-accent-light"> Semiconductores destaca como la mejor posición (+4.2%) </span> tras el anuncio de Nvidia.
             </p>
           </div>
+
+          {/* CTA — Leer resumen completo */}
+          <Link href="/resumen" className="group block mb-6">
+            <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] transition-all duration-500 hover:border-white/[0.20] hover:shadow-[0_0_40px_rgba(255,255,255,0.04)]">
+              {/* Background image with parallax-like effect */}
+              <div className="absolute inset-0">
+                <img
+                  src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=400&fit=crop"
+                  alt=""
+                  className="w-full h-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+              </div>
+
+              {/* Animated accent line at top */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* Subtle moving particles */}
+              <div className="absolute top-4 right-12 w-1 h-1 rounded-full bg-green/60 animate-pulse" />
+              <div className="absolute top-8 right-24 w-1.5 h-1.5 rounded-full bg-white/20 animate-pulse" style={{ animationDelay: "1s" }} />
+              <div className="absolute bottom-6 right-16 w-1 h-1 rounded-full bg-[#ffd60a]/40 animate-pulse" style={{ animationDelay: "0.5s" }} />
+
+              {/* Content */}
+              <div className="relative p-6 sm:p-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-2 h-2 rounded-full bg-green animate-pulse" />
+                  <span className="text-[10px] uppercase tracking-widest text-green font-medium">Briefing listo</span>
+                  <span className="text-[10px] text-muted ml-1">8 min lectura</span>
+                </div>
+
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 transition-transform duration-300 group-hover:translate-x-1">
+                  Leer el briefing completo
+                </h3>
+                <p className="text-sm text-muted/80 max-w-md mb-5 leading-relaxed">
+                  Contexto macro global, impacto detallado en cada posicion de tu portfolio, fuentes clave y recomendaciones de accion.
+                </p>
+
+                {/* Mini preview tags */}
+                <div className="flex flex-wrap items-center gap-2 mb-5">
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-green/10 text-green border border-green/20">S&P 500 en maximos</span>
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-red/10 text-red border border-red/20">Brent -4.2%</span>
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#ffd60a]/10 text-[#ffd60a] border border-[#ffd60a]/20">BCE dovish</span>
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-muted border border-white/10">+5 temas</span>
+                </div>
+
+                {/* Button */}
+                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white/[0.08] border border-white/[0.10] transition-all duration-300 group-hover:bg-white/[0.12] group-hover:border-white/[0.18]">
+                  <span className="text-sm font-medium text-foreground">Abrir briefing</span>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="transition-transform duration-300 group-hover:translate-x-1.5">
+                    <path d="M4 9h10M10 5l4 4-4 4" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </Link>
 
           {/* Collapsible sections */}
           <div className="divide-y divide-card-border">
@@ -539,15 +632,19 @@ export default function Home() {
           <BorderCard padding="p-4">
             <div className="flex items-center justify-between mb-3 px-2">
               <h2 className="font-semibold">Portfolio</h2>
-              <span className="text-xs text-green">+2.4% semanal</span>
+              <span className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>{weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy</span>
             </div>
             <TradingChart />
             <div className="mt-3 px-2">
-              <PortfolioPosition ticker="IWDA" name="iShares MSCI World" change={1.8} value="4.230,00" />
-              <PortfolioPosition ticker="VUAA" name="Vanguard S&P 500" change={2.1} value="3.150,00" />
-              <PortfolioPosition ticker="BRT" name="Brent Crude Oil" change={-3.8} value="1.200,00" />
-              <PortfolioPosition ticker="EUNA" name="iShares Euro Gov Bond" change={0.5} value="2.400,00" />
-              <PortfolioPosition ticker="SEMI" name="VanEck Semiconductor" change={4.2} value="1.867,32" />
+              {positions.map((p) => (
+                <PortfolioPosition
+                  key={p.ticker}
+                  ticker={p.ticker}
+                  name={p.name}
+                  change={p.changePct}
+                  value={formatEUR(p.value)}
+                />
+              ))}
             </div>
           </BorderCard>
 

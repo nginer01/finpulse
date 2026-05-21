@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import ScrollProgress from "@/components/ScrollProgress";
+import LoginGate from "@/components/LoginGate";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
   const colors: Record<string, string> = {
@@ -22,6 +23,7 @@ function SectionDivider() {
 
 export default function ResumenDiario() {
   return (
+    <LoginGate teaserHeight={55}>
     <main className="min-h-screen">
       <ScrollProgress />
       <Nav />
@@ -660,5 +662,6 @@ export default function ResumenDiario() {
 
       </div>
     </main>
+    </LoginGate>
   );
 }

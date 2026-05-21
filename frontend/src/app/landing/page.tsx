@@ -355,7 +355,7 @@ export default function LandingPage() {
             ))}
           </div>
           <div ref={mag1.ref} onMouseMove={mag1.onMove} onMouseLeave={mag1.onLeave} className="transition-transform duration-300 ease-out">
-            <Link href="/" className={`text-[11px] uppercase tracking-[0.2em] font-semibold px-6 py-2.5 border transition-all duration-700 ${scrolled ? "text-[#1a1a1a] border-[#1a1a1a]/30 hover:bg-[#1a1a1a] hover:text-white" : "text-white border-white/30 hover:bg-white hover:text-[#1a1a1a]"}`}>
+            <Link href="/login" className={`text-[11px] uppercase tracking-[0.2em] font-semibold px-6 py-2.5 border transition-all duration-700 ${scrolled ? "text-[#1a1a1a] border-[#1a1a1a]/30 hover:bg-[#1a1a1a] hover:text-white" : "text-white border-white/30 hover:bg-white hover:text-[#1a1a1a]"}`}>
               Entrar
             </Link>
           </div>
@@ -380,8 +380,8 @@ export default function LandingPage() {
             </Reveal>
             <Reveal delay={1000}>
               <div ref={mag2.ref} onMouseMove={mag2.onMove} onMouseLeave={mag2.onLeave} className="inline-block transition-transform duration-300 ease-out">
-                <Link href="/" className="inline-block text-[12px] uppercase tracking-[0.3em] text-white/80 border border-white/30 backdrop-blur-sm bg-white/[0.06] px-10 py-4 hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 font-semibold hover:tracking-[0.4em]">
-                  Descubrir
+                <Link href="/login" className="inline-block text-[12px] uppercase tracking-[0.3em] text-white/80 border border-white/30 backdrop-blur-sm bg-white/[0.06] px-10 py-4 hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 font-semibold hover:tracking-[0.4em]">
+                  Comenzar
                 </Link>
               </div>
             </Reveal>
@@ -755,7 +755,7 @@ export default function LandingPage() {
               <Reveal delay={250}><p className="text-[15px] text-white/45 font-normal leading-[2] mb-16 max-w-md mx-auto tracking-wide">Para inversores que toman sus propias decisiones.</p></Reveal>
               <Reveal delay={400}>
                 <div className="inline-block transition-transform duration-300 ease-out">
-                  <Link href="/" className="group/cta inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.3em] text-white border border-white/30 px-14 py-5 hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 font-semibold backdrop-blur-sm bg-white/[0.04] hover:tracking-[0.4em] hover:px-16">
+                  <Link href="/login" className="group/cta inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.3em] text-white border border-white/30 px-14 py-5 hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 font-semibold backdrop-blur-sm bg-white/[0.04] hover:tracking-[0.4em] hover:px-16">
                     Comenzar ahora
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="opacity-0 -translate-x-2 group-hover/cta:opacity-100 group-hover/cta:translate-x-0 transition-all duration-500"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </Link>

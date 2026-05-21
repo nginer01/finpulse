@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api import portfolio, chat, news, market
+from app.api import portfolio, chat, news, market, auth
 
 app = FastAPI(
     title=settings.app_name,
@@ -18,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/api")
 app.include_router(portfolio.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(news.router, prefix="/api")

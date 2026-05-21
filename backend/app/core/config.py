@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     gmail_address: str = ""
     gmail_app_password: str = ""
     cors_origins: list[str] = ["http://localhost:3000"]
+    supabase_url: str = ""
+    supabase_anon_key: str = ""
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

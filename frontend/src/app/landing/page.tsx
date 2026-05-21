@@ -309,10 +309,10 @@ function Particles() {
 /* ══════════════════════════════════════════════
    SPLIT TEXT (letter-by-letter hero)
    ══════════════════════════════════════════════ */
-function SplitText({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) {
+function SplitText({ text, className = "", delay = 0, style }: { text: string; className?: string; delay?: number; style?: React.CSSProperties }) {
   const { ref, visible } = useReveal();
   return (
-    <div ref={ref} className={className} aria-label={text}>
+    <div ref={ref} className={className} style={style} aria-label={text}>
       {text.split("").map((char, i) => (
         <span key={i} className={`inline-block transition-all duration-[0.8s] ease-[cubic-bezier(0.16,1,0.3,1)] ${visible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-[40px] blur-[4px]"}`}
           style={{ transitionDelay: `${delay + i * 50}ms` }}>

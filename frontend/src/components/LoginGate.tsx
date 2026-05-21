@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * LoginGate — overlay that blocks scrolling after a certain percentage
@@ -11,13 +12,11 @@ import Link from "next/link";
  * The `teaserHeight` prop controls how much content is visible (in vh).
  */
 export default function LoginGate({ children, teaserHeight = 60 }: { children: React.ReactNode; teaserHeight?: number }) {
+  const { isLoggedIn, loading } = useAuth();
   const [showGate, setShowGate] = useState(false);
 
-  // TODO: replace with real auth check
-  const isLoggedIn = false;
-
   useEffect(() => {
-    if (isLoggedIn) return;
+    if (isLoggedIn || loading) return;
     const onScroll = () => {
       const threshold = window.innerHeight * (teaserHeight / 100);
       setShowGate(window.scrollY > threshold);
@@ -25,8 +24,9 @@ export default function LoginGate({ children, teaserHeight = 60 }: { children: R
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, [teaserHeight, isLoggedIn]);
+  }, [teaserHeight, isLoggedIn, loading]);
 
+  if (loading) return <>{children}</>;
   if (isLoggedIn) return <>{children}</>;
 
   return (

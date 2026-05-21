@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
 import MobileNav from "@/components/MobileNav";
 import AIChatButton from "@/components/AIChatButton";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col pb-16 sm:pb-0">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <MobileNav />
         <AIChatButton />
       </body>

@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { login, register } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";
+import type { AuthError } from "@/lib/auth";
 
 const inputClass = "w-full bg-white border rounded-xl px-5 py-3.5 text-[14px] text-[#1a1a1a] placeholder-[#ccc] outline-none focus:border-[#1a1a1a]/40 transition-colors duration-300";
 const labelClass = "block text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-2.5";
@@ -34,6 +38,8 @@ function PasswordStrength({ password }: { password: string }) {
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { setUser } = useAuth();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,35 +91,29 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // TODO: replace with real API call to backend
-      const endpoint = mode === "login" ? "/api/auth/login" : "/api/auth/register";
-      const body = mode === "login"
-        ? { email, password }
-        : { email, password, name };
-
-      const res = await fetch(`http://localhost:8000${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        if (res.status === 409) {
-          setError("Ya existe una cuenta con este email");
-        } else if (res.status === 401) {
-          setError("Email o contrasena incorrectos");
-        } else {
-          setError(data.detail || "Error del servidor. Intentalo de nuevo.");
-        }
-        return;
+      if (mode === "login") {
+        const data = await login(email, password);
+        setUser({
+          id: data.user_id,
+          name: data.name,
+          email: data.email,
+          experience_level: "intermedio",
+          timezone: "Europe/Madrid",
+        });
+      } else {
+        const data = await register(email, password, name);
+        setUser({
+          id: data.user_id,
+          name: data.name,
+          email: data.email,
+          experience_level: "intermedio",
+          timezone: "Europe/Madrid",
+        });
       }
-
-      // TODO: store token, redirect to dashboard
-      // const data = await res.json();
-      // router.push("/");
-    } catch {
-      setError("No se pudo conectar con el servidor");
+      router.push("/");
+    } catch (err: unknown) {
+      const authErr = err as AuthError;
+      setError(authErr.detail || "Error inesperado");
     } finally {
       setLoading(false);
     }

@@ -2,32 +2,31 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * AuthRedirect — redirects to /login if user is not authenticated.
  * Wrap page content with this for pages that require full auth (no teaser).
- *
- * TODO: replace isLoggedIn with real auth check.
  */
 export default function AuthRedirect({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-
-  // TODO: replace with real auth check
-  const isLoggedIn = false;
+  const { isLoggedIn, loading } = useAuth();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!loading && !isLoggedIn) {
       router.replace("/login");
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, loading, router]);
 
-  if (!isLoggedIn) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
       </div>
     );
   }
+
+  if (!isLoggedIn) return null;
 
   return <>{children}</>;
 }

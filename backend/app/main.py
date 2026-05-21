@@ -38,3 +38,27 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/debug/db")
+async def debug_db():
+    import os
+    db_url = os.environ.get("DATABASE_URL", "NOT SET")
+    # Mask password
+    masked = db_url
+    if "@" in db_url and ":" in db_url:
+        parts = db_url.split("@")
+        pre = parts[0]
+        host = parts[1] if len(parts) > 1 else ""
+        user_pass = pre.split("//")[-1] if "//" in pre else pre
+        user = user_pass.split(":")[0] if ":" in user_pass else user_pass
+        masked = f"...{user}:****@{host}"
+
+    try:
+        from app.core.database import async_session
+        from sqlalchemy import text
+        async with async_session() as session:
+            result = await session.execute(text("SELECT 1"))
+            return {"db": "connected", "url_masked": masked}
+    except Exception as e:
+        return {"db": "error", "error": str(e), "url_masked": masked}

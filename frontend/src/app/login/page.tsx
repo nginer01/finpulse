@@ -3,20 +3,127 @@
 import { useState } from "react";
 import Link from "next/link";
 
+const inputClass = "w-full bg-white border rounded-xl px-5 py-3.5 text-[14px] text-[#1a1a1a] placeholder-[#ccc] outline-none focus:border-[#1a1a1a]/40 transition-colors duration-300";
+const labelClass = "block text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-2.5";
+
+function PasswordStrength({ password }: { password: string }) {
+  const checks = [
+    { label: "8+ caracteres", ok: password.length >= 8 },
+    { label: "Mayuscula", ok: /[A-Z]/.test(password) },
+    { label: "Numero", ok: /[0-9]/.test(password) },
+    { label: "Simbolo", ok: /[^A-Za-z0-9]/.test(password) },
+  ];
+  const score = checks.filter((c) => c.ok).length;
+  const colors = ["#e5e0db", "#c4001a", "#b8860b", "#b8860b", "#1a1a1a"];
+  return (
+    <div className="mt-3">
+      <div className="flex gap-1.5 mb-2">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="flex-1 h-[3px] rounded-full transition-all duration-500" style={{ backgroundColor: i < score ? colors[score] : "#f0ede8" }} />
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1">
+        {checks.map((c) => (
+          <span key={c.label} className={`text-[10px] font-semibold transition-colors duration-300 ${c.ok ? "text-[#1a1a1a]" : "text-[#ccc]"}`}>
+            {c.ok ? "✓" : "○"} {c.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: real auth
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setName("");
+    setError("");
   };
+
+  const switchMode = (m: "login" | "register") => {
+    setMode(m);
+    resetForm();
+  };
+
+  const validate = (): string | null => {
+    if (!email.trim()) return "Introduce tu email";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Email no valido";
+    if (!password) return "Introduce tu contrasena";
+
+    if (mode === "register") {
+      if (!name.trim()) return "Introduce tu nombre";
+      if (password.length < 8) return "La contrasena debe tener al menos 8 caracteres";
+      if (!/[A-Z]/.test(password)) return "La contrasena necesita al menos una mayuscula";
+      if (!/[0-9]/.test(password)) return "La contrasena necesita al menos un numero";
+      if (password !== confirmPassword) return "Las contrasenas no coinciden";
+    }
+    return null;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // TODO: replace with real API call to backend
+      const endpoint = mode === "login" ? "/api/auth/login" : "/api/auth/register";
+      const body = mode === "login"
+        ? { email, password }
+        : { email, password, name };
+
+      const res = await fetch(`http://localhost:8000${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        if (res.status === 409) {
+          setError("Ya existe una cuenta con este email");
+        } else if (res.status === 401) {
+          setError("Email o contrasena incorrectos");
+        } else {
+          setError(data.detail || "Error del servidor. Intentalo de nuevo.");
+        }
+        return;
+      }
+
+      // TODO: store token, redirect to dashboard
+      // const data = await res.json();
+      // router.push("/");
+    } catch {
+      setError("No se pudo conectar con el servidor");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const passwordsMatch = confirmPassword.length > 0 && password === confirmPassword;
+  const passwordsMismatch = confirmPassword.length > 0 && password !== confirmPassword;
 
   return (
     <main className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6 login-page">
-      {/* Background subtle texture */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0)", backgroundSize: "32px 32px" }} />
 
       <div className="w-full max-w-[420px] relative z-10">
@@ -28,54 +135,80 @@ export default function LoginPage() {
 
         {/* Toggle */}
         <div className="flex mb-10 border-b border-[#e5e0db]">
-          <button
-            onClick={() => setMode("login")}
-            className={`flex-1 pb-4 text-[12px] uppercase tracking-[0.25em] font-semibold transition-all duration-500 border-b-2 -mb-[1px] ${mode === "login" ? "text-[#1a1a1a] border-[#1a1a1a]" : "text-[#ccc] border-transparent hover:text-[#999]"}`}
-          >
+          <button onClick={() => switchMode("login")}
+            className={`flex-1 pb-4 text-[12px] uppercase tracking-[0.25em] font-semibold transition-all duration-500 border-b-2 -mb-[1px] ${mode === "login" ? "text-[#1a1a1a] border-[#1a1a1a]" : "text-[#ccc] border-transparent hover:text-[#999]"}`}>
             Iniciar sesion
           </button>
-          <button
-            onClick={() => setMode("register")}
-            className={`flex-1 pb-4 text-[12px] uppercase tracking-[0.25em] font-semibold transition-all duration-500 border-b-2 -mb-[1px] ${mode === "register" ? "text-[#1a1a1a] border-[#1a1a1a]" : "text-[#ccc] border-transparent hover:text-[#999]"}`}
-          >
+          <button onClick={() => switchMode("register")}
+            className={`flex-1 pb-4 text-[12px] uppercase tracking-[0.25em] font-semibold transition-all duration-500 border-b-2 -mb-[1px] ${mode === "register" ? "text-[#1a1a1a] border-[#1a1a1a]" : "text-[#ccc] border-transparent hover:text-[#999]"}`}>
             Crear cuenta
           </button>
         </div>
+
+        {/* Error message */}
+        {error && (
+          <div className="mb-6 px-4 py-3 rounded-xl bg-[#c4001a]/[0.06] border border-[#c4001a]/15 flex items-start gap-3">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0"><circle cx="8" cy="8" r="7" stroke="#c4001a" strokeWidth="1.2"/><path d="M8 5v3.5M8 10.5v.5" stroke="#c4001a" strokeWidth="1.2" strokeLinecap="round"/></svg>
+            <p className="text-[12px] text-[#c4001a] font-medium leading-[1.6]">{error}</p>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           {mode === "register" && (
             <div>
-              <label className="block text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-2.5">Nombre</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Tu nombre"
-                className="w-full bg-white border border-[#e5e0db] rounded-xl px-5 py-3.5 text-[14px] text-[#1a1a1a] placeholder-[#ccc] outline-none focus:border-[#1a1a1a]/40 transition-colors duration-300"
-              />
+              <label className={labelClass}>Nombre</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)}
+                placeholder="Tu nombre" className={`${inputClass} ${!name.trim() && error?.includes("nombre") ? "border-[#c4001a]/40" : "border-[#e5e0db]"}`} />
             </div>
           )}
+
           <div>
-            <label className="block text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-2.5">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              className="w-full bg-white border border-[#e5e0db] rounded-xl px-5 py-3.5 text-[14px] text-[#1a1a1a] placeholder-[#ccc] outline-none focus:border-[#1a1a1a]/40 transition-colors duration-300"
-            />
+            <label className={labelClass}>Email</label>
+            <input type="email" value={email} onChange={(e) => { setEmail(e.target.value); setError(""); }}
+              placeholder="tu@email.com" className={`${inputClass} ${error?.includes("email") || error?.includes("Email") ? "border-[#c4001a]/40" : "border-[#e5e0db]"}`} />
           </div>
+
           <div>
-            <label className="block text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-2.5">Contrasena</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full bg-white border border-[#e5e0db] rounded-xl px-5 py-3.5 text-[14px] text-[#1a1a1a] placeholder-[#ccc] outline-none focus:border-[#1a1a1a]/40 transition-colors duration-300"
-            />
+            <label className={labelClass}>Contrasena</label>
+            <div className="relative">
+              <input type={showPassword ? "text" : "password"} value={password}
+                onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                placeholder="••••••••"
+                className={`${inputClass} pr-12 ${error?.includes("contrasena") && !error.includes("coinciden") ? "border-[#c4001a]/40" : "border-[#e5e0db]"}`} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#ccc] hover:text-[#999] transition-colors">
+                {showPassword ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" strokeLinecap="round" strokeLinejoin="round"/><line x1="1" y1="1" x2="23" y2="23" strokeLinecap="round"/></svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                )}
+              </button>
+            </div>
+            {mode === "register" && password.length > 0 && <PasswordStrength password={password} />}
           </div>
+
+          {mode === "register" && (
+            <div>
+              <label className={labelClass}>Confirmar contrasena</label>
+              <div className="relative">
+                <input type={showConfirm ? "text" : "password"} value={confirmPassword}
+                  onChange={(e) => { setConfirmPassword(e.target.value); setError(""); }}
+                  placeholder="••••••••"
+                  className={`${inputClass} pr-12 ${passwordsMismatch ? "border-[#c4001a]/40" : passwordsMatch ? "border-[#1a1a1a]/30" : "border-[#e5e0db]"}`} />
+                <button type="button" onClick={() => setShowConfirm(!showConfirm)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#ccc] hover:text-[#999] transition-colors">
+                  {showConfirm ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" strokeLinecap="round" strokeLinejoin="round"/><line x1="1" y1="1" x2="23" y2="23" strokeLinecap="round"/></svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                  )}
+                </button>
+              </div>
+              {passwordsMismatch && <p className="text-[11px] text-[#c4001a] mt-2 font-medium">Las contrasenas no coinciden</p>}
+              {passwordsMatch && <p className="text-[11px] text-[#1a1a1a] mt-2 font-medium">✓ Las contrasenas coinciden</p>}
+            </div>
+          )}
 
           {mode === "login" && (
             <div className="text-right">
@@ -85,10 +218,9 @@ export default function LoginPage() {
             </div>
           )}
 
-          <button
-            type="submit"
-            className="w-full bg-[#1a1a1a] text-white text-[12px] uppercase tracking-[0.25em] font-semibold py-4 rounded-xl hover:bg-[#333] transition-all duration-300 mt-4"
-          >
+          <button type="submit" disabled={loading}
+            className="w-full bg-[#1a1a1a] text-white text-[12px] uppercase tracking-[0.25em] font-semibold py-4 rounded-xl hover:bg-[#333] transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+            {loading && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
             {mode === "login" ? "Entrar" : "Crear cuenta"}
           </button>
         </form>

@@ -118,8 +118,8 @@ function TextReveal({ text, className = "" }: { text: string; className?: string
     const onScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const start = window.innerHeight * 0.85;
-      const end = window.innerHeight * 0.25;
+      const start = window.innerHeight * 1.1;
+      const end = window.innerHeight * 0.55;
       const p = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
       setVisibleWords(Math.floor(p * words.length));
     };

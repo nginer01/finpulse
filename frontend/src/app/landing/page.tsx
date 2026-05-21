@@ -227,8 +227,7 @@ export default function LandingPage() {
         </div>
         <div className="sticky top-0 h-screen flex items-center justify-center z-10" style={{ opacity: heroOp }}>
           <div className="text-center max-w-5xl mx-auto px-6">
-            <Reveal><p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-8 font-semibold">FinPulse presenta</p></Reveal>
-            <Reveal delay={200}><h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-extralight leading-[0.95] tracking-tight text-white">Inteligencia<br />financiera</h1></Reveal>
+            <Reveal delay={200}><h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] uppercase tracking-[0.25em] font-semibold leading-[0.95] text-white" style={{ transform: "scaleY(0.85)" }}>FinPulse</h1></Reveal>
             <Reveal delay={500}>
               <Link href="/" className="inline-block mt-12 text-[12px] uppercase tracking-[0.3em] text-white/80 border border-white/30 backdrop-blur-sm bg-white/[0.06] px-10 py-4 hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 font-semibold">
                 Descubrir
@@ -421,7 +420,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── IMAGE 4 — INTELLIGENCE DIVIDER ─── */}
-      <CinematicDivider src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1920&h=1080&fit=crop&q=90" alt="Stock analysis">
+      <CinematicDivider src="https://images.unsplash.com/photo-1462206092226-f46025ffe607?w=1920&h=1080&fit=crop&q=90" alt="Cityscape light">
         <div className="text-center">
           <p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-5 font-semibold">IA con criterio</p>
           <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Recomendaciones fundamentadas</h2>
@@ -491,7 +490,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── IMAGE 5 — STRESS TEST DIVIDER ─── */}
-      <CinematicDivider src="https://images.unsplash.com/photo-1613442301025-2d930f1cc9dc?w=1920&h=1080&fit=crop&q=90" alt="Market crash">
+      <CinematicDivider src="https://images.unsplash.com/photo-1534996858221-380b92700493?w=1920&h=1080&fit=crop&q=90" alt="Storm clouds">
         <div className="text-center">
           <p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-5 font-semibold">Resiliencia</p>
           <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">¿Y si se repite 2008?</h2>

@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     gmail_address: str = ""
     gmail_app_password: str = ""
-    cors_origins: list[str] = ["http://localhost:3000"]
+    cors_origins: list[str] = ["http://localhost:3000", "https://frontend-nginer01s-projects.vercel.app"]
     supabase_url: str = ""
     supabase_anon_key: str = ""
 

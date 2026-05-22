@@ -62,7 +62,8 @@ finpulse/
 - Frontend: src/lib/auth.ts (login, register, tokens en localStorage)
 - Frontend: src/context/AuthContext.tsx (AuthProvider, useAuth hook)
 - Backend: app/api/auth.py (register, login, me, refresh endpoints)
-- Componentes: LoginGate (teaser con scroll-lock), AuthRedirect (redirect a /login)
+- LoginGate: teaser visible + gradient fade + prompt "Crea tu cuenta" siempre visible (no depende de scroll)
+- AuthRedirect: redirect a /login para paginas protegidas sin teaser
 - Cuenta de test: nicolas@finpulse.es / FinPulse2026!
 
 ### Deploy
@@ -75,11 +76,15 @@ finpulse/
 - EUNA -> EUNA.AS, SEMI -> SEMI.AS, BRT -> BZ=F
 - US stocks/ETFs: pass-through (AAPL, MSFT, SPY, etc.)
 
-## Design system app (Apple Minimal)
+## Design system app (unificado con landing)
+- Fuente global: Helvetica Neue (-apple-system) — NO Geist (override en globals.css --font-sans)
 - Fondo: negro puro #000000
 - Cards: #1d1d1f/60 con borde white/8%
 - Colores: verde #30d158, rojo #ff453a, amarillo #ffd60a
-- Nav: fondo BLANCO, texto #1d1d1f
+- Nav: FINPULSE uppercase tracking-[0.25em] scaleY(0.88), links uppercase tracking-[0.2em] 11px
+- Titulos h1: font-extralight tracking-wide
+- Section labels h2/h3: text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80
+- NO hay seccion de marketing/features en el dashboard (eliminada)
 
 ## Design system landing (estilo Rolex + cinematico)
 - Fondo: #faf8f5 (crema calido)

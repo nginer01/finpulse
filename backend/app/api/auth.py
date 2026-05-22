@@ -149,17 +149,20 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
 
 @router.post("/login", response_model=AuthResponse)
 async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
-    async with httpx.AsyncClient() as client:
-        res = await client.post(
-            f"{SUPABASE_AUTH}/token?grant_type=password",
-            headers=HEADERS,
-            json={"email": body.email, "password": body.password},
-        )
+    try:
+        async with httpx.AsyncClient() as client:
+            res = await client.post(
+                f"{SUPABASE_AUTH}/token?grant_type=password",
+                headers=HEADERS,
+                json={"email": body.email, "password": body.password},
+            )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Supabase connection error: {str(e)}")
 
     if res.status_code == 400:
         raise HTTPException(status_code=401, detail="Email o contrasena incorrectos")
     if res.status_code != 200:
-        raise HTTPException(status_code=res.status_code, detail="Error de autenticacion")
+        raise HTTPException(status_code=res.status_code, detail=f"Auth error: {res.status_code} {res.text}")
 
     data = res.json()
     supabase_id = data.get("user", {}).get("id")

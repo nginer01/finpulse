@@ -238,7 +238,7 @@ export default function OnboardingPage() {
                 <div className="flex justify-center mb-2">
                   <PulseLogoLarge />
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+                <h1 className="text-2xl font-extralight tracking-wide text-foreground">
                   Bienvenido a <span className="text-accent">FinPulse</span>
                 </h1>
                 <p className="text-lg text-foreground/80">
@@ -265,7 +265,7 @@ export default function OnboardingPage() {
                   <button onClick={back} className="flex items-center gap-1 text-muted hover:text-foreground transition-colors text-sm cursor-pointer mb-6">
                     <ArrowLeft /> Atras
                   </button>
-                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                  <h1 className="text-2xl font-extralight tracking-wide text-foreground">
                     Sobre ti
                   </h1>
                   <p className="text-muted text-sm mt-1">Personaliza tu experiencia</p>
@@ -325,7 +325,7 @@ export default function OnboardingPage() {
                     <button onClick={back} className="flex items-center gap-1 text-muted hover:text-foreground transition-colors text-sm cursor-pointer mb-6">
                       <ArrowLeft /> Atras
                     </button>
-                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                    <h1 className="text-2xl font-extralight tracking-wide text-foreground">
                       Conecta tu portfolio
                     </h1>
                     <p className="text-muted text-sm mt-1">Importa tus posiciones o empieza de cero</p>
@@ -385,7 +385,7 @@ export default function OnboardingPage() {
                   <button onClick={back} className="flex items-center gap-1 text-muted hover:text-foreground transition-colors text-sm cursor-pointer mb-6">
                     <ArrowLeft /> Atras
                   </button>
-                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                  <h1 className="text-2xl font-extralight tracking-wide text-foreground">
                     Que te interesa seguir?
                   </h1>
                   <p className="text-muted text-sm mt-1">Selecciona los temas para tu resumen diario</p>
@@ -437,7 +437,7 @@ export default function OnboardingPage() {
               <div key="step4" className="step-enter text-center space-y-6">
                 <CheckmarkAnimated />
 
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                <h1 className="text-2xl font-extralight tracking-wide text-foreground">
                   Todo listo{name ? `, ${name}` : ""}!
                 </h1>
 

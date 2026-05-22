@@ -319,7 +319,7 @@ function BiasCard({ b }: { b: Bias }) {
   return (
     <div className={`border rounded-xl p-5 space-y-3 ${s.bg}`}>
       <div className="flex items-center justify-between">
-        <h4 className="font-bold text-lg">{b.name}</h4>
+        <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{b.name}</h4>
         <span className={`text-xs font-bold ${s.color}`}>{s.label}</span>
       </div>
       <p className="text-xs text-muted">
@@ -360,7 +360,7 @@ function ScenarioNvidia() {
         className="w-full h-40 object-cover"
       />
       <div className="p-5 space-y-4">
-        <h4 className="font-bold">Si hubieras mantenido NVIDIA en vez de vender en marzo...</h4>
+        <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Si hubieras mantenido NVIDIA en vez de vender en marzo...</h4>
         <div className="space-y-2">
           <div>
             <div className="flex justify-between text-xs text-muted mb-1">
@@ -411,7 +411,7 @@ function ScenarioBitcoin() {
         className="w-full h-40 object-cover"
       />
       <div className="p-5 space-y-4">
-        <h4 className="font-bold">Si hubieras comprado Bitcoin ETF en enero...</h4>
+        <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Si hubieras comprado Bitcoin ETF en enero...</h4>
         <div className="space-y-2">
           <div>
             <div className="flex justify-between text-xs text-muted mb-1">
@@ -526,7 +526,7 @@ function SectionHeader({
   return (
     <div className="mb-6">
       <span className="text-xs font-mono text-accent mb-1 block">{number}</span>
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{title}</h2>
       <p className="text-sm text-muted mt-1">{subtitle}</p>
     </div>
   );
@@ -556,7 +556,7 @@ export default function AprendizajePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <p className="text-muted text-sm mb-1">Centro de aprendizaje</p>
-            <h1 className="text-3xl sm:text-4xl font-bold">Tu perfil inversor</h1>
+            <h1 className="text-2xl font-extralight tracking-wide">Tu perfil inversor</h1>
             <p className="text-muted text-sm mt-2">
               Analisis de comportamiento, sesgos y calidad de tus decisiones
             </p>
@@ -582,7 +582,7 @@ export default function AprendizajePage() {
             {/* Summary */}
             <div className="space-y-4">
               <BorderCard padding="p-5" className="space-y-4">
-                <h3 className="font-bold text-lg">
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">
                   Score total:{" "}
                   <span className="text-accent-light">{(totalScore * 100).toFixed(1)}%</span>
                 </h3>
@@ -629,7 +629,7 @@ export default function AprendizajePage() {
                   </span>
                   .
                 </p>
-                <p className="text-green font-bold text-lg mt-2">Mejora del +20%</p>
+                <p className="text-green font-semibold text-sm uppercase tracking-wide mt-2">Mejora del +20%</p>
                 <div className="w-full h-2 bg-card-border rounded-full mt-3 overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-accent to-green rounded-full"

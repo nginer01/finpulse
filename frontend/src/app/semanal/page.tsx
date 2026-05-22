@@ -164,7 +164,7 @@ export default function SemanalPage() {
               <path d="M3 8h10M9 4l4 4-4 4" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">Semana del 5 al 11 de mayo 2026</h1>
+          <h1 className="text-2xl font-extralight tracking-wide mb-3">Semana del 5 al 11 de mayo 2026</h1>
           <p className="text-lg md:text-xl" style={{ color: "var(--color-muted)" }}>
             Tu semana en numeros
           </p>
@@ -198,7 +198,7 @@ export default function SemanalPage() {
 
         {/* ---- 3. TIMELINE ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Lo que paso esta semana</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-8">Lo que paso esta semana</h2>
           <div className="relative pl-8 md:pl-12">
             {/* vertical line */}
             <div className="absolute left-3 md:left-5 top-0 bottom-0 w-0.5" style={{ backgroundColor: "var(--color-card-border)" }} />
@@ -239,7 +239,7 @@ export default function SemanalPage() {
 
         {/* ---- 4. DECISIONS ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Tus decisiones esta semana</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-8">Tus decisiones esta semana</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {decisions.map((d) => (
               <div
@@ -248,7 +248,7 @@ export default function SemanalPage() {
                 style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-card-border)" }}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">{d.title}</h3>
+                  <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{d.title}</h3>
                   <span
                     className="px-3 py-1 rounded-full text-xs font-bold uppercase"
                     style={{
@@ -285,7 +285,7 @@ export default function SemanalPage() {
 
         {/* ---- 5. RECOMMENDATION TRACK RECORD ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-2">Recomendaciones: como fueron</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-2">Recomendaciones: como fueron</h2>
           <p className="mb-8 text-sm" style={{ color: "var(--color-muted)" }}>
             Score global: <span className="font-bold" style={{ color: "var(--color-green)" }}>78% acierto</span> (14/18)
           </p>
@@ -315,7 +315,7 @@ export default function SemanalPage() {
 
         {/* ---- 6. INVESTOR DNA ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Investor DNA - Evolucion</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-8">Investor DNA - Evolucion</h2>
           <div
             className="rounded-xl p-6 border space-y-6"
             style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-card-border)" }}
@@ -356,7 +356,7 @@ export default function SemanalPage() {
 
         {/* ---- 7. LESSON OF THE WEEK ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Leccion de la semana</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-8">Leccion de la semana</h2>
           <div
             className="relative rounded-xl overflow-hidden border"
             style={{ borderColor: "var(--color-accent)", backgroundColor: "var(--color-card)" }}
@@ -373,7 +373,7 @@ export default function SemanalPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </span>
-                <h3 className="text-xl font-bold">La importancia del timing en ventas</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">La importancia del timing en ventas</h3>
               </div>
               <p className="leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 Tu venta de BRT el jueves fue excelente: detectaste el volumen institucional de venta antes de la caida.
@@ -395,7 +395,7 @@ export default function SemanalPage() {
 
         {/* ---- 8. OBJECTIVES ---- */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">Objetivos para la próxima semana</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-8">Objetivos para la próxima semana</h2>
           <div className="space-y-4">
             {objectives.map((obj, i) => {
               const priorityStyles: Record<string, { bg: string; text: string; label: string }> = {

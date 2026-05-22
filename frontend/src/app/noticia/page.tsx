@@ -149,7 +149,7 @@ export default function NoticiaPage() {
             <SourceBadge name="Matt Levine" type="newsletter" />
             <SourceBadge name="Polymarket" type="polymarket" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-3">
+          <h1 className="text-2xl font-extralight tracking-wide leading-tight mb-3">
             Acuerdo comercial EEUU-China: impacto en ETFs globales
           </h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted">
@@ -199,7 +199,7 @@ export default function NoticiaPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Analisis completo</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Analisis completo</h2>
               <p className="text-xs text-muted">Que paso, por que importa, que significa para tu dinero</p>
             </div>
           </div>
@@ -304,7 +304,7 @@ export default function NoticiaPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Hilo temporal</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Hilo temporal</h2>
               <p className="text-xs text-muted">Como evoluciono esta historia dia a dia</p>
             </div>
           </div>
@@ -382,7 +382,7 @@ export default function NoticiaPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Impacto en tu portfolio</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Impacto en tu portfolio</h2>
               <p className="text-xs text-muted">Como afecta esta noticia a tus posiciones</p>
             </div>
           </div>
@@ -476,7 +476,7 @@ export default function NoticiaPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Paralelo histórico</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Paralelo histórico</h2>
               <p className="text-xs text-muted">2019 vs 2026: dos acuerdos, dos contextos</p>
             </div>
           </div>
@@ -490,7 +490,7 @@ export default function NoticiaPage() {
                     19
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Acuerdo Fase 1 — 2019</h3>
+                    <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Acuerdo Fase 1 — 2019</h3>
                     <p className="text-xs text-muted">Diciembre 2019</p>
                   </div>
                 </div>
@@ -527,7 +527,7 @@ export default function NoticiaPage() {
                     26
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Acuerdo Fase 1 — 2026</h3>
+                    <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Acuerdo Fase 1 — 2026</h3>
                     <p className="text-xs text-muted">Mayo 2026</p>
                   </div>
                 </div>
@@ -584,7 +584,7 @@ export default function NoticiaPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6">
-              <h2 className="text-2xl font-bold">Contraargumentos</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Contraargumentos</h2>
               <p className="text-xs text-muted">Caso optimista vs caso pesimista</p>
             </div>
           </div>
@@ -607,7 +607,7 @@ export default function NoticiaPage() {
                     <polyline points="17 6 23 6 23 12" />
                   </svg>
                 </div>
-                <h3 className="text-green font-semibold text-lg">Caso optimista</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-green">Caso optimista</h3>
               </div>
               <ul className="space-y-3 text-sm text-muted leading-6">
                 <li className="flex items-start gap-2">
@@ -665,7 +665,7 @@ export default function NoticiaPage() {
                     <polyline points="17 18 23 18 23 12" />
                   </svg>
                 </div>
-                <h3 className="text-red font-semibold text-lg">Caso pesimista</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-red">Caso pesimista</h3>
               </div>
               <ul className="space-y-3 text-sm text-muted leading-6">
                 <li className="flex items-start gap-2">
@@ -712,7 +712,7 @@ export default function NoticiaPage() {
 
         {/* ───── 8. NOTICIAS RELACIONADAS ───── */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Noticias relacionadas</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-6">Noticias relacionadas</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
               href="#"

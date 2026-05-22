@@ -331,7 +331,7 @@ export default function StressTestPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-[var(--color-background)]/70 to-transparent" />
           <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10">
-            <h1 className="text-3xl sm:text-5xl font-bold text-[var(--color-foreground)] tracking-tight">
+            <h1 className="text-2xl font-extralight tracking-wide text-[var(--color-foreground)]">
               Stress Test
             </h1>
             <p className="mt-2 text-base sm:text-lg text-[var(--color-muted)] max-w-md">
@@ -342,7 +342,7 @@ export default function StressTestPage() {
 
         {/* ── SCENARIO SELECTOR ── */}
         <section className="mb-12">
-          <h2 className="text-xl font-semibold text-[var(--color-foreground)] mb-4">
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-4">
             Selecciona un escenario histórico
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -379,7 +379,7 @@ export default function StressTestPage() {
 
         {/* ── SIMULATION RESULTS ── */}
         <section className="mb-12">
-          <h2 className="text-xl font-semibold text-[var(--color-foreground)] mb-6">
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-6">
             Impacto simulado: {scenario.name}
           </h2>
 
@@ -426,7 +426,7 @@ export default function StressTestPage() {
           </div>
 
           {/* Position-by-position impact */}
-          <h3 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">
+          <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-4">
             Impacto por posicion
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -486,7 +486,7 @@ export default function StressTestPage() {
           </div>
 
           {/* What you could do — action cards */}
-          <h3 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">
+          <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-4">
             Que podrias hacer
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
@@ -529,7 +529,7 @@ export default function StressTestPage() {
 
         {/* ── RISK SCORE ── */}
         <section className="mb-12">
-          <h2 className="text-xl font-semibold text-[var(--color-foreground)] mb-6">
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-6">
             Nivel de riesgo de tu portfolio
           </h2>
           <div className="rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-6 sm:p-8 flex flex-col items-center gap-4">
@@ -543,7 +543,7 @@ export default function StressTestPage() {
 
         {/* ── RECOMMENDATIONS ── */}
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-[var(--color-foreground)] mb-4">
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-[var(--color-foreground)] mb-4">
             Recomendaciones para reducir riesgo
           </h2>
           <div className="space-y-3">

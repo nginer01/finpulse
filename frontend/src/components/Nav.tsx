@@ -23,26 +23,23 @@ export default function Nav() {
   return (
     <>
       <header className="sticky top-0 z-20 bg-white border-b border-[#e5e5e5]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-9 h-9 rounded-full bg-black/[0.06] flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-[#1d1d1f]" />
-            </div>
-            <span className="text-2xl font-semibold tracking-tight text-[#1d1d1f] hidden sm:inline" style={{ fontFamily: "var(--font-sora), sans-serif" }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <span className="text-[16px] tracking-[0.25em] uppercase font-semibold text-[#1d1d1f]" style={{ transform: "scaleY(0.88)", display: "inline-block" }}>
               FinPulse
             </span>
           </Link>
-          <nav className="flex items-center gap-1 sm:gap-3 text-sm">
+          <nav className="flex items-center gap-2 sm:gap-6">
             {links.map((link) => {
               const isActive = pathname === link.href || (link.href === "/" && (isResumen || isNoticia));
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-2 sm:px-3 py-1.5 rounded-lg transition-all duration-300 ${
+                  className={`relative text-[11px] uppercase tracking-[0.2em] font-semibold transition-all duration-300 py-1.5 ${
                     isActive
-                      ? "text-[#1d1d1f] font-medium after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-[2px] after:bg-[#1d1d1f] after:rounded-full"
-                      : "text-[#86868b] hover:text-[#1d1d1f]"
+                      ? "text-[#1d1d1f] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-[2px] after:bg-[#1d1d1f] after:rounded-full"
+                      : "text-[#999] hover:text-[#1d1d1f]"
                   }`}
                 >
                   {link.label}

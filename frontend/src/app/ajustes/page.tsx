@@ -54,7 +54,7 @@ function SectionCard({
       }`}
     >
       <h2
-        className={`text-lg font-semibold mb-6 ${
+        className={`text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-6 ${
           danger ? "text-red" : "text-foreground"
         }`}
       >
@@ -284,7 +284,7 @@ export default function AjustesPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         {/* Page header */}
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          <h1 className="text-2xl font-extralight tracking-wide">
             Ajustes
           </h1>
           <p className="text-muted text-sm mt-1">
@@ -429,7 +429,7 @@ export default function AjustesPage() {
           {/* Gmail */}
           <div className="mb-6 pb-6 border-b border-card-border">
             <div className="flex items-center gap-2 mb-3">
-              <h3 className="text-sm font-semibold text-foreground">Gmail</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Gmail</h3>
               <span
                 className={`w-2 h-2 rounded-full ${
                   gmailConnected ? "bg-green" : "bg-red"
@@ -449,7 +449,7 @@ export default function AjustesPage() {
 
           {/* Podcasts */}
           <div className="mb-6 pb-6 border-b border-card-border">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
+            <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">
               Podcasts
             </h3>
             {Object.entries(podcastToggles).map(([name, on]) => (
@@ -466,7 +466,7 @@ export default function AjustesPage() {
 
           {/* X (Twitter) */}
           <div className="mb-6 pb-6 border-b border-card-border">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
+            <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">
               X (Twitter)
             </h3>
             <div className="flex flex-wrap gap-2 mb-3">
@@ -523,7 +523,7 @@ export default function AjustesPage() {
 
           {/* Informes bancarios */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-3">
+            <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">
               Informes bancarios
             </h3>
             <div className="space-y-2">

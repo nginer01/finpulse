@@ -552,7 +552,7 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
 
   return (
     <BorderCard padding="p-5" className="sm:">
-      <h3 className="text-sm font-semibold mb-4">Analisis de correlación</h3>
+      <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Analisis de correlación</h3>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
         {/* Big number */}
@@ -688,7 +688,7 @@ export default function ComparadorPage() {
         {/* ─── 1. HEADER & SELECTORS ─── */}
         <section>
           <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1">
+            <h1 className="text-2xl font-extralight tracking-wide mb-1">
               Comparador de activos
             </h1>
             <p className="text-sm text-muted">
@@ -733,7 +733,7 @@ export default function ComparadorPage() {
 
         {/* ─── 2. PRICE CHART OVERLAY ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Rendimiento comparado (6 meses)</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Rendimiento comparado (6 meses)</h2>
           <BorderCard padding="p-4" className="sm:">
             {/* Legend */}
             <div className="flex items-center gap-5 mb-4">
@@ -765,7 +765,7 @@ export default function ComparadorPage() {
 
         {/* ─── 3. KEY METRICS COMPARISON ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-2">Metricas clave</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-2">Metricas clave</h2>
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center gap-1.5 text-xs text-muted">
               <span className="w-2.5 h-2.5 rounded-full bg-accent" />
@@ -786,12 +786,12 @@ export default function ComparadorPage() {
 
         {/* ─── 5. SECTOR/COMPOSITION BREAKDOWN ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Composición por sector</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Composición por sector</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <BorderCard padding="p-5">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-                <h3 className="text-sm font-semibold">{assetA.ticker}</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetA.ticker}</h3>
                 <span className="text-xs text-muted">{assetA.name}</span>
               </div>
               <DonutChart data={assetA.sectors} label={assetA.ticker} />
@@ -799,7 +799,7 @@ export default function ComparadorPage() {
             <BorderCard padding="p-5">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2.5 h-2.5 rounded-full bg-green" />
-                <h3 className="text-sm font-semibold">{assetB.ticker}</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetB.ticker}</h3>
                 <span className="text-xs text-muted">{assetB.name}</span>
               </div>
               <DonutChart data={assetB.sectors} label={assetB.ticker} />
@@ -817,7 +817,7 @@ export default function ComparadorPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-semibold mb-2">Recomendación de diversificación</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-2">Recomendación de diversificación</h3>
                 <p className="text-sm text-muted leading-relaxed">
                   Si buscas mayor diversificación, considera combinar{" "}
                   <span className="text-accent-light font-medium">{tickerA}</span> con un activo de baja correlación

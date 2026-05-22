@@ -428,7 +428,7 @@ export default function RecomendacionesPage() {
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">Recomendaciones</h1>
+              <h1 className="text-2xl font-extralight tracking-wide">Recomendaciones</h1>
               <p className="text-sm text-[#86868b]">Tu director de inversiones personal — análisis, convicción, y contraargumentos</p>
             </div>
           </div>
@@ -490,7 +490,7 @@ export default function RecomendacionesPage() {
         <div className="border-t border-white/[0.04] pt-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-semibold tracking-tight mb-1">Inversiones en ficción</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-1">Inversiones en ficción</h2>
               <p className="text-xs text-[#86868b]">Seguimiento de inversiones simuladas — sin dinero real</p>
             </div>
             <BorderCard padding="p-3">
@@ -559,7 +559,7 @@ export default function RecomendacionesPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowFictionModal(false)} />
           <div className="relative bg-[#1d1d1f] border border-white/[0.08] rounded-2xl w-full max-w-md mx-4 p-6 shadow-2xl">
-            <h3 className="font-semibold text-lg mb-1">Invertir en ficción</h3>
+            <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-1">Invertir en ficción</h3>
             <p className="text-xs text-[#86868b] mb-5">Simula una inversión sin dinero real. Podrás seguir su evolución.</p>
 
             <div className="space-y-4">

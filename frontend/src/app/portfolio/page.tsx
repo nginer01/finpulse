@@ -361,7 +361,7 @@ export default function PortfolioPage() {
               <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
                 <p className="text-xs text-muted uppercase tracking-wider mb-1">Valor total del portfolio</p>
                 <div className="flex items-end gap-4 flex-wrap">
-                  <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">12.847,32</h1>
+                  <h1 className="text-2xl font-extralight tracking-wide">12.847,32</h1>
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-green text-sm font-semibold bg-green/10 px-2.5 py-1 rounded-lg">
                       +847,32 (+7.1% YTD)
@@ -384,7 +384,7 @@ export default function PortfolioPage() {
         {/* ─── 2. POSITIONS ─── */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold">Posiciones</h2>
+            <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Posiciones</h2>
             <button
               onClick={() => setShowAddModal(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-accent text-white hover:bg-accent-light transition-colors"
@@ -444,7 +444,7 @@ export default function PortfolioPage() {
 
         {/* ─── 3. DISTRIBUTION CHARTS ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Distribución del portfolio</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Distribución del portfolio</h2>
 
           {/* Tabs on small screens, side by side on md+ */}
           <div className="md:hidden flex gap-2 mb-4">
@@ -472,11 +472,11 @@ export default function PortfolioPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className={`bg-card border border-card-border rounded-xl p-5 ${activeTab !== "sector" ? "hidden md:block" : ""}`}>
-              <h3 className="text-sm font-semibold mb-4 text-muted">Por sector</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-medium mb-4 text-muted">Por sector</h3>
               <HorizontalBarChart data={sectorData} />
             </div>
             <div className={`bg-card border border-card-border rounded-xl p-5 ${activeTab !== "geo" ? "hidden md:block" : ""}`}>
-              <h3 className="text-sm font-semibold mb-4 text-muted">Por geografia</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-medium mb-4 text-muted">Por geografia</h3>
               <HorizontalBarChart data={geoData} />
             </div>
           </div>
@@ -484,7 +484,7 @@ export default function PortfolioPage() {
 
         {/* ─── 4. RENDIMIENTO VS BENCHMARKS ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Rendimiento vs Benchmarks (YTD)</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Rendimiento vs Benchmarks (YTD)</h2>
           <BorderCard padding="p-5">
             <div className="relative h-32 overflow-hidden">
               <img
@@ -511,7 +511,7 @@ export default function PortfolioPage() {
         {/* ─── 5. EL CAMINO NO TOMADO ─── */}
         <section>
           <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-lg font-bold">El camino no tomado</h2>
+            <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">El camino no tomado</h2>
             <span className="text-xs px-2.5 py-1 rounded-full bg-amber-500/15 text-[#ffd60a]">
               Inversiones no realizadas
             </span>
@@ -525,7 +525,7 @@ export default function PortfolioPage() {
 
         {/* ─── 6. HISTORIAL DE OPERACIONES ─── */}
         <section>
-          <h2 className="text-lg font-bold mb-4">Historial de operaciones</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Historial de operaciones</h2>
           <BorderCard padding="p-5">
             {operations.map((op, i) => (
               <OperationRow key={i} {...op} />

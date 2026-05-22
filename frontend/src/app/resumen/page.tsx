@@ -37,7 +37,7 @@ export default function ResumenDiario() {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <p className="text-muted text-sm mb-1">Domingo, 11 de mayo 2026 — 9:00 AM</p>
-            <h1 className="text-3xl font-bold">Resumen diario</h1>
+            <h1 className="text-2xl font-extralight tracking-wide">Resumen diario</h1>
           </div>
         </div>
 
@@ -88,7 +88,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=250&fit=crop" alt="Trading floor" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Lo esencial</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Lo esencial</h2>
               <p className="text-xs text-muted">Financial Times / Bloomberg</p>
             </div>
           </div>
@@ -116,14 +116,14 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=800&h=250&fit=crop" alt="Stock market screens" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Mercados en detalle</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Mercados en detalle</h2>
               <p className="text-xs text-muted">The Daily Shot / Reuters</p>
             </div>
           </div>
 
           <div className="space-y-8 text-sm leading-7 text-muted">
             <div>
-              <h3 className="text-foreground font-semibold text-base mb-3">Estados Unidos</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Estados Unidos</h3>
               <p>
                 El S&P 500 cerro el viernes en 5.847 puntos (+1.2%), impulsado por el anuncio del acuerdo comercial fase 1 con China. Las mega-caps tecnologicas lideraron el rally — Apple +2.4%, Nvidia +5.1%, Microsoft +1.8%. El Nasdaq subio un +1.8% con semiconductores como sector estrella de la semana.
               </p>
@@ -136,7 +136,7 @@ export default function ResumenDiario() {
             </div>
 
             <div>
-              <h3 className="text-foreground font-semibold text-base mb-3">Europa</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Europa</h3>
               <p>
                 Stoxx 600 +0.8% en la semana. El motor no es solo el acuerdo comercial sino las expectativas de recorte del BCE. Las actas de la última reunion, filtradas por Financial Times el jueves, confirman que una mayoria amplia del consejo de gobierno apoya un recorte de 25 puntos basicos en la reunion del 5 de junio.
               </p>
@@ -152,7 +152,7 @@ export default function ResumenDiario() {
             </div>
 
             <div>
-              <h3 className="text-foreground font-semibold text-base mb-3">Asia</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Asia</h3>
               <p>
                 Nikkei +1.5%, beneficiado por un yen debil que favorece a las exportadoras japonesas. Toyota y Sony lideran las subidas. El Shanghai Composite sube un +2.3% celebrando el acuerdo comercial — es el mayor beneficiario directo de la reduccion de tensiones.
               </p>
@@ -162,7 +162,7 @@ export default function ResumenDiario() {
             </div>
 
             <div>
-              <h3 className="text-foreground font-semibold text-base mb-3">Renta fija y divisas</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Renta fija y divisas</h3>
               <p>
                 Treasury 10Y en 4.28% (-5 puntos basicos en la semana). La curva de tipos se normaliza gradualmente — la inversión que persistia desde 2023 practicamente ha desaparecido, lo cual reduce las señales de recesion. Polymarket situa la probabilidad de recesion en EEUU en 2026 en solo el 12%, mínimo del año.
               </p>
@@ -181,7 +181,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&h=250&fit=crop" alt="Portfolio charts" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Tu portfolio hoy</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Tu portfolio hoy</h2>
               <p className="text-xs text-muted">Datos de mercado en tiempo real</p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=800&h=250&fit=crop" alt="Semiconductores" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Temas de seguimiento</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Temas de seguimiento</h2>
               <p className="text-xs text-muted">3 temas activos esta semana</p>
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function ResumenDiario() {
 
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-foreground font-semibold text-base">Semiconductores</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Semiconductores</h3>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA — subida dinamica</span>
               </div>
               <p>
@@ -315,7 +315,7 @@ export default function ResumenDiario() {
 
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-foreground font-semibold text-base">Petróleo y energia</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Petróleo y energia</h3>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA — subida dinamica</span>
               </div>
               <p>
@@ -331,7 +331,7 @@ export default function ResumenDiario() {
 
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-foreground font-semibold text-base">Politica monetaria BCE</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Politica monetaria BCE</h3>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">MEDIA</span>
               </div>
               <p>
@@ -352,7 +352,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=800&h=250&fit=crop" alt="News sources" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Lo que dicen tus fuentes</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Lo que dicen tus fuentes</h2>
               <p className="text-xs text-muted">8 fuentes analizadas hoy</p>
             </div>
           </div>
@@ -469,14 +469,14 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=250&fit=crop" alt="Historical data" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Paralelos históricos</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Paralelos históricos</h2>
               <p className="text-xs text-muted">Lecciones del pasado para el presente</p>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
 
             <div className="bg-card border border-card-border rounded-xl p-6">
-              <h3 className="text-foreground font-semibold text-base mb-3">Acuerdo comercial EEUU-China: 2019 vs 2026</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Acuerdo comercial EEUU-China: 2019 vs 2026</h3>
               <p>
                 En diciembre 2019, el anuncio del acuerdo fase 1 impulso al S&P 500 un +3.2% en las dos semanas siguientes. El rally fue amplio — todos los sectores subieron, liderados por industriales y tecnologia. Los mercados emergentes asiaticos fueron los mayores beneficiarios.
               </p>
@@ -489,7 +489,7 @@ export default function ResumenDiario() {
             </div>
 
             <div className="bg-card border border-card-border rounded-xl p-6">
-              <h3 className="text-foreground font-semibold text-base mb-3">Iran volviendo al mercado: 2015-2016</h3>
+              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Iran volviendo al mercado: 2015-2016</h3>
               <p>
                 Cuando se firmo el JCPOA (acuerdo nuclear con Iran) en julio 2015, el Brent estaba en $65. En los 6 meses siguientes cayo hasta $45 — una caida del 30%. La produccion iraniana aumento en aproximadamente 1 millon de barriles diarios.
               </p>
@@ -517,7 +517,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=250&fit=crop" alt="Investment strategy" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Recomendaciones</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Recomendaciones</h2>
               <p className="text-xs text-muted">2 acciones sugeridas hoy</p>
             </div>
           </div>
@@ -525,7 +525,7 @@ export default function ResumenDiario() {
 
             <div className="bg-card border border-red/20 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-foreground font-semibold text-base">1. Reducir Brent un 50%</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">1. Reducir Brent un 50%</h3>
                 <span className="text-sm px-3 py-1 rounded-full bg-accent/15 text-accent-light font-medium">Convicción: 8/10</span>
               </div>
               <p className="text-muted">
@@ -557,7 +557,7 @@ export default function ResumenDiario() {
 
             <div className="bg-card border border-green/20 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-foreground font-semibold text-base">2. Añadir SEMI en próxima caida (&gt;2%)</h3>
+                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">2. Añadir SEMI en próxima caida (&gt;2%)</h3>
                 <span className="text-sm px-3 py-1 rounded-full bg-accent/15 text-accent-light font-medium">Convicción: 7/10</span>
               </div>
               <p className="text-muted">
@@ -597,7 +597,7 @@ export default function ResumenDiario() {
             <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=250&fit=crop" alt="Calendar events" className="w-full h-40 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-xl font-bold">Alertas y próximos eventos</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Alertas y próximos eventos</h2>
               <p className="text-xs text-muted">3 alertas activas — 6 eventos esta semana</p>
             </div>
           </div>

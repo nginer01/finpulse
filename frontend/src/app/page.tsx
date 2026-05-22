@@ -136,15 +136,6 @@ function PortfolioPosition({ ticker, name, change, value }: { ticker: string; na
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-  return (
-    <BorderCard padding="p-6">
-      <div className="text-2xl mb-3">{icon}</div>
-      <h3 className="font-semibold mb-2">{title}</h3>
-      <p className="text-sm text-muted leading-relaxed">{description}</p>
-    </BorderCard>
-  );
-}
 
 // Holdings: quantity per ticker (from user's portfolio)
 const HOLDINGS: Record<string, { qty: number; name: string }> = {
@@ -190,8 +181,8 @@ export default function Home() {
       {/* Hero: Daily Summary */}
       <section className="max-w-6xl mx-auto px-6 pt-10 pb-8">
         <div className="stagger-1">
-          <p className="text-muted text-sm mb-1 capitalize">{dateStr} — {timeStr}</p>
-          <h1 className="text-2xl font-bold mb-4">Buenos días, Nico</h1>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-muted font-semibold mb-2">{dateStr} — {timeStr}</p>
+          <h1 className="text-2xl font-extralight tracking-wide mb-4">Buenos días, Nico</h1>
         </div>
 
         {/* Quick Stats */}
@@ -199,7 +190,7 @@ export default function Home() {
           <div className="stagger-2">
             <BorderCard padding="p-4">
               <p className="text-xs text-muted mb-1">Portfolio total</p>
-              <AnimatedCounter value={totalValue} className="text-xl font-bold" />
+              <AnimatedCounter value={totalValue} className="text-xl font-extralight tracking-wide" />
               <p className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>
                 {weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy
               </p>
@@ -269,7 +260,7 @@ export default function Home() {
           {/* Summary header */}
           <div className="flex items-center gap-2 mb-2">
             <div className="w-2 h-2 rounded-full bg-[#30d158] animate-pulse" />
-            <h2 className="font-semibold">Resumen diario</h2>
+            <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Resumen diario</h2>
             <span className="text-[10px] text-[#30d158] ml-1">Actualizado hace 2h</span>
           </div>
           <div className="flex flex-wrap gap-2 mb-5">
@@ -331,7 +322,7 @@ export default function Home() {
                   <span className="text-[10px] text-muted ml-1">8 min lectura</span>
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 transition-transform duration-300 group-hover:translate-x-1">
+                <h3 className="text-[14px] sm:text-[15px] font-semibold tracking-wide text-foreground mb-2 transition-transform duration-300 group-hover:translate-x-1">
                   Leer el briefing completo
                 </h3>
                 <p className="text-sm text-muted/80 max-w-md mb-5 leading-relaxed">
@@ -565,7 +556,7 @@ export default function Home() {
 
       {/* 6 News Windows */}
       <section className="max-w-6xl mx-auto px-6 pb-8">
-        <h2 className="font-semibold mb-4">Noticias para profundizar</h2>
+        <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Noticias para profundizar</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posición en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times"
             summary="El acuerdo fase 1 reduce aranceles en un 30% para bienes industriales. Sin embargo, los aranceles tech (semiconductores, IA) se negociaran por separado en Q3. Los mercados celebran la reduccion de incertidumbre — S&P 500 en máximos."
@@ -631,7 +622,7 @@ export default function Home() {
           {/* Portfolio */}
           <BorderCard padding="p-4">
             <div className="flex items-center justify-between mb-3 px-2">
-              <h2 className="font-semibold">Portfolio</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Portfolio</h2>
               <span className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>{weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy</span>
             </div>
             <TradingChart />
@@ -651,7 +642,7 @@ export default function Home() {
           {/* Investor DNA + Learning */}
           <div className="space-y-6">
             <BorderCard padding="p-6">
-              <h2 className="font-semibold mb-4">Investor DNA</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Investor DNA</h2>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between text-xs mb-1">
@@ -694,7 +685,7 @@ export default function Home() {
             </BorderCard>
 
             <BorderCard padding="p-6">
-              <h2 className="font-semibold mb-3">Última lección aprendida</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-3">Ultima leccion aprendida</h2>
               <div className="bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-accent-light mb-2">Hace 3 dias — Venta de BRT</p>
                 <p className="text-sm text-muted leading-relaxed">
@@ -709,7 +700,7 @@ export default function Home() {
 
       {/* Radar de Oportunidades */}
       <section className="max-w-6xl mx-auto px-6 pb-8">
-        <h2 className="font-semibold mb-4">Radar de oportunidades</h2>
+        <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Radar de oportunidades</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Radar visual */}
           <BorderCard padding="p-6" className="flex flex-col items-center justify-center">
@@ -794,20 +785,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="max-w-6xl mx-auto px-6 py-12 border-t border-card-border">
-        <h2 className="text-xl font-bold mb-2 text-center">Lo que hace diferente a FinPulse</h2>
-        <p className="text-sm text-muted text-center mb-8">No es solo un tracker. Es tu copiloto financiero.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <FeatureCard icon="&#x1f9ec;" title="Investor DNA" description="Tu perfil psicologico como inversor. Sesgos, fortalezas, debilidades. Evoluciona contigo." />
-          <FeatureCard icon="&#x1f4d3;" title="Decision Journal" description="Cada operación se registra con contexto: noticias, sentimiento, recomendación IA. Review automatico." />
-          <FeatureCard icon="&#x1f4e1;" title="Signal vs Noise" description="Mide que fuentes te hacen ganar dinero. Elimina el ruido, enfocate en lo que importa." />
-          <FeatureCard icon="&#x1f300;" title="Stress Test" description="Simula escenarios históricos contra tu portfolio. Que pasa si se repite 2008? Y 2020?" />
-          <FeatureCard icon="&#x1f6e4;&#xfe0f;" title="El camino no tomado" description="Registra oportunidades que descartaste. Ve como habrian ido. Aprende de lo que no hiciste." />
-          <FeatureCard icon="&#x1f3af;" title="Conviction Tracker" description="Registra tu nivel de confianza en cada decision. Descubre cuando confiar en tu instinto." />
         </div>
       </section>
 

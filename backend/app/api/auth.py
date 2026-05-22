@@ -10,8 +10,8 @@ from app.models.models import User
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-SUPABASE_AUTH = f"{settings.supabase_url}/auth/v1"
-HEADERS = {"apikey": settings.supabase_anon_key, "Content-Type": "application/json"}
+SUPABASE_AUTH = f"{settings.supabase_url.strip()}/auth/v1"
+HEADERS = {"apikey": settings.supabase_anon_key.strip(), "Content-Type": "application/json"}
 
 
 # ── Schemas ──

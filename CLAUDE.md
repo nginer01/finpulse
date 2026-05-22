@@ -29,30 +29,46 @@ finpulse/
 ### Frontend
 - Next.js 16.2.6 (Turbopack), Node v24.14.0
 - Dev: http://localhost:3000
+- Prod: https://frontend-nginer01s-projects.vercel.app
 - Dependencias clave: lightweight-charts v5.2.0, font Sora (logo)
 - IMPORTANTE: Leer docs en node_modules/next/dist/docs/ antes de escribir codigo Next.js
 - lightweight-charts v5: usar chart.addSeries(CandlestickSeries, opts), NO addCandlestickSeries()
 - lightweight-charts v5: usar createSeriesMarkers(series, markers), NO series.setMarkers()
 - chart.remove() en useEffect: wrap con try/catch + innerHTML="" para React strict mode
+- Env var en Vercel: NEXT_PUBLIC_API_URL = https://finpulse-production-8f64.up.railway.app
 
 ### Backend
 - Python 3.12.10, FastAPI 0.115.12, uvicorn, SQLAlchemy 2.0.41 async, asyncpg
 - yfinance 1.3.0, finnhub-python, fredapi, anthropic 0.52.0
 - Dev: http://localhost:8000
+- Prod: https://finpulse-production-8f64.up.railway.app
 - yfinance es sync: usar asyncio.to_thread() en FastAPI
+- Railway: root directory = backend, NO poner start command (usa nixpacks.toml)
+- IMPORTANTE: hacer .strip() en env vars de Railway (mete newlines)
 
 ### Base de datos (Supabase)
 - Proyecto: finpulse, Region: West EU (Ireland)
 - Ref: vbmvjxourxmtnmlmuomu
 - Pooler: aws-0-eu-west-1.pooler.supabase.com (port 5432, session mode)
 - DB user: postgres.vbmvjxourxmtnmlmuomu
+- DB password: FinPulseDB2026abc
 - Driver: asyncpg con NullPool (pgbouncer compatible)
 - IMPORTANTE: usar port 5432 (session mode), NO 6543 (transaction mode)
-- Tablas: users, positions, operations, news_articles, daily_summaries, decisions, recommendations, tracking_topics
+- Tablas: users (con supabase_id), positions, operations, news_articles, daily_summaries, decisions, recommendations, tracking_topics
+
+### Auth (Supabase Auth)
+- Supabase URL: https://vbmvjxourxmtnmlmuomu.supabase.co
+- Email confirmation: DESACTIVADO (para desarrollo)
+- Frontend: src/lib/auth.ts (login, register, tokens en localStorage)
+- Frontend: src/context/AuthContext.tsx (AuthProvider, useAuth hook)
+- Backend: app/api/auth.py (register, login, me, refresh endpoints)
+- Componentes: LoginGate (teaser con scroll-lock), AuthRedirect (redirect a /login)
+- Cuenta de test: nicolas@finpulse.es / FinPulse2026!
 
 ### Deploy
-- Vercel: https://frontend-nginer01s-projects.vercel.app (auto-deploy NO conectado aun)
-- Backend: pendiente (Railway)
+- Vercel: https://frontend-nginer01s-projects.vercel.app (deploy manual con `npx vercel --prod --yes`)
+- Railway: https://finpulse-production-8f64.up.railway.app (auto-deploy desde GitHub)
+- CORS: localhost:3000 + frontend-nginer01s-projects.vercel.app
 
 ## yfinance ticker mapping
 - IWDA -> IWDA.AS, VUAA -> VUAA.DE (no VUAA.AS ni VUAA.L)
@@ -65,20 +81,25 @@ finpulse/
 - Colores: verde #30d158, rojo #ff453a, amarillo #ffd60a
 - Nav: fondo BLANCO, texto #1d1d1f
 
-## Design system landing (estilo Rolex)
+## Design system landing (estilo Rolex + cinematico)
 - Fondo: #faf8f5 (crema calido)
-- Cards: bg-white, border #e5e0db, shadow suave, rounded-[20px]
+- Cards: bg-white, border #e5e0db, shadow suave, rounded-[20px], glow on hover
 - BorderCard trace: verde #006039 (Rolex green)
 - Texto: #1a1a1a (titulos), #555 (cuerpo)
 - Rojo: #c4001a, Verde: #006039, Oro: #b8860b
 - Tipografia: Helvetica Neue, font-extralight para titulos
-- Hero: fixed image con scroll-linked opacity + scale
-- Imagenes cinematograficas: parallax (speed 0.12, scale 1.15)
+- Hero: Ken Burns animation + particles + film grain + split text letra por letra
+- Imagenes cinematograficas: 3 variantes Ken Burns, film grain overlay
+- Text reveal palabra por palabra al scrollear
+- Marquee ticker con datos de mercado
+- Botones magneticos (siguen cursor)
+- Stats animados con contadores
 
-## Paginas frontend (17 rutas + 404)
+## Paginas frontend (18 rutas + 404)
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
-- `/landing` — Landing estilo Rolex con parallax, 3D tilt, BorderCard trace
-- `/resumen` — Briefing diario (mock)
+- `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
+- `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
+- `/resumen` — Briefing diario (mock, con LoginGate teaser)
 - `/noticia` — Deep-dive (mock)
 - `/portfolio` — TradingView chart, heatmap (mock)
 - `/aprendizaje` — Investor DNA radar SVG (mock)
@@ -91,7 +112,13 @@ finpulse/
 - `/ajustes` — Configuracion (mock)
 
 ## Backend endpoints
-### Market data (funcionando):
+### Auth (funcionando en prod):
+- POST /api/auth/register — Supabase Auth signup + crear usuario en DB
+- POST /api/auth/login — login, devuelve access_token + refresh_token
+- GET /api/auth/me — datos del usuario autenticado
+- POST /api/auth/refresh — renovar access token
+
+### Market data (funcionando en prod):
 - GET /api/market/quote/{ticker}
 - GET /api/market/quotes?tickers=X,Y
 - GET /api/market/history/{ticker}?timeframe=6M
@@ -131,7 +158,7 @@ finpulse/
 - Informes semanales de bancos
 
 ## Pendiente
-1. Landing: mas efectos cinematograficos, posiblemente videos reales
+1. ~~Landing cinematica~~ HECHO
 2. Conectar mas paginas a datos reales (portfolio, comparador, stress-test)
 3. Posiciones en Supabase (no hardcoded)
 4. ANTHROPIC_API_KEY + system prompt "CEO de JP Morgan"
@@ -140,11 +167,21 @@ finpulse/
 7. Polymarket API
 8. FRED API para datos macro (instalado, no integrado)
 9. Finnhub WebSocket para precios real-time (instalado, no integrado)
-10. Autenticacion de usuario
-11. Vercel auto-deploy + deploy backend Railway
+10. ~~Autenticacion de usuario~~ HECHO (Supabase Auth, frontend+backend)
+11. ~~Deploy frontend Vercel + backend Railway~~ HECHO
 12. Seleccionar mejores fuentes (newsletters, cuentas X, bancos)
+13. Eliminar /debug/db endpoint temporal del backend
+14. Quitar error details del login endpoint (solo para debug)
+15. Configurar Vercel auto-deploy desde GitHub
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)
 - TASKKILL //PID X //F (doble slash por git bash)
 - psycopg async no funciona en Windows (ProactorEventLoop), usar asyncpg
+
+## Notas Railway
+- Root directory: backend
+- NO poner Start Command en Settings (usa nixpacks.toml → python run.py)
+- run.py lee PORT de os.environ (Railway asigna su propio puerto)
+- Variables con newlines: hacer .strip() en el codigo
+- Region: EU West

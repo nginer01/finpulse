@@ -162,26 +162,42 @@ finpulse/
 - Podcasts: UBS On-Air (Paul Donovan, diario) + mas por definir
 - Informes semanales de bancos
 
+## Paginas de preview (rediseno dashboard)
+- `/preview-light` — Dashboard rediseñado estilo landing: hero con video, dividers cinematicos 65vh, titulos 5rem, spacing py-40, news cards con imagenes 360px. ESTA ES LA REFERENCIA para el dashboard final.
+- `/preview-dark` — Variante oscura refinada (descartada, usuario prefiere light)
+- `/showcase` — Reel cinematico 9 escenas para marketing (WIP: hacerlo mas rapido/continuo)
+- `/demo` — Dashboard animado con datos en vivo
+
+## Hero video
+- Archivo: frontend/public/hero-video.mp4 (85MB, local only, en .gitignore)
+- Usado en: landing hero + preview-light hero
+- Implementacion: <video autoPlay muted loop playsInline> con poster fallback
+- PENDIENTE: comprimir a ~5-10MB con ffmpeg para produccion
+- PENDIENTE: las imagenes de los dividers deberian cambiar segun las noticias del dia (dinamicas con IA)
+
 ## Pendiente
 1. ~~Landing cinematica~~ HECHO
-2. Conectar mas paginas a datos reales (portfolio, comparador, stress-test)
-3. Posiciones en Supabase (no hardcoded)
-4. ANTHROPIC_API_KEY + system prompt "CEO de JP Morgan"
-5. Integracion Gmail (correo dedicado aun NO creado)
-6. Integracion X (Twitter)
-7. Polymarket API
-8. FRED API para datos macro (instalado, no integrado)
-9. Finnhub WebSocket para precios real-time (instalado, no integrado)
-10. ~~Autenticacion de usuario~~ HECHO (Supabase Auth, frontend+backend)
-11. ~~Deploy frontend Vercel + backend Railway~~ HECHO
-12. Seleccionar mejores fuentes (newsletters, cuentas X, bancos)
-13. Eliminar /debug/db endpoint temporal del backend
-14. Quitar error details del login endpoint (solo para debug)
-15. Configurar Vercel auto-deploy desde GitHub
-16. ~~Unificar tipografia app con landing~~ HECHO (Helvetica Neue, uppercase labels)
-17. Video marketing para landing: /showcase tiene 9 escenas (briefing, portfolio, IA, DNA, stress, alertas, etc). PENDIENTE: hacerlo mas rapido y fluido (scroll continuo en vez de escenas separadas). /demo tiene dashboard animado con datos en vivo.
+2. Aplicar /preview-light como dashboard principal (reemplazar page.tsx actual)
+3. Conectar mas paginas a datos reales (portfolio, comparador, stress-test)
+4. Posiciones en Supabase (no hardcoded)
+5. ANTHROPIC_API_KEY + system prompt "CEO de JP Morgan"
+6. Integracion Gmail (correo dedicado aun NO creado)
+7. Integracion X (Twitter)
+8. Polymarket API
+9. FRED API para datos macro (instalado, no integrado)
+10. Finnhub WebSocket para precios real-time (instalado, no integrado)
+11. ~~Autenticacion de usuario~~ HECHO (Supabase Auth, frontend+backend)
+12. ~~Deploy frontend Vercel + backend Railway~~ HECHO
+13. Seleccionar mejores fuentes (newsletters, cuentas X, bancos)
+14. Eliminar /debug/db endpoint temporal del backend
+15. Quitar error details del login endpoint (solo para debug)
+16. Configurar Vercel auto-deploy desde GitHub
+17. ~~Unificar tipografia app con landing~~ HECHO (Helvetica Neue, uppercase labels)
 18. LoginGate temporalmente desactivado en /resumen — reactivar cuando auth este completo
-19. Resumen page rediseñada con estilo cinematico (hero full-width, section dividers diamante, image headers centrados)
+19. ~~Resumen page rediseñada~~ HECHO (hero full-width, section dividers diamante, image headers centrados)
+20. Comprimir hero-video.mp4 para produccion
+21. Imagenes dinamicas por noticias del dia (cuando IA este integrada)
+22. Video marketing con Runway (prompts listos en conversacion)
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

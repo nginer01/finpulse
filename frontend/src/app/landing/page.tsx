@@ -362,14 +362,21 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ─── HERO — Ken Burns + Particles + Split Text ─── */}
+      {/* ─── HERO — Video + Particles + Split Text ─── */}
       <section className="relative h-[120vh]">
         <div className="fixed inset-0 z-0 will-change-transform overflow-hidden" style={{ opacity: heroOp, transform: `scale(${heroSc})` }}>
-          <div className="absolute inset-0 animate-ken-burns">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=90" alt="Skyline" className="w-full h-full object-cover" />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/60" />
-          <div className="absolute inset-0 film-grain opacity-[0.04] pointer-events-none" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=90"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50" />
+          <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
           <Particles />
         </div>
         <div className="sticky top-0 h-screen flex items-center justify-center z-10" style={{ opacity: heroOp }}>

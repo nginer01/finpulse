@@ -178,6 +178,10 @@ finpulse/
 13. Eliminar /debug/db endpoint temporal del backend
 14. Quitar error details del login endpoint (solo para debug)
 15. Configurar Vercel auto-deploy desde GitHub
+16. ~~Unificar tipografia app con landing~~ HECHO (Helvetica Neue, uppercase labels)
+17. Video marketing para landing: /showcase tiene 9 escenas (briefing, portfolio, IA, DNA, stress, alertas, etc). PENDIENTE: hacerlo mas rapido y fluido (scroll continuo en vez de escenas separadas). /demo tiene dashboard animado con datos en vivo.
+18. LoginGate temporalmente desactivado en /resumen — reactivar cuando auth este completo
+19. Resumen page rediseñada con estilo cinematico (hero full-width, section dividers diamante, image headers centrados)
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

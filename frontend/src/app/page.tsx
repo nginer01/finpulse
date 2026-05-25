@@ -1,143 +1,109 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import Nav from "@/components/Nav";
-import BorderCard from "@/components/BorderCard";
-import Tooltip from "@/components/Tooltip";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import dynamic from "next/dynamic";
 import { usePortfolioSnapshot } from "@/hooks/useMarketData";
-import type { Quote } from "@/lib/api";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
 
-function ChevronIcon({ open }: { open: boolean }) {
+/* ══════════════════════════════════════════════
+   HOOKS
+   ══════════════════════════════════════════════ */
+
+function useReveal(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+function Reveal({ children, className = "", delay = 0, direction = "up" }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale" }) {
+  const { ref, visible } = useReveal();
+  const transforms: Record<string, string> = { up: "translate-y-10", left: "-translate-x-10", right: "translate-x-10", scale: "scale-95" };
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>
-      <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div ref={ref} className={`transition-all duration-[1.6s] ease-[cubic-bezier(0.16,1,0.3,1)] ${visible ? "opacity-100 translate-y-0 translate-x-0 scale-100" : `opacity-0 ${transforms[direction]}`} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}>{children}</div>
   );
 }
 
-function SummarySection({ title, icon, tag, tagColor, defaultOpen, children }: {
-  title: string;
-  icon: string;
-  tag?: string;
-  tagColor?: string;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(defaultOpen ?? false);
+function Particles() {
   return (
-    <div className="border-b border-card-border last:border-0">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-3 py-4 text-left hover:bg-white/[0.02] transition-colors"
-      >
-        <span className="text-lg">{icon}</span>
-        <span className="text-sm font-medium flex-1">{title}</span>
-        {tag && (
-          <span className={`text-xs px-2 py-0.5 rounded-full ${tagColor || "bg-card-border text-muted"}`}>{tag}</span>
-        )}
-        <span className="text-muted"><ChevronIcon open={open} /></span>
-      </button>
-      {open && (
-        <div className="pb-5 pl-9 pr-4 animate-fade-in-up">
-          {children}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]">
+      {Array.from({ length: 30 }).map((_, i) => (
+        <div key={i} className="absolute w-[2px] h-[2px] rounded-full bg-white/30 animate-float-particle"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 8}s`,
+            animationDuration: `${6 + Math.random() * 8}s`,
+          }} />
+      ))}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   CINEMATIC DIVIDER
+   ══════════════════════════════════════════════ */
+function CinematicDivider({ src, alt, children, variant = 0 }: { src: string; alt: string; children?: React.ReactNode; variant?: number }) {
+  const kenBurnsClass = ["animate-ken-burns", "animate-ken-burns-2", "animate-ken-burns-3"][variant % 3];
+  return (
+    <section className="relative z-20 h-[65vh] overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className={`w-full h-full will-change-transform ${kenBurnsClass}`}>
+          <img src={src} alt={alt} className="w-full h-full object-cover" />
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#faf8f5] via-transparent to-transparent opacity-80" />
+      <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
+      {children && (
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <Reveal>{children}</Reveal>
         </div>
       )}
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   ANIMATED STAT
+   ══════════════════════════════════════════════ */
+function AnimatedStat({ value, suffix = "", label }: { value: number; suffix?: string; label: string }) {
+  const { ref, visible } = useReveal();
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!visible) return;
+    let frame: number;
+    const start = performance.now();
+    function tick(now: number) {
+      const p = Math.min((now - start) / 2000, 1);
+      setCount(Math.round(value * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) frame = requestAnimationFrame(tick);
+    }
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [visible, value]);
+  return (
+    <div ref={ref} className="text-center">
+      <p className="text-6xl sm:text-7xl font-extralight tracking-tight text-[#1a1a1a]">{count}{suffix}</p>
+      <p className="mt-4 text-[12px] uppercase tracking-[0.2em] text-[#999] font-semibold">{label}</p>
     </div>
   );
 }
 
-function SourceBadge({ name, type }: { name: string; type: "newsletter" | "podcast" | "polymarket" | "x" | "bank" | "news" }) {
-  const colors: Record<string, string> = {
-    newsletter: "bg-blue-500/15 text-blue-400",
-    podcast: "bg-purple-500/15 text-purple-400",
-    polymarket: "bg-emerald-500/15 text-emerald-400",
-    x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-[#ffd60a]",
-    news: "bg-rose-500/15 text-rose-400",
-  };
-  return (
-    <span className={`text-xs px-2 py-0.5 rounded-full ${colors[type]}`}>{name}</span>
-  );
-}
+/* ══════════════════════════════════════════════
+   DATA
+   ══════════════════════════════════════════════ */
 
-function NewsCard({ type, title, tag, delay, image, source, summary, impact, sources }: {
-  type: string; title: string; tag: string; delay: string; image: string; source: string;
-  summary: string; impact: string; sources: string[];
-}) {
-  const [expanded, setExpanded] = useState(false);
-  const tagColors: Record<string, string> = {
-    "Tu portfolio": "bg-accent/20 text-accent-light",
-    "Nuevo": "bg-green/20 text-green",
-    "Futuro": "bg-amber-500/20 text-[#ffd60a]",
-  };
-  return (
-    <BorderCard className={`cursor-pointer ${delay}`} padding="p-0">
-      <div onClick={() => setExpanded(!expanded)}>
-        <div className="relative h-36 overflow-hidden rounded-t-2xl">
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-          <span className="absolute bottom-2 left-3 text-xs text-muted/80">{source}</span>
-        </div>
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-muted uppercase tracking-wider">{type}</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${tagColors[tag] || "bg-card-border text-muted"}`}>{tag}</span>
-          </div>
-          <h3 className="text-sm font-medium leading-snug mb-2">{title}</h3>
-          {!expanded && <p className="text-xs text-accent-light">Click para expandir</p>}
-          {expanded && (
-            <div className="mt-3 space-y-3 animate-fade-in-up">
-              <p className="text-xs text-muted leading-relaxed">{summary}</p>
-              <div className="bg-background rounded-lg p-3 border border-card-border">
-                <p className="text-xs text-accent-light font-medium mb-1">Impacto en tu portfolio</p>
-                <p className="text-xs text-muted">{impact}</p>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {sources.map((s) => (
-                  <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-card-border text-muted">{s}</span>
-                ))}
-              </div>
-              <Link href="/noticia" className="block text-xs text-accent-light hover:text-accent transition-colors" onClick={(e) => e.stopPropagation()}>
-                Profundizar →
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-    </BorderCard>
-  );
-}
-
-function PortfolioPosition({ ticker, name, change, value }: { ticker: string; name: string; change: number; value: string }) {
-  const isPositive = change >= 0;
-  return (
-    <div className="flex items-center justify-between py-3 border-b border-card-border last:border-0">
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-xs font-mono text-accent-light">
-          {ticker.slice(0, 2)}
-        </div>
-        <div>
-          <p className="text-sm font-medium">{ticker}</p>
-          <p className="text-xs text-muted">{name}</p>
-        </div>
-      </div>
-      <div className="text-right">
-        <p className="text-sm font-medium">{value}</p>
-        <p className={`text-xs ${isPositive ? "text-green" : "text-red"}`}>
-          {isPositive ? "+" : ""}{change}%
-        </p>
-      </div>
-    </div>
-  );
-}
-
-
-// Holdings: quantity per ticker (from user's portfolio)
 const HOLDINGS: Record<string, { qty: number; name: string }> = {
   IWDA: { qty: 35, name: "iShares MSCI World" },
   VUAA: { qty: 10, name: "Vanguard S&P 500" },
@@ -150,10 +116,28 @@ function formatEUR(n: number) {
   return n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-export default function Home() {
-  const { data: snapshot, loading: marketLoading } = usePortfolioSnapshot();
+const NEWS_CARDS = [
+  { title: "Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World", image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&h=600&fit=crop&q=85", label: "Tu portfolio", source: "Financial Times" },
+  { title: "Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana", image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop&q=85", label: "Tu portfolio", source: "Reuters" },
+  { title: "Nvidia presenta Blackwell Ultra: el mercado de semiconductores se reconfigura", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop&q=85", label: "Nuevo", source: "Bloomberg" },
+  { title: "India supera a China como mayor mercado emergente por flujo de capitales", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop&q=85", label: "Nuevo", source: "The Daily Shot" },
+  { title: "Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027", image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=600&fit=crop&q=85", label: "Futuro", source: "Matt Levine" },
+  { title: "Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica", image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop&q=85", label: "Futuro", source: "Informe BBVA" },
+];
 
-  // Compute portfolio positions from real market data
+const DNA_BARS = [
+  { label: "Disciplina", value: 78, color: "#1a1a1a" },
+  { label: "Control emocional", value: 65, color: "#b8860b" },
+  { label: "Diversificacion", value: 82, color: "#1a1a1a" },
+  { label: "Timing", value: 54, color: "#c4001a" },
+];
+
+/* ══════════════════════════════════════════════
+   PAGE
+   ══════════════════════════════════════════════ */
+export default function PreviewLight() {
+  const { data: snapshot } = usePortfolioSnapshot();
+
   const positions = Object.entries(HOLDINGS).map(([ticker, { qty, name }]) => {
     const quote = snapshot?.positions[ticker];
     const price = quote?.price || 0;
@@ -163,638 +147,352 @@ export default function Home() {
   });
 
   const totalValue = positions.reduce((sum, p) => sum + p.value, 0);
-
-  // Compute weighted weekly change
   const weightedChange = totalValue > 0
     ? positions.reduce((sum, p) => sum + (p.changePct * p.value / totalValue), 0)
     : 0;
 
-  // Format current date
   const now = new Date();
   const dateStr = now.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
   const timeStr = now.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
-      <Nav />
+    <main className="bg-[#faf8f5] text-[#1a1a1a] overflow-x-hidden preview-light-page">
 
-      {/* Hero: Daily Summary */}
-      <section className="max-w-6xl mx-auto px-6 pt-10 pb-8">
-        <div className="stagger-1">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-muted font-semibold mb-2">{dateStr} — {timeStr}</p>
-          <h1 className="text-2xl font-extralight tracking-wide mb-4">Buenos días, Nico</h1>
+      {/* ─── SECTION 1: HERO WITH VIDEO ─── */}
+      <section className="relative h-[80vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            poster="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1920&h=1080&fit=crop&q=90"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50" />
+        <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
+        <Particles />
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <div className="text-center max-w-5xl mx-auto px-6">
+            <Reveal>
+              <p className="text-[12px] uppercase tracking-[0.5em] text-white/60 font-semibold mb-6">{dateStr} — {timeStr}</p>
+            </Reveal>
+            <Reveal delay={200}>
+              <h1 className="text-5xl sm:text-6xl md:text-[5rem] font-extralight text-white tracking-tight leading-[1.05]">Buenos dias, Nico</h1>
+            </Reveal>
+            <Reveal delay={500}>
+              <p className="text-[16px] text-white/40 font-extralight tracking-[0.1em] mt-6">Tu resumen financiero personalizado</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="stagger-2">
-            <BorderCard padding="p-4">
-              <p className="text-xs text-muted mb-1">Portfolio total</p>
-              <AnimatedCounter value={totalValue} className="text-xl font-extralight tracking-wide" />
-              <p className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>
-                {weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy
+      {/* ─── SECTION 2: QUICK STATS ─── */}
+      <section className="relative z-20 bg-[#faf8f5] py-32 sm:py-40">
+        <div className="max-w-[1140px] mx-auto px-6">
+          <Reveal>
+            <div className="text-center mb-16">
+              <p className="text-[12px] uppercase tracking-[0.5em] text-[#1a1a1a]/50 mb-6 font-semibold">Tu portfolio hoy</p>
+              <p className="text-[4rem] font-extralight tracking-tight text-[#1a1a1a]">
+                {totalValue > 0 ? formatEUR(totalValue) : "---"} <span className="text-[18px] text-[#ccc]">EUR</span>
               </p>
-            </BorderCard>
-          </div>
-          <div className="stagger-3">
-            <BorderCard padding="p-4">
-              <Tooltip text="Índice de sentimiento basado en Polymarket, VIX y flujos de capital. 0 = pánico extremo, 100 = euforia máxima.">
-                <p className="text-xs text-muted mb-1 border-b border-dashed border-muted/30">Sentimiento mercado</p>
-              </Tooltip>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="flex-1 h-2 rounded-full bg-card-border overflow-hidden">
-                  <div className="h-full w-3/5 rounded-full bg-gradient-to-r from-red to-[#ffd60a] animate-fill-bar" />
-                </div>
-                <span className="text-sm font-medium text-[#ffd60a]">62</span>
+              <p className={`text-[16px] font-semibold mt-3 ${weightedChange >= 0 ? "text-[#1a1a1a]" : "text-[#c4001a]"}`}>
+                {weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(2)}% hoy
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Reveal delay={100}>
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Mejor posicion</p>
+                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">SEMI</p>
+                <p className="text-[13px] text-[#1a1a1a] font-semibold mt-2">+4.2% esta semana</p>
               </div>
-              <p className="text-xs text-muted mt-1">Moderadamente optimista</p>
-            </BorderCard>
-          </div>
-          <div className="stagger-4">
-            <Link href="/recomendaciones">
-              <BorderCard padding="p-4">
-                <p className="text-xs text-muted mb-1">Recomendación IA</p>
-                <p className="text-sm font-medium">Mantener posiciones</p>
-                <p className="text-xs text-accent-light">Convicción: 7/10 →</p>
-              </BorderCard>
-            </Link>
-          </div>
-          <div className="stagger-5">
-            <BorderCard padding="p-4">
-              <Tooltip text="Tu perfil psicológico como inversor. Mide disciplina, control emocional, diversificación y timing. Evoluciona con cada decisión.">
-                <p className="text-xs text-muted mb-1 border-b border-dashed border-muted/30">Tu Investor DNA</p>
-              </Tooltip>
-              <p className="text-sm font-medium">Perfil equilibrado</p>
-              <p className="text-xs text-muted">Acierto: 68% (mejorando)</p>
-            </BorderCard>
+            </Reveal>
+            <Reveal delay={200}>
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Sentimiento</p>
+                <p className="text-[32px] font-extralight tracking-tight text-[#b8860b]">62<span className="text-[16px] text-[#ccc]">/100</span></p>
+                <p className="text-[13px] text-[#999] mt-2">Optimismo moderado</p>
+              </div>
+            </Reveal>
+            <Reveal delay={300}>
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Recomendacion IA</p>
+                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">Mantener</p>
+                <p className="text-[13px] text-[#999] mt-2">Conviccion 7/10</p>
+              </div>
+            </Reveal>
+            <Reveal delay={400}>
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Investor DNA</p>
+                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">Equilibrado</p>
+                <p className="text-[13px] text-[#999] mt-2">Acierto: 68%</p>
+              </div>
+            </Reveal>
           </div>
         </div>
+      </section>
 
-        {/* Next event countdown */}
-        <div className="stagger-6 mb-6">
-          <BorderCard padding="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#ff453a]/10 flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <rect x="2" y="3" width="14" height="12" rx="2" stroke="#ff453a" strokeWidth="1.5" />
-                    <path d="M2 7h14" stroke="#ff453a" strokeWidth="1.5" />
-                    <path d="M6 3V1M12 3V1" stroke="#ff453a" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-[#86868b]">Próximo evento</p>
-                  <p className="text-sm font-medium">IPC EEUU — martes 13 mayo</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-lg font-semibold text-[#ff453a]">1d 6h</p>
-                <p className="text-[10px] text-[#86868b]">Puede frenar el rally</p>
-              </div>
-            </div>
-          </BorderCard>
+      {/* ─── CINEMATIC DIVIDER 1 ─── */}
+      <CinematicDivider src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1920&h=1080&fit=crop&q=90" alt="Markets" variant={0}>
+        <div className="text-center">
+          <p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-5 font-semibold">Cada manana</p>
+          <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Tu briefing diario</h2>
         </div>
+      </CinematicDivider>
 
-        {/* Daily Summary — Full version */}
-        <div className="bg-card border border-card-border rounded-xl p-6 mb-8 stagger-7">
-          {/* Summary header */}
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 rounded-full bg-[#30d158] animate-pulse" />
-            <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Resumen diario</h2>
-            <span className="text-[10px] text-[#30d158] ml-1">Actualizado hace 2h</span>
-          </div>
-          <div className="flex flex-wrap gap-2 mb-5">
-            <SourceBadge name="UBS On-Air" type="podcast" />
-            <SourceBadge name="Matt Levine" type="newsletter" />
-            <SourceBadge name="The Daily Shot" type="newsletter" />
-            <SourceBadge name="Polymarket" type="polymarket" />
-            <SourceBadge name="@zerohedge" type="x" />
-            <SourceBadge name="@sentimentrader" type="x" />
-            <SourceBadge name="Informe BBVA" type="bank" />
-            <SourceBadge name="Financial Times" type="news" />
-          </div>
-
-          {/* Executive summary — always visible */}
-          <div className="relative rounded-lg overflow-hidden mb-5 border border-card-border">
-            <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=300&fit=crop" alt="Mercados globales" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-4">
-              <p className="text-xs text-accent-light font-medium uppercase tracking-wider">Resumen ejecutivo</p>
-            </div>
-          </div>
-          <div className="bg-background rounded-lg p-4 border border-card-border mb-5">
-            <p className="text-sm leading-relaxed">
-              Semana clave para los mercados globales. El acuerdo comercial preliminar EEUU-China impulsa a la renta variable global, con el S&P 500 cerrando en máximos históricos (+1.2%) y mercados europeos al alza. Sin embargo, el sector energetico se debilita tras avances en las negociaciones Iran-EEUU, con el Brent cayendo un 4.2% en la semana. El BCE mantiene el tono dovish y Polymarket situa al 73% la probabilidad de recorte en junio.
-            </p>
-            <p className="text-sm leading-relaxed mt-3">
-              <span className="text-green font-medium">Para tu portfolio:</span> balance neto positivo (+2.4%). Tus posiciones en MSCI World y S&P 500 capturan la subida. Tu exposición a Brent es el punto debil — considera reducirla o cubrir.
-              <span className="text-accent-light"> Semiconductores destaca como la mejor posición (+4.2%) </span> tras el anuncio de Nvidia.
-            </p>
-          </div>
-
-          {/* CTA — Leer resumen completo */}
-          <Link href="/resumen" className="group block mb-6">
-            <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] transition-all duration-500 hover:border-white/[0.20] hover:shadow-[0_0_40px_rgba(255,255,255,0.04)]">
-              {/* Background image with parallax-like effect */}
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=400&fit=crop"
-                  alt=""
-                  className="w-full h-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/60" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+      {/* ─── SECTION 3: BRIEFING ─── */}
+      <section className="relative z-20 bg-[#faf8f5] py-32 sm:py-40">
+        <div className="max-w-[1140px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-28 items-start">
+          {/* Left — Text */}
+          <div>
+            <Reveal>
+              <p className="text-[12px] uppercase tracking-[0.5em] text-[#1a1a1a]/50 mb-8 font-semibold">Lo que importa hoy</p>
+            </Reveal>
+            <Reveal delay={50}>
+              <p className="text-[17px] text-[#555] leading-[2.2] tracking-wide mb-14">
+                Macro de EEUU, Europa y Asia. Movimientos en renta variable y fija. Materias primas y divisas.
+                Lo que dicen los analistas. Y los paralelos historicos que dan contexto a cada evento.
+              </p>
+            </Reveal>
+            <Reveal delay={100}>
+              <div className="space-y-9">
+                {[
+                  { n: "Contexto macro", d: "Decisiones de bancos centrales, datos de empleo, inflacion, PMI" },
+                  { n: "Tu portfolio, posicion a posicion", d: "Que le afecta hoy a cada activo que tienes en cartera" },
+                  { n: "Temas en movimiento", d: "Los hilos que el mercado sigue de cerca esta semana" },
+                  { n: "Voces con criterio", d: "Lo que opinan las fuentes que tu seleccionas" },
+                  { n: "Precedentes historicos", d: "Que ocurrio la ultima vez que se dieron condiciones similares" },
+                ].map((item, i) => (
+                  <div key={item.n} className="flex items-start gap-5 group cursor-default">
+                    <span className="text-[12px] text-[#1a1a1a]/30 font-semibold mt-1 shrink-0 tabular-nums group-hover:text-[#1a1a1a]/80 transition-colors">0{i + 1}</span>
+                    <div><p className="text-[14px] text-[#1a1a1a] font-semibold mb-1.5 tracking-wide group-hover:tracking-widest transition-all duration-500">{item.n}</p><p className="text-[13px] text-[#999] font-normal leading-[1.9]">{item.d}</p></div>
+                  </div>
+                ))}
               </div>
+            </Reveal>
+          </div>
 
-              {/* Animated accent line at top */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              {/* Subtle moving particles */}
-              <div className="absolute top-4 right-12 w-1 h-1 rounded-full bg-green/60 animate-pulse" />
-              <div className="absolute top-8 right-24 w-1.5 h-1.5 rounded-full bg-white/20 animate-pulse" style={{ animationDelay: "1s" }} />
-              <div className="absolute bottom-6 right-16 w-1 h-1 rounded-full bg-[#ffd60a]/40 animate-pulse" style={{ animationDelay: "0.5s" }} />
-
-              {/* Content */}
-              <div className="relative p-6 sm:p-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-green animate-pulse" />
-                  <span className="text-[10px] uppercase tracking-widest text-green font-medium">Briefing listo</span>
-                  <span className="text-[10px] text-muted ml-1">8 min lectura</span>
-                </div>
-
-                <h3 className="text-[14px] sm:text-[15px] font-semibold tracking-wide text-foreground mb-2 transition-transform duration-300 group-hover:translate-x-1">
-                  Leer el briefing completo
-                </h3>
-                <p className="text-sm text-muted/80 max-w-md mb-5 leading-relaxed">
-                  Contexto macro global, impacto detallado en cada posicion de tu portfolio, fuentes clave y recomendaciones de accion.
-                </p>
-
-                {/* Mini preview tags */}
-                <div className="flex flex-wrap items-center gap-2 mb-5">
-                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-green/10 text-green border border-green/20">S&P 500 en maximos</span>
-                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-red/10 text-red border border-red/20">Brent -4.2%</span>
-                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#ffd60a]/10 text-[#ffd60a] border border-[#ffd60a]/20">BCE dovish</span>
-                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-muted border border-white/10">+5 temas</span>
-                </div>
-
-                {/* Button */}
-                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white/[0.08] border border-white/[0.10] transition-all duration-300 group-hover:bg-white/[0.12] group-hover:border-white/[0.18]">
-                  <span className="text-sm font-medium text-foreground">Abrir briefing</span>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="transition-transform duration-300 group-hover:translate-x-1.5">
-                    <path d="M4 9h10M10 5l4 4-4 4" stroke="#f5f5f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+          {/* Right — Card */}
+          <Reveal delay={150} direction="right">
+            <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
+              <div className="flex items-center gap-2.5 mb-6">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a1a] animate-pulse" />
+                <span className="text-[11px] uppercase tracking-[0.25em] text-[#1a1a1a] font-bold">Briefing listo</span>
+                <span className="text-[11px] text-[#bbb] ml-auto font-semibold">8 min</span>
+              </div>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {["UBS On-Air", "Matt Levine", "Polymarket", "FT"].map((s) => (
+                  <span key={s} className="text-[11px] px-3.5 py-1.5 rounded-full border border-[#e5e0db] text-[#666] font-semibold">{s}</span>
+                ))}
+              </div>
+              <p className="text-[15px] font-semibold text-[#1a1a1a] mb-4 tracking-wide">Resumen ejecutivo</p>
+              <p className="text-[13px] text-[#666] leading-[1.9] mb-6">Semana clave para los mercados. El acuerdo EEUU-China impulsa la renta variable. El Brent cae un 4.2% por negociaciones Iran-EEUU. El BCE mantiene tono dovish.</p>
+              <div className="flex flex-wrap gap-2 mb-7">
+                <span className="text-[11px] px-3.5 py-1.5 rounded-full bg-[#1a1a1a]/8 text-[#1a1a1a] font-bold">S&P 500 maximos</span>
+                <span className="text-[11px] px-3.5 py-1.5 rounded-full bg-[#c4001a]/8 text-[#c4001a] font-bold">Brent -4.2%</span>
+                <span className="text-[11px] px-3.5 py-1.5 rounded-full bg-[#b8860b]/8 text-[#b8860b] font-bold">BCE dovish</span>
+              </div>
+              <div className="pt-5 border-t border-[#f0ede8]">
+                {["Contexto macro global", "Impacto en tu portfolio", "Temas de seguimiento", "Lo que dicen tus fuentes", "Recomendaciones"].map((s) => (
+                  <div key={s} className="flex items-center justify-between py-3 border-b border-[#f0ede8] last:border-0 group/r cursor-pointer hover:bg-[#faf8f5] -mx-4 px-4 rounded-lg transition-colors">
+                    <span className="text-[14px] text-[#444] font-medium group-hover/r:text-[#1a1a1a]">{s}</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-[#ddd] group-hover/r:text-[#1a1a1a] group-hover/r:translate-x-1 transition-all"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </div>
+                ))}
               </div>
             </div>
-          </Link>
+          </Reveal>
+        </div>
+      </section>
 
-          {/* Collapsible sections */}
-          <div className="divide-y divide-card-border">
-            <SummarySection title="Contexto macro global" icon="&#x1f30d;" tag="Alcista" tagColor="bg-green/15 text-green" defaultOpen>
-              <div className="space-y-3 text-sm text-muted leading-relaxed">
-                <p>
-                  <span className="text-foreground font-medium">EEUU:</span> El S&P 500 cerro el viernes en 5.847 puntos (+1.2%), impulsado por el anuncio del acuerdo comercial fase 1 con China. El Nasdaq subio un +1.8% liderado por semiconductores y mega-caps tech. Los futuros apuntan a apertura plana el lunes — el mercado ya ha descontado gran parte de la noticia. El VIX cayo a 13.2, niveles de complacencia no vistos desde enero 2024.
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">Europa:</span> Stoxx 600 +0.8%. El BCE no ha hablado oficialmente, pero las actas de la última reunion filtradas por Financial Times confirman que la mayoria del consejo apoya un recorte de 25pb en junio. El euro se debilita frente al dolar (1.076), lo cual es positivo para exportadoras europeas.
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">Asia:</span> Nikkei +1.5% (yen debil favorece exportadoras). Shanghai Composite +2.3% celebra el acuerdo comercial. India (Nifty 50) plana — los inversores rotan hacia China tras meses de outperformance indio.
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">Renta fija:</span> Treasury 10Y en 4.28% (-5pb en la semana). Los bonos europeos se benefician del tono dovish del BCE. El Bund aleman cae a 2.31%.
-                </p>
+      {/* ─── CINEMATIC DIVIDER 2 ─── */}
+      <CinematicDivider src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920&h=1080&fit=crop&q=90" alt="News" variant={1}>
+        <div className="text-center">
+          <p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-5 font-semibold">Profundiza</p>
+          <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Noticias seleccionadas para ti</h2>
+        </div>
+      </CinematicDivider>
+
+      {/* ─── SECTION 4: NEWS CARDS ─── */}
+      <section className="relative z-20 bg-[#faf8f5] py-32 sm:py-40">
+        <div className="max-w-[1140px] mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {NEWS_CARDS.map((card, i) => (
+              <Reveal key={card.title} delay={i * 120} direction={i === 0 ? "left" : i === 2 ? "right" : "up"}>
+                <div className="relative h-[360px] rounded-[20px] overflow-hidden group cursor-pointer transition-transform duration-500 hover:scale-105">
+                  <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 right-0 p-7 translate-y-2 group-hover:translate-y-0 transition-transform duration-700">
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-white/50 mb-2 font-semibold">{card.label} — {card.source}</p>
+                    <p className="text-[15px] text-white/90 font-extralight leading-[1.6]">{card.title}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CINEMATIC DIVIDER 3 ─── */}
+      <CinematicDivider src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=1920&h=1080&fit=crop&q=90" alt="Data" variant={2}>
+        <div className="text-center">
+          <p className="text-[12px] uppercase tracking-[0.5em] text-white/70 mb-5 font-semibold">Datos en vivo</p>
+          <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Portfolio y mercados</h2>
+        </div>
+      </CinematicDivider>
+
+      {/* ─── SECTION 5: PORTFOLIO + DNA ─── */}
+      <section className="relative z-20 bg-[#faf8f5] py-32 sm:py-40">
+        <div className="max-w-[1140px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-28 items-start">
+          {/* Left — Portfolio card */}
+          <Reveal direction="left">
+            <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] uppercase tracking-[0.35em] text-[#999] font-semibold">Portfolio total</span>
+                <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#1a1a1a] animate-pulse" /><span className="text-[11px] text-[#1a1a1a] font-bold">En vivo</span></div>
               </div>
-            </SummarySection>
-
-            <SummarySection title="Impacto directo en tu portfolio" icon="&#x1f4bc;" tag="+2.4%" tagColor="bg-green/15 text-green">
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-green mt-0.5">&#x25B2;</span>
-                  <div>
-                    <p><span className="text-foreground font-medium">IWDA (iShares MSCI World) +1.8%</span></p>
-                    <p className="text-muted">Se beneficia directamente del rally global. El acuerdo EEUU-China reduce riesgo geopolitico, que era el principal freno para mercados desarrollados. Con el BCE dovish, el componente europeo tambien tira al alza. <span className="text-accent-light">Esta posición esta en su mejor momento en 3 meses.</span></p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-green mt-0.5">&#x25B2;</span>
-                  <div>
-                    <p><span className="text-foreground font-medium">VUAA (Vanguard S&P 500) +2.1%</span></p>
-                    <p className="text-muted">Máximos históricos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposición a China (Apple, Nvidia, Tesla). Atención: el VIX en 13.2 indica complacencia extrema — históricamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-red mt-0.5">&#x25BC;</span>
-                  <div>
-                    <p><span className="text-foreground font-medium">BRT (Brent Crude Oil) -3.8%</span></p>
-                    <p className="text-muted">Las negociaciones Iran-EEUU avanzan mas rapido de lo esperado. Si Iran vuelve al mercado con plena capacidad, se estiman 1.5M barriles/dia adicionales. Esto presionaria al Brent hacia los $68-70. <span className="text-red">Tu posición pierde 45,60 esta semana. Considerar stop-loss en $72 o reducir exposición un 50%.</span></p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-green mt-0.5">&#x25B2;</span>
-                  <div>
-                    <p><span className="text-foreground font-medium">EUNA (iShares Euro Gov Bond) +0.5%</span></p>
-                    <p className="text-muted">Beneficiado por el tono dovish del BCE. Si se confirma el recorte en junio, esta posición podria subir un 1-2% adicional. Paul Donovan (UBS) confirma que la inflacion europea no sera problema hasta Q4 2026.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-green mt-0.5">&#x25B2;</span>
-                  <div>
-                    <p><span className="text-foreground font-medium">SEMI (VanEck Semiconductor) +4.2%</span></p>
-                    <p className="text-muted">Mejor posición de la semana. Nvidia presento la nueva arquitectura Blackwell Ultra y los pedidos anticipados superan expectativas. TSMC confirma aumento de capex del 15%. El sector esta en un ciclo expansivo que podria durar 12-18 meses mas. <span className="text-green">Considerar aumentar posición en caidas.</span></p>
-                  </div>
-                </div>
+              <p className="text-[32px] font-extralight text-[#1a1a1a] tracking-tight mb-1">
+                {totalValue > 0 ? formatEUR(totalValue) : "---"} <span className="text-[14px] text-[#ccc] tracking-wide">EUR</span>
+              </p>
+              <p className={`text-[13px] font-semibold mb-6 ${weightedChange >= 0 ? "text-[#1a1a1a]" : "text-[#c4001a]"}`}>
+                {weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(2)}% hoy
+              </p>
+              <div className="mb-4">
+                <TradingChart />
               </div>
-            </SummarySection>
-
-            <SummarySection title="Temas de seguimiento" icon="&#x1f4cd;" tag="3 activos" tagColor="bg-accent/15 text-accent-light">
-              <div className="space-y-4 text-sm">
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-foreground">Semiconductores</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA (subida dinamica)</span>
-                  </div>
-                  <p className="text-muted">Prioridad base: MEDIA. Subida a ALTA por el evento de Nvidia. La nueva arquitectura Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Esto reconfigura la cadena de valor: TSMC, ASML, Samsung y SK Hynix suben entre 2-6%. Tu posición en SEMI esta bien posicionada. Próximos catalistas: earnings de TSMC (22 mayo) y guidance de ASML (28 mayo).</p>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-foreground">Petróleo y energia</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA (subida dinamica)</span>
-                  </div>
-                  <p className="text-muted">Prioridad base: MEDIA. Subida a ALTA por la caida del Brent. Las negociaciones Iran-EEUU son el driver principal. Arabia Saudi aun no ha reaccionado — si recorta produccion, el impacto se amortigua. Si no, el Brent puede caer hasta $68. La OPEC+ se reune el 1 de junio. Fecha clave.</p>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-foreground">Politica monetaria BCE</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">MEDIA</span>
-                  </div>
-                  <p className="text-muted">Sin cambios de prioridad. Reunion del BCE el 5 de junio. Polymarket: 73% probabilidad de recorte 25pb. Impacto en tu portfolio: positivo para EUNA (bonos), positivo para IWDA (componente europeo), neutral para el resto.</p>
-                </div>
-              </div>
-            </SummarySection>
-
-            <SummarySection title="Lo que dicen tus fuentes" icon="&#x1f4e1;" tag="8 fuentes hoy" tagColor="bg-purple-500/15 text-purple-400">
-              <div className="space-y-4 text-sm">
-                <div className="border-l-2 border-purple-500/40 pl-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <SourceBadge name="UBS On-Air" type="podcast" />
-                    <span className="text-xs text-muted">Paul Donovan — hoy</span>
-                  </div>
-                  <p className="text-muted">&quot;La inflacion europea esta contenida. Los datos de salarios del Q1 confirman que no hay presion alcista significativa. El BCE tiene via libre para recortar en junio sin arriesgar su credibilidad.&quot; Donovan tambien advierte que el acuerdo EEUU-China es &quot;fase 1 — los aranceles tech siguen sobre la mesa.&quot;</p>
-                </div>
-                <div className="border-l-2 border-blue-500/40 pl-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <SourceBadge name="Matt Levine" type="newsletter" />
-                    <span className="text-xs text-muted">Money Stuff — viernes</span>
-                  </div>
-                  <p className="text-muted">Analisis detallado del acuerdo comercial: &quot;Es un framework, no un acuerdo final. Los mercados celebran la reduccion de incertidumbre, no los terminos especificos. La letra pequena muestra que los aranceles a semiconductores y IA se negociaran por separado en Q3.&quot;</p>
-                </div>
-                <div className="border-l-2 border-emerald-500/40 pl-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <SourceBadge name="Polymarket" type="polymarket" />
-                    <span className="text-xs text-muted">Datos en vivo</span>
-                  </div>
-                  <p className="text-muted">Recorte BCE junio: <span className="text-green">73%</span> (+8% vs semana pasada). Acuerdo Iran-EEUU antes de agosto: <span className="text-[#ffd60a]">58%</span> (+15% vs semana pasada). Recesion EEUU en 2026: <span className="text-green">12%</span> (mínimo del ano). S&P 500 sobre 6000 antes de diciembre: <span className="text-[#ffd60a]">61%</span>.</p>
-                </div>
-                <div className="border-l-2 border-zinc-500/40 pl-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <SourceBadge name="@zerohedge" type="x" />
-                    <span className="text-xs text-muted">Hilo destacado — sabado</span>
-                  </div>
-                  <p className="text-muted">Alerta sobre la complacencia del mercado: &quot;VIX en 13 con earnings season terminando y el acuerdo China ya descontado. El próximo catalizador es a la baja, no al alza. Históricamente, VIX sub-14 durante mas de 2 semanas precede correcciones.&quot; <span className="text-accent-light">Dato relevante para tu S&P 500.</span></p>
-                </div>
-                <div className="border-l-2 border-amber-500/40 pl-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <SourceBadge name="Informe BBVA" type="bank" />
-                    <span className="text-xs text-muted">Informe semanal — viernes</span>
-                  </div>
-                  <p className="text-muted">BBVA Research revisa al alza su previsión de PIB eurozona para 2026: de 1.1% a 1.4%. Mejora perspectivas para exportadoras alemanas y sector financiero europeo. Mantiene previsión de 2 recortes del BCE este año (junio y septiembre).</p>
-                </div>
-              </div>
-            </SummarySection>
-
-            <SummarySection title="Paralelos históricos" icon="&#x1f4da;">
-              <div className="space-y-4 text-sm text-muted">
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-foreground font-medium mb-2">Acuerdo comercial EEUU-China (2019 vs 2026)</p>
-                  <p>En diciembre 2019, el acuerdo fase 1 impulso al S&P 500 un +3.2% en las 2 semanas siguientes. Sin embargo, los aranceles clave nunca se eliminaron realmente y el rally se agoto en febrero 2020 (antes del COVID). <span className="text-accent-light">Patron similar: el mercado celebra la reduccion de incertidumbre, pero los detalles importan.</span> Recomendación: disfrutar el rally pero no perseguirlo — tomar beneficios parciales si sube un +3% adicional.</p>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-foreground font-medium mb-2">Iran volviendo al mercado (2015-2016)</p>
-                  <p>Cuando se firmo el JCPOA en 2015, el Brent cayo de $65 a $45 en 6 meses (-30%). La produccion iraniana aumento en 1M barriles/dia. Arabia Saudi respondio manteniendo su produccion para defender cuota de mercado, lo que intensifico la caida. <span className="text-red">Si el patron se repite, tu posición en Brent tiene riesgo significativo a la baja.</span> Diferencia clave: en 2026 la demanda global es mayor y la OPEC+ tiene mas disciplina que en 2015.</p>
-                </div>
-              </div>
-            </SummarySection>
-
-            <SummarySection title="Recomendaciones de hoy" icon="&#x1f3af;" tag="2 acciones" tagColor="bg-accent/15 text-accent-light">
-              <div className="space-y-4 text-sm">
-                <div className="bg-background rounded-lg p-4 border border-red/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-foreground font-medium">Reducir Brent un 50%</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Convicción: 8/10</span>
-                  </div>
-                  <p className="text-muted mb-3">Las negociaciones Iran-EEUU, el paralelo histórico de 2015, y la falta de reaccion de Arabia Saudi apuntan a mas caidas. Reducir a la mitad para limitar perdidas y mantener exposición por si la OPEC+ reacciona.</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-card rounded p-3 border border-card-border">
-                      <p className="text-xs text-green mb-1 font-medium">A favor</p>
-                      <p className="text-xs text-muted">Paralelo 2015 (Brent -30%). Iran puede añadir 1.5M bbl/dia. Polymarket da 58% a acuerdo. Tu portfolio ya tiene bastante riesgo energy.</p>
+              <div className="mt-3">
+                {positions.map((p) => (
+                  <div key={p.ticker} className="flex items-center justify-between py-3.5 border-b border-[#f0ede8] last:border-0">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-[#1a1a1a]/[0.07] flex items-center justify-center text-[11px] font-bold text-[#1a1a1a]">{p.ticker.slice(0, 2)}</div>
+                      <div><p className="text-[14px] font-semibold text-[#1a1a1a]">{p.ticker}</p><p className="text-[12px] text-[#999]">{p.name}</p></div>
                     </div>
-                    <div className="bg-card rounded p-3 border border-card-border">
-                      <p className="text-xs text-red mb-1 font-medium">En contra</p>
-                      <p className="text-xs text-muted">La OPEC+ tiene mas disciplina hoy. La demanda global crece. Arabia Saudi podria recortar produccion. El acuerdo puede retrasarse meses.</p>
+                    <div className="text-right">
+                      <p className="text-[14px] font-semibold text-[#1a1a1a]">{formatEUR(p.value)}</p>
+                      <p className={`text-[12px] font-bold ${p.changePct >= 0 ? "text-[#1a1a1a]" : "text-[#c4001a]"}`}>{p.changePct >= 0 ? "+" : ""}{p.changePct.toFixed(1)}%</p>
                     </div>
                   </div>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-green/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-foreground font-medium">Añadir SEMI en caidas (si baja &gt;2%)</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">Convicción: 7/10</span>
-                  </div>
-                  <p className="text-muted mb-3">El ciclo de semiconductores es expansivo (12-18 meses). Nvidia Blackwell Ultra confirma la demanda. TSMC aumenta capex. Pero el sector ya ha subido mucho — esperar una caida para comprar con mejor riesgo/recompensa.</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-card rounded p-3 border border-card-border">
-                      <p className="text-xs text-green mb-1 font-medium">A favor</p>
-                      <p className="text-xs text-muted">Ciclo expansivo confirmado. Demanda IA insaciable. Capex TSMC +15%. Tu posición actual es pequena (14% del portfolio).</p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right — Investor DNA + Learning */}
+          <Reveal delay={150} direction="right">
+            <div className="space-y-8">
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
+                <p className="text-[14px] font-semibold text-[#1a1a1a] tracking-wide">Tu Investor DNA</p>
+                <p className="text-[13px] text-[#999] mt-1.5 mb-8">Perfil psicologico como inversor</p>
+                <div className="space-y-5">
+                  {DNA_BARS.map((bar) => (
+                    <div key={bar.label}>
+                      <div className="flex justify-between text-[13px] mb-2">
+                        <span className="text-[#777]">{bar.label}</span>
+                        <span className="text-[#1a1a1a] font-bold">{bar.value}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-[#f0ede8] overflow-hidden">
+                        <div className="h-full rounded-full transition-all duration-[2s] ease-out animate-bar-fill" style={{ "--bar-width": `${bar.value}%`, backgroundColor: bar.color } as React.CSSProperties} />
+                      </div>
                     </div>
-                    <div className="bg-card rounded p-3 border border-card-border">
-                      <p className="text-xs text-red mb-1 font-medium">En contra</p>
-                      <p className="text-xs text-muted">Sector ya +25% YTD. Aranceles tech EEUU-China aun no resueltos (Matt Levine). Valoraciones estiradas (P/E sector en 32x).</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
+                <p className="text-[12px] text-[#999] mt-6">Tendencia: mejorando en disciplina, trabajar en timing de entrada.</p>
               </div>
-            </SummarySection>
 
-            <SummarySection title="Alertas y próximos eventos" icon="&#x26a0;&#xfe0f;" tag="3 alertas" tagColor="bg-red/15 text-red">
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3">
-                  <span className="text-red mt-0.5">&#x25CF;</span>
-                  <div>
-                    <p className="text-foreground font-medium">VIX en zona de complacencia (13.2)</p>
-                    <p className="text-muted">Históricamente, VIX sub-14 durante +2 semanas precede correcciones del 3-5%. No vender, pero no añadir riesgo agresivamente. Tu S&P 500 es la posición mas expuesta.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#ffd60a] mt-0.5">&#x25CF;</span>
-                  <div>
-                    <p className="text-foreground font-medium">Brent — vigilar nivel $72</p>
-                    <p className="text-muted">Si rompe los $72 a la baja, el siguiente soporte esta en $68. Considerar stop-loss o reduccion de posición antes de esa ruptura.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-accent-light mt-0.5">&#x25CF;</span>
-                  <div>
-                    <p className="text-foreground font-medium">Próximos eventos clave</p>
-                    <p className="text-muted">IPC EEUU (martes 13). Earnings TSMC (22 mayo). Reunion OPEC+ (1 junio). Reunion BCE (5 junio). Cualquiera de estos puede mover tu portfolio significativamente.</p>
-                  </div>
+              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#1a1a1a]/50 font-semibold mb-4">Ultima leccion aprendida</p>
+                <div className="bg-[#faf8f5] rounded-[16px] p-4 border border-[#e5e0db]">
+                  <p className="text-[12px] text-[#1a1a1a]/50 mb-2">Hace 3 dias — Venta de BRT</p>
+                  <p className="text-[17px] text-[#555] leading-[2.2] tracking-wide">
+                    Vendiste parte de Brent tras caida del 2%. Resultado: siguio cayendo un 1.8% adicional.
+                    <span className="text-[#1a1a1a] font-medium"> Buena decision.</span> Senal clave que detectaste: volumen de venta institucional inusualmente alto.
+                  </p>
                 </div>
               </div>
-            </SummarySection>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── SECTION 6: STATS ─── */}
+      <section className="relative z-20 bg-[#faf8f5] py-28">
+        <div className="max-w-[900px] mx-auto px-6 grid grid-cols-3 gap-8">
+          <AnimatedStat value={12} suffix="+" label="Fuentes integradas" />
+          <AnimatedStat value={365} suffix="" label="Briefings al ano" />
+          <AnimatedStat value={98} suffix="%" label="Cobertura global" />
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="relative z-20 bg-[#faf8f5] py-20">
+        <div className="max-w-[1140px] mx-auto px-6">
+          <div className="flex items-center justify-center gap-3 mb-12">
+            <div className="w-14 h-[1px] bg-[#e5e0db]" />
+            <div className="w-2 h-2 rotate-45 border border-[#e5e0db]" />
+            <div className="w-14 h-[1px] bg-[#e5e0db]" />
           </div>
-        </div>
-      </section>
-
-      {/* 6 News Windows */}
-      <section className="max-w-6xl mx-auto px-6 pb-8">
-        <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Noticias para profundizar</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <NewsCard type="Interes personal" title="Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posición en MSCI World" tag="Tu portfolio" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=300&fit=crop" source="Financial Times"
-            summary="El acuerdo fase 1 reduce aranceles en un 30% para bienes industriales. Sin embargo, los aranceles tech (semiconductores, IA) se negociaran por separado en Q3. Los mercados celebran la reduccion de incertidumbre — S&P 500 en máximos."
-            impact="Tu IWDA sube +1.8% directamente por esto. VUAA tambien se beneficia (+2.1%). Efecto neto: +~120 en tu portfolio."
-            sources={["Financial Times", "Matt Levine", "Polymarket"]}
-          />
-          <NewsCard type="Interes personal" title="Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana" tag="Tu portfolio" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=300&fit=crop" source="Reuters"
-            summary="El secretario de Estado confirmo avances significativos. Si Iran vuelve al mercado con plena capacidad, 1.5M barriles/dia adicionales presionarian los precios. Polymarket: 58% probabilidad de acuerdo antes de agosto."
-            impact="Tu posición en BRT pierde 45,60 esta semana. Si el Brent rompe $72, puede caer hasta $68. Considerar reducir exposición."
-            sources={["Reuters", "UBS On-Air", "Polymarket"]}
-          />
-          <NewsCard type="Información nueva" title="Nvidia presenta nueva arquitectura Blackwell Ultra: el mercado de semiconductores se reconfigura" tag="Nuevo" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1640955014216-75201056c829?w=600&h=300&fit=crop" source="Bloomberg"
-            summary="Blackwell Ultra promete 4x mejor rendimiento en inferencia IA. Los hyperscalers ya han confirmado pedidos masivos. TSMC aumenta capex un 15%. El ciclo expansivo de semiconductores se extiende 12-18 meses mas."
-            impact="Tu SEMI sube +4.2%, mejor posición de la semana. Considerar aumentar en próxima caida."
-            sources={["Bloomberg", "@sentimentrader", "Financial Times"]}
-          />
-          <NewsCard type="Información nueva" title="India supera a China como mayor mercado emergente por flujo de capitales" tag="Nuevo" delay="animate-fade-in-up" image="https://images.unsplash.com/photo-1532664189809-02133fee698d?w=600&h=300&fit=crop" source="The Daily Shot"
-            summary="Tras meses de outperformance, India atrae mas capital que China por primera vez en 2026. Sin embargo, el acuerdo EEUU-China esta provocando rotacion inversa — los inversores vuelven a mirar a Shanghai."
-            impact="No tienes exposición directa a emergentes. Podria ser una oportunidad futura si India corrige."
-            sources={["The Daily Shot", "BBVA Research"]}
-          />
-          <NewsCard type="Vision futura" title="Regulación IA en Europa: nuevo marco legal podria impactar al sector tech en 2027" tag="Futuro" delay="animate-fade-in-up-delay" image="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop" source="Matt Levine"
-            summary="La UE prepara nuevas restricciones para modelos de IA de alto riesgo. Las multas podrian alcanzar el 6% de los ingresos globales. Meta, Google y Microsoft serian los mas afectados. Implementacion prevista para Q1 2027."
-            impact="Impacto indirecto en tu VUAA y IWDA por el peso de big tech. Monitorizar — no requiere accion inmediata."
-            sources={["Matt Levine", "Financial Times"]}
-          />
-          <NewsCard type="Vision futura" title="Escasez global de cobre: la próxima crisis silenciosa para la transicion energetica" tag="Futuro" delay="animate-fade-in-up-delay-2" image="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=300&fit=crop" source="Informe BBVA"
-            summary="BBVA Research alerta: la demanda de cobre para vehículos eléctricos y renovables superara la oferta en 2027-2028. Chile y Peru no pueden aumentar produccion al ritmo necesario. El precio podria duplicarse en 3 años."
-            impact="No tienes exposición a cobre. Podria ser oportunidad a medio plazo — radar de oportunidades activado."
-            sources={["Informe BBVA", "Bloomberg"]}
-          />
-        </div>
-      </section>
-
-      {/* Fiction mini */}
-      <section className="max-w-6xl mx-auto px-6 pb-4 stagger-8">
-        <Link href="/recomendaciones">
-          <BorderCard padding="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-white/[0.04] flex items-center justify-center border border-dashed border-white/[0.15]">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <circle cx="7" cy="7" r="5.5" stroke="#86868b" strokeWidth="1" strokeDasharray="2 1.5" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-[#86868b]">Inversiones en ficción</p>
-                  <p className="text-sm font-medium">2 activas — IBIT, GLD</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-semibold text-[#30d158]">+284,50 €</p>
-                <p className="text-[10px] text-[#86868b]">de 800 € simulados →</p>
-              </div>
-            </div>
-          </BorderCard>
-        </Link>
-      </section>
-
-      {/* Portfolio Preview */}
-      <section className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Portfolio */}
-          <BorderCard padding="p-4">
-            <div className="flex items-center justify-between mb-3 px-2">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Portfolio</h2>
-              <span className={`text-xs ${weightedChange >= 0 ? "text-green" : "text-red"}`}>{weightedChange >= 0 ? "+" : ""}{weightedChange.toFixed(1)}% hoy</span>
-            </div>
-            <TradingChart />
-            <div className="mt-3 px-2">
-              {positions.map((p) => (
-                <PortfolioPosition
-                  key={p.ticker}
-                  ticker={p.ticker}
-                  name={p.name}
-                  change={p.changePct}
-                  value={formatEUR(p.value)}
-                />
-              ))}
-            </div>
-          </BorderCard>
-
-          {/* Investor DNA + Learning */}
-          <div className="space-y-6">
-            <BorderCard padding="p-6">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Investor DNA</h2>
-              <div className="space-y-3">
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted">Disciplina</span>
-                    <span><AnimatedCounter value={78} decimals={0} suffix="%" /></span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
-                    <div className="h-full rounded-full bg-accent animate-fill-bar" style={{ width: "78%" }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted">Control emocional</span>
-                    <span><AnimatedCounter value={65} decimals={0} suffix="%" /></span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
-                    <div className="h-full rounded-full bg-[#ffd60a] animate-fill-bar" style={{ width: "65%" }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted">Diversificación</span>
-                    <span><AnimatedCounter value={82} decimals={0} suffix="%" /></span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
-                    <div className="h-full rounded-full bg-green animate-fill-bar" style={{ width: "82%" }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted">Timing</span>
-                    <span>54%</span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-card-border overflow-hidden">
-                    <div className="h-full rounded-full bg-red" style={{ width: "54%" }} />
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted mt-4">Tendencia: mejorando en disciplina, trabajar en timing de entrada.</p>
-            </BorderCard>
-
-            <BorderCard padding="p-6">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-3">Ultima leccion aprendida</h2>
-              <div className="bg-background rounded-lg p-4 border border-card-border">
-                <p className="text-xs text-accent-light mb-2">Hace 3 dias — Venta de BRT</p>
-                <p className="text-sm text-muted leading-relaxed">
-                  Vendiste parte de Brent tras caida del 2%. Resultado: siguio cayendo un 1.8% adicional.
-                  <span className="text-green"> Buena decision.</span> Señal clave que detectaste: volumen de venta institucional inusualmente alto.
-                </p>
-              </div>
-            </BorderCard>
+          <div className="text-center">
+            <p className="text-[14px] tracking-[0.35em] uppercase text-[#1a1a1a]/70 font-semibold">FinPulse</p>
+            <p className="text-[12px] text-[#ccc] mt-2 tracking-wide">Inteligencia financiera personal</p>
           </div>
-        </div>
-      </section>
-
-      {/* Radar de Oportunidades */}
-      <section className="max-w-6xl mx-auto px-6 pb-8">
-        <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Radar de oportunidades</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Radar visual */}
-          <BorderCard padding="p-6" className="flex flex-col items-center justify-center">
-            <div className="relative w-48 h-48">
-              {/* Radar circles */}
-              <svg viewBox="0 0 200 200" className="w-full h-full">
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#2d2d2d" strokeWidth="1" />
-                <circle cx="100" cy="100" r="60" fill="none" stroke="#2d2d2d" strokeWidth="1" />
-                <circle cx="100" cy="100" r="30" fill="none" stroke="#2d2d2d" strokeWidth="1" />
-                <line x1="100" y1="10" x2="100" y2="190" stroke="#2d2d2d" strokeWidth="0.5" />
-                <line x1="10" y1="100" x2="190" y2="100" stroke="#2d2d2d" strokeWidth="0.5" />
-                {/* Sweep line */}
-                <line x1="100" y1="100" x2="170" y2="40" stroke="#f5f5f7" strokeWidth="1.5" opacity="0.6">
-                  <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="8s" repeatCount="indefinite" />
-                </line>
-                {/* Blips — opportunities */}
-                <circle cx="135" cy="55" r="5" fill="#30d158" opacity="0.9">
-                  <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="60" cy="70" r="4" fill="#f59e0b" opacity="0.8">
-                  <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="150" cy="120" r="3.5" fill="#f5f5f7" opacity="0.7">
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite" />
-                </circle>
-              </svg>
-            </div>
-            <p className="text-xs text-muted mt-2">3 oportunidades detectadas</p>
-          </BorderCard>
-
-          {/* Opportunity cards */}
-          <div className="md:col-span-2 space-y-3">
-            <div className="bg-card border border-green/20 rounded-xl p-4 hover:border-green/40 transition-colors cursor-pointer">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green animate-pulse" />
-                  <span className="text-sm font-medium">Cobre — escasez global 2027-2028</span>
-                </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-green/15 text-green">Alta convicción</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed mb-2">BBVA Research y Bloomberg alertan: la demanda de cobre para EVs y renovables superara la oferta. Chile y Peru no pueden escalar produccion. El precio podria duplicarse en 3 años.</p>
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-muted">Detectado hace 3 dias</span>
-                <span className="text-muted">•</span>
-                <span className="text-muted">4 fuentes</span>
-                <span className="text-muted">•</span>
-                <span className="text-green">No mainstream todavia</span>
-              </div>
-            </div>
-            <div className="bg-card border border-amber-500/20 rounded-xl p-4 hover:border-amber-500/40 transition-colors cursor-pointer">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#ffd60a] animate-pulse" />
-                  <span className="text-sm font-medium">India — rotacion de capital tras acuerdo China</span>
-                </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">Media convicción</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed mb-2">Los inversores rotan de India a China por el acuerdo. Si India corrige un 10-15%, podria ser punto de entrada histórico para el mercado emergente de mayor crecimiento a largo plazo.</p>
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-muted">Detectado hace 1 dia</span>
-                <span className="text-muted">•</span>
-                <span className="text-muted">2 fuentes</span>
-                <span className="text-muted">•</span>
-                <span className="text-[#ffd60a]">Emergente</span>
-              </div>
-            </div>
-            <div className="bg-card border border-accent/20 rounded-xl p-4 hover:border-accent/40 transition-colors cursor-pointer">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
-                  <span className="text-sm font-medium">Nuclear — renacimiento por demanda IA</span>
-                </div>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-accent/15 text-accent-light">En observacion</span>
-              </div>
-              <p className="text-xs text-muted leading-relaxed mb-2">Los centros de datos de IA necesitan energia limpia y estable. Microsoft, Google y Amazon firman acuerdos con plantas nucleares. ETFs de uranio suben +18% YTD. Tendencia incipiente.</p>
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-muted">Detectado hace 5 dias</span>
-                <span className="text-muted">•</span>
-                <span className="text-muted">3 fuentes</span>
-                <span className="text-muted">•</span>
-                <span className="text-accent-light">Temprano</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-card-border py-6">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between text-xs text-muted">
-          <span>FinPulse — Aprende mientras inviertes</span>
-          <span>En desarrollo</span>
         </div>
       </footer>
+
+      {/* ─── STYLES ─── */}
+      <style jsx global>{`
+        .preview-light-page {
+          font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ken Burns variants */
+        @keyframes ken-burns {
+          0%   { transform: scale(1) translate(0, 0); }
+          50%  { transform: scale(1.15) translate(-2%, -1%); }
+          100% { transform: scale(1) translate(0, 0); }
+        }
+        @keyframes ken-burns-2 {
+          0%   { transform: scale(1.1) translate(-1%, 0); }
+          50%  { transform: scale(1) translate(1%, -2%); }
+          100% { transform: scale(1.1) translate(-1%, 0); }
+        }
+        @keyframes ken-burns-3 {
+          0%   { transform: scale(1) translate(1%, 1%); }
+          50%  { transform: scale(1.12) translate(-1%, 0); }
+          100% { transform: scale(1) translate(1%, 1%); }
+        }
+        .animate-ken-burns   { animation: ken-burns 20s ease-in-out infinite; }
+        .animate-ken-burns-2 { animation: ken-burns-2 25s ease-in-out infinite; }
+        .animate-ken-burns-3 { animation: ken-burns-3 22s ease-in-out infinite; }
+
+        /* Floating particles */
+        @keyframes float-particle {
+          0%, 100% { transform: translate(0, 0); opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.6; }
+          50% { transform: translate(30px, -60px); opacity: 0.3; }
+        }
+        .animate-float-particle { animation: float-particle 8s ease-in-out infinite; }
+
+        /* Film grain */
+        .film-grain {
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+          background-size: 128px 128px;
+        }
+
+        /* Bar fill */
+        @keyframes bar-fill {
+          0% { width: 0; }
+          100% { width: var(--bar-width); }
+        }
+        .animate-bar-fill { animation: bar-fill 1.5s ease-out forwards; width: 0; }
+      `}</style>
     </main>
   );
 }

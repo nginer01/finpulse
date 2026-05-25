@@ -5,45 +5,53 @@ import LoginGate from "@/components/LoginGate";
 
 function SourceBadge({ name, type }: { name: string; type: string }) {
   const colors: Record<string, string> = {
-    newsletter: "bg-blue-500/15 text-blue-400",
-    podcast: "bg-purple-500/15 text-purple-400",
-    polymarket: "bg-emerald-500/15 text-emerald-400",
-    x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-[#ffd60a]",
-    news: "bg-rose-500/15 text-rose-400",
+    newsletter: "border-blue-500/20 text-blue-400/80",
+    podcast: "border-purple-500/20 text-purple-400/80",
+    polymarket: "border-emerald-500/20 text-emerald-400/80",
+    x: "border-white/10 text-white/40",
+    bank: "border-amber-500/20 text-[#ffd60a]/80",
+    news: "border-rose-500/20 text-rose-400/80",
   };
   return (
-    <span className={`text-xs px-2 py-0.5 rounded-full ${colors[type] || "bg-card-border text-muted"}`}>{name}</span>
+    <span className={`text-[10px] uppercase tracking-[0.1em] font-medium px-3 py-1 rounded-full border ${colors[type] || "border-card-border text-muted"}`}>{name}</span>
   );
 }
 
 function SectionDivider() {
-  return <div className="h-px bg-card-border my-10" />;
+  return (
+    <div className="flex items-center justify-center gap-3 my-16">
+      <div className="w-14 h-[1px] bg-white/[0.08]" />
+      <div className="w-1.5 h-1.5 rounded-full border border-white/[0.12]" />
+      <div className="w-14 h-[1px] bg-white/[0.08]" />
+    </div>
+  );
 }
 
 export default function ResumenDiario() {
   return (
-    <LoginGate teaserHeight={55}>
     <main className="min-h-screen">
       <ScrollProgress />
       <Nav />
 
-      {/* Reading progress indicator */}
-      <div className="max-w-3xl mx-auto px-6">
-
-        {/* Hero image */}
-        <div className="relative rounded-xl overflow-hidden mt-8 mb-6">
-          <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=400&fit=crop" alt="Mercados globales" className="w-full h-56 object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <p className="text-muted text-sm mb-1">Domingo, 11 de mayo 2026 — 9:00 AM</p>
-            <h1 className="text-2xl font-extralight tracking-wide">Resumen diario</h1>
+      {/* Hero — full width cinematic like landing */}
+      <section className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1920&h=1080&fit=crop&q=90" alt="Mercados globales" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <div className="text-center">
+            <p className="text-[11px] uppercase tracking-[0.5em] text-white/60 mb-5 font-semibold">Cada manana</p>
+            <h1 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Tu briefing diario</h1>
+            <p className="text-[13px] text-white/40 mt-4 tracking-wide">Domingo, 11 de mayo 2026 — 9:00 AM</p>
           </div>
         </div>
+      </section>
+
+      <div className="max-w-3xl mx-auto px-6">
 
         {/* Title block */}
-        <div className="pb-8 border-b border-card-border">
-          <p className="text-muted text-sm mb-4">14 fuentes procesadas — Tiempo de lectura: ~8 min</p>
+        <div className="pb-10 border-b border-white/[0.06] pt-10">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-muted/60 font-medium mb-5">14 fuentes procesadas — Tiempo de lectura: ~8 min</p>
           <div className="flex flex-wrap gap-2">
             <SourceBadge name="UBS On-Air" type="podcast" />
             <SourceBadge name="Matt Levine" type="newsletter" />
@@ -57,26 +65,26 @@ export default function ResumenDiario() {
         </div>
 
         {/* Quick status bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 py-6 border-b border-card-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-b border-white/[0.06]">
           <div>
-            <p className="text-xs text-muted">Portfolio</p>
-            <p className="text-lg font-bold">12.847,32</p>
-            <p className="text-xs text-green">+2.4%</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Portfolio</p>
+            <p className="text-xl font-extralight tracking-wide">12.847,32</p>
+            <p className="text-[11px] text-green mt-1">+2.4%</p>
           </div>
           <div>
-            <p className="text-xs text-muted">Sentimiento</p>
-            <p className="text-lg font-bold text-[#ffd60a]">62/100</p>
-            <p className="text-xs text-muted">Optimismo moderado</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Sentimiento</p>
+            <p className="text-xl font-extralight tracking-wide text-[#ffd60a]">62/100</p>
+            <p className="text-[11px] text-muted/60 mt-1">Optimismo moderado</p>
           </div>
           <div>
-            <p className="text-xs text-muted">Recomendación</p>
-            <p className="text-lg font-bold">Mantener</p>
-            <p className="text-xs text-accent-light">Convicción 7/10</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Recomendacion</p>
+            <p className="text-xl font-extralight tracking-wide">Mantener</p>
+            <p className="text-[11px] text-accent-light/60 mt-1">Conviccion 7/10</p>
           </div>
           <div>
-            <p className="text-xs text-muted">Alertas</p>
-            <p className="text-lg font-bold text-red">3</p>
-            <p className="text-xs text-muted">1 critica, 2 moderadas</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Alertas</p>
+            <p className="text-xl font-extralight tracking-wide text-red">3</p>
+            <p className="text-[11px] text-muted/60 mt-1">1 critica, 2 moderadas</p>
           </div>
         </div>
 
@@ -84,12 +92,12 @@ export default function ResumenDiario() {
 
         {/* 1. Lo esencial */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=250&fit=crop" alt="Trading floor" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Lo esencial</h2>
-              <p className="text-xs text-muted">Financial Times / Bloomberg</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=400&fit=crop&q=90" alt="Trading floor" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Financial Times / Bloomberg</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Lo esencial</h2>
             </div>
           </div>
           <div className="text-sm leading-7 text-muted space-y-4">
@@ -112,12 +120,12 @@ export default function ResumenDiario() {
 
         {/* 2. Mercados en detalle */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=800&h=250&fit=crop" alt="Stock market screens" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Mercados en detalle</h2>
-              <p className="text-xs text-muted">The Daily Shot / Reuters</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=1200&h=400&fit=crop&q=90" alt="Stock market screens" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">The Daily Shot / Reuters</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Mercados en detalle</h2>
             </div>
           </div>
 
@@ -177,12 +185,12 @@ export default function ResumenDiario() {
 
         {/* 3. Tu portfolio hoy */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&h=250&fit=crop" alt="Portfolio charts" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Tu portfolio hoy</h2>
-              <p className="text-xs text-muted">Datos de mercado en tiempo real</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&h=250&fit=crop" alt="Portfolio charts" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Datos de mercado en tiempo real</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Tu portfolio hoy</h2>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7">
@@ -193,7 +201,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">IW</div>
                   <div>
                     <p className="font-medium">IWDA — iShares MSCI World</p>
-                    <p className="text-xs text-muted">4.230,00 — 32.9% del portfolio</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">4.230,00 — 32.9% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+1.8%</span>
@@ -209,7 +217,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">VU</div>
                   <div>
                     <p className="font-medium">VUAA — Vanguard S&P 500</p>
-                    <p className="text-xs text-muted">3.150,00 — 24.5% del portfolio</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3.150,00 — 24.5% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+2.1%</span>
@@ -225,7 +233,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-red/10 flex items-center justify-center text-sm font-mono text-red">BR</div>
                   <div>
                     <p className="font-medium">BRT — Brent Crude Oil</p>
-                    <p className="text-xs text-muted">1.200,00 — 9.3% del portfolio</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">1.200,00 — 9.3% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-red font-medium">-3.8%</span>
@@ -238,7 +246,7 @@ export default function ResumenDiario() {
               </p>
               <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-red font-medium mb-1">Recomendación: reducir posición un 50%</p>
-                <p className="text-xs text-muted">Convicción 8/10. El paralelo histórico de 2015 (cuando se firmo el JCPOA, el Brent cayo de $65 a $45 en 6 meses), la tendencia de Polymarket (58% a acuerdo Iran antes de agosto), y tu nivel de exposición actual sugieren que es prudente reducir. Mantener la otra mitad por si la OPEC+ reacciona con recortes.</p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Convicción 8/10. El paralelo histórico de 2015 (cuando se firmo el JCPOA, el Brent cayo de $65 a $45 en 6 meses), la tendencia de Polymarket (58% a acuerdo Iran antes de agosto), y tu nivel de exposición actual sugieren que es prudente reducir. Mantener la otra mitad por si la OPEC+ reacciona con recortes.</p>
               </div>
             </div>
 
@@ -248,7 +256,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">EU</div>
                   <div>
                     <p className="font-medium">EUNA — iShares Euro Gov Bond</p>
-                    <p className="text-xs text-muted">2.400,00 — 18.7% del portfolio</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">2.400,00 — 18.7% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+0.5%</span>
@@ -264,7 +272,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center text-sm font-mono text-green">SE</div>
                   <div>
                     <p className="font-medium">SEMI — VanEck Semiconductor</p>
-                    <p className="text-xs text-muted">1.867,32 — 14.5% del portfolio</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">1.867,32 — 14.5% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+4.2%</span>
@@ -277,7 +285,7 @@ export default function ResumenDiario() {
               </p>
               <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-green font-medium mb-1">Recomendación: añadir en caidas (si baja &gt;2%)</p>
-                <p className="text-xs text-muted">Convicción 7/10. El ciclo es favorable, pero el sector ya sube un +25% en lo que va de año y las valoraciones estan estiradas (P/E sector en 32x). Ademas, Matt Levine recuerda que los aranceles tech EEUU-China se negociaran por separado en Q3. Mejor esperar un retroceso para mejorar el precio de entrada.</p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Convicción 7/10. El ciclo es favorable, pero el sector ya sube un +25% en lo que va de año y las valoraciones estan estiradas (P/E sector en 32x). Ademas, Matt Levine recuerda que los aranceles tech EEUU-China se negociaran por separado en Q3. Mejor esperar un retroceso para mejorar el precio de entrada.</p>
               </div>
             </div>
           </div>
@@ -287,12 +295,12 @@ export default function ResumenDiario() {
 
         {/* 4. Temas de seguimiento */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=800&h=250&fit=crop" alt="Semiconductores" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Temas de seguimiento</h2>
-              <p className="text-xs text-muted">3 temas activos esta semana</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=800&h=250&fit=crop" alt="Semiconductores" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3 temas activos esta semana</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Temas de seguimiento</h2>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
@@ -348,12 +356,12 @@ export default function ResumenDiario() {
 
         {/* 5. Lo que dicen las fuentes */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=800&h=250&fit=crop" alt="News sources" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Lo que dicen tus fuentes</h2>
-              <p className="text-xs text-muted">8 fuentes analizadas hoy</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=800&h=250&fit=crop" alt="News sources" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">8 fuentes analizadas hoy</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Lo que dicen tus fuentes</h2>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
@@ -465,12 +473,12 @@ export default function ResumenDiario() {
 
         {/* 6. Paralelos históricos */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=250&fit=crop" alt="Historical data" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Paralelos históricos</h2>
-              <p className="text-xs text-muted">Lecciones del pasado para el presente</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=250&fit=crop" alt="Historical data" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Lecciones del pasado para el presente</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Paralelos históricos</h2>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7 text-muted">
@@ -513,12 +521,12 @@ export default function ResumenDiario() {
 
         {/* 7. Recomendaciones */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=250&fit=crop" alt="Investment strategy" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Recomendaciones</h2>
-              <p className="text-xs text-muted">2 acciones sugeridas hoy</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=250&fit=crop" alt="Investment strategy" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">2 acciones sugeridas hoy</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Recomendaciones</h2>
             </div>
           </div>
           <div className="space-y-6 text-sm leading-7">
@@ -593,12 +601,12 @@ export default function ResumenDiario() {
 
         {/* 8. Alertas */}
         <section className="py-10">
-          <div className="relative rounded-xl overflow-hidden mb-6">
-            <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=250&fit=crop" alt="Calendar events" className="w-full h-40 object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Alertas y próximos eventos</h2>
-              <p className="text-xs text-muted">3 alertas activas — 6 eventos esta semana</p>
+          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
+            <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=250&fit=crop" alt="Calendar events" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3 alertas activas — 6 eventos esta semana</p>
+              <h2 className="text-2xl font-extralight text-white tracking-wide">Alertas y próximos eventos</h2>
             </div>
           </div>
           <div className="space-y-4 text-sm leading-7">
@@ -653,7 +661,7 @@ export default function ResumenDiario() {
 
         {/* Final note */}
         <div className="py-10 border-t border-card-border text-center">
-          <p className="text-xs text-muted">Resumen generado a las 9:00 AM del 11 de mayo de 2026</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Resumen generado a las 9:00 AM del 11 de mayo de 2026</p>
           <p className="text-xs text-muted mt-1">14 fuentes procesadas — 247 noticias analizadas — 12 vinculadas a tu portfolio</p>
           <Link href="/" className="inline-block mt-4 text-sm text-accent-light hover:text-accent transition-colors">
             Volver al dashboard
@@ -662,6 +670,5 @@ export default function ResumenDiario() {
 
       </div>
     </main>
-    </LoginGate>
   );
 }

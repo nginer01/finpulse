@@ -135,8 +135,16 @@ finpulse/
 - GET/POST/DELETE /api/portfolio/positions
 - POST /api/portfolio/import-csv
 
-### Chat/News:
-- POST /api/chat/ask (necesita ANTHROPIC_API_KEY)
+### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):
+- POST /api/chat/ask — Chat libre con CIO, soporta conversation_history (ultimos 10 msgs) y context
+- POST /api/chat/recommend — 3 recomendaciones con conviccion 1-10, pro/contra, paralelos historicos, timeframe
+- POST /api/chat/briefing — Briefing diario completo: macro, mercados, impacto por posicion
+- POST /api/chat/analyze — Analiza noticia concreta + impacto en portfolio
+- System prompt: CIO de elite, directo, fundamentado, anti sesgo confirmacion, paralelos historicos
+- Model: claude-sonnet-4-20250514, max_tokens 2048-4000
+- Fallback graceful si no hay API key
+
+### News:
 - GET /api/news/summary/today, /api/news/articles
 
 ## Holdings ficticios (cantidades inventadas, precios reales)
@@ -163,24 +171,24 @@ finpulse/
 - Informes semanales de bancos
 
 ## Paginas de preview (rediseno dashboard)
-- `/preview-light` — Dashboard rediseñado estilo landing: hero con video, dividers cinematicos 65vh, titulos 5rem, spacing py-40, news cards con imagenes 360px. ESTA ES LA REFERENCIA para el dashboard final.
+- `/preview-light` — Ya aplicado como dashboard principal (page.tsx)
 - `/preview-dark` — Variante oscura refinada (descartada, usuario prefiere light)
 - `/showcase` — Reel cinematico 9 escenas para marketing (WIP: hacerlo mas rapido/continuo)
 - `/demo` — Dashboard animado con datos en vivo
 
 ## Hero video
 - Archivo: frontend/public/hero-video.mp4 (85MB, local only, en .gitignore)
-- Usado en: landing hero + preview-light hero
+- Usado en: dashboard hero (page.tsx). Landing usa foto original con Ken Burns.
 - Implementacion: <video autoPlay muted loop playsInline> con poster fallback
 - PENDIENTE: comprimir a ~5-10MB con ffmpeg para produccion
 - PENDIENTE: las imagenes de los dividers deberian cambiar segun las noticias del dia (dinamicas con IA)
 
 ## Pendiente
 1. ~~Landing cinematica~~ HECHO
-2. Aplicar /preview-light como dashboard principal (reemplazar page.tsx actual)
+2. ~~Aplicar preview-light como dashboard~~ HECHO (page.tsx reemplazado, backup en page.backup.tsx)
 3. Conectar mas paginas a datos reales (portfolio, comparador, stress-test)
 4. Posiciones en Supabase (no hardcoded)
-5. ANTHROPIC_API_KEY + system prompt "CEO de JP Morgan"
+5. ~~System prompt "CEO de JP Morgan"~~ HECHO (4 endpoints: ask, recommend, briefing, analyze). Falta ANTHROPIC_API_KEY.
 6. Integracion Gmail (correo dedicado aun NO creado)
 7. Integracion X (Twitter)
 8. Polymarket API

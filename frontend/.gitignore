@@ -42,3 +42,4 @@ next-env.d.ts
 
 .vercel
 public/hero-video.mp4
+public/landing-video.mp4

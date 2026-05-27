@@ -150,25 +150,42 @@ finpulse/
 ## Holdings ficticios (cantidades inventadas, precios reales)
 - IWDA: 35 uds, VUAA: 10 uds, BRT: 15 uds, EUNA: 50 uds, SEMI: 100 uds
 
-## Funcionalidades clave del producto
-- Resumen diario a las 9:00 AM (hora Espana), integra TODAS las fuentes
-- Memoria acumulativa: noticias repetidas se profundizan, no se resumen desde cero
-- 6 ventanas de noticias: 2 interes personal, 2 informacion nueva, 2 vision futura
-- Sistema de aprendizaje post-decision (que paso, que se podia hacer, se podia prever)
-- Hilo temporal de noticias (evolucion en el tiempo)
-- Indice de conviccion 1-10 por recomendacion
-- Radar de oportunidades emergentes
-- Contraargumentos automaticos (anti sesgo de confirmacion)
-- Resumen semanal (domingos)
-- Paralelismos historicos en lecciones/recomendaciones
-- Sentimiento social via Polymarket
+## PRINCIPIO FUNDAMENTAL
+La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informacion no es excelente, la app no vale nada.
 
-## Fuentes de informacion
-- Gmail dedicado (newsletters, papers, periodicos via WhatsApp)
-- X (Twitter): cuentas especificas por definir
-- Polymarket: sentimiento y expectativas
-- Podcasts: UBS On-Air (Paul Donovan, diario) + mas por definir
-- Informes semanales de bancos
+## Briefing diario — El corazon de FinPulse
+- Se genera cada manana a las 9:00 AM (hora Espana)
+- Lee TODOS los emails del Gmail dedicado (periodicos, newsletters, papers, informes)
+- NO resume superficialmente: lee detenidamente, extrae toda la informacion relevante
+- Cruza fuentes: si 3 fuentes hablan del mismo tema, junta toda la info, no repite
+- Anade contexto: Polymarket (probabilidades), X (opiniones influyentes), datos de mercado
+- ADAPTADO al usuario: si tiene Brent, petroleo va primero y con mas profundidad
+- Recomendaciones fundamentadas: conviccion 1-10, pro/contra, paralelos historicos
+- Memoria acumulativa: noticias que se repiten se profundizan, no se resumen desde cero
+- NO INVENTAR NADA: solo informacion verificada de las fuentes
+- Calidad > brevedad: puede ser largo, lo importante es que sea completo
+- Tono: CEO de JP Morgan hablando a su cliente VIP
+
+## Funcionalidades diferenciales (lo que nadie mas hace)
+1. **Decision Journal**: al comprar/vender, tags rapidos obligatorios (2s) + texto libre opcional. La IA analiza retrospectivamente si acertaste y por que.
+2. **El camino no tomado**: registra oportunidades descartadas y muestra que habria pasado.
+3. **Briefing que aprende de ti**: se adapta al portfolio, prioriza por tus intereses, profundiza en tus temas.
+4. **Anti sesgo confirmacion**: SIEMPRE caso a favor Y en contra con la misma fuerza.
+5. **Investor DNA evolutivo**: score de disciplina, timing, diversificacion, control emocional. Sube/baja con decisiones.
+6. **Alertas predictivas**: avisa ANTES de que algo pase (volumen institucional, Polymarket, correlaciones historicas).
+7. **Noticias → Portfolio → Accion**: cadena completa con paralelos historicos y recomendacion concreta.
+
+## Fuentes de informacion (por prioridad)
+1. Gmail dedicado — periodicos, newsletters, papers, informes (el usuario los envia). AUN NO CREADO.
+2. Newsletters fondos/bancos — UBS On-Air, BBVA Research, Matt Levine, FT Alphaville
+3. Polymarket API — probabilidades de eventos (recorte BCE, acuerdo Iran, etc)
+4. X (Twitter) — opiniones de politicos, economistas, analistas, gestores
+5. Datos de mercado — yfinance (ya implementado)
+6. Podcasts — UBS On-Air (Paul Donovan, diario) + otros por definir
+
+## Bloqueantes para briefing real
+1. ANTHROPIC_API_KEY — necesaria para que Claude genere el briefing
+2. Gmail dedicado — necesario para recibir las fuentes del usuario
 
 ## Paginas de preview (rediseno dashboard)
 - `/preview-light` — Ya aplicado como dashboard principal (page.tsx)
@@ -183,29 +200,37 @@ finpulse/
 - PENDIENTE: comprimir a ~5-10MB con ffmpeg para produccion
 - PENDIENTE: las imagenes de los dividers deberian cambiar segun las noticias del dia (dinamicas con IA)
 
-## Pendiente
-1. ~~Landing cinematica~~ HECHO
-2. ~~Aplicar preview-light como dashboard~~ HECHO (page.tsx reemplazado, backup en page.backup.tsx)
-3. Conectar mas paginas a datos reales (portfolio, comparador, stress-test)
-4. Posiciones en Supabase (no hardcoded)
-5. ~~System prompt "CEO de JP Morgan"~~ HECHO (4 endpoints: ask, recommend, briefing, analyze). Falta ANTHROPIC_API_KEY.
-6. Integracion Gmail (correo dedicado aun NO creado)
-7. Integracion X (Twitter)
-8. Polymarket API
-9. FRED API para datos macro (instalado, no integrado)
-10. Finnhub WebSocket para precios real-time (instalado, no integrado)
-11. ~~Autenticacion de usuario~~ HECHO (Supabase Auth, frontend+backend)
-12. ~~Deploy frontend Vercel + backend Railway~~ HECHO
-13. Seleccionar mejores fuentes (newsletters, cuentas X, bancos)
-14. Eliminar /debug/db endpoint temporal del backend
-15. Quitar error details del login endpoint (solo para debug)
-16. Configurar Vercel auto-deploy desde GitHub
-17. ~~Unificar tipografia app con landing~~ HECHO (Helvetica Neue, uppercase labels)
-18. LoginGate temporalmente desactivado en /resumen — reactivar cuando auth este completo
-19. ~~Resumen page rediseñada~~ HECHO (hero full-width, section dividers diamante, image headers centrados)
-20. Comprimir hero-video.mp4 para produccion
-21. Imagenes dinamicas por noticias del dia (cuando IA este integrada)
-22. Video marketing con Runway (prompts listos en conversacion)
+## Pendiente — FUNCIONALIDAD (prioridad)
+1. **BLOQUEANTE**: Crear Gmail dedicado + app password
+2. **BLOQUEANTE**: Obtener ANTHROPIC_API_KEY
+3. Gmail reader: leer y procesar todos los emails del correo dedicado
+4. Polymarket API: integrar datos de probabilidades
+5. Generador de briefing: Claude recibe TODO (emails + Polymarket + mercado + portfolio) y genera briefing
+6. Memoria acumulativa: guardar noticias procesadas en Supabase, no repetir
+7. Decision Journal: tags rapidos + texto libre al operar
+8. Alertas predictivas: detectar senales antes de que el mercado reaccione
+9. Posiciones en Supabase (no hardcoded)
+10. Conectar mas paginas a datos reales
+
+## Pendiente — TECNICO
+- Eliminar /debug/db endpoint temporal del backend
+- Quitar error details del login endpoint (solo para debug)
+- Configurar Vercel auto-deploy desde GitHub
+- LoginGate temporalmente desactivado en /resumen — reactivar
+- Comprimir hero-video.mp4 para produccion
+- Imagenes dinamicas por noticias del dia
+- Video marketing con Runway (prompts listos)
+
+## Hecho
+- Landing cinematica con Ken Burns, particles, text reveal, marquee
+- Auth completo (Supabase Auth, frontend+backend, login/register)
+- Deploy (Vercel frontend + Railway backend)
+- Dashboard rediseñado estilo landing (preview-light aplicado como page.tsx)
+- Tipografia unificada (Helvetica Neue)
+- System prompt CEO JP Morgan (4 endpoints: ask, recommend, briefing, analyze)
+- Resumen page cinematica
+- Hero video en dashboard
+- Design Bible documentada
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

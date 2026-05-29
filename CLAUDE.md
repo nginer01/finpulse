@@ -182,6 +182,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 4. X (Twitter) — opiniones de politicos, economistas, analistas, gestores
 5. Datos de mercado — yfinance (ya implementado)
 6. Podcasts — UBS On-Air (Paul Donovan, diario) + otros por definir
+7. BlackRock comentario semanal — https://www.blackrock.com/es/profesionales/vision-de-mercado/comentario-semanal — cada miercoles por la tarde
 
 ## Bloqueantes para briefing real
 1. ANTHROPIC_API_KEY — necesaria para que Claude genere el briefing

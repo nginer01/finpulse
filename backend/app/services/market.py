@@ -275,3 +275,30 @@ async def get_portfolio_snapshot(tickers: list[str]) -> dict:
         "indices": indices,
         "timestamp": datetime.now().isoformat(),
     }
+
+
+def get_portfolio_snapshot_sync(tickers: list[str]) -> dict:
+    """Sync version of get_portfolio_snapshot for use in briefing service."""
+    result = {"positions": {}, "indices": {}, "timestamp": datetime.now().isoformat()}
+    for ticker in tickers:
+        yf_symbol = TICKER_MAP.get(ticker, ticker)
+        try:
+            t = yf.Ticker(yf_symbol)
+            info = t.info
+            price = info.get("currentPrice") or info.get("regularMarketPrice") or info.get("previousClose", 0)
+            prev = info.get("previousClose") or info.get("regularMarketPreviousClose", price)
+            change = price - prev if prev else 0
+            change_pct = (change / prev * 100) if prev else 0
+            result["positions"][ticker] = {
+                "ticker": ticker,
+                "yf_symbol": yf_symbol,
+                "price": price,
+                "previousClose": prev,
+                "change": round(change, 4),
+                "changePct": round(change_pct, 2),
+                "currency": info.get("currency", ""),
+                "name": info.get("shortName") or info.get("longName", ticker),
+            }
+        except Exception:
+            result["positions"][ticker] = {"ticker": ticker, "price": 0, "changePct": 0, "name": ticker}
+    return result

@@ -175,14 +175,39 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 6. **Alertas predictivas**: avisa ANTES de que algo pase (volumen institucional, Polymarket, correlaciones historicas).
 7. **Noticias → Portfolio → Accion**: cadena completa con paralelos historicos y recomendacion concreta.
 
-## Fuentes de informacion (por prioridad)
-1. Gmail dedicado — periodicos, newsletters, papers, informes (el usuario los envia). AUN NO CREADO.
-2. Newsletters fondos/bancos — UBS On-Air, BBVA Research, Matt Levine, FT Alphaville
-3. Polymarket API — probabilidades de eventos (recorte BCE, acuerdo Iran, etc)
-4. X (Twitter) — opiniones de politicos, economistas, analistas, gestores
-5. Datos de mercado — yfinance (ya implementado)
-6. Podcasts — UBS On-Air (Paul Donovan, diario) + otros por definir
-7. BlackRock comentario semanal — https://www.blackrock.com/es/profesionales/vision-de-mercado/comentario-semanal — cada miercoles por la tarde
+## Fuentes de informacion
+### Newsletters (reenviar al Gmail news.FinPulse@gmail.com):
+- Matt Levine — Money Stuff (Bloomberg, diario)
+- The Daily Shot (macro, graficos, diario)
+- Finimize (resumenes 3 min)
+- Morning Brew (negocio y mercados)
+- Chartr (datos visuales)
+
+### Bancos/instituciones:
+- BlackRock Weekly Commentary (miercoles, https://www.blackrock.com/es/profesionales/vision-de-mercado/comentario-semanal)
+- UBS On-Air / Paul Donovan (diario, podcast)
+- Goldman Sachs Briefings (gs.com/insights)
+- JP Morgan Market Insights (am.jpmorgan.com/weekly-market-recap)
+- BBVA Research (bbvaresearch.com, gratis, espanol)
+
+### Periodicos:
+- Financial Times — FirstFT newsletter (gratis)
+- The Economist Espresso (diario)
+- Expansion / Cinco Dias (Espana)
+
+### Cuentas de X:
+- @zerohedge (contrarian, riesgos)
+- @sentimentrader (sentimiento, flujos)
+- @MacroAlf — Alfonso Peccatiello (macro europeo)
+- @jessefelder (valoraciones, fundamental)
+- @LizAnnSonders (estratega Schwab)
+- @HenrikZeberg (ciclos macro)
+
+### Datos automaticos (integrados o por integrar):
+- Polymarket API (integrado)
+- yfinance (integrado)
+- FRED API (instalado, no integrado)
+- Finnhub news (instalado, no integrado)
 
 ## Bloqueantes para briefing real
 1. ANTHROPIC_API_KEY — necesaria para que Claude genere el briefing

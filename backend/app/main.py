@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api import portfolio, chat, news, market, auth
+from app.api import portfolio, chat, news, market, auth, journal
 
 app = FastAPI(
     title=settings.app_name,
@@ -23,6 +23,7 @@ app.include_router(portfolio.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(news.router, prefix="/api")
 app.include_router(market.router, prefix="/api")
+app.include_router(journal.router, prefix="/api")
 
 
 @app.get("/")

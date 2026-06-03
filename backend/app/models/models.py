@@ -120,9 +120,13 @@ class Decision(Base):
     price: Mapped[float] = mapped_column(Float)
     quantity: Mapped[float] = mapped_column(Float)
     conviction: Mapped[int] = mapped_column(Integer)  # 1-10
-    thesis: Mapped[str] = mapped_column(Text)
+    tags: Mapped[str] = mapped_column(String(500), default="")  # comma-separated quick tags
+    thesis: Mapped[str] = mapped_column(Text, default="")  # optional free text
     result: Mapped[str | None] = mapped_column(SAEnum(DecisionResult), nullable=True)
     lesson: Mapped[str | None] = mapped_column(Text, nullable=True)
+    ai_review: Mapped[str | None] = mapped_column(Text, nullable=True)  # IA retrospective analysis
+    price_after_7d: Mapped[float | None] = mapped_column(Float, nullable=True)  # price 7 days later
+    price_after_30d: Mapped[float | None] = mapped_column(Float, nullable=True)  # price 30 days later
     date: Mapped[date] = mapped_column(Date)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 

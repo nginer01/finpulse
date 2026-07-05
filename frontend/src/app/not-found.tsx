@@ -1,17 +1,15 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
 
 export default function NotFound() {
   return (
     <main
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: "#000", color: "#f5f5f7", fontFamily: "system-ui, -apple-system, sans-serif" }}
+      style={{ backgroundColor: "#000", color: "#f5f5f7" }}
     >
-      <Nav />
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         <p
-          className="text-[8rem] sm:text-[12rem] font-bold leading-none select-none"
+          className="text-[8rem] sm:text-[12rem] font-extralight tracking-tight leading-none select-none"
           style={{ color: "#2d2d2d" }}
         >
           404
@@ -27,7 +25,7 @@ export default function NotFound() {
 
         <Link
           href="/"
-          className="mt-10 inline-block rounded-full bg-white text-black px-8 py-3 text-sm font-medium transition-opacity hover:opacity-85"
+          className="mt-10 inline-block rounded-full bg-white text-black px-10 py-3.5 text-[11px] uppercase tracking-[0.25em] font-semibold transition-opacity hover:opacity-85"
         >
           Volver al inicio
         </Link>

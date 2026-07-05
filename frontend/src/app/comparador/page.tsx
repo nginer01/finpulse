@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "@/components/Nav";
+import Link from "next/link";
 import BorderCard from "@/components/BorderCard";
+import ImageCarousel from "@/components/ImageCarousel";
+import Reveal from "@/components/Reveal";
 
 /* ──────────────────────────────────────────────
    MOCK DATA — Assets
@@ -494,7 +496,7 @@ function MetricComparisonTable({ metrics }: { metrics: MetricRow[] }) {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span
-                    className="text-sm font-bold"
+                    className="text-sm font-semibold tabular-nums"
                     style={{ color: winnerA ? "#f5f5f7" : "#e5e5e5" }}
                   >
                     {m.format(m.valueA)}
@@ -516,7 +518,7 @@ function MetricComparisonTable({ metrics }: { metrics: MetricRow[] }) {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span
-                    className="text-sm font-bold"
+                    className="text-sm font-semibold tabular-nums"
                     style={{ color: winnerB ? "#30d158" : "#e5e5e5" }}
                   >
                     {m.format(m.valueB)}
@@ -551,13 +553,13 @@ function CorrelationVisual({ tickerA, tickerB, corr }: { tickerA: string; ticker
   const pct = ((corr + 1) / 2) * 100; // map -1..1 to 0..100
 
   return (
-    <BorderCard padding="p-5" className="sm:">
+    <BorderCard padding="p-5">
       <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Analisis de correlación</h3>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
         {/* Big number */}
         <div className="text-center sm:text-left shrink-0">
-          <p className="text-4xl font-bold tracking-tight" style={{ color }}>
+          <p className="text-4xl font-extralight tracking-tight" style={{ color }}>
             {corr.toFixed(2)}
           </p>
           <p className="text-sm font-medium mt-1" style={{ color }}>
@@ -681,22 +683,38 @@ export default function ComparadorPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <Nav />
+
+      {/* ─── HERO CAROUSEL ─── */}
+      <ImageCarousel
+        images={[
+          { src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&h=500&fit=crop&q=90", alt: "Mercados" },
+          { src: "https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=1600&h=500&fit=crop&q=90", alt: "Pantallas de trading" },
+          { src: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=1600&h=500&fit=crop&q=90", alt: "Análisis de datos" },
+        ]}
+        heightClass="h-[240px] sm:h-[320px]"
+      >
+        <div className="h-full flex flex-col items-center justify-center text-center px-6">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-white/60 font-semibold mb-4">Análisis comparativo</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white tracking-tight">Comparador de activos</h1>
+          <p className="text-[13px] text-white/50 mt-4 tracking-wide">Rendimiento, riesgo y composición, lado a lado</p>
+        </div>
+      </ImageCarousel>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
-        {/* ─── 1. HEADER & SELECTORS ─── */}
-        <section>
-          <div className="mb-6">
-            <h1 className="text-2xl font-extralight tracking-wide mb-1">
-              Comparador de activos
-            </h1>
-            <p className="text-sm text-muted">
-              Compara rendimiento, riesgo y composición de dos activos lado a lado.
-            </p>
-          </div>
+        {/* Breadcrumb */}
+        <Link href="/portfolio" className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Volver a Portfolio
+        </Link>
 
-          <BorderCard padding="p-4" className="sm:">
+        {/* ─── 1. SELECTORS ─── */}
+        <section>
+
+          <BorderCard padding="p-4">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <AssetSelector
                 value={tickerA}
@@ -734,7 +752,8 @@ export default function ComparadorPage() {
         {/* ─── 2. PRICE CHART OVERLAY ─── */}
         <section>
           <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Rendimiento comparado (6 meses)</h2>
-          <BorderCard padding="p-4" className="sm:">
+          <Reveal>
+          <BorderCard padding="p-4">
             {/* Legend */}
             <div className="flex items-center gap-5 mb-4">
               <div className="flex items-center gap-2">
@@ -761,6 +780,7 @@ export default function ComparadorPage() {
               Base 100 al inicio del periodo. Datos simulados con fines educativos.
             </p>
           </BorderCard>
+          </Reveal>
         </section>
 
         {/* ─── 3. KEY METRICS COMPARISON ─── */}
@@ -781,29 +801,35 @@ export default function ComparadorPage() {
 
         {/* ─── 4. CORRELATION ANALYSIS ─── */}
         <section>
-          <CorrelationVisual tickerA={tickerA} tickerB={tickerB} corr={corr} />
+          <Reveal>
+            <CorrelationVisual tickerA={tickerA} tickerB={tickerB} corr={corr} />
+          </Reveal>
         </section>
 
         {/* ─── 5. SECTOR/COMPOSITION BREAKDOWN ─── */}
         <section>
           <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Composición por sector</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <BorderCard padding="p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetA.ticker}</h3>
-                <span className="text-xs text-muted">{assetA.name}</span>
-              </div>
-              <DonutChart data={assetA.sectors} label={assetA.ticker} />
-            </BorderCard>
-            <BorderCard padding="p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-2.5 h-2.5 rounded-full bg-green" />
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetB.ticker}</h3>
-                <span className="text-xs text-muted">{assetB.name}</span>
-              </div>
-              <DonutChart data={assetB.sectors} label={assetB.ticker} />
-            </BorderCard>
+            <Reveal direction="left">
+              <BorderCard padding="p-5" className="h-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent" />
+                  <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetA.ticker}</h3>
+                  <span className="text-xs text-muted">{assetA.name}</span>
+                </div>
+                <DonutChart data={assetA.sectors} label={assetA.ticker} />
+              </BorderCard>
+            </Reveal>
+            <Reveal direction="right" delay={100}>
+              <BorderCard padding="p-5" className="h-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="w-2.5 h-2.5 rounded-full bg-green" />
+                  <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">{assetB.ticker}</h3>
+                  <span className="text-xs text-muted">{assetB.name}</span>
+                </div>
+                <DonutChart data={assetB.sectors} label={assetB.ticker} />
+              </BorderCard>
+            </Reveal>
           </div>
         </section>
 

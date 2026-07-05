@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "@/components/Nav";
+import Link from "next/link";
 
 /* ──────────────────────────────────────────────
    TYPES & MOCK DATA
@@ -320,8 +320,16 @@ export default function StressTestPage() {
 
   return (
     <>
-      <Nav />
-      <main className="min-h-screen pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <main className="min-h-screen pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        {/* Breadcrumb */}
+        <Link href="/portfolio" className="mb-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors duration-300">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Volver a Portfolio
+        </Link>
+
         {/* ── HERO ── */}
         <section className="relative rounded-2xl overflow-hidden mb-12">
           <img
@@ -391,7 +399,7 @@ export default function StressTestPage() {
                 <div className="flex items-end gap-3 flex-wrap">
                   <div>
                     <p className="text-xs uppercase tracking-wider text-[var(--color-muted)] mb-1">Valor actual</p>
-                    <p className="text-2xl font-bold text-[var(--color-foreground)]">
+                    <p className="text-2xl font-extralight tracking-tight text-[var(--color-foreground)]">
                       US$ {fmt(scenario.portfolioBefore)}
                     </p>
                   </div>
@@ -400,7 +408,7 @@ export default function StressTestPage() {
                   </svg>
                   <div>
                     <p className="text-xs uppercase tracking-wider text-[var(--color-muted)] mb-1">Valor simulado</p>
-                    <p className="text-2xl font-bold text-[var(--color-red)]">
+                    <p className="text-2xl font-extralight tracking-tight text-[var(--color-red)]">
                       US$ {fmt(scenario.portfolioAfter)}
                     </p>
                   </div>
@@ -409,7 +417,7 @@ export default function StressTestPage() {
                   <svg width="20" height="20" viewBox="0 0 20 20">
                     <path d="M10 4 L10 12 M10 15 L10 16" stroke="var(--color-red)" strokeWidth="2" strokeLinecap="round" fill="none" />
                   </svg>
-                  <span className="text-3xl font-black text-[var(--color-red)]">
+                  <span className="text-3xl font-extralight tracking-tight text-[var(--color-red)]">
                     {scenario.portfolioChange}%
                   </span>
                 </div>
@@ -444,7 +452,7 @@ export default function StressTestPage() {
                       <span className="text-xs text-[var(--color-muted)] ml-2">{pos.name}</span>
                     </div>
                     <span
-                      className={`text-lg font-black ${positive ? "text-[var(--color-green)]" : "text-[var(--color-red)]"}`}
+                      className={`text-lg font-semibold tabular-nums ${positive ? "text-[var(--color-green)]" : "text-[var(--color-red)]"}`}
                     >
                       {positive ? "+" : ""}{pos.change}%
                     </span>
@@ -504,7 +512,7 @@ export default function StressTestPage() {
                   style={{ backgroundColor: c.bg, borderColor: c.border }}
                 >
                   <p className="text-sm font-semibold text-[var(--color-foreground)] mb-2">{action.title}</p>
-                  <p className="text-2xl font-black mb-2" style={{ color: c.text }}>
+                  <p className="text-2xl font-extralight tracking-tight mb-2" style={{ color: c.text }}>
                     {action.simulatedLoss}%
                   </p>
                   <p className="text-xs text-[var(--color-muted)]">{action.description}</p>
@@ -534,7 +542,7 @@ export default function StressTestPage() {
           </h2>
           <div className="rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-6 sm:p-8 flex flex-col items-center gap-4">
             <RiskGauge score={scenario.riskScore} label={scenario.riskLabel} />
-            <p className="text-lg font-bold text-[var(--color-foreground)]">{scenario.riskLabel}</p>
+            <p className="text-[13px] uppercase tracking-[0.2em] font-semibold text-[var(--color-foreground)]">{scenario.riskLabel}</p>
             <p className="text-sm text-[var(--color-muted)] text-center max-w-md">
               Basado en la composición actual de tu portfolio y su comportamiento histórico frente a {scenario.name.toLowerCase()}.
             </p>

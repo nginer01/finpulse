@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # FinPulse — Project Instructions
 
 ## What is FinPulse
@@ -23,6 +27,26 @@ finpulse/
   backend/     — FastAPI + Python 3.12 (venv en backend/venv)
   docs/        — documentacion
 ```
+
+## Development commands
+
+### Frontend (run from `frontend/`)
+```bash
+npm run dev          # Dev server at http://localhost:3000
+npm run build        # Production build
+npm run lint         # ESLint
+npx vercel --prod --yes  # Manual deploy to Vercel
+```
+
+### Backend (run from `backend/`, activate venv first)
+```bash
+source venv/Scripts/activate   # Windows Git Bash
+python run.py                  # Dev server at http://localhost:8000
+pip install -r requirements.txt  # Install dependencies
+```
+
+## Next.js version warning
+This project uses Next.js 16 which has breaking changes vs training data. ALWAYS read the relevant guide in `frontend/node_modules/next/dist/docs/` before writing Next.js code.
 
 ## Stack tecnico
 

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import ScrollProgress from "@/components/ScrollProgress";
 import LoginGate from "@/components/LoginGate";
 
@@ -31,7 +30,6 @@ export default function ResumenDiario() {
   return (
     <main className="min-h-screen">
       <ScrollProgress />
-      <Nav />
 
       {/* Hero — full width cinematic like landing */}
       <section className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
@@ -201,7 +199,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">IW</div>
                   <div>
                     <p className="font-medium">IWDA — iShares MSCI World</p>
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">4.230,00 — 32.9% del portfolio</p>
+                    <p className="text-xs text-muted">4.230,00 — 32.9% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+1.8%</span>
@@ -217,7 +215,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">VU</div>
                   <div>
                     <p className="font-medium">VUAA — Vanguard S&P 500</p>
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3.150,00 — 24.5% del portfolio</p>
+                    <p className="text-xs text-muted">3.150,00 — 24.5% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+2.1%</span>
@@ -233,7 +231,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-red/10 flex items-center justify-center text-sm font-mono text-red">BR</div>
                   <div>
                     <p className="font-medium">BRT — Brent Crude Oil</p>
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">1.200,00 — 9.3% del portfolio</p>
+                    <p className="text-xs text-muted">1.200,00 — 9.3% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-red font-medium">-3.8%</span>
@@ -246,7 +244,7 @@ export default function ResumenDiario() {
               </p>
               <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-red font-medium mb-1">Recomendación: reducir posición un 50%</p>
-                <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Convicción 8/10. El paralelo histórico de 2015 (cuando se firmo el JCPOA, el Brent cayo de $65 a $45 en 6 meses), la tendencia de Polymarket (58% a acuerdo Iran antes de agosto), y tu nivel de exposición actual sugieren que es prudente reducir. Mantener la otra mitad por si la OPEC+ reacciona con recortes.</p>
+                <p className="text-xs text-muted leading-relaxed">Convicción 8/10. El paralelo histórico de 2015 (cuando se firmo el JCPOA, el Brent cayo de $65 a $45 en 6 meses), la tendencia de Polymarket (58% a acuerdo Iran antes de agosto), y tu nivel de exposición actual sugieren que es prudente reducir. Mantener la otra mitad por si la OPEC+ reacciona con recortes.</p>
               </div>
             </div>
 
@@ -256,7 +254,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">EU</div>
                   <div>
                     <p className="font-medium">EUNA — iShares Euro Gov Bond</p>
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">2.400,00 — 18.7% del portfolio</p>
+                    <p className="text-xs text-muted">2.400,00 — 18.7% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+0.5%</span>
@@ -272,7 +270,7 @@ export default function ResumenDiario() {
                   <div className="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center text-sm font-mono text-green">SE</div>
                   <div>
                     <p className="font-medium">SEMI — VanEck Semiconductor</p>
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">1.867,32 — 14.5% del portfolio</p>
+                    <p className="text-xs text-muted">1.867,32 — 14.5% del portfolio</p>
                   </div>
                 </div>
                 <span className="text-green font-medium">+4.2%</span>
@@ -285,7 +283,7 @@ export default function ResumenDiario() {
               </p>
               <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
                 <p className="text-xs text-green font-medium mb-1">Recomendación: añadir en caidas (si baja &gt;2%)</p>
-                <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Convicción 7/10. El ciclo es favorable, pero el sector ya sube un +25% en lo que va de año y las valoraciones estan estiradas (P/E sector en 32x). Ademas, Matt Levine recuerda que los aranceles tech EEUU-China se negociaran por separado en Q3. Mejor esperar un retroceso para mejorar el precio de entrada.</p>
+                <p className="text-xs text-muted leading-relaxed">Convicción 7/10. El ciclo es favorable, pero el sector ya sube un +25% en lo que va de año y las valoraciones estan estiradas (P/E sector en 32x). Ademas, Matt Levine recuerda que los aranceles tech EEUU-China se negociaran por separado en Q3. Mejor esperar un retroceso para mejorar el precio de entrada.</p>
               </div>
             </div>
           </div>
@@ -595,6 +593,9 @@ export default function ResumenDiario() {
               </div>
             </div>
           </div>
+          <Link href="/recomendaciones" className="mt-8 flex items-center justify-center gap-2 text-[11px] uppercase tracking-[0.3em] font-semibold text-foreground border border-white/[0.15] rounded-xl py-4 hover:bg-white hover:text-black transition-all duration-500">
+            Ver todas las recomendaciones
+          </Link>
         </section>
 
         <SectionDivider />
@@ -663,9 +664,14 @@ export default function ResumenDiario() {
         <div className="py-10 border-t border-card-border text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Resumen generado a las 9:00 AM del 11 de mayo de 2026</p>
           <p className="text-xs text-muted mt-1">14 fuentes procesadas — 247 noticias analizadas — 12 vinculadas a tu portfolio</p>
-          <Link href="/" className="inline-block mt-4 text-sm text-accent-light hover:text-accent transition-colors">
-            Volver al dashboard
-          </Link>
+          <div className="flex items-center justify-center gap-8 mt-6">
+            <Link href="/" className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
+              ← Volver al dashboard
+            </Link>
+            <Link href="/semanal" className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
+              Ver resumen semanal →
+            </Link>
+          </div>
         </div>
 
       </div>

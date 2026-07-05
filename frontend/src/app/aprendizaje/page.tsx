@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
 
 /* ------------------------------------------------------------------ */
@@ -238,7 +237,7 @@ function DecisionCard({ d }: { d: Decision }) {
         >
           {d.action}
         </span>
-        <span className="text-lg font-bold">{d.ticker}</span>
+        <span className="text-lg font-semibold tracking-wide">{d.ticker}</span>
         <span className="text-sm text-muted">@ {d.price}</span>
         <span className={`ml-auto text-xs font-bold px-2 py-0.5 rounded-full ${s.bg} ${s.color}`}>
           {s.label}
@@ -543,7 +542,6 @@ export default function AprendizajePage() {
 
   return (
     <main className="min-h-screen">
-      <Nav />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Hero */}

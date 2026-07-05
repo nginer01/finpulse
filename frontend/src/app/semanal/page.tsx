@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data                                                         */
@@ -128,10 +127,14 @@ function ProgressBar({ value, color }: { value: number; color: string }) {
 
 export default function SemanalPage() {
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
+  const [doneObjectives, setDoneObjectives] = useState<number[]>([]);
+
+  const toggleObjective = (i: number) => {
+    setDoneObjectives((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
+  };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--color-background)", color: "var(--color-foreground)" }}>
-      <Nav />
 
       {/* ---- 1. HERO ---- */}
       <section className="relative w-full h-[340px] md:h-[400px] overflow-hidden">
@@ -172,6 +175,17 @@ export default function SemanalPage() {
       </section>
 
       <main className="max-w-5xl mx-auto px-4 pb-24 -mt-10 relative z-20 space-y-16">
+        {/* Breadcrumb */}
+        <div className="pt-14">
+          <Link href="/resumen" className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            Volver al briefing diario
+          </Link>
+        </div>
+
         {/* ---- 2. WEEK IN NUMBERS ---- */}
         <section>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -187,7 +201,7 @@ export default function SemanalPage() {
                     {s.label}
                   </span>
                 </div>
-                <p className="text-2xl font-bold">{s.value}</p>
+                <p className="text-2xl font-extralight tracking-tight">{s.value}</p>
                 <p className="text-sm mt-1" style={{ color: "var(--color-green)" }}>
                   {s.sub}
                 </p>
@@ -227,7 +241,10 @@ export default function SemanalPage() {
                     <p style={{ color: "var(--color-muted)" }}>{evt.text}</p>
                     {expandedDay === i && (
                       <div className="mt-3 pt-3 text-sm" style={{ borderTop: "1px solid var(--color-card-border)", color: "var(--color-muted)" }}>
-                        Impacto en tu portfolio: <span className={`font-semibold ${impactColor[evt.color]}`}>{evt.impact}</span> en el dia. Haz click en la noticia para ver el analisis completo.
+                        Impacto en tu portfolio: <span className={`font-semibold ${impactColor[evt.color]}`}>{evt.impact}</span> en el dia.{" "}
+                        <Link href="/noticia/acuerdo-eeuu-china" onClick={(e) => e.stopPropagation()} className="text-accent-light hover:text-accent underline underline-offset-4 transition-colors">
+                          Ver el analisis completo →
+                        </Link>
                       </div>
                     )}
                   </div>
@@ -404,25 +421,39 @@ export default function SemanalPage() {
                 baja: { bg: "rgba(99,102,241,0.15)", text: "var(--color-accent-light)", label: "Baja" },
               };
               const ps = priorityStyles[obj.priority];
+              const done = doneObjectives.includes(i);
               return (
-                <div
+                <button
                   key={i}
-                  className="flex items-center gap-4 rounded-xl p-5 border"
-                  style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-card-border)" }}
+                  onClick={() => toggleObjective(i)}
+                  className="w-full text-left flex items-center gap-4 rounded-xl p-5 border transition-all duration-300 cursor-pointer"
+                  style={{
+                    backgroundColor: "var(--color-card)",
+                    borderColor: done ? "rgba(48,209,88,0.35)" : "var(--color-card-border)",
+                  }}
                 >
                   {/* checkbox circle */}
                   <div
-                    className="shrink-0 w-6 h-6 rounded-full border-2"
-                    style={{ borderColor: "var(--color-card-border)" }}
-                  />
-                  <p className="flex-1 font-medium">{obj.text}</p>
+                    className="shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300"
+                    style={{
+                      borderColor: done ? "var(--color-green)" : "var(--color-card-border)",
+                      backgroundColor: done ? "rgba(48,209,88,0.15)" : "transparent",
+                    }}
+                  >
+                    {done && (
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="var(--color-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 6l3 3 5-5" />
+                      </svg>
+                    )}
+                  </div>
+                  <p className={`flex-1 font-medium transition-all duration-300 ${done ? "line-through opacity-50" : ""}`}>{obj.text}</p>
                   <span
                     className="shrink-0 px-3 py-1 rounded-full text-xs font-bold uppercase"
                     style={{ backgroundColor: ps.bg, color: ps.text }}
                   >
                     {ps.label}
                   </span>
-                </div>
+                </button>
               );
             })}
           </div>

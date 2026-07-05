@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import ScrollProgress from "@/components/ScrollProgress";
 import BorderCard from "@/components/BorderCard";
 
@@ -22,7 +21,6 @@ export default function ResumenSemanalCompleto() {
   return (
     <main className="min-h-screen">
       <ScrollProgress />
-      <Nav />
 
       {/* Hero */}
       <div className="relative">
@@ -38,7 +36,7 @@ export default function ResumenSemanalCompleto() {
               <span className="text-xs px-3 py-1 rounded-full bg-accent/25 text-accent-light font-medium">Resumen Semanal</span>
               <span className="text-xs text-muted">12 mayo 2026</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3">La semana que cambio el tablero: acuerdo China, Nvidia, y un mercado en máximos</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight leading-[1.15] mb-3">La semana que cambio el tablero: acuerdo China, Nvidia, y un mercado en máximos</h1>
             <p className="text-muted text-sm">87 noticias procesadas — 14 fuentes — Tiempo de lectura: ~12 min</p>
           </div>
         </div>
@@ -46,6 +44,15 @@ export default function ResumenSemanalCompleto() {
 
       {/* Article body — newspaper column style */}
       <article className="max-w-3xl mx-auto px-6 py-12">
+
+        {/* Breadcrumb */}
+        <Link href="/semanal" className="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Volver al resumen semanal
+        </Link>
 
         {/* Lead paragraph */}
         <p className="text-lg leading-8 mb-8">
@@ -55,25 +62,25 @@ export default function ResumenSemanalCompleto() {
         {/* Stats strip */}
         <div className="grid grid-cols-4 gap-3 my-10 py-6 border-y border-card-border">
           <div className="text-center">
-            <p className="text-2xl font-bold text-green">+2.4%</p>
+            <p className="text-2xl font-extralight tracking-tight text-green">+2.4%</p>
             <p className="text-xs text-muted">Tu portfolio</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold">5.847</p>
+            <p className="text-2xl font-extralight tracking-tight">5.847</p>
             <p className="text-xs text-muted">S&P 500 (max)</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-[#ffd60a]">13.2</p>
+            <p className="text-2xl font-extralight tracking-tight text-[#ffd60a]">13.2</p>
             <p className="text-xs text-muted">VIX (complacencia)</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-accent-light">72/100</p>
+            <p className="text-2xl font-extralight tracking-tight text-accent-light">72/100</p>
             <p className="text-xs text-muted">Tu score aprendizaje</p>
           </div>
         </div>
 
         {/* Section 1 */}
-        <h2 className="text-2xl font-bold mt-12 mb-6">El lunes arranco con un susurro</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">El lunes arranco con un susurro</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Los primeros rumores de un posible acuerdo comercial entre Washington y Pekin empezaron a circular el domingo por la noche en circulos diplomaticos asiaticos. Para cuando abrio Wall Street el lunes, el S&P 500 ya descontaba parte de la noticia con una subida del 0.4%. Tu posición en IWDA capturo el movimiento inmediatamente — es la ventaja de tener exposición global diversificada.
@@ -101,7 +108,7 @@ export default function ResumenSemanalCompleto() {
           <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">Wall Street cerro la semana en máximos históricos tras el acuerdo comercial. Foto: Financial Times</figcaption>
         </figure>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">Nvidia encendio la mecha el miercoles</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">Nvidia encendio la mecha el miercoles</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Si el acuerdo comercial fue el evento macro de la semana, el anuncio de Nvidia fue el evento sectorial. La presentacion de Blackwell Ultra el miercoles no fue una mejora incremental — fue un salto generacional. Rendimiento 4x superior en inferencia de IA. Los hyperscalers (Amazon, Google, Microsoft) confirmaron pedidos masivos antes de que Jensen Huang bajara del escenario.
@@ -153,7 +160,7 @@ export default function ResumenSemanalCompleto() {
           </div>
         </BorderCard>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">La decisión de la semana: vender Brent</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">La decisión de la semana: vender Brent</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           El jueves por la mañana, Financial Times publico las actas filtradas del BCE. Pero tu atención estaba en otro sitio: las negociaciones entre Iran y Estados Unidos avanzaban mas rapido de lo esperado. El secretario de Estado confirmo &ldquo;avances significativos&rdquo; — el lenguaje mas positivo hasta la fecha.
@@ -188,7 +195,7 @@ export default function ResumenSemanalCompleto() {
           <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">Las negociaciones Iran-EEUU presionan al sector energetico. El Brent cae un 4.2% en la semana. Foto: Reuters</figcaption>
         </figure>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">Lo que dicen las fuentes clave</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">Lo que dicen las fuentes clave</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Paul Donovan, economista jefe de UBS, dedico su podcast del domingo a analizar el acuerdo comercial. Su lectura es cauta pero constructiva: celebra la reduccion de incertidumbre, pero advierte que los aranceles tecnologicos — semiconductores, IA, datos — se negociaran por separado en el tercer trimestre. Para tu posición en SEMI, esto es un matiz relevante que Matt Levine tambien destaca en su newsletter del viernes.
@@ -256,7 +263,7 @@ export default function ResumenSemanalCompleto() {
           </div>
         </BorderCard>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">La señal de precaucion que no debes ignorar</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">La señal de precaucion que no debes ignorar</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Con todo lo positivo de la semana, hay un dato que merece atención: el VIX cerro en 13.2, niveles de complacencia no vistos desde enero de 2024. Tanto The Daily Shot como @zerohedge coinciden en la misma señal: cuando el VIX se mantiene por debajo de 14 durante mas de dos semanas, el S&P 500 sufre una correccion media del 4.2% en las siguientes seis semanas. Ya llevamos ocho sesiones.
@@ -274,7 +281,7 @@ export default function ResumenSemanalCompleto() {
           <figcaption className="text-xs text-muted mt-2 px-6 sm:px-0">El VIX en zona de complacencia: una señal que históricamente precede correcciones moderadas. Fuente: The Daily Shot</figcaption>
         </figure>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">Tu evolucion como inversor</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">Tu evolucion como inversor</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Esta semana tu score de aprendizaje sube a 72/100, cinco puntos mas que la semana anterior. El mayor avance esta en disciplina (78%, +4) y en timing (54%, +3). La venta de Brent es el ejemplo perfecto: hace tres meses habrias dudado, habrias esperado &ldquo;un poco mas&rdquo;, y habrias visto como la caida se comia tus beneficios. Esta vez actuaste con decision, basandote en datos (volumen institucional, Polymarket, paralelo histórico 2015).
@@ -308,7 +315,7 @@ export default function ResumenSemanalCompleto() {
           El area que mas necesita trabajo sigue siendo el control emocional (65%). La compra de VUAA el 15 de abril con convicción 5/10 es el ejemplo: fue una compra por FOMO, y aunque ha subido un 2.1%, el proceso de decisión no fue el correcto. Tus compras con convicción menor a 6 pierden dinero el 60% de las veces. Esta vez tuviste suerte, pero la estadistica no esta a tu favor.
         </p>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6">La semana que viene</h2>
+        <h2 className="text-2xl sm:text-3xl font-extralight tracking-wide mt-12 mb-6">La semana que viene</h2>
 
         <p className="text-sm text-muted leading-7 mb-4">
           Hay cuatro eventos que pueden mover tu portfolio significativamente. El martes 13 sale el IPC de Estados Unidos — si sorprende al alza, el rally se frena. El 22 de mayo, earnings de TSMC: si confirman el aumento de capex del 15%, tu posición en SEMI tiene mas recorrido. El 30 de mayo, dato de inflacion eurozona — el último antes de la reunion del BCE del 5 de junio, donde se decidira si recortan tipos.

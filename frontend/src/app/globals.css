@@ -91,3 +91,35 @@ h1, h2, h3 {
   font-weight: 600;
   color: var(--muted);
 }
+
+/* ── Shared cinematic utilities (landing-grade, reusable app-wide) ── */
+@keyframes ken-burns {
+  0%   { transform: scale(1) translate(0, 0); }
+  50%  { transform: scale(1.12) translate(-2%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+@keyframes ken-burns-2 {
+  0%   { transform: scale(1.1) translate(-1%, 0); }
+  50%  { transform: scale(1) translate(1%, -2%); }
+  100% { transform: scale(1.1) translate(-1%, 0); }
+}
+@keyframes ken-burns-3 {
+  0%   { transform: scale(1) translate(1%, 1%); }
+  50%  { transform: scale(1.12) translate(-1%, 0); }
+  100% { transform: scale(1) translate(1%, 1%); }
+}
+.animate-ken-burns   { animation: ken-burns 20s ease-in-out infinite; }
+.animate-ken-burns-2 { animation: ken-burns-2 25s ease-in-out infinite; }
+.animate-ken-burns-3 { animation: ken-burns-3 22s ease-in-out infinite; }
+
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* Crossfade for auto-rotating image carousels */
+@keyframes carousel-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.animate-carousel-fade { animation: carousel-fade 1.2s ease-in-out forwards; }

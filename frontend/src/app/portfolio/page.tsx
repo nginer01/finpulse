@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Nav from "@/components/Nav";
+import Link from "next/link";
 import AddPosition, { type UserPosition } from "@/components/AddPosition";
 import PortfolioHeatmap from "@/components/PortfolioHeatmap";
 import BorderCard from "@/components/BorderCard";
+import Reveal from "@/components/Reveal";
 import dynamic from "next/dynamic";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
@@ -138,7 +139,7 @@ function PositionCard({
 }: (typeof positions)[0]) {
   const positive = weekChange >= 0;
   return (
-    <BorderCard padding="p-5" className="duration-300 flex flex-col ga">
+    <BorderCard padding="p-5" className="duration-300 h-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -151,7 +152,7 @@ function PositionCard({
           </div>
         </div>
         <div className="text-right">
-          <p className="text-base font-bold">{value}</p>
+          <p className="text-base font-semibold tabular-nums">{value}</p>
           <p className={`text-xs font-medium ${positive ? "text-green" : "text-red"}`}>
             {positive ? "+" : ""}
             {weekChange}% sem
@@ -232,8 +233,8 @@ function MissedTradeCard({
   asset, date, buyPrice, currentPrice, gain, lesson,
 }: (typeof missedTrades)[0]) {
   return (
-    <BorderCard padding="p-5" className="duration-300">
-      <div className="p-5">
+    <BorderCard padding="p-5" className="duration-300 h-full">
+      <div>
         <p className="text-xs text-muted mb-1">No compraste en {date}</p>
         <p className="font-semibold mb-3">{asset}</p>
 
@@ -342,7 +343,6 @@ export default function PortfolioPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <Nav />
       <AddPosition open={showAddModal} onClose={() => setShowAddModal(false)} onAdd={handleAddPositions} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
@@ -378,6 +378,42 @@ export default function PortfolioPage() {
             <div className="px-3 sm:px-4 pb-4 pt-3">
               <TradingChart />
             </div>
+          </div>
+        </section>
+
+        {/* ─── HERRAMIENTAS DE ANÁLISIS ─── */}
+        <section>
+          <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-4">Herramientas de análisis</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              {
+                href: "/comparador",
+                title: "Comparador de activos",
+                desc: "Rendimiento, riesgo, correlación y composición de dos activos, lado a lado.",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=300&fit=crop&q=85",
+              },
+              {
+                href: "/stress-test",
+                title: "Stress Test",
+                desc: "¿Qué pasaría con tu portfolio si se repitiera 2008, el COVID o la burbuja tech?",
+                image: "https://images.unsplash.com/photo-1534996858221-380b92700493?w=800&h=300&fit=crop&q=85",
+              },
+            ].map((tool, i) => (
+              <Reveal key={tool.href} delay={i * 120} direction={i === 0 ? "left" : "right"}>
+                <Link href={tool.href} className="group relative block h-40 rounded-2xl overflow-hidden border border-card-border hover:border-white/25 transition-all duration-500">
+                  <img src={tool.image} alt={tool.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
+                  <div className="absolute inset-0 p-6 flex flex-col justify-center">
+                    <p className="text-[15px] font-semibold text-white tracking-wide mb-2 group-hover:tracking-widest transition-all duration-500">{tool.title}</p>
+                    <p className="text-[12px] text-white/60 leading-[1.7] max-w-[85%]">{tool.desc}</p>
+                    <p className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/50 font-semibold group-hover:text-white transition-colors duration-500">
+                      Abrir
+                      <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </section>
 

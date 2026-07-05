@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 type Message = {
   id: string;
@@ -69,7 +71,11 @@ function renderMarkdown(text: string) {
   });
 }
 
+const HIDDEN_ROUTES = ["/landing", "/login"];
+
 export default function AIChatButton() {
+  const pathname = usePathname();
+  const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -121,12 +127,14 @@ export default function AIChatButton() {
     }, 800 + Math.random() * 700);
   };
 
+  if (HIDDEN_ROUTES.includes(pathname) || !isLoggedIn) return null;
+
   return (
     <>
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className={`fixed bottom-20 sm:bottom-6 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 ${
+        className={`fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 ${
           open
             ? "bg-card border border-card-border rotate-0"
             : "bg-gradient-to-br from-accent to-accent-light shadow-accent/30"
@@ -148,7 +156,7 @@ export default function AIChatButton() {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-36 sm:bottom-24 right-5 z-40 w-[360px] max-w-[calc(100vw-40px)] bg-card border border-card-border rounded-2xl shadow-2xl shadow-black/40 overflow-hidden animate-fade-in-up flex flex-col" style={{ height: "500px" }}>
+        <div className="fixed bottom-24 right-5 z-40 w-[360px] max-w-[calc(100vw-40px)] bg-card border border-card-border rounded-2xl shadow-2xl shadow-black/40 overflow-hidden animate-fade-in-up flex flex-col" style={{ height: "500px" }}>
           {/* Header */}
           <div className="px-4 py-3 border-b border-card-border flex items-center gap-3 shrink-0">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent to-accent-light flex items-center justify-center">

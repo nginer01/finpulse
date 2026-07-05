@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { NEWS } from "@/lib/news";
 
 type SearchResult = {
   type: "noticia" | "posicion" | "decision" | "pagina";
@@ -11,13 +12,16 @@ type SearchResult = {
   icon: string;
 };
 
+const newsResults: SearchResult[] = NEWS.map((n) => ({
+  type: "noticia" as const,
+  title: n.headline,
+  subtitle: `${n.category} — ${n.source.name}`,
+  href: `/noticia/${n.id}`,
+  icon: "N",
+}));
+
 const allResults: SearchResult[] = [
-  { type: "noticia", title: "Acuerdo comercial EEUU-China", subtitle: "Impacto en ETFs globales", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "Negociaciones Iran-EEUU", subtitle: "Brent cae 4% en la semana", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "Nvidia Blackwell Ultra", subtitle: "Semiconductores se reconfiguran", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "Regulación IA en Europa", subtitle: "Nuevo marco legal 2027", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "Escasez global de cobre", subtitle: "Transicion energetica en riesgo", href: "/noticia", icon: "N" },
-  { type: "noticia", title: "India vs China emergentes", subtitle: "Rotacion de capital", href: "/noticia", icon: "N" },
+  ...newsResults,
   { type: "posicion", title: "IWDA — iShares MSCI World", subtitle: "4.230,00 — +1.8%", href: "/portfolio", icon: "P" },
   { type: "posicion", title: "VUAA — Vanguard S&P 500", subtitle: "3.150,00 — +2.1%", href: "/portfolio", icon: "P" },
   { type: "posicion", title: "BRT — Brent Crude Oil", subtitle: "1.200,00 — -3.8%", href: "/portfolio", icon: "P" },
@@ -30,6 +34,8 @@ const allResults: SearchResult[] = [
   { type: "pagina", title: "Portfolio", subtitle: "Tus posiciones e inversiones", href: "/portfolio", icon: "R" },
   { type: "pagina", title: "Aprendizaje", subtitle: "Investor DNA, decisiones, sesgos", href: "/aprendizaje", icon: "R" },
   { type: "pagina", title: "Resumen semanal", subtitle: "Review de la semana", href: "/semanal", icon: "R" },
+  { type: "pagina", title: "Columna semanal", subtitle: "El articulo completo de la semana", href: "/semanal/resumen", icon: "R" },
+  { type: "pagina", title: "Recomendaciones", subtitle: "Ideas de tu CIO personal", href: "/recomendaciones", icon: "R" },
   { type: "pagina", title: "Stress Test", subtitle: "Simula escenarios históricos", href: "/stress-test", icon: "R" },
   { type: "pagina", title: "Comparador", subtitle: "Compara activos lado a lado", href: "/comparador", icon: "R" },
   { type: "pagina", title: "Ajustes", subtitle: "Configuración de la app", href: "/ajustes", icon: "R" },

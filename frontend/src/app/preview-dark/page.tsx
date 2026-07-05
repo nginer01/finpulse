@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
 import Tooltip from "@/components/Tooltip";
 import AnimatedCounter from "@/components/AnimatedCounter";
@@ -186,7 +185,6 @@ export default function PreviewDark() {
 
   return (
     <main className="min-h-screen bg-black text-white overflow-x-hidden preview-dark-page">
-      <Nav />
 
       {/* Hero: Daily Summary */}
       <section className="max-w-6xl mx-auto px-6 pt-10 pb-8">

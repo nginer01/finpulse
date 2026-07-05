@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
-import MobileNav from "@/components/MobileNav";
+import Navbar from "@/components/Navbar";
 import AIChatButton from "@/components/AIChatButton";
 import { AuthProvider } from "@/context/AuthContext";
 import AuthGuard from "@/components/AuthRedirect";
@@ -37,14 +37,14 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col pb-16 sm:pb-0">
+      <body className="min-h-full flex flex-col">
         <AuthProvider>
+          <Navbar />
           <AuthGuard>
             {children}
           </AuthGuard>
+          <AIChatButton />
         </AuthProvider>
-        <MobileNav />
-        <AIChatButton />
       </body>
     </html>
   );

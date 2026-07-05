@@ -5,6 +5,7 @@ import Link from "next/link";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import dynamic from "next/dynamic";
 import { usePortfolioSnapshot } from "@/hooks/useMarketData";
+import { NEWS } from "@/lib/news";
 
 const TradingChart = dynamic(() => import("@/components/TradingChart"), { ssr: false });
 
@@ -116,14 +117,7 @@ function formatEUR(n: number) {
   return n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-const NEWS_CARDS = [
-  { title: "Acuerdo comercial EEUU-China: impacto en ETFs globales y tu posicion en MSCI World", image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&h=600&fit=crop&q=85", label: "Tu portfolio", source: "Financial Times" },
-  { title: "Negociaciones Iran-EEUU avanzan: Brent cae 4% en la semana", image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop&q=85", label: "Tu portfolio", source: "Reuters" },
-  { title: "Nvidia presenta Blackwell Ultra: el mercado de semiconductores se reconfigura", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop&q=85", label: "Nuevo", source: "Bloomberg" },
-  { title: "India supera a China como mayor mercado emergente por flujo de capitales", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop&q=85", label: "Nuevo", source: "The Daily Shot" },
-  { title: "Regulacion IA en Europa: nuevo marco legal podria impactar al sector tech en 2027", image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=600&fit=crop&q=85", label: "Futuro", source: "Matt Levine" },
-  { title: "Escasez global de cobre: la proxima crisis silenciosa para la transicion energetica", image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop&q=85", label: "Futuro", source: "Informe BBVA" },
-];
+// Noticias del briefing — mock hoy, generadas por Gmail + Claude en producción (ver src/lib/news.ts)
 
 const DNA_BARS = [
   { label: "Disciplina", value: 78, color: "#1a1a1a" },
@@ -205,34 +199,24 @@ export default function PreviewLight() {
             </div>
           </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Reveal delay={100}>
-              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Mejor posicion</p>
-                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">SEMI</p>
-                <p className="text-[13px] text-[#1a1a1a] font-semibold mt-2">+4.2% esta semana</p>
-              </div>
-            </Reveal>
-            <Reveal delay={200}>
-              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Sentimiento</p>
-                <p className="text-[32px] font-extralight tracking-tight text-[#b8860b]">62<span className="text-[16px] text-[#ccc]">/100</span></p>
-                <p className="text-[13px] text-[#999] mt-2">Optimismo moderado</p>
-              </div>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Recomendacion IA</p>
-                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">Mantener</p>
-                <p className="text-[13px] text-[#999] mt-2">Conviccion 7/10</p>
-              </div>
-            </Reveal>
-            <Reveal delay={400}>
-              <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">Investor DNA</p>
-                <p className="text-[32px] font-extralight tracking-tight text-[#1a1a1a]">Equilibrado</p>
-                <p className="text-[13px] text-[#999] mt-2">Acierto: 68%</p>
-              </div>
-            </Reveal>
+            {[
+              { href: "/portfolio", label: "Mejor posicion", value: <>SEMI</>, sub: "+4.2% esta semana", subClass: "text-[#1a1a1a] font-semibold", valueColor: "text-[#1a1a1a]" },
+              { href: "/resumen", label: "Sentimiento", value: <>62<span className="text-[16px] text-[#ccc]">/100</span></>, sub: "Optimismo moderado", subClass: "text-[#999]", valueColor: "text-[#b8860b]" },
+              { href: "/recomendaciones", label: "Recomendacion IA", value: <>Mantener</>, sub: "Conviccion 7/10", subClass: "text-[#999]", valueColor: "text-[#1a1a1a]" },
+              { href: "/aprendizaje", label: "Investor DNA", value: <>Equilibrado</>, sub: "Acierto: 68%", subClass: "text-[#999]", valueColor: "text-[#1a1a1a]" },
+            ].map((stat, i) => (
+              <Reveal key={stat.label} delay={100 + i * 100}>
+                <Link href={stat.href} className="group block h-full bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-[#999] font-semibold mb-3">{stat.label}</p>
+                  <p className={`text-[32px] font-extralight tracking-tight ${stat.valueColor}`}>{stat.value}</p>
+                  <p className={`text-[13px] mt-2 ${stat.subClass}`}>{stat.sub}</p>
+                  <p className="mt-4 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] text-[#bbb] font-semibold group-hover:text-[#1a1a1a] transition-colors duration-500">
+                    Ver detalle
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </p>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -299,12 +283,15 @@ export default function PreviewLight() {
               </div>
               <div className="pt-5 border-t border-[#f0ede8]">
                 {["Contexto macro global", "Impacto en tu portfolio", "Temas de seguimiento", "Lo que dicen tus fuentes", "Recomendaciones"].map((s) => (
-                  <div key={s} className="flex items-center justify-between py-3 border-b border-[#f0ede8] last:border-0 group/r cursor-pointer hover:bg-[#faf8f5] -mx-4 px-4 rounded-lg transition-colors">
+                  <Link href="/resumen" key={s} className="flex items-center justify-between py-3 border-b border-[#f0ede8] last:border-0 group/r cursor-pointer hover:bg-[#faf8f5] -mx-4 px-4 rounded-lg transition-colors">
                     <span className="text-[14px] text-[#444] font-medium group-hover/r:text-[#1a1a1a]">{s}</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-[#ddd] group-hover/r:text-[#1a1a1a] group-hover/r:translate-x-1 transition-all"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </div>
+                  </Link>
                 ))}
               </div>
+              <Link href="/resumen" className="mt-6 flex items-center justify-center gap-2 text-[11px] uppercase tracking-[0.3em] font-semibold text-[#1a1a1a] border border-[#1a1a1a]/20 rounded-xl py-3.5 hover:bg-[#1a1a1a] hover:text-white transition-all duration-500">
+                Leer briefing completo
+              </Link>
             </div>
           </Reveal>
         </div>
@@ -322,17 +309,22 @@ export default function PreviewLight() {
       <section className="relative z-20 bg-[#faf8f5] py-32 sm:py-40">
         <div className="max-w-[1140px] mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {NEWS_CARDS.map((card, i) => (
-              <Reveal key={card.title} delay={i * 120} direction={i === 0 ? "left" : i === 2 ? "right" : "up"}>
-                <div className="relative h-[360px] rounded-[20px] overflow-hidden group cursor-pointer transition-transform duration-500 hover:scale-105">
-                  <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110" />
+            {NEWS.map((card, i) => (
+              <Reveal key={card.id} delay={i * 120} direction={i % 3 === 0 ? "left" : i % 3 === 2 ? "right" : "up"}>
+                <Link href={`/noticia/${card.id}`} className="relative block h-[360px] rounded-[20px] overflow-hidden group cursor-pointer transition-transform duration-500 hover:scale-[1.03]">
+                  <img src={card.image} alt={card.headline} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
                   <div className="absolute bottom-0 left-0 right-0 p-7 translate-y-2 group-hover:translate-y-0 transition-transform duration-700">
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-white/50 mb-2 font-semibold">{card.label} — {card.source}</p>
-                    <p className="text-[15px] text-white/90 font-extralight leading-[1.6]">{card.title}</p>
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-white/50 mb-2 font-semibold">{card.category} — {card.source.name}</p>
+                    <p className="text-[15px] text-white/90 font-extralight leading-[1.6]">{card.headline}</p>
+                    <p className="text-[12px] text-white/45 leading-[1.7] mt-3 line-clamp-2">{card.snippet}</p>
+                    <p className="mt-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60 font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      Leer análisis
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </p>
                   </div>
-                </div>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -368,7 +360,7 @@ export default function PreviewLight() {
               </div>
               <div className="mt-3">
                 {positions.map((p) => (
-                  <div key={p.ticker} className="flex items-center justify-between py-3.5 border-b border-[#f0ede8] last:border-0">
+                  <Link href="/portfolio" key={p.ticker} className="flex items-center justify-between py-3.5 border-b border-[#f0ede8] last:border-0 hover:bg-[#faf8f5] -mx-3 px-3 rounded-lg transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-[#1a1a1a]/[0.07] flex items-center justify-center text-[11px] font-bold text-[#1a1a1a]">{p.ticker.slice(0, 2)}</div>
                       <div><p className="text-[14px] font-semibold text-[#1a1a1a]">{p.ticker}</p><p className="text-[12px] text-[#999]">{p.name}</p></div>
@@ -377,9 +369,12 @@ export default function PreviewLight() {
                       <p className="text-[14px] font-semibold text-[#1a1a1a]">{formatEUR(p.value)}</p>
                       <p className={`text-[12px] font-bold ${p.changePct >= 0 ? "text-[#1a1a1a]" : "text-[#c4001a]"}`}>{p.changePct >= 0 ? "+" : ""}{p.changePct.toFixed(1)}%</p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
+              <Link href="/portfolio" className="mt-5 flex items-center justify-center gap-2 text-[11px] uppercase tracking-[0.3em] font-semibold text-[#1a1a1a] border border-[#1a1a1a]/20 rounded-xl py-3.5 hover:bg-[#1a1a1a] hover:text-white transition-all duration-500">
+                Ver portfolio completo
+              </Link>
             </div>
           </Reveal>
 
@@ -403,6 +398,10 @@ export default function PreviewLight() {
                   ))}
                 </div>
                 <p className="text-[12px] text-[#999] mt-6">Tendencia: mejorando en disciplina, trabajar en timing de entrada.</p>
+                <Link href="/aprendizaje" className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-semibold text-[#999] hover:text-[#1a1a1a] transition-colors duration-500">
+                  Ver tu perfil inversor
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </Link>
               </div>
 
               <div className="bg-white rounded-[20px] border border-[#e5e0db] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_60px_rgba(0,0,0,0.08)] hover:border-[#1a1a1a]/25 transition-all duration-500">
@@ -414,6 +413,10 @@ export default function PreviewLight() {
                     <span className="text-[#1a1a1a] font-medium"> Buena decision.</span> Senal clave que detectaste: volumen de venta institucional inusualmente alto.
                   </p>
                 </div>
+                <Link href="/aprendizaje" className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-semibold text-[#999] hover:text-[#1a1a1a] transition-colors duration-500">
+                  Ver todas tus decisiones
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </Link>
               </div>
             </div>
           </Reveal>

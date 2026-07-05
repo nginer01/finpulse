@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "@/components/Nav";
 import BorderCard from "@/components/BorderCard";
 import Tooltip from "@/components/Tooltip";
+import ImageCarousel from "@/components/ImageCarousel";
+import Reveal from "@/components/Reveal";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -260,6 +261,7 @@ function ConvictionDots({ value }: { value: number }) {
 
 function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r: Recommendation) => void }) {
   const [expanded, setExpanded] = useState(false);
+  const [decision, setDecision] = useState<"followed" | "ignored" | null>(null);
   const cat = categoryLabels[r.category];
 
   return (
@@ -358,12 +360,34 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
                 </svg>
                 Invertir en ficción
               </button>
-              <button className="px-4 py-2 rounded-xl text-xs font-medium bg-[#30d158]/15 text-[#30d158] hover:bg-[#30d158]/25 transition-colors">
-                Seguir recomendación
-              </button>
-              <button className="px-4 py-2 rounded-xl text-xs font-medium text-[#48484a] hover:text-[#86868b] transition-colors">
-                Ignorar
-              </button>
+              {decision === null ? (
+                <>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDecision("followed"); }}
+                    className="px-4 py-2 rounded-xl text-xs font-medium bg-[#30d158]/15 text-[#30d158] hover:bg-[#30d158]/25 transition-colors"
+                  >
+                    Seguir recomendación
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDecision("ignored"); }}
+                    className="px-4 py-2 rounded-xl text-xs font-medium text-[#48484a] hover:text-[#86868b] transition-colors"
+                  >
+                    Ignorar
+                  </button>
+                </>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <span className={`px-4 py-2 rounded-xl text-xs font-semibold ${decision === "followed" ? "bg-[#30d158]/15 text-[#30d158]" : "bg-white/[0.04] text-[#86868b]"}`}>
+                    {decision === "followed" ? "✓ Siguiendo esta recomendación" : "Recomendación ignorada"}
+                  </span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDecision(null); }}
+                    className="text-xs text-[#48484a] hover:text-[#86868b] transition-colors underline underline-offset-4"
+                  >
+                    Deshacer
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -415,23 +439,27 @@ export default function RecomendacionesPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <Nav />
+
+      {/* ─── HERO CAROUSEL ─── */}
+      <ImageCarousel
+        images={[
+          { src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&h=500&fit=crop&q=90", alt: "Estrategia de inversión" },
+          { src: "https://images.unsplash.com/photo-1462206092226-f46025ffe607?w=1600&h=500&fit=crop&q=90", alt: "Ciudad al amanecer" },
+          { src: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&h=500&fit=crop&q=90", alt: "Análisis financiero" },
+        ]}
+        heightClass="h-[240px] sm:h-[320px]"
+      >
+        <div className="h-full flex flex-col items-center justify-center text-center px-6">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-white/60 font-semibold mb-4">IA con criterio</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white tracking-tight">Recomendaciones</h1>
+          <p className="text-[13px] text-white/50 mt-4 tracking-wide">Tu director de inversiones personal — análisis, convicción y contraargumentos</p>
+        </div>
+      </ImageCarousel>
 
       <div className="max-w-5xl mx-auto px-6 pt-10 pb-20">
 
         {/* Header */}
         <div className="mb-10">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 2L12.5 7.5L18 8.5L14 12.5L15 18L10 15.5L5 18L6 12.5L2 8.5L7.5 7.5L10 2Z" stroke="#f5f5f7" strokeWidth="1.5" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-2xl font-extralight tracking-wide">Recomendaciones</h1>
-              <p className="text-sm text-[#86868b]">Tu director de inversiones personal — análisis, convicción, y contraargumentos</p>
-            </div>
-          </div>
 
           {/* Track record */}
           <BorderCard padding="p-4" className="mt-6">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "@/components/Nav";
+import { useAuth } from "@/context/AuthContext";
 
 /* ------------------------------------------------------------------ */
 /*  Reusable primitives                                                */
@@ -276,10 +276,32 @@ export default function AjustesPage() {
 
   // -- Danger --
   const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [exported, setExported] = useState(false);
+  const { logout } = useAuth();
+
+  const handleExport = () => {
+    const data = {
+      perfil: { nombre, email, timezone, idioma },
+      temas: topics,
+      fuentes: { gmail: gmailEmail, podcasts: podcastToggles, twitter: twitterAccounts, polymarket, bancos: bankChecks },
+      resumenDiario: { hora: resumenHora, timezone: resumenTimezone, históricos, contraargumentos, resumenSemanal },
+      portfolio: { broker, benchmarks, divisa },
+      notificaciones: { alertas: notifAlerts, recomendaciones: notifRecomendaciones, resumen: notifResumen, temas: notifTemas },
+      exportadoEl: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "finpulse-datos.json";
+    a.click();
+    URL.revokeObjectURL(url);
+    setExported(true);
+    setTimeout(() => setExported(false), 3000);
+  };
 
   return (
     <main className="min-h-screen">
-      <Nav />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         {/* Page header */}
@@ -733,8 +755,8 @@ export default function AjustesPage() {
                   Descarga un archivo JSON con toda tu información
                 </p>
               </div>
-              <button className="px-4 py-2 border border-card-border text-sm font-medium rounded-lg hover:bg-card-border/30 transition-colors text-foreground shrink-0">
-                Exportar datos
+              <button onClick={handleExport} className="px-4 py-2 border border-card-border text-sm font-medium rounded-lg hover:bg-card-border/30 transition-colors text-foreground shrink-0">
+                {exported ? "✓ Exportado" : "Exportar datos"}
               </button>
             </div>
             <div className="flex flex-col gap-3 py-3">
@@ -753,6 +775,7 @@ export default function AjustesPage() {
                   className="flex-1"
                 />
                 <button
+                  onClick={() => { if (deleteConfirm === "ELIMINAR") logout(); }}
                   disabled={deleteConfirm !== "ELIMINAR"}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors shrink-0 ${
                     deleteConfirm === "ELIMINAR"

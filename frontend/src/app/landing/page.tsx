@@ -665,7 +665,7 @@ export default function LandingPage() {
               <div className="grid grid-cols-5 gap-3 mb-8"><Gauge label="IWDA" drop={-52} color="#c4001a" /><Gauge label="VUAA" drop={-56} color="#c4001a" /><Gauge label="BRT" drop={-68} color="#c4001a" /><Gauge label="EUNA" drop={8} color="#1a1a1a" /><Gauge label="SEMI" drop={-62} color="#c4001a" /></div>
               <div className="flex gap-2">
                 {["2008", "COVID", "Dot-com", "2022"].map((s, i) => (
-                  <button key={s} className={`text-[12px] px-5 py-2.5 rounded-xl border font-bold transition-all duration-300 ${i === 0 ? "border-[#1a1a1a]/20 text-[#1a1a1a] bg-[#1a1a1a]/6" : "border-[#e5e0db] text-[#bbb] hover:text-[#888] hover:border-[#ccc]"}`}>{s}</button>
+                  <Link href="/login" key={s} className={`text-[12px] px-5 py-2.5 rounded-xl border font-bold transition-all duration-300 ${i === 0 ? "border-[#1a1a1a]/20 text-[#1a1a1a] bg-[#1a1a1a]/6" : "border-[#e5e0db] text-[#bbb] hover:text-[#888] hover:border-[#ccc]"}`}>{s}</Link>
                 ))}
               </div>
             </Card>

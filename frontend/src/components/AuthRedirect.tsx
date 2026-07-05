@@ -1,32 +1,48 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
+const PUBLIC_ROUTES = ["/landing", "/login"];
+
 /**
- * AuthRedirect — redirects to /login if user is not authenticated.
- * Wrap page content with this for pages that require full auth (no teaser).
+ * AuthGuard — wraps all pages in the root layout.
+ * - Not authenticated: only /landing and /login are accessible; everything else redirects to /landing.
+ * - Authenticated: all routes accessible, no forced redirects.
+ * - Shows a loading spinner while auth state is resolving (no flash of protected content).
  */
-export default function AuthRedirect({ children }: { children: React.ReactNode }) {
+export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { isLoggedIn, loading } = useAuth();
 
-  useEffect(() => {
-    if (!loading && !isLoggedIn) {
-      router.replace("/login");
-    }
-  }, [isLoggedIn, loading, router]);
+  const isPublic = PUBLIC_ROUTES.includes(pathname);
 
-  if (loading) {
+  useEffect(() => {
+    if (loading) return;
+    if (!isLoggedIn && !isPublic) {
+      router.replace("/landing");
+    }
+  }, [isLoggedIn, loading, isPublic, router]);
+
+  // While auth is loading, show spinner only for protected routes
+  if (loading && !isPublic) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
       </div>
     );
   }
 
-  if (!isLoggedIn) return null;
+  // Not logged in on a protected route — don't render content (redirect is firing)
+  if (!loading && !isLoggedIn && !isPublic) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return <>{children}</>;
 }

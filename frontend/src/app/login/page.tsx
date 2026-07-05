@@ -110,7 +110,7 @@ export default function LoginPage() {
           timezone: "Europe/Madrid",
         });
       }
-      router.push("/");
+      router.replace("/");
     } catch (err: unknown) {
       const authErr = err as AuthError;
       setError(authErr.detail || "Error inesperado");

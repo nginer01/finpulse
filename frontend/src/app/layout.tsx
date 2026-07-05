@@ -4,6 +4,7 @@ import "./globals.css";
 import MobileNav from "@/components/MobileNav";
 import AIChatButton from "@/components/AIChatButton";
 import { AuthProvider } from "@/context/AuthContext";
+import AuthGuard from "@/components/AuthRedirect";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col pb-16 sm:pb-0">
         <AuthProvider>
-          {children}
+          <AuthGuard>
+            {children}
+          </AuthGuard>
         </AuthProvider>
         <MobileNav />
         <AIChatButton />

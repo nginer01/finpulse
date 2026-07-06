@@ -16,6 +16,8 @@ import {
   Icon,
 } from "@/components/article/ArticleBits";
 import { P, H2, Strong } from "@/components/article/Typography";
+import SourceLink from "@/components/article/SourceLink";
+import DocumentsPanel from "@/components/documents/DocumentsPanel";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -132,7 +134,7 @@ export default function ResumenDiario() {
                 <Kicker icon="newspaper">Top Story</Kicker>
                 <H2>El mercado laboral entierra el recorte de julio — y a nadie le importa</H2>
                 <P className="first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground">
-                  La economía estadounidense creó <DataTip value="147.000 empleos" tip="Nóminas no agrícolas de junio. Consenso: 110.000. La tasa de paro baja al 4,1%." direction="flat" /> en
+                  La economía estadounidense creó <SourceLink sourceId="ft-empleo">147.000 empleos</SourceLink> en
                   junio, muy por encima de las 110.000 que esperaba el consenso, y la tasa de paro bajó al 4,1%. En cualquier otro
                   contexto, un dato así habría enfriado a la renta variable — empleo fuerte significa Fed paciente, y Fed paciente
                   significa tipos altos durante más tiempo. El viernes ocurrió exactamente lo contrario: el S&P 500 cerró
@@ -141,16 +143,16 @@ export default function ResumenDiario() {
                 </P>
                 <P className="mt-5">
                   La lectura del mercado es de manual goldilocks: la economía no se enfría lo suficiente como para temer una recesión,
-                  pero la inflación tampoco da señales de reacelerarse. Polymarket liquidó en horas la apuesta por un recorte en
-                  julio — del 21% al <Strong>5%</Strong> — y a la vez subió la de septiembre hasta el <Strong>68%</Strong>. Es decir:
+                  pero la inflación tampoco da señales de reacelerarse. <SourceLink sourceId="polymarket-fed">Polymarket liquidó en horas la apuesta por un
+                  recorte en julio</SourceLink> — del 21% al <Strong>5%</Strong> — y a la vez subió la de septiembre hasta el <Strong>68%</Strong>. Es decir:
                   el mercado no ha renunciado a los recortes, solo los ha movido seis semanas. Y con la temporada de resultados del
                   segundo trimestre arrancando el día 14, la atención rota de la macro a los beneficios.
                 </P>
                 <P className="mt-5">
                   El asterisco de la semana es doble. Primero, los aranceles: la pausa de 90 días expira el <Strong>9 de julio</Strong> y
                   la Casa Blanca empieza hoy a enviar cartas con los nuevos tipos arancelarios a los socios sin acuerdo. Europa negocia
-                  contrarreloj — Polymarket da un 42% a un acuerdo marco antes del jueves. Segundo, el crudo: la OPEC+ confirmó este fin
-                  de semana un aumento de producción de <DataTip value="548.000 barriles diarios" tip="Aumento acordado para agosto, por encima de los 411.000 b/d de los tres meses anteriores." direction="down" /> para
+                  contrarreloj — <SourceLink sourceId="polymarket-aranceles">Polymarket da un 42% a un acuerdo marco antes del jueves</SourceLink>. Segundo, el crudo: la OPEC+ confirmó este fin
+                  de semana un aumento de producción de <SourceLink sourceId="reuters-opec">548.000 barriles diarios</SourceLink> para
                   agosto, acelerando la devolución de los recortes voluntarios. El Brent abre la semana débil en $68,30.
                 </P>
                 <P className="mt-5">
@@ -163,6 +165,7 @@ export default function ResumenDiario() {
                   quote="El dato de empleo no cambia el destino, cambia el calendario. La Fed recortará cuando los aranceles dejen de ensuciar la foto de inflación — septiembre sigue vivo."
                   source="Paul Donovan"
                   meta="UBS On-Air, esta mañana"
+                  sourceId="ubs-donovan"
                 />
 
                 <InlineImage
@@ -208,8 +211,8 @@ export default function ResumenDiario() {
 
                 <P>
                   La volatilidad sigue comprimida: el VIX cerró en <DataTip value="16,38" tip="Mínimo de cinco meses. Por debajo de 17 el mercado descuenta un verano tranquilo — históricamente un aviso." direction="down" />,
-                  mínimos de febrero. Con el deadline arancelario a tres días vista, ese nivel de complacencia es la lectura más
-                  incómoda del tablero: o el mercado sabe algo (que habrá prórrogas y acuerdos), o está infravalorando el único
+                  mínimos de febrero. Con el deadline arancelario a tres días vista, <SourceLink sourceId="zerohedge-vix">ese nivel de complacencia es la lectura más
+                  incómoda del tablero</SourceLink>: o el mercado sabe algo (que habrá prórrogas y acuerdos), o está infravalorando el único
                   evento binario de la semana.
                 </P>
 
@@ -230,8 +233,8 @@ export default function ResumenDiario() {
                 <H2>Los chips tiran del carro, la energía se queda sola</H2>
                 <P>
                   La dispersión sectorial de la semana cuenta la historia completa del mercado en una sola imagen. En un extremo,
-                  los <Strong>semiconductores (+2,8%)</Strong>: Nvidia rozó los 4 billones de dólares de capitalización — sería la
-                  primera empresa de la historia en alcanzarlos — y TSMC publicó unas ventas de junio un 26% superiores al año
+                  los <Strong>semiconductores (+2,8%)</Strong>: <SourceLink sourceId="bloomberg-nvda">Nvidia rozó los 4 billones de dólares de capitalización</SourceLink> — sería la
+                  primera empresa de la historia en alcanzarlos — y <SourceLink sourceId="tsmc-ventas">TSMC publicó unas ventas de junio un 26% superiores</SourceLink> al año
                   pasado. El ciclo de inversión en infraestructura de IA no da señales de fatiga, y la cadena entera (ASML, SK Hynix,
                   Micron) subió en bloque.
                 </P>
@@ -332,6 +335,7 @@ export default function ResumenDiario() {
                   quote="Nadie compra el S&P a 22 veces beneficios porque espere un recorte en julio. Lo compra porque cree que los beneficios del Q2 van a justificar el múltiplo. La semana que viene empezamos a saberlo."
                   source="Matt Levine"
                   meta="Money Stuff, viernes"
+                  sourceId="matt-levine"
                 />
               </section>
             </Reveal>
@@ -372,6 +376,21 @@ export default function ResumenDiario() {
                     </div>
                   ))}
                 </div>
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 7. MIS DOCUMENTOS ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="folder">Mis documentos</Kicker>
+                <H2>Lo que ha llegado a tu bandeja</H2>
+                <P className="mb-9">
+                  Newsletters, informes subidos, artículos y notas de tu carpeta Synpulse — procesados por la IA y ordenados por
+                  relevancia para tu portfolio. Haz clic en cualquiera para leer el resumen completo.
+                </P>
+                <DocumentsPanel limit={6} />
               </section>
             </Reveal>
 

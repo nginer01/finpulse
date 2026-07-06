@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import DocumentsManager from "@/components/documents/DocumentsManager";
 
 /* ------------------------------------------------------------------ */
 /*  Reusable primitives                                                */
@@ -589,6 +590,15 @@ export default function AjustesPage() {
             </div>
           </div>
         </SectionCard>
+
+        {/* ============================================================= */}
+        {/* 3b. MIS DOCUMENTOS                                             */}
+        {/* ============================================================= */}
+        <div id="documentos" className="scroll-mt-24">
+          <SectionCard title="Mis Documentos">
+            <DocumentsManager />
+          </SectionCard>
+        </div>
 
         {/* ============================================================= */}
         {/* 4. RESUMEN DIARIO                                              */}

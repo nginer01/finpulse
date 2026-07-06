@@ -187,6 +187,62 @@ export function Icon({ name, className = "w-4 h-4" }: { name: string; className?
           <path d="M3 17l5-5 4 4 3-3 6 6" />
         </svg>
       );
+    case "user":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21" />
+        </svg>
+      );
+    case "bell":
+      return (
+        <svg {...common}>
+          <path d="M6 9a6 6 0 0112 0c0 5 2 6.5 2 6.5H4S6 14 6 9z" />
+          <path d="M10 19.5a2.2 2.2 0 004 0" />
+        </svg>
+      );
+    case "theme":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="8.5" />
+          <path d="M12 3.5v17M12 3.5a8.5 8.5 0 010 17" fill="currentColor" fillOpacity="0.25" />
+        </svg>
+      );
+    case "shield":
+      return (
+        <svg {...common}>
+          <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      );
+    case "plug":
+      return (
+        <svg {...common}>
+          <path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 01-5 5v0a5 5 0 01-5-5V8z" />
+          <path d="M12 16v5" />
+        </svg>
+      );
+    case "card":
+      return (
+        <svg {...common}>
+          <rect x="3" y="6" width="18" height="13" rx="2" />
+          <path d="M3 10h18M7 15h4" />
+        </svg>
+      );
+    case "help":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M9.5 9.5a2.5 2.5 0 114 2c-.8.6-1.5 1-1.5 2.2M12 17v.5" />
+        </svg>
+      );
+    case "lock":
+      return (
+        <svg {...common}>
+          <rect x="5" y="11" width="14" height="9" rx="2" />
+          <path d="M8 11V8a4 4 0 018 0v3M12 15v2" />
+        </svg>
+      );
     default:
       return null;
   }

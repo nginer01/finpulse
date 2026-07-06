@@ -201,7 +201,7 @@ export default function DocumentsPanel({ limit = 6 }: { limit?: number }) {
       </div>
 
       <Link
-        href="/ajustes#documentos"
+        href="/ajustes/fuentes"
         className="mt-6 inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.25em] font-semibold text-muted hover:text-foreground transition-colors duration-300"
       >
         Gestionar mis documentos

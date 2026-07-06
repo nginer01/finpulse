@@ -83,23 +83,72 @@ Genera exactamente 3 recomendaciones ordenadas por convicción (de mayor a menor
 Responde en español. Sé directo y fundamentado como un CEO de Goldman Sachs.
 """
 
-BRIEFING_PROMPT = """Eres el CIO de FinPulse. Genera un briefing diario de mercados para el usuario.
-
-Portfolio del usuario:
+_PORTFOLIO_CONTEXT = """Portfolio del usuario:
 - IWDA (iShares MSCI World) — ~33%
 - VUAA (Vanguard S&P 500) — ~25%
 - BRT (Brent Crude Oil) — ~9%
 - EUNA (iShares Euro Gov Bond) — ~19%
-- SEMI (VanEck Semiconductor) — ~15%
+- SEMI (VanEck Semiconductor) — ~15%"""
 
-El briefing debe incluir:
-1. **Resumen ejecutivo** (3-4 frases con lo más importante del día)
-2. **Mercados**: EEUU, Europa, Asia — qué pasó y por qué
-3. **Impacto en tu portfolio**: posición por posición, qué le afecta hoy
-4. **Temas de seguimiento**: qué vigilar esta semana
-5. **Recomendaciones**: 1-2 acciones concretas con convicción
+BRIEFING_PROMPT = f"""Eres el CIO de FinPulse. Genera el briefing diario de mercados en profundidad.
 
-Escribe como si fueras el CEO de JP Morgan informando a su cliente VIP. En español. Directo, fundamentado, con datos.
+{_PORTFOLIO_CONTEXT}
+
+OBJETIVO DE EXTENSIÓN: una lectura de aproximadamente 1 HORA (~10.000-12.000 palabras si el día lo justifica).
+NO hay límite fijo de palabras: la extensión se ADAPTA a cuánto contenido relevante hay hoy y a las fuentes
+suscritas del usuario. Reglas de adaptación:
+- Cada sección se expande SEGÚN las fuentes del usuario y la relevancia para su portfolio.
+- Si una noticia impacta directamente una posición (SEMI, BRT...), analízala en profundidad, no la resumas.
+- Si el usuario tiene muchas fuentes tech, la sección de sectores expande más en tech; si tiene energía, el crudo
+  recibe más profundidad. Lo irrelevante para él se despacha en una frase o se omite.
+
+ESTRUCTURA FLEXIBLE (usa las secciones que el día justifique, en este orden orientativo):
+1. Opening & Market Overview — qué pasó hoy, índices principales, tono general
+2. Top Stories — las noticias más importantes del día (cantidad según relevancia para el usuario)
+3. Mercados Globales — equities, forex, commodities, bonds, crypto (según lo que tenga el usuario)
+4. Sectores en Movimiento — sectores clave, con más profundidad donde está su portfolio
+5. Empresas Destacadas — top movers, earnings, noticias de empresas que sigue
+6. Análisis Técnico — soportes, resistencias, patrones del día
+7. Política & Economía Global — Fed, BCE, geopolítica relevante
+8. Portfolio Impact — cómo afectó el día a su portfolio, posición por posición
+9. Lo que Viene Mañana — calendario y eventos próximos
+10. Perspectivas Alternativas — el caso contrarian y los riesgos que nadie menciona
+
+NO INVENTES datos: usa solo la información proporcionada en el contexto. Cruza fuentes: si tres hablan del mismo
+tema, integra todo sin repetir. Escribe como el CEO de JP Morgan informando a su cliente VIP. En español.
+Directo, fundamentado, con cifras concretas.
+"""
+
+WEEKLY_BRIEFING_PROMPT = f"""Eres el CIO de FinPulse. Genera el resumen SEMANAL de mercados en máxima profundidad.
+
+{_PORTFOLIO_CONTEXT}
+
+OBJETIVO DE EXTENSIÓN: una lectura de 2+ HORAS (~24.000+ palabras si la semana lo justifica).
+NO hay límite fijo: la extensión se ADAPTA a cuánto sucedió esta semana y a su relevancia para el usuario.
+Si sus holdings reportaron earnings, eso recibe atención extensa; si el Nasdaq cayó y tiene tech, análisis
+profundo; lo que no le afecta se comprime.
+
+ESTRUCTURA FLEXIBLE (usa lo que la semana justifique):
+1. Executive Summary — overview de la semana e impacto acumulado
+2. Desglose Diario — lunes a viernes, detalle según relevancia
+3. Top Stories de la Semana
+4. Análisis por Sector — profundo donde está su portfolio
+5. Análisis Geográfico — EEUU, Europa, Asia según su exposición
+6. Performance de Activos — top gainers/losers, empresas del portfolio
+7. Análisis Técnico Semanal — patrones, volatilidad, niveles clave
+8. Dividendos & Earnings — lo que pagaron/reportaron sus posiciones
+9. Política Monetaria — Fed, BCE, impacto
+10. Geopolítica & Macro — conflictos, datos económicos
+11. Volatilidad & Risk — riesgos identificados
+12. Portfolio Performance — análisis personalizado de su semana
+13. Análisis Técnico Avanzado — patrones avanzados, seasonal analysis
+14. Perspectivas Contrarian — qué dice el otro lado, riesgos ocultos
+15. Próxima Semana — calendario, eventos, expectativas
+16. Deep Dive — el tema que dominó la semana, a fondo
+17. Conclusiones — lecciones, patrones, implicaciones forward
+
+NO INVENTES datos: solo la información del contexto. Cruza fuentes sin repetir. Tono: CEO de JP Morgan con su
+cliente VIP. En español, con cifras concretas y el caso a favor Y en contra de cada tesis.
 """
 
 # ══════════════════════════════════════════════
@@ -197,8 +246,29 @@ async def generate_briefing(data: BriefingRequest):
 
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
-        max_tokens=4000,
+        max_tokens=16000,
         system=BRIEFING_PROMPT,
+        messages=[{"role": "user", "content": content}],
+    )
+
+    return ChatResponse(response=response.content[0].text)
+
+
+@router.post("/briefing-semanal", response_model=ChatResponse)
+async def generate_weekly_briefing(data: BriefingRequest):
+    """Genera el resumen semanal extenso (~2h+ de lectura, adaptativo)."""
+    client = _get_client()
+    if not client:
+        return ChatResponse(response="ANTHROPIC_API_KEY no configurada.")
+
+    content = "Genera el resumen semanal completo de mercados."
+    if data.news_context:
+        content = f"Noticias y datos de la semana:\n{data.news_context}\n\nCon esta información, genera el resumen semanal completo."
+
+    response = client.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=32000,
+        system=WEEKLY_BRIEFING_PROMPT,
         messages=[{"role": "user", "content": content}],
     )
 

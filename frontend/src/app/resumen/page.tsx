@@ -18,6 +18,7 @@ import {
 import { P, H2, Strong } from "@/components/article/Typography";
 import SourceLink from "@/components/article/SourceLink";
 import DocumentsPanel from "@/components/documents/DocumentsPanel";
+import ReadingTime from "@/components/article/ReadingTime";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -109,7 +110,7 @@ export default function ResumenDiario() {
                 el petróleo pierde soporte y los aranceles del 9 de julio marcan la agenda.
               </p>
               <p className="mt-6 text-[12px] text-white/45 tracking-wide">
-                14 fuentes procesadas · 231 noticias analizadas · Lectura: ~9 min
+                14 fuentes procesadas · 231 noticias analizadas · <ReadingTime />
               </p>
             </div>
           </div>
@@ -342,7 +343,89 @@ export default function ResumenDiario() {
 
             <SectionDivider />
 
-            {/* ---------- 6. LO QUE VIENE ---------- */}
+            {/* ---------- 6. POLÍTICA & ECONOMÍA GLOBAL ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="compass">Política &amp; economía global</Kicker>
+                <H2>Washington marca el paso, Fráncfort respira</H2>
+                <P>
+                  La semana geopolítica tiene un solo epicentro: las <SourceLink sourceId="polymarket-aranceles">cartas arancelarias que empiezan a salir hoy</SourceLink> de
+                  la Casa Blanca. El guion previsto es de escalada controlada — tipos del 25-40% para los socios sin acuerdo, con
+                  entrada en vigor el 1 de agosto, lo que en la práctica añade tres semanas más de negociación tras el deadline
+                  formal del jueves. Bruselas negocia una exención parcial para automoción a cambio de compromisos de compra de
+                  gas natural licuado; Japón e India están sensiblemente más lejos de lo que el mercado descuenta.
+                </P>
+                <P className="mt-5">
+                  En el plano monetario, el dato de empleo redefine el mapa: la Fed no tiene ninguna urgencia y las actas del
+                  miércoles deberían confirmar un comité cómodo esperando al IPC del día 15. El BCE, por su parte, tiene un
+                  problema nuevo que no es de tipos sino de divisa: <SourceLink sourceId="ubs-bce">un euro en máximos de cuatro años</SourceLink> que
+                  ya resta competitividad a las exportadoras y que, según <SourceLink sourceId="bbva-research">BBVA Research</SourceLink>, quita
+                  unas dos décimas de PIB al sector exterior de la eurozona. Un BCE quieto con una Fed a punto de recortar es la
+                  receta para que el euro siga fuerte — vigílalo si el tramo europeo de tu IWDA empieza a rezagarse.
+                </P>
+                <P className="mt-5">
+                  El tercer frente es fiscal: el paquete presupuestario aprobado la semana pasada en EEUU añade estímulo a una
+                  economía que no lo pide, y el Tesoro anunciará el miércoles el calendario de emisiones del trimestre. Más papel
+                  con la Fed en pausa es presión estructural al alza para el tramo largo de la curva — el 10 años en 4,34% puede
+                  parecer alto, pero el suelo de esa cifra lo pone la oferta, no solo la inflación.
+                </P>
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 7. PORTFOLIO IMPACT ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="check">Portfolio impact</Kicker>
+                <H2>Qué significa hoy para cada posición</H2>
+                <div className="mt-8 space-y-6">
+                  {[
+                    {
+                      t: "IWDA — iShares MSCI World (33%)",
+                      c: "up" as const,
+                      txt: "Máximos históricos arrastrada por EEUU. El riesgo específico de hoy es el arancelario: dos tercios del índice es EEUU, pero el tramo europeo sufre si el jueves acaba mal. Sin acción — es el núcleo y se comporta como tal.",
+                    },
+                    {
+                      t: "VUAA — Vanguard S&P 500 (25%)",
+                      c: "up" as const,
+                      txt: "Cuarto récord en seis sesiones y a 22x beneficios. La validación llega el 14 con la banca. No añadir en máximos con VIX en 16: si el múltiplo se justifica, será con earnings, no con momentum.",
+                    },
+                    {
+                      t: "SEMI — VanEck Semiconductor (15%)",
+                      c: "up" as const,
+                      txt: "Mejor posición de la semana (+3,4%). El dato clave llega el viernes con los ingresos Q2 de TSMC. El retroceso del 2-3% que esperas para ampliar quizá no llegue — no perseguir sigue siendo la decisión.",
+                    },
+                    {
+                      t: "EUNA — iShares Euro Gov Bond (19%)",
+                      c: "flat" as const,
+                      txt: "BCE quieto y curva europea estable: hace exactamente su trabajo de lastre defensivo. Si el jueves arancelario sale mal, es la posición que amortigua. Mantener sin más.",
+                    },
+                    {
+                      t: "BRT — Brent Crude Oil (9%)",
+                      c: "down" as const,
+                      txt: "El único frente abierto. La OPEC+ devuelve 548k b/d en agosto y los inventarios del miércoles dirán si el mercado los absorbe. Tu nivel de invalidación sigue en $66 — hoy cotiza a $68,30, sin margen para la complacencia.",
+                    },
+                  ].map((p) => (
+                    <div key={p.t} className="flex gap-4">
+                      <span
+                        className={`mt-2 w-2 h-2 shrink-0 rounded-full ${
+                          p.c === "up" ? "bg-[#30d158]" : p.c === "down" ? "bg-[#ff453a]" : "bg-[#ffd60a]"
+                        }`}
+                      />
+                      <div>
+                        <p className="text-[15px] font-medium text-foreground tracking-wide mb-1.5">{p.t}</p>
+                        <p className="text-[15px] leading-[1.8] text-[#b8b8bd] tracking-wide">{p.txt}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 8. LO QUE VIENE ---------- */}
             <Reveal>
               <section>
                 <Kicker icon="calendar">Lo que viene</Kicker>
@@ -381,7 +464,36 @@ export default function ResumenDiario() {
 
             <SectionDivider />
 
-            {/* ---------- 7. MIS DOCUMENTOS ---------- */}
+            {/* ---------- 9. PERSPECTIVAS ALTERNATIVAS ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="alert">Perspectivas alternativas</Kicker>
+                <H2>El caso contrarian: qué tendría que pasar para que esto salga mal</H2>
+                <P>
+                  Todo lo anterior es el consenso, y el consenso está muy cómodo. El caso bajista honesto tiene tres patas. La
+                  primera es mecánica: <SourceLink sourceId="daily-shot">el posicionamiento especulativo largo en S&P está en máximos del año</SourceLink> con
+                  la volatilidad en mínimos — cuando todo el mundo está del mismo lado, el movimiento contrario no necesita una
+                  gran excusa, solo un empujón. Un jueves arancelario sin prórrogas sería ese empujón.
+                </P>
+                <P className="mt-5">
+                  La segunda es de fondo: el mercado laboral es menos sólido de lo que dice el titular. El ADP privado fue
+                  negativo por primera vez en dos años y la mitad de las nóminas de junio las puso el empleo público estatal.
+                  Si esa divergencia se confirma en julio, el recorte de septiembre dejará de ser "por normalización" y empezará
+                  a oler a "por debilidad" — y ese matiz, como vimos en 2024, vale un 5% de índice.
+                </P>
+                <P className="mt-5">
+                  La tercera es la concentración: dos tercios de la subida del semestre la explican los mismos diez valores, y
+                  <SourceLink sourceId="zerohedge-vix"> la historia de los últimos veranos</SourceLink> dice que agosto no perdona
+                  a los mercados estrechos. Nada de esto es una predicción — es el precio de lista del escenario en el que la
+                  semana que viene alguien no renueva la música. Tu cartera lo tiene parcialmente cubierto con EUNA; la mitad
+                  restante de BRT, en cambio, no es cobertura para este riesgo: es riesgo adicional.
+                </P>
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 10. MIS DOCUMENTOS ---------- */}
             <Reveal>
               <section>
                 <Kicker icon="folder">Mis documentos</Kicker>

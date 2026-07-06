@@ -17,6 +17,7 @@ import {
 } from "@/components/article/ArticleBits";
 import { P, Lead, H2, Strong } from "@/components/article/Typography";
 import SourceLink from "@/components/article/SourceLink";
+import ReadingTime from "@/components/article/ReadingTime";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Semana del 29 de junio al 3 de julio de 2026           */
@@ -148,7 +149,7 @@ export default function ResumenSemanalCompleto() {
                   <Icon name="alert" className="w-3 h-3" /> Complacencia — VIX 16,4
                 </span>
                 <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-semibold text-white/70 border border-white/20 rounded-full px-4 py-1.5">
-                  87 noticias · 14 fuentes · ~14 min
+                  87 noticias · 14 fuentes · <ReadingTime prefix="Lectura" />
                 </span>
               </div>
             </div>
@@ -351,6 +352,60 @@ export default function ResumenSemanalCompleto() {
 
           <SectionDivider />
 
+          {/* ---------- ANÁLISIS GEOGRÁFICO ---------- */}
+          <Reveal>
+            <section>
+              <Kicker icon="compass">Análisis geográfico</Kicker>
+              <H2>Tres relojes distintos: EEUU corre, Europa negocia, Asia espera</H2>
+              <P>
+                <Strong>Estados Unidos (≈58% de tu exposición vía IWDA y VUAA)</Strong> vivió su semana más limpia del semestre:
+                récords con breadth mejorando, financieras despertando y un dato de empleo que compra tiempo a la Fed. La economía
+                que describen los datos duros sigue sin parecerse a la que describen las encuestas — y mientras esa brecha no se
+                cierre, el mercado seguirá eligiendo los datos duros.
+              </P>
+              <P className="mt-5">
+                <Strong>Europa (≈25% vía IWDA y EUNA)</Strong> cerró plana en un rango estrecho, secuestrada por la negociación
+                arancelaria. El dato incómodo es la divisa: <SourceLink sourceId="ubs-bce">el euro en 1,178 es un problema nuevo
+                para las exportadoras</SourceLink>, y explica por qué el DAX se quedó cuatro puntos por detrás del S&P en el
+                semestre pese a un BCE mucho más generoso. Para tu EUNA, en cambio, el entorno es ideal: tipos quietos, inflación
+                contenida y demanda de refugio si el jueves se tuerce.
+              </P>
+              <P className="mt-5">
+                <Strong>Asia (≈12% vía IWDA)</Strong> fue la región cauta: el Nikkei retrocedió con Japón en la lista de cartas
+                arancelarias y el yen sin decidirse, mientras China siguió a lo suyo — estímulo selectivo y una tregua comercial
+                que de momento se respeta. La beta asiática de tu cartera es pequeña, pero el canal indirecto no lo es:
+                si los aranceles a Japón e India salen al 30%+, el golpe llega vía cadenas de suministro de las mismas
+                tecnológicas que lideran tu SEMI.
+              </P>
+            </section>
+          </Reveal>
+
+          <SectionDivider />
+
+          {/* ---------- POLÍTICA MONETARIA & DIVIDENDOS ---------- */}
+          <Reveal>
+            <section>
+              <Kicker icon="trend">Política monetaria &amp; flujos a tu bolsillo</Kicker>
+              <H2>La Fed gana tiempo; tus posiciones, cupones</H2>
+              <P>
+                La semana monetaria se resume en un desplazamiento de seis semanas: <SourceLink sourceId="polymarket-fed">el
+                mercado movió el primer recorte de julio a septiembre</SourceLink> sin drama y sin vender bolsa, porque el motivo
+                del retraso (empleo sólido) es el bueno. Las actas del miércoles 8 son el próximo test: si el comité discute
+                seriamente el balance o los efectos arancelarios en precios, septiembre puede enfriarse — y ahí sí habría
+                lectura negativa para múltiplos. El BCE, sin reunión hasta el 24 de julio, tiene la agenda tomada por el euro.
+              </P>
+              <P className="mt-5">
+                En el capítulo de <Strong>dividendos y resultados</Strong>, semana tranquila para tu cartera: EUNA distribuyó su
+                cupón semestral (≈0,9% sobre posición, reinvertido el lunes), IWDA y VUAA son de acumulación — el interés
+                compuesto trabaja solo — y ninguna de tus posiciones reportó. Eso cambia ya: los ingresos Q2 de TSMC del viernes
+                10 son, en la práctica, el primer "earnings" del trimestre para tu SEMI, y la banca americana del día 14 marcará
+                el tono del múltiplo que sostiene a VUAA.
+              </P>
+            </section>
+          </Reveal>
+
+          <SectionDivider />
+
           {/* ---------- ACTIVOS DESTACADOS ---------- */}
           <Reveal>
             <section>
@@ -428,6 +483,33 @@ export default function ResumenSemanalCompleto() {
                   </p>
                 </div>
               </div>
+            </section>
+          </Reveal>
+
+          <SectionDivider />
+
+          {/* ---------- DEEP DIVE ---------- */}
+          <Reveal>
+            <section>
+              <Kicker icon="lens">Deep dive — el tema de la semana</Kicker>
+              <H2>Nvidia a $4 billones: qué compra el mercado exactamente</H2>
+              <P>
+                El hito de <SourceLink sourceId="bloomberg-nvda">los 4 billones de dólares</SourceLink> merece pararse un momento,
+                porque es la variable que más explica tu cartera este año. La pregunta correcta no es si Nvidia "vale" esa cifra,
+                sino qué tiene que pasar para justificarla: a 32 veces beneficios estimados, el mercado descuenta que el capex de
+                los hyperscalers — <SourceLink sourceId="tsmc-ventas">que crece al 34% interanual</SourceLink> — no solo se
+                mantiene, sino que se convierte en gasto recurrente. La evidencia de la semana apoya la tesis: ventas de TSMC
+                +26%, capacidad de Blackwell comprometida hasta 2027, y la restricción desplazándose de chips a potencia
+                eléctrica — señal de demanda desbordada, no de demanda satisfecha.
+              </P>
+              <P className="mt-5">
+                El contraargumento serio no es la valoración sino la concentración del cliente: cinco compañías explican la mayor
+                parte de los pedidos, y todas están empezando a diseñar silicio propio. El día que una de ellas anuncie un
+                recorte de capex — no un fracaso, un simple recorte — el múltiplo del sector entero se comprime un 15% en una
+                semana. Es el riesgo que asumes a cambio del mejor ciclo de la década, y la razón de que tu SEMI pese un 15% y
+                no un 30%. La disciplina de tamaño ES la gestión de este riesgo; no hace falta más cobertura que esa mientras el
+                ciclo confirme — y el viernes 10, con TSMC, tendremos la siguiente confirmación o el primer aviso.
+              </P>
             </section>
           </Reveal>
 

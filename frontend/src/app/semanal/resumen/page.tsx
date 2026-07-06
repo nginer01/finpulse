@@ -16,6 +16,7 @@ import {
   Icon,
 } from "@/components/article/ArticleBits";
 import { P, Lead, H2, Strong } from "@/components/article/Typography";
+import SourceLink from "@/components/article/SourceLink";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Semana del 29 de junio al 3 de julio de 2026           */
@@ -264,9 +265,9 @@ export default function ResumenSemanalCompleto() {
                 1. El empleo americano no se rinde
               </h3>
               <P>
-                Las <DataTip value="147.000 nóminas" tip="Nóminas no agrícolas de junio. Consenso: 110.000. Paro: 4,1% (vs 4,2% anterior)." direction="flat" /> de
-                junio pulverizaron el consenso y enterraron el recorte de julio en cuestión de minutos: Polymarket lo hundió del 21%
-                al 5%, mientras septiembre subía al 68%. La paradoja — bolsa en máximos celebrando el retraso de los recortes — se
+                Las <SourceLink sourceId="ft-empleo">147.000 nóminas</SourceLink> de
+                junio pulverizaron el consenso y enterraron el recorte de julio en cuestión de minutos: <SourceLink sourceId="polymarket-fed">Polymarket lo hundió del 21%
+                al 5%</SourceLink>, mientras septiembre subía al 68%. La paradoja — bolsa en máximos celebrando el retraso de los recortes — se
                 explica porque el mercado prefiere mil veces un recorte por normalización que un recorte por rescate. El matiz
                 incómodo lo puso el ADP del miércoles con su -33.000 en el sector privado: el empleo público estatal y local está
                 sosteniendo la creación de puestos. Es un dato para archivar, no para operar. Todavía.
@@ -276,7 +277,7 @@ export default function ResumenSemanalCompleto() {
                 2. La OPEC+ abre el grifo — y tu Brent lo nota
               </h3>
               <P>
-                El cártel confirmó la devolución de <Strong>548.000 barriles diarios en agosto</Strong>, acelerando el ritmo de los
+                El cártel confirmó la devolución de <SourceLink sourceId="reuters-opec">548.000 barriles diarios en agosto</SourceLink>, acelerando el ritmo de los
                 tres meses anteriores (411.000). Arabia Saudí ha dejado de defender el precio para defender la cuota — el mismo
                 guion de 2015 que ya conoces de sobra. El Brent cerró la semana en $68,30 (-2,3%) y tu posición
                 en <Strong>BRT acumula un -2,8% semanal</Strong>. La reducción del 50% que ejecutaste en mayo sigue pareciendo la
@@ -294,9 +295,9 @@ export default function ResumenSemanalCompleto() {
                 3. Nvidia a las puertas de los 4 billones
               </h3>
               <P>
-                La cifra es difícil de procesar: Nvidia cerró el jueves a un 2% de convertirse en la <Strong>primera empresa de la
-                historia en valer 4 billones de dólares</Strong> — más que todo el mercado bursátil alemán. Detrás del hito hay
-                sustancia: TSMC reportó ventas de junio un 26% superiores al año anterior, y los pedidos de Blackwell Ultra tienen
+                La cifra es difícil de procesar: <SourceLink sourceId="bloomberg-nvda">Nvidia cerró el jueves a un 2% de convertirse en la primera empresa de la
+                historia en valer 4 billones de dólares</SourceLink> — más que todo el mercado bursátil alemán. Detrás del hito hay
+                sustancia: <SourceLink sourceId="tsmc-ventas">TSMC reportó ventas de junio un 26% superiores</SourceLink> al año anterior, y los pedidos de Blackwell Ultra tienen
                 la capacidad de 2026 comprometida al completo. Tu SEMI (+3,4% en la semana) captura toda la cadena — fabricante,
                 foundry, memoria y litografía — que es exactamente donde quieres estar en este ciclo.
               </P>
@@ -306,7 +307,7 @@ export default function ResumenSemanalCompleto() {
               </h3>
               <P>
                 La pausa de 90 días vence el <Strong>9 de julio</Strong> y las cartas con los nuevos tipos empiezan a salir el lunes.
-                Bruselas negocia un acuerdo marco (42% de probabilidad en Polymarket, +11 en la semana); Japón e India están más
+                Bruselas negocia un acuerdo marco (<SourceLink sourceId="polymarket-aranceles">42% de probabilidad en Polymarket, +11 en la semana</SourceLink>); Japón e India están más
                 lejos. El mercado descuenta prórrogas y acuerdos de mínimos — probablemente con razón. Pero un VIX en 16,4 con un
                 evento binario a tres días es la definición técnica de complacencia, y las opciones de cobertura sobre el Stoxx
                 están históricamente baratas para quien quiera dormir tranquilo.
@@ -316,6 +317,7 @@ export default function ResumenSemanalCompleto() {
                 quote="El mercado ha decidido que los aranceles son una táctica de negociación y no una política económica. La semana que viene sabremos si el mercado negocia bien."
                 source="The Daily Shot"
                 meta="Edición del viernes"
+                sourceId="daily-shot"
               />
             </section>
           </Reveal>

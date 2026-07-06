@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BorderCard from "@/components/BorderCard";
+import { SourceChip } from "@/components/article/SourceLink";
 
 /* ------------------------------------------------------------------ */
 /*  RADAR / SPIDER CHART (SVG)                                        */
@@ -481,7 +482,7 @@ function SourceBar({ s, maxAccuracy }: { s: Source; maxAccuracy: number }) {
     <div className="space-y-1">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">{s.name}</span>
+          <SourceChip name={s.name} />
           {s.tag && (
             <span
               className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${

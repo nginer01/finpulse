@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Tooltip from "@/components/Tooltip";
+import SourceLink from "@/components/article/SourceLink";
 
 /* ------------------------------------------------------------------ */
 /*  Iconos SVG limpios (stroke 1.5, sin emojis)                        */
@@ -133,6 +134,59 @@ export function Icon({ name, className = "w-4 h-4" }: { name: string; className?
           <path d="M12 3v12M7 10l5 5 5-5M4 21h16" />
         </svg>
       );
+    case "folder":
+      return (
+        <svg {...common}>
+          <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+        </svg>
+      );
+    case "mail":
+      return (
+        <svg {...common}>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="M3 7l9 6 9-6" />
+        </svg>
+      );
+    case "upload":
+      return (
+        <svg {...common}>
+          <path d="M12 15V3M7 8l5-5 5 5M4 21h16" />
+        </svg>
+      );
+    case "link":
+      return (
+        <svg {...common}>
+          <path d="M10 14a5 5 0 007.07 0l2.83-2.83a5 5 0 00-7.07-7.07l-1.4 1.4" />
+          <path d="M14 10a5 5 0 00-7.07 0l-2.83 2.83a5 5 0 007.07 7.07l1.4-1.4" />
+        </svg>
+      );
+    case "refresh":
+      return (
+        <svg {...common}>
+          <path d="M20 11a8 8 0 10.5 4M20 4v7h-7" />
+        </svg>
+      );
+    case "trash":
+      return (
+        <svg {...common}>
+          <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" />
+        </svg>
+      );
+    case "doc":
+      return (
+        <svg {...common}>
+          <path d="M6 3h8l4 4v14H6V3z" />
+          <path d="M14 3v4h4M9 12h6M9 16h6" />
+        </svg>
+      );
+    case "image":
+      return (
+        <svg {...common}>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <circle cx="9" cy="10" r="1.5" />
+          <path d="M3 17l5-5 4 4 3-3 6 6" />
+        </svg>
+      );
     default:
       return null;
   }
@@ -158,12 +212,18 @@ export function Kicker({ icon, children }: { icon: string; children: React.React
 /*  PullQuote — cita destacada con línea vertical                      */
 /* ------------------------------------------------------------------ */
 
-export function PullQuote({ quote, source, meta }: { quote: string; source: string; meta?: string }) {
+export function PullQuote({ quote, source, meta, sourceId }: { quote: string; source: string; meta?: string; sourceId?: string }) {
   return (
     <blockquote className="border-l-2 border-white/25 pl-6 sm:pl-8 my-10">
       <p className="text-[19px] sm:text-[21px] font-extralight italic leading-[1.7] text-[#e8e8ed] tracking-wide">&ldquo;{quote}&rdquo;</p>
       <footer className="mt-4 flex items-baseline gap-3">
-        <span className="text-[12px] uppercase tracking-[0.2em] font-semibold text-foreground">{source}</span>
+        {sourceId ? (
+          <SourceLink sourceId={sourceId} className="text-[12px] uppercase tracking-[0.2em] font-semibold">
+            {source}
+          </SourceLink>
+        ) : (
+          <span className="text-[12px] uppercase tracking-[0.2em] font-semibold text-foreground">{source}</span>
+        )}
         {meta && <span className="text-[12px] text-muted">{meta}</span>}
       </footer>
     </blockquote>

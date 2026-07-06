@@ -4,7 +4,7 @@ import { useState } from "react";
 import BorderCard from "@/components/BorderCard";
 import Tooltip from "@/components/Tooltip";
 import ImageCarousel from "@/components/ImageCarousel";
-import Reveal from "@/components/Reveal";
+import { SourceChip } from "@/components/article/SourceLink";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -231,20 +231,6 @@ function RiskGauge({ value }: { value: number }) {
   );
 }
 
-function SourceBadge({ name, type }: { name: string; type: string }) {
-  const colors: Record<string, string> = {
-    newsletter: "bg-blue-500/15 text-blue-400",
-    podcast: "bg-purple-500/15 text-purple-400",
-    polymarket: "bg-emerald-500/15 text-emerald-400",
-    x: "bg-zinc-500/15 text-zinc-400",
-    bank: "bg-amber-500/15 text-[#ffd60a]",
-    news: "bg-rose-500/15 text-rose-400",
-  };
-  return (
-    <span className={`text-[11px] px-2 py-0.5 rounded-full ${colors[type] || "bg-white/5 text-[#86868b]"}`}>{name}</span>
-  );
-}
-
 function ConvictionDots({ value }: { value: number }) {
   return (
     <div className="flex gap-0.5">
@@ -321,9 +307,9 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
               <p className="text-xs text-[#86868b] leading-6">{r.thesis}</p>
             </div>
 
-            {/* Sources */}
+            {/* Sources — clickeables, abren modal con snippet + link original */}
             <div className="px-5 pb-3 flex flex-wrap gap-1.5">
-              {r.sources.map((s) => <SourceBadge key={s.name} name={s.name} type={s.type} />)}
+              {r.sources.map((s) => <SourceChip key={s.name} name={s.name} />)}
             </div>
 
             {/* Pro / Contra */}

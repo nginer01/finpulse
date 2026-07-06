@@ -1,679 +1,508 @@
 import Link from "next/link";
 import ScrollProgress from "@/components/ScrollProgress";
-import LoginGate from "@/components/LoginGate";
+import Reveal from "@/components/Reveal";
+import LineChart from "@/components/charts/LineChart";
+import BarsChart from "@/components/charts/BarsChart";
+import Sparkline from "@/components/charts/Sparkline";
+import {
+  Kicker,
+  PullQuote,
+  InlineImage,
+  VideoCard,
+  DataTip,
+  ShareBar,
+  Breadcrumb,
+  SectionDivider,
+  Icon,
+} from "@/components/article/ArticleBits";
+import { P, H2, Strong } from "@/components/article/Typography";
 
-function SourceBadge({ name, type }: { name: string; type: string }) {
-  const colors: Record<string, string> = {
-    newsletter: "border-blue-500/20 text-blue-400/80",
-    podcast: "border-purple-500/20 text-purple-400/80",
-    polymarket: "border-emerald-500/20 text-emerald-400/80",
-    x: "border-white/10 text-white/40",
-    bank: "border-amber-500/20 text-[#ffd60a]/80",
-    news: "border-rose-500/20 text-rose-400/80",
-  };
-  return (
-    <span className={`text-[10px] uppercase tracking-[0.1em] font-medium px-3 py-1 rounded-full border ${colors[type] || "border-card-border text-muted"}`}>{name}</span>
-  );
-}
+/* ------------------------------------------------------------------ */
+/*  Mock data — Lunes, 6 de julio de 2026                              */
+/* ------------------------------------------------------------------ */
 
-function SectionDivider() {
-  return (
-    <div className="flex items-center justify-center gap-3 my-16">
-      <div className="w-14 h-[1px] bg-white/[0.08]" />
-      <div className="w-1.5 h-1.5 rounded-full border border-white/[0.12]" />
-      <div className="w-14 h-[1px] bg-white/[0.08]" />
-    </div>
-  );
-}
+const spWeek = [
+  { label: "Lun 29", value: 6205 },
+  { label: "Mar 30", value: 6228 },
+  { label: "Mié 1", value: 6212 },
+  { label: "Jue 2", value: 6241 },
+  { label: "Vie 3", value: 6284 },
+];
+
+const sectores = [
+  { label: "Semiconductores", value: 2.8, note: "Nvidia roza los 4 billones de capitalización" },
+  { label: "Tecnología", value: 1.9, note: "Mega-caps lideran el rally de la semana" },
+  { label: "Financieras", value: 1.1, note: "Curva de tipos más pendiente favorece márgenes" },
+  { label: "Industriales", value: 0.8, note: "Expectativa de acuerdos comerciales" },
+  { label: "Salud", value: 0.3, note: "Sin catalizadores, sesión de transición" },
+  { label: "Consumo", value: 0.2, note: "A la espera de resultados del Q2" },
+  { label: "Utilities", value: -0.6, note: "Rotación hacia riesgo penaliza defensivos" },
+  { label: "Energía", value: -2.1, note: "La OPEC+ acelera la devolución de producción" },
+];
+
+const indices = [
+  { name: "S&P 500", value: "6.284,65", change: "+0,83%", dir: "up" as const, spark: [6205, 6228, 6212, 6241, 6284] },
+  { name: "Nasdaq", value: "20.601,10", change: "+1,02%", dir: "up" as const, spark: [20280, 20390, 20305, 20445, 20601] },
+  { name: "Stoxx 600", value: "543,20", change: "+0,48%", dir: "up" as const, spark: [538.9, 540.1, 539.2, 541.4, 543.2] },
+  { name: "IBEX 35", value: "14.120,00", change: "+0,71%", dir: "up" as const, spark: [13950, 14010, 13980, 14060, 14120] },
+  { name: "Brent", value: "$68,30", change: "-0,75%", dir: "down" as const, spark: [69.8, 69.2, 69.5, 68.8, 68.3] },
+  { name: "VIX", value: "16,38", change: "-4,9%", dir: "down" as const, spark: [17.9, 17.4, 17.6, 16.9, 16.38] },
+];
+
+const movers = [
+  { ticker: "NVDA", name: "Nvidia", change: "+2,4%", dir: "up" as const, tip: "Roza los 4 billones de capitalización. Pedidos de Blackwell Ultra desbordados hasta 2027." },
+  { ticker: "TSM", name: "TSMC", change: "+3,1%", dir: "up" as const, tip: "Ventas de junio +26% interanual. Publica ingresos del Q2 el 10 de julio." },
+  { ticker: "ASML", name: "ASML", change: "+2,2%", dir: "up" as const, tip: "Arrastrada por el ciclo de capex de las foundries. Resultados el 15 de julio." },
+  { ticker: "XOM", name: "Exxon Mobil", change: "-2,6%", dir: "down" as const, tip: "El aumento de producción de la OPEC+ presiona a todo el sector." },
+  { ticker: "TSLA", name: "Tesla", change: "-1,8%", dir: "down" as const, tip: "Ruido político en torno a Musk y entregas del Q2 por debajo de lo esperado." },
+];
+
+const polymarket = [
+  { q: "Recorte Fed en septiembre", p: 68, delta: "+9", tone: "green" },
+  { q: "Recorte Fed en julio", p: 5, delta: "-16", tone: "muted" },
+  { q: "Acuerdo UE-EEUU antes del 9 jul", p: 42, delta: "+11", tone: "amber" },
+  { q: "Recesión EEUU en 2026", p: 18, delta: "-2", tone: "green" },
+];
+
+const eventos = [
+  { date: "Hoy", event: "Vence la pausa arancelaria: primeras cartas a socios comerciales", impact: "alta" },
+  { date: "Mié 8", event: "Actas de la Fed — sesgo del comité tras el dato de empleo", impact: "alta" },
+  { date: "Jue 9", event: "Deadline oficial de aranceles recíprocos", impact: "alta" },
+  { date: "Vie 10", event: "Ingresos Q2 de TSMC — primer test del ciclo semi", impact: "media" },
+  { date: "Mar 14", event: "Arranca la temporada de resultados: JPMorgan y Citi", impact: "media" },
+  { date: "Mié 15", event: "IPC de junio en EEUU — clave para el recorte de septiembre", impact: "alta" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Página                                                             */
+/* ------------------------------------------------------------------ */
 
 export default function ResumenDiario() {
   return (
     <main className="min-h-screen">
       <ScrollProgress />
 
-      {/* Hero — full width cinematic like landing */}
-      <section className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1920&h=1080&fit=crop&q=90" alt="Mercados globales" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-center">
-            <p className="text-[11px] uppercase tracking-[0.5em] text-white/60 mb-5 font-semibold">Cada manana</p>
-            <h1 className="text-4xl sm:text-5xl md:text-[4rem] font-extralight text-white tracking-tight">Tu briefing diario</h1>
-            <p className="text-[13px] text-white/40 mt-4 tracking-wide">Domingo, 11 de mayo 2026 — 9:00 AM</p>
+      {/* ============ HERO — portada de periódico ============ */}
+      <section className="relative h-[68vh] min-h-[480px] overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1920&h=1080&fit=crop&q=90"
+          alt="Wall Street en máximos históricos"
+          className="absolute inset-0 w-full h-full object-cover animate-ken-burns"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30" />
+
+        <div className="absolute inset-0 flex items-end">
+          <div className="w-full max-w-[1360px] mx-auto px-6 pb-14 sm:pb-20">
+            <div className="animate-fade-in-up">
+              <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.5em] text-white/60 font-semibold mb-6">
+                Briefing diario — Lunes, 6 de julio de 2026
+              </p>
+              <h1 className="max-w-[1000px] text-[2.6rem] sm:text-[3.4rem] md:text-[3.8rem] font-extralight text-white tracking-tight leading-[1.08]">
+                Wall Street toca máximos con el empleo de junio; el crudo cede ante la OPEC+
+              </h1>
+              <p className="max-w-[720px] mt-6 text-[15px] sm:text-[16px] text-white/65 leading-[1.7] tracking-wide font-light">
+                El S&P 500 cierra la semana en 6.284 puntos tras unas nóminas más fuertes de lo previsto. La Fed gana margen,
+                el petróleo pierde soporte y los aranceles del 9 de julio marcan la agenda.
+              </p>
+              <p className="mt-6 text-[12px] text-white/45 tracking-wide">
+                14 fuentes procesadas · 231 noticias analizadas · Lectura: ~9 min
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="max-w-3xl mx-auto px-6">
-
-        {/* Title block */}
-        <div className="pb-10 border-b border-white/[0.06] pt-10">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-muted/60 font-medium mb-5">14 fuentes procesadas — Tiempo de lectura: ~8 min</p>
-          <div className="flex flex-wrap gap-2">
-            <SourceBadge name="UBS On-Air" type="podcast" />
-            <SourceBadge name="Matt Levine" type="newsletter" />
-            <SourceBadge name="The Daily Shot" type="newsletter" />
-            <SourceBadge name="Polymarket" type="polymarket" />
-            <SourceBadge name="@zerohedge" type="x" />
-            <SourceBadge name="@sentimentrader" type="x" />
-            <SourceBadge name="Informe BBVA" type="bank" />
-            <SourceBadge name="Financial Times" type="news" />
-          </div>
+      {/* ============ CUERPO — artículo + sidebar ============ */}
+      <div className="max-w-[1360px] mx-auto px-6">
+        {/* Breadcrumb */}
+        <div className="py-8 border-b border-white/[0.06]">
+          <Breadcrumb items={[{ label: "Dashboard", href: "/" }, { label: "Resumen", href: "/resumen" }, { label: "6 julio 2026" }]} />
         </div>
 
-        {/* Quick status bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-b border-white/[0.06]">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Portfolio</p>
-            <p className="text-xl font-extralight tracking-wide">12.847,32</p>
-            <p className="text-[11px] text-green mt-1">+2.4%</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Sentimiento</p>
-            <p className="text-xl font-extralight tracking-wide text-[#ffd60a]">62/100</p>
-            <p className="text-[11px] text-muted/60 mt-1">Optimismo moderado</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Recomendacion</p>
-            <p className="text-xl font-extralight tracking-wide">Mantener</p>
-            <p className="text-[11px] text-accent-light/60 mt-1">Conviccion 7/10</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted/50 font-medium mb-2">Alertas</p>
-            <p className="text-xl font-extralight tracking-wide text-red">3</p>
-            <p className="text-[11px] text-muted/60 mt-1">1 critica, 2 moderadas</p>
-          </div>
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-14 xl:gap-20 pt-14 pb-10">
+
+          {/* ==================== COLUMNA ARTÍCULO ==================== */}
+          <article className="max-w-[760px] min-w-0">
+
+            {/* ---------- 1. TOP STORY ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="newspaper">Top Story</Kicker>
+                <H2>El mercado laboral entierra el recorte de julio — y a nadie le importa</H2>
+                <P className="first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground">
+                  La economía estadounidense creó <DataTip value="147.000 empleos" tip="Nóminas no agrícolas de junio. Consenso: 110.000. La tasa de paro baja al 4,1%." direction="flat" /> en
+                  junio, muy por encima de las 110.000 que esperaba el consenso, y la tasa de paro bajó al 4,1%. En cualquier otro
+                  contexto, un dato así habría enfriado a la renta variable — empleo fuerte significa Fed paciente, y Fed paciente
+                  significa tipos altos durante más tiempo. El viernes ocurrió exactamente lo contrario: el S&P 500 cerró
+                  en <DataTip value="6.284,65" tip="Nuevo máximo histórico de cierre. Cuarto récord en las últimas seis sesiones." direction="up" /> puntos,
+                  nuevo máximo histórico, con el Nasdaq también en territorio inexplorado.
+                </P>
+                <P className="mt-5">
+                  La lectura del mercado es de manual goldilocks: la economía no se enfría lo suficiente como para temer una recesión,
+                  pero la inflación tampoco da señales de reacelerarse. Polymarket liquidó en horas la apuesta por un recorte en
+                  julio — del 21% al <Strong>5%</Strong> — y a la vez subió la de septiembre hasta el <Strong>68%</Strong>. Es decir:
+                  el mercado no ha renunciado a los recortes, solo los ha movido seis semanas. Y con la temporada de resultados del
+                  segundo trimestre arrancando el día 14, la atención rota de la macro a los beneficios.
+                </P>
+                <P className="mt-5">
+                  El asterisco de la semana es doble. Primero, los aranceles: la pausa de 90 días expira el <Strong>9 de julio</Strong> y
+                  la Casa Blanca empieza hoy a enviar cartas con los nuevos tipos arancelarios a los socios sin acuerdo. Europa negocia
+                  contrarreloj — Polymarket da un 42% a un acuerdo marco antes del jueves. Segundo, el crudo: la OPEC+ confirmó este fin
+                  de semana un aumento de producción de <DataTip value="548.000 barriles diarios" tip="Aumento acordado para agosto, por encima de los 411.000 b/d de los tres meses anteriores." direction="down" /> para
+                  agosto, acelerando la devolución de los recortes voluntarios. El Brent abre la semana débil en $68,30.
+                </P>
+                <P className="mt-5">
+                  Para tu cartera, la foto es favorable con una excepción conocida: <Strong>IWDA y VUAA</Strong> navegan en máximos,
+                  <Strong> SEMI</Strong> vuelve a ser la mejor posición de la semana (+3,4%) empujada por Nvidia y TSMC, y el lastre
+                  sigue siendo <Strong>BRT</Strong>, que acumula un -2,8% semanal y afronta un agosto con más oferta en el mercado.
+                </P>
+
+                <PullQuote
+                  quote="El dato de empleo no cambia el destino, cambia el calendario. La Fed recortará cuando los aranceles dejen de ensuciar la foto de inflación — septiembre sigue vivo."
+                  source="Paul Donovan"
+                  meta="UBS On-Air, esta mañana"
+                />
+
+                <InlineImage
+                  src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=1600&h=800&fit=crop&q=90"
+                  alt="Pantallas de cotización en verde"
+                  caption="Cuarto cierre récord del S&P 500 en seis sesiones. El breadth mejora: el 62% de los componentes cotiza sobre su media de 50 sesiones. Foto: Bloomberg"
+                />
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 2. MERCADOS ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="trend">Mercados</Kicker>
+                <H2>Récords en Nueva York, calma tensa en Europa</H2>
+                <P>
+                  La semana corta por el 4 de julio dejó al <Strong>S&P 500 con un +1,7% semanal</Strong> y al Nasdaq con un +1,6%.
+                  El rally es estrecho pero se está ensanchando: las financieras acompañaron por primera vez en un mes (+1,1%) ante
+                  una curva de tipos algo más pendiente, y el Russell 2000 de pequeñas compañías sumó un +1,0%. El Treasury a 10 años
+                  repuntó hasta el <DataTip value="4,34%" tip="El dato de empleo elevó la rentabilidad 5 pb el viernes: menos recortes descontados a corto plazo." direction="flat" /> tras
+                  el dato de empleo — el bono, a diferencia de la bolsa, sí se tomó en serio el aplazamiento de los recortes.
+                </P>
+                <P className="mt-5">
+                  Europa cerró la semana con avances más tímidos (Stoxx 600 +0,5%) y toda la atención puesta en Washington. El euro,
+                  en <DataTip value="1,178" tip="EUR/USD en máximos de cuatro años. Un euro fuerte abarata importaciones pero penaliza a las exportadoras europeas." direction="up" /> dólares,
+                  cotiza en máximos de cuatro años — un problema creciente para las exportadoras del DAX y un tema que el BCE ya
+                  discute abiertamente desde el foro de Sintra. En Asia, el Nikkei retrocedió un 0,6% el lunes: Japón figura entre los
+                  países que recibirán carta arancelaria esta semana.
+                </P>
+
+                <div className="my-10 rounded-2xl border border-card-border bg-card/40 p-6 sm:p-8">
+                  <div className="flex items-baseline justify-between mb-5">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-1.5">S&P 500 — última semana</p>
+                      <p className="text-[13px] text-muted">Cierre diario, puntos</p>
+                    </div>
+                    <p className="text-[22px] font-extralight text-[#30d158] tracking-tight" style={{ fontVariantNumeric: "tabular-nums" }}>+1,7%</p>
+                  </div>
+                  <LineChart data={spWeek} height={240} decimals={0} ariaLabel="Evolución del S&P 500 en la última semana" />
+                </div>
+
+                <P>
+                  La volatilidad sigue comprimida: el VIX cerró en <DataTip value="16,38" tip="Mínimo de cinco meses. Por debajo de 17 el mercado descuenta un verano tranquilo — históricamente un aviso." direction="down" />,
+                  mínimos de febrero. Con el deadline arancelario a tres días vista, ese nivel de complacencia es la lectura más
+                  incómoda del tablero: o el mercado sabe algo (que habrá prórrogas y acuerdos), o está infravalorando el único
+                  evento binario de la semana.
+                </P>
+
+                <VideoCard
+                  poster="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1600&h=800&fit=crop&q=90"
+                  title="Market open — la semana de los aranceles en 60 segundos"
+                  duration="0:58"
+                />
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 3. SECTORES ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="sectors">Sectores en movimiento</Kicker>
+                <H2>Los chips tiran del carro, la energía se queda sola</H2>
+                <P>
+                  La dispersión sectorial de la semana cuenta la historia completa del mercado en una sola imagen. En un extremo,
+                  los <Strong>semiconductores (+2,8%)</Strong>: Nvidia rozó los 4 billones de dólares de capitalización — sería la
+                  primera empresa de la historia en alcanzarlos — y TSMC publicó unas ventas de junio un 26% superiores al año
+                  pasado. El ciclo de inversión en infraestructura de IA no da señales de fatiga, y la cadena entera (ASML, SK Hynix,
+                  Micron) subió en bloque.
+                </P>
+                <P className="mt-5">
+                  En el otro extremo, la <Strong>energía (-2,1%)</Strong> fue el único sector en rojo claro. La decisión de la OPEC+
+                  de devolver 548.000 barriles diarios en agosto — más rápido de lo que descontaba el mercado — confirma que Arabia
+                  Saudí prioriza cuota de mercado sobre precio. Exxon y Chevron cayeron más de un 2% y el sector acumula ya un -8%
+                  en el año, el peor del S&P 500.
+                </P>
+
+                <div className="my-10 rounded-2xl border border-card-border bg-card/40 p-6 sm:p-8">
+                  <div className="flex items-baseline justify-between mb-6">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-1.5">Performance sectorial — semana</p>
+                      <p className="text-[13px] text-muted">S&P 500, variación semanal por sector</p>
+                    </div>
+                  </div>
+                  <BarsChart data={sectores} ariaLabel="Performance semanal por sector del S&P 500" />
+                </div>
+
+                <P>
+                  Entre ambos polos, los defensivos (utilities -0,6%, salud +0,3%) confirman la rotación hacia el riesgo. Es el patrón
+                  clásico de un mercado en máximos con volatilidad baja: el dinero sale de lo aburrido y persigue lo que ya sube.
+                  Funciona — hasta que deja de hacerlo.
+                </P>
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 4. ACTIVOS DESTACADOS ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="star">Activos destacados</Kicker>
+                <H2>Cinco valores que movieron la sesión</H2>
+                <div className="mt-8 rounded-2xl border border-card-border overflow-hidden">
+                  {movers.map((m, i) => (
+                    <div
+                      key={m.ticker}
+                      className={`flex items-center gap-4 sm:gap-6 px-5 sm:px-7 py-5 hover:bg-white/[0.03] transition-colors duration-300 ${
+                        i > 0 ? "border-t border-white/[0.06]" : ""
+                      }`}
+                    >
+                      <div
+                        className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center text-[12px] font-semibold tracking-wide ${
+                          m.dir === "up" ? "bg-[#30d158]/10 text-[#30d158]" : "bg-[#ff453a]/10 text-[#ff453a]"
+                        }`}
+                        style={{ fontVariantNumeric: "tabular-nums" }}
+                      >
+                        {m.ticker.slice(0, 2)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[15px] font-medium text-foreground tracking-wide">
+                          {m.name} <span className="text-muted text-[12px] ml-1">{m.ticker}</span>
+                        </p>
+                        <p className="text-[13px] text-muted leading-relaxed mt-0.5 line-clamp-2">{m.tip}</p>
+                      </div>
+                      <DataTip value={m.change} tip={m.tip} direction={m.dir} />
+                    </div>
+                  ))}
+                </div>
+                <InlineImage
+                  src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=1600&h=800&fit=crop&q=90"
+                  alt="Oblea de semiconductores"
+                  caption="Nvidia se acerca a los 4 billones de capitalización; TSMC publica el Q2 el 10 de julio. Tu posición en SEMI captura toda la cadena. Foto: Reuters"
+                />
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 5. ANÁLISIS ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="lens">Análisis</Kicker>
+                <H2>Por qué el mercado celebra malas noticias para los recortes</H2>
+                <P>
+                  Hay una aparente contradicción en la reacción del viernes: el dato de empleo retrasa los recortes de la Fed y aun
+                  así la bolsa marca máximos. La explicación está en qué tipo de recortes descontaba el mercado. Un recorte en julio
+                  habría sido un <Strong>recorte por debilidad</Strong> — la Fed acudiendo al rescate de una economía que se enfría.
+                  El recorte de septiembre que ahora cotiza al 68% es un <Strong>recorte por normalización</Strong> — la inflación
+                  convergiendo al objetivo con pleno empleo. El segundo escenario es históricamente mucho mejor para la renta
+                  variable, y el mercado votó el viernes con claridad.
+                </P>
+                <P className="mt-5">
+                  Matt Levine lo resumía el viernes con su sorna habitual: el mercado ya no negocia tipos, negocia la credibilidad
+                  del calendario. Mientras el dato de inflación del día 15 no se contamine visiblemente por los aranceles, la tesis
+                  goldilocks se mantiene. El riesgo real no está en la Fed — está en que el 9 de julio termine sin acuerdos y con
+                  tipos arancelarios más altos de lo que el VIX en 16 sugiere que nadie espera.
+                </P>
+                <P className="mt-5">
+                  La lección aplicable a tu cartera es de disciplina, no de acción: con IWDA y VUAA en máximos y la volatilidad en
+                  mínimos, añadir riesgo ahora es comprar caro el escenario bueno. La asimetría favorece esperar al IPC del 15 de
+                  julio y al desenlace arancelario antes de mover ficha.
+                </P>
+
+                <PullQuote
+                  quote="Nadie compra el S&P a 22 veces beneficios porque espere un recorte en julio. Lo compra porque cree que los beneficios del Q2 van a justificar el múltiplo. La semana que viene empezamos a saberlo."
+                  source="Matt Levine"
+                  meta="Money Stuff, viernes"
+                />
+              </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- 6. LO QUE VIENE ---------- */}
+            <Reveal>
+              <section>
+                <Kicker icon="calendar">Lo que viene</Kicker>
+                <H2>Tres días para el deadline arancelario</H2>
+                <P>
+                  La semana se decide entre el miércoles y el jueves: actas de la Fed el día 8 y vencimiento de la pausa arancelaria
+                  el día 9. El escenario base del mercado — prórrogas selectivas y un acuerdo marco con la UE — dejaría vía libre
+                  hasta el IPC del 15. El escenario alternativo, cartas con aranceles del 25-40% y sin prórroga, encontraría a un
+                  mercado en máximos, con volatilidad en mínimos y posicionamiento largo. No hace falta explicar cómo termina esa
+                  combinación si sale mal.
+                </P>
+                <div className="mt-9 space-y-0 rounded-2xl border border-card-border overflow-hidden">
+                  {eventos.map((e, i) => (
+                    <div
+                      key={i}
+                      className={`flex items-center gap-5 px-5 sm:px-7 py-4 hover:bg-white/[0.03] transition-colors duration-300 ${
+                        i > 0 ? "border-t border-white/[0.06]" : ""
+                      }`}
+                    >
+                      <span className="w-16 shrink-0 text-[12px] font-semibold text-foreground uppercase tracking-wider" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {e.date}
+                      </span>
+                      <span className="flex-1 text-[14px] text-[#c8c8cd] leading-relaxed">{e.event}</span>
+                      <span
+                        className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-semibold px-3 py-1 rounded-full border ${
+                          e.impact === "alta" ? "border-[#ff453a]/30 text-[#ff453a]" : "border-[#ffd60a]/30 text-[#ffd60a]"
+                        }`}
+                      >
+                        {e.impact}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+
+            {/* ---------- CIERRE + ACCIONES ---------- */}
+            <div className="mt-20 pt-10 border-t border-white/[0.06]">
+              <p className="text-[12px] text-muted leading-relaxed mb-8">
+                Resumen generado a las 9:00 AM del 6 de julio de 2026 · 14 fuentes procesadas · 231 noticias analizadas · 11 vinculadas a tu portfolio
+              </p>
+              <ShareBar title="FinPulse — Briefing del 6 de julio de 2026" storageKey="resumen-2026-07-06" />
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-12">
+                <Link href="/semanal" className="group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] font-semibold text-muted hover:text-foreground transition-all duration-500">
+                  Ver resumen semanal
+                  <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+                    <Icon name="arrow-right" className="w-3.5 h-3.5" />
+                  </span>
+                </Link>
+                <Link href="/noticia" className="group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] font-semibold text-muted hover:text-foreground transition-all duration-500">
+                  Análisis completo del sector semis
+                  <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+                    <Icon name="arrow-right" className="w-3.5 h-3.5" />
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </article>
+
+          {/* ==================== SIDEBAR ==================== */}
+          <aside className="lg:sticky lg:top-24 lg:self-start space-y-10 min-w-0">
+
+            {/* Índices */}
+            <Reveal delay={100}>
+              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+                <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-5">Índices — cierre viernes</p>
+                <div className="space-y-4">
+                  {indices.map((idx) => (
+                    <div key={idx.name} className="flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-[13px] font-medium text-foreground tracking-wide">{idx.name}</p>
+                        <p className="text-[15px] font-extralight text-[#e8e8ed] tracking-tight" style={{ fontVariantNumeric: "tabular-nums" }}>
+                          {idx.value}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3 shrink-0">
+                        <Sparkline data={idx.spark} width={72} height={24} color={idx.dir === "up" ? "#30d158" : "#ff453a"} />
+                        <span
+                          className={`text-[12px] font-semibold w-14 text-right ${idx.dir === "up" ? "text-[#30d158]" : "text-[#ff453a]"}`}
+                          style={{ fontVariantNumeric: "tabular-nums" }}
+                        >
+                          {idx.change}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Tu portfolio */}
+            <Reveal delay={200}>
+              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+                <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-4">Tu portfolio</p>
+                <p className="text-[34px] font-extralight tracking-tight text-foreground leading-none">
+                  13.091<span className="text-[20px] text-muted">,47 €</span>
+                </p>
+                <p className="text-[13px] font-semibold text-[#30d158] mt-2" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  +1,9% esta semana · +244,15 €
+                </p>
+                <div className="mt-5 pt-5 border-t border-white/[0.06] space-y-2.5">
+                  {[
+                    { t: "SEMI", c: "+3,4%", up: true },
+                    { t: "VUAA", c: "+2,0%", up: true },
+                    { t: "IWDA", c: "+1,6%", up: true },
+                    { t: "EUNA", c: "+0,2%", up: true },
+                    { t: "BRT", c: "-2,8%", up: false },
+                  ].map((p) => (
+                    <div key={p.t} className="flex items-center justify-between">
+                      <span className="text-[12px] font-semibold tracking-[0.1em] text-[#c8c8cd]">{p.t}</span>
+                      <span className={`text-[12px] font-semibold ${p.up ? "text-[#30d158]" : "text-[#ff453a]"}`} style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {p.c}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/portfolio"
+                  className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] font-semibold text-muted hover:text-foreground transition-colors duration-300"
+                >
+                  Ver portfolio
+                  <Icon name="arrow-right" className="w-3 h-3" />
+                </Link>
+              </div>
+            </Reveal>
+
+            {/* Polymarket */}
+            <Reveal delay={300}>
+              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+                <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-5">Polymarket — probabilidades</p>
+                <div className="space-y-5">
+                  {polymarket.map((pm) => (
+                    <div key={pm.q}>
+                      <div className="flex items-baseline justify-between gap-3 mb-2">
+                        <p className="text-[12px] text-[#c8c8cd] leading-snug">{pm.q}</p>
+                        <p className="text-[15px] font-semibold text-foreground shrink-0" style={{ fontVariantNumeric: "tabular-nums" }}>
+                          {pm.p}%<span className="text-[10px] text-muted font-medium ml-1">({pm.delta})</span>
+                        </p>
+                      </div>
+                      <div className="h-[3px] rounded-full bg-white/[0.07] overflow-hidden">
+                        <div className="h-full rounded-full bg-white/60" style={{ width: `${pm.p}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Alerta */}
+            <Reveal delay={400}>
+              <div className="rounded-2xl border border-[#ffd60a]/25 bg-card/40 p-6">
+                <div className="flex items-center gap-3 mb-3 text-[#ffd60a]">
+                  <Icon name="alert" className="w-4 h-4" />
+                  <p className="text-[11px] uppercase tracking-[0.25em] font-semibold">Alerta activa</p>
+                </div>
+                <p className="text-[14px] text-foreground font-medium leading-snug mb-2">VIX en 16,4 con deadline arancelario a 3 días</p>
+                <p className="text-[13px] text-muted leading-relaxed">
+                  La combinación de máximos históricos, volatilidad en mínimos de 5 meses y un evento binario el jueves es el patrón
+                  que históricamente precede picos de volatilidad. No añadir riesgo antes del día 9.
+                </p>
+              </div>
+            </Reveal>
+          </aside>
         </div>
-
-        {/* === BODY === */}
-
-        {/* 1. Lo esencial */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=400&fit=crop&q=90" alt="Trading floor" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Financial Times / Bloomberg</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Lo esencial</h2>
-            </div>
-          </div>
-          <div className="text-sm leading-7 text-muted space-y-4">
-            <p>
-              Semana clave para los mercados globales. El acuerdo comercial preliminar entre EEUU y China impulsa la renta variable mundial, con el <span className="text-foreground font-medium">S&P 500 cerrando en máximos históricos (+1.2%)</span> y los mercados europeos y asiaticos al alza. Es la primera señal concreta de distension comercial desde que se reiniciaron los aranceles a principios de ano, y los mercados lo celebran con volumen.
-            </p>
-            <p>
-              Sin embargo, no todo es positivo. El <span className="text-red font-medium">sector energetico se debilita significativamente</span> tras los avances en las negociaciones entre Iran y EEUU. El Brent cae un 4.2% en la semana hasta los $74.30 — si Iran vuelve al mercado con plena capacidad, se estiman entre 1 y 1.5 millones de barriles diarios adicionales que presionarian los precios hacia los $68-70.
-            </p>
-            <p>
-              En Europa, el BCE mantiene un tono claramente dovish. Las actas filtradas por Financial Times confirman que la mayoria del consejo apoya un <span className="text-green font-medium">recorte de 25 puntos basicos en junio</span>. Polymarket lo cifra al 73%, ocho puntos mas que la semana pasada. Esto es directamente favorable para bonos europeos y para el componente europeo de tu MSCI World.
-            </p>
-            <p className="bg-card border border-card-border rounded-lg p-4 text-foreground">
-              <span className="font-medium">Balance para tu portfolio:</span> neto positivo (+2.4% semanal). Tus posiciones en MSCI World, S&P 500 y semiconductores capturan la subida. El unico punto debil es tu exposición a Brent, que pierde 45,60 esta semana y podria seguir cayendo. Semiconductores es tu mejor posición (+4.2%) tras el evento de Nvidia.
-            </p>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 2. Mercados en detalle */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=1200&h=400&fit=crop&q=90" alt="Stock market screens" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">The Daily Shot / Reuters</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Mercados en detalle</h2>
-            </div>
-          </div>
-
-          <div className="space-y-8 text-sm leading-7 text-muted">
-            <div>
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Estados Unidos</h3>
-              <p>
-                El S&P 500 cerro el viernes en 5.847 puntos (+1.2%), impulsado por el anuncio del acuerdo comercial fase 1 con China. Las mega-caps tecnologicas lideraron el rally — Apple +2.4%, Nvidia +5.1%, Microsoft +1.8%. El Nasdaq subio un +1.8% con semiconductores como sector estrella de la semana.
-              </p>
-              <p className="mt-3">
-                Los futuros apuntan a apertura plana el lunes. El mercado ya ha descontado gran parte de la noticia — como apunta Matt Levine, <span className="text-accent-light">&quot;los mercados celebran la reduccion de incertidumbre, no los terminos especificos del acuerdo&quot;</span>. La letra pequena muestra que los aranceles a semiconductores e inteligencia artificial se negociaran por separado en Q3.
-              </p>
-              <p className="mt-3">
-                <span className="text-[#ffd60a] font-medium">Senal de precaucion:</span> El VIX cayo a 13.2, niveles de complacencia no vistos desde enero 2024. @zerohedge advierte en un hilo muy compartido: &quot;VIX sub-14 durante mas de 2 semanas históricamente precede correcciones del 3-5% en las siguientes 4-6 semanas.&quot; No es momento de entrar agresivamente.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Europa</h3>
-              <p>
-                Stoxx 600 +0.8% en la semana. El motor no es solo el acuerdo comercial sino las expectativas de recorte del BCE. Las actas de la última reunion, filtradas por Financial Times el jueves, confirman que una mayoria amplia del consejo de gobierno apoya un recorte de 25 puntos basicos en la reunion del 5 de junio.
-              </p>
-              <p className="mt-3">
-                El euro se debilita frente al dolar hasta 1.076, lo cual es positivo para exportadoras europeas — especialmente alemanas, donde el DAX sube un +1.1%. El Bund aleman cae a 2.31% de rentabilidad, confirmando que el mercado de renta fija tambien descuenta el recorte.
-              </p>
-              <p className="mt-3">
-                Paul Donovan en el UBS On-Air de hoy: <span className="text-accent-light">&quot;La inflacion europea esta contenida. Los datos de salarios del Q1 confirman que no hay presion alcista significativa. El BCE tiene via libre para recortar en junio sin arriesgar su credibilidad.&quot;</span> Tambien advierte que el acuerdo EEUU-China es &quot;fase 1 — los aranceles tech siguen sobre la mesa.&quot;
-              </p>
-              <p className="mt-3">
-                BBVA Research revisa al alza su previsión de PIB eurozona para 2026: de 1.1% a 1.4%. Mantiene previsión de 2 recortes del BCE este año (junio y septiembre).
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Asia</h3>
-              <p>
-                Nikkei +1.5%, beneficiado por un yen debil que favorece a las exportadoras japonesas. Toyota y Sony lideran las subidas. El Shanghai Composite sube un +2.3% celebrando el acuerdo comercial — es el mayor beneficiario directo de la reduccion de tensiones.
-              </p>
-              <p className="mt-3">
-                Dato interesante: India (Nifty 50) cierra plana. Despues de meses de outperformance frente a China, los inversores empiezan a rotar capital de India hacia China aprovechando el acuerdo. Esto podria ser el inicio de un cambio de liderazgo entre mercados emergentes que vale la pena vigilar.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Renta fija y divisas</h3>
-              <p>
-                Treasury 10Y en 4.28% (-5 puntos basicos en la semana). La curva de tipos se normaliza gradualmente — la inversión que persistia desde 2023 practicamente ha desaparecido, lo cual reduce las señales de recesion. Polymarket situa la probabilidad de recesion en EEUU en 2026 en solo el 12%, mínimo del año.
-              </p>
-              <p className="mt-3">
-                El dolar se fortalece (DXY 104.8) por el diferencial de tipos con Europa. Esto presiona ligeramente a las commodities denominadas en dolares — otro factor negativo para el petróleo.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 3. Tu portfolio hoy */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&h=250&fit=crop" alt="Portfolio charts" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Datos de mercado en tiempo real</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Tu portfolio hoy</h2>
-            </div>
-          </div>
-          <div className="space-y-6 text-sm leading-7">
-
-            <div className="bg-card border border-card-border rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">IW</div>
-                  <div>
-                    <p className="font-medium">IWDA — iShares MSCI World</p>
-                    <p className="text-xs text-muted">4.230,00 — 32.9% del portfolio</p>
-                  </div>
-                </div>
-                <span className="text-green font-medium">+1.8%</span>
-              </div>
-              <p className="text-muted">
-                Se beneficia directamente del rally global. El acuerdo EEUU-China reduce el riesgo geopolitico que era el principal freno para mercados desarrollados. Con el BCE dovish, el componente europeo tambien tira al alza. Esta posición esta en su mejor momento en 3 meses. Continua siendo el nucleo solido de tu portfolio — no requiere accion.
-              </p>
-            </div>
-
-            <div className="bg-card border border-card-border rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">VU</div>
-                  <div>
-                    <p className="font-medium">VUAA — Vanguard S&P 500</p>
-                    <p className="text-xs text-muted">3.150,00 — 24.5% del portfolio</p>
-                  </div>
-                </div>
-                <span className="text-green font-medium">+2.1%</span>
-              </div>
-              <p className="text-muted">
-                Máximos históricos. El acuerdo comercial elimina la incertidumbre que pesaba sobre mega-caps con exposición a China (Apple, Nvidia, Tesla). <span className="text-[#ffd60a]">Atención: el VIX en 13.2 indica complacencia extrema — históricamente, niveles sub-14 preceden correcciones del 3-5% en las siguientes 4-6 semanas.</span> No vender, pero tampoco añadir aqui ahora. Dejar correr.
-              </p>
-            </div>
-
-            <div className="bg-card border border-red/20 rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-red/10 flex items-center justify-center text-sm font-mono text-red">BR</div>
-                  <div>
-                    <p className="font-medium">BRT — Brent Crude Oil</p>
-                    <p className="text-xs text-muted">1.200,00 — 9.3% del portfolio</p>
-                  </div>
-                </div>
-                <span className="text-red font-medium">-3.8%</span>
-              </div>
-              <p className="text-muted">
-                La posición mas problematica esta semana. Las negociaciones Iran-EEUU avanzan mas rapido de lo esperado. Si Iran vuelve al mercado con plena capacidad, se estiman 1.5 millones de barriles diarios adicionales que presionarian al Brent hacia los $68-70.
-              </p>
-              <p className="text-muted mt-3">
-                <span className="text-red font-medium">Perdida esta semana: -45,60.</span> Arabia Saudi aun no ha reaccionado — si recorta produccion, el impacto se amortigua. Si no, la caida continuara. La OPEC+ se reune el 1 de junio, fecha clave. Mientras tanto, el nivel a vigilar es $72: si lo rompe a la baja, el siguiente soporte esta en $68.
-              </p>
-              <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
-                <p className="text-xs text-red font-medium mb-1">Recomendación: reducir posición un 50%</p>
-                <p className="text-xs text-muted leading-relaxed">Convicción 8/10. El paralelo histórico de 2015 (cuando se firmo el JCPOA, el Brent cayo de $65 a $45 en 6 meses), la tendencia de Polymarket (58% a acuerdo Iran antes de agosto), y tu nivel de exposición actual sugieren que es prudente reducir. Mantener la otra mitad por si la OPEC+ reacciona con recortes.</p>
-              </div>
-            </div>
-
-            <div className="bg-card border border-card-border rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-sm font-mono text-accent-light">EU</div>
-                  <div>
-                    <p className="font-medium">EUNA — iShares Euro Gov Bond</p>
-                    <p className="text-xs text-muted">2.400,00 — 18.7% del portfolio</p>
-                  </div>
-                </div>
-                <span className="text-green font-medium">+0.5%</span>
-              </div>
-              <p className="text-muted">
-                Movimiento contenido pero en la direccion correcta. Beneficiado directamente por el tono dovish del BCE. Si se confirma el recorte en junio (73% segun Polymarket), esta posición podria subir un 1-2% adicional. Paul Donovan confirma que la inflacion europea no sera problema hasta Q4 2026 como mínimo. Posicion de proteccion que esta funcionando bien — mantener.
-              </p>
-            </div>
-
-            <div className="bg-card border border-green/20 rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center text-sm font-mono text-green">SE</div>
-                  <div>
-                    <p className="font-medium">SEMI — VanEck Semiconductor</p>
-                    <p className="text-xs text-muted">1.867,32 — 14.5% del portfolio</p>
-                  </div>
-                </div>
-                <span className="text-green font-medium">+4.2%</span>
-              </div>
-              <p className="text-muted">
-                <span className="text-green font-medium">Mejor posición de la semana.</span> Nvidia presento la nueva arquitectura Blackwell Ultra el miercoles: promete un rendimiento 4x superior en inferencia de IA. Los pedidos anticipados de los hyperscalers (Amazon, Google, Microsoft) superan todas las expectativas. TSMC confirma un aumento de capex del 15% para responder a la demanda.
-              </p>
-              <p className="text-muted mt-3">
-                El ciclo expansivo de semiconductores tiene pinta de durar 12-18 meses mas. La cadena de valor entera sube: ASML +3.2%, SK Hynix +4.8%, Samsung +2.1%. Tu posición actual es relativamente pequena (14.5% del portfolio).
-              </p>
-              <div className="mt-4 bg-background rounded-lg p-4 border border-card-border">
-                <p className="text-xs text-green font-medium mb-1">Recomendación: añadir en caidas (si baja &gt;2%)</p>
-                <p className="text-xs text-muted leading-relaxed">Convicción 7/10. El ciclo es favorable, pero el sector ya sube un +25% en lo que va de año y las valoraciones estan estiradas (P/E sector en 32x). Ademas, Matt Levine recuerda que los aranceles tech EEUU-China se negociaran por separado en Q3. Mejor esperar un retroceso para mejorar el precio de entrada.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 4. Temas de seguimiento */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1640955014216-75201056c829?w=800&h=250&fit=crop" alt="Semiconductores" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3 temas activos esta semana</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Temas de seguimiento</h2>
-            </div>
-          </div>
-          <div className="space-y-6 text-sm leading-7 text-muted">
-
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Semiconductores</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA — subida dinamica</span>
-              </div>
-              <p>
-                Prioridad base: MEDIA. Se ha subido a ALTA esta semana por el evento de Nvidia. La nueva arquitectura Blackwell Ultra no es una mejora incremental — es un salto generacional que reconfigura la cadena de valor. Los hyperscalers ya han confirmado pedidos masivos para H2 2026.
-              </p>
-              <p className="mt-3">
-                Implicaciones mas alla de Nvidia: TSMC necesita mas capacidad (de ahi el +15% capex), ASML vendera mas maquinas EUV, y los fabricantes de memoria HBM (SK Hynix, Samsung) no dan abasto. Es un ciclo que se retroalimenta.
-              </p>
-              <p className="mt-3">
-                <span className="text-foreground font-medium">Próximos catalistas:</span> Earnings de TSMC (22 mayo) y guidance de ASML (28 mayo). Ambos confirmaran o desmentiran la tesis del ciclo expansivo. Tu posición en SEMI te da exposición directa a todo esto.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Petróleo y energia</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-red/15 text-red">ALTA — subida dinamica</span>
-              </div>
-              <p>
-                Prioridad base: MEDIA. Subida a ALTA por la caida del Brent esta semana. El driver principal son las negociaciones Iran-EEUU: el secretario de Estado confirmo el jueves que &quot;se han logrado avances significativos&quot; — el lenguaje mas positivo hasta la fecha.
-              </p>
-              <p className="mt-3">
-                El escenario base ahora es que se alcance algun tipo de acuerdo preliminar antes de agosto (Polymarket: 58%, +15% en una semana). Si eso ocurre, Iran podria empezar a aumentar produccion en Q4 2026, con impacto real en precios en Q1 2027.
-              </p>
-              <p className="mt-3">
-                Arabia Saudi es la variable clave. En 2015, cuando se firmo el JCPOA, Arabia mantuvo produccion para defender cuota de mercado y el Brent cayo un 30% en 6 meses. Hoy la OPEC+ tiene mas disciplina, pero no es seguro que sacrifiquen cuota por precio. La reunion del 1 de junio sera decisiva.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">Politica monetaria BCE</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-[#ffd60a]">MEDIA</span>
-              </div>
-              <p>
-                Sin cambios de prioridad esta semana, pero la probabilidad de recorte sigue subiendo. Polymarket: 73% para junio (+8% en una semana). Las actas filtradas y las declaraciones de Donovan lo confirman. El dato de inflacion eurozona del 30 de mayo sera la última pieza del puzzle — si sale en linea o por debajo de lo esperado, el recorte es practicamente seguro.
-              </p>
-              <p className="mt-3">
-                <span className="text-foreground font-medium">Impacto en tu portfolio:</span> Positivo para EUNA (bonos europeos) y para el componente europeo de IWDA. Neutral para el resto de posiciones. Si tienes cash disponible y quieres mas exposición a Europa, una opcion seria añadir a EUNA antes de la reunion del 5 de junio.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 5. Lo que dicen las fuentes */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=800&h=250&fit=crop" alt="News sources" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">8 fuentes analizadas hoy</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Lo que dicen tus fuentes</h2>
-            </div>
-          </div>
-          <div className="space-y-6 text-sm leading-7 text-muted">
-
-            <div className="border-l-2 border-purple-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="UBS On-Air" type="podcast" />
-                <span className="text-xs text-muted">Paul Donovan — hoy, 7:30 AM</span>
-              </div>
-              <p>
-                Episodio centrado en el acuerdo EEUU-China y la politica del BCE. Donovan celebra la reduccion de incertidumbre pero advierte: &quot;Es un framework, no un tratado. Los detalles importan y aun no los tenemos. Los aranceles tecnologicos — semiconductores, IA, datos — se negociaran por separado y ahi esta el verdadero pulso geopolitico.&quot;
-              </p>
-              <p className="mt-3">
-                Sobre el BCE: &quot;La inflacion europea esta contenida. Los datos de salarios del Q1 confirman que no hay presion alcista significativa. El BCE tiene via libre para recortar en junio sin arriesgar su credibilidad. Espero dos recortes este ano: junio y septiembre.&quot;
-              </p>
-            </div>
-
-            <div className="border-l-2 border-blue-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="Matt Levine" type="newsletter" />
-                <span className="text-xs text-muted">Money Stuff — viernes</span>
-              </div>
-              <p>
-                Analisis profundo del acuerdo comercial con su estilo habitual. Lo mas relevante: &quot;Los mercados suben porque hay menos incertidumbre, no porque los terminos sean especialmente buenos. Es un acuerdo para seguir negociando, que es mejor que no tener acuerdo.&quot;
-              </p>
-              <p className="mt-3">
-                Dato importante que rescata: la lista de excepciones incluye semiconductores avanzados, equipos de IA, y ciertos materiales estrategicos. Esto significa que empresas como Nvidia siguen sin poder vender sus chips mas potentes a China. Para tu posición en SEMI, esto es un matiz relevante — el rally del sector esta impulsado por demanda occidental, no china.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-blue-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="The Daily Shot" type="newsletter" />
-                <span className="text-xs text-muted">Viernes</span>
-              </div>
-              <p>
-                Gráfico destacado del dia: la correlación entre VIX bajo y correcciones posteriores. En los ultimos 20 años, cuando el VIX ha estado por debajo de 14 durante mas de 10 sesiones consecutivas, el S&P 500 ha sufrido una correccion media del 4.2% en las siguientes 6 semanas. Ya llevamos 8 sesiones.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-emerald-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="Polymarket" type="polymarket" />
-                <span className="text-xs text-muted">Datos en tiempo real</span>
-              </div>
-              <div className="space-y-2 mt-2">
-                <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
-                  <span>Recorte BCE en junio</span>
-                  <span className="text-green font-medium">73% <span className="text-xs text-muted">(+8%)</span></span>
-                </div>
-                <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
-                  <span>Acuerdo Iran-EEUU antes de agosto</span>
-                  <span className="text-[#ffd60a] font-medium">58% <span className="text-xs text-muted">(+15%)</span></span>
-                </div>
-                <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
-                  <span>Recesion EEUU en 2026</span>
-                  <span className="text-green font-medium">12% <span className="text-xs text-muted">(-3%)</span></span>
-                </div>
-                <div className="flex items-center justify-between bg-card rounded-lg px-4 py-2 border border-card-border">
-                  <span>S&P 500 sobre 6.000 antes de diciembre</span>
-                  <span className="text-[#ffd60a] font-medium">61% <span className="text-xs text-muted">(+5%)</span></span>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-l-2 border-zinc-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="@zerohedge" type="x" />
-                <span className="text-xs text-muted">Hilo destacado — sabado</span>
-              </div>
-              <p>
-                Hilo viral sobre la complacencia del mercado. Argumento principal: con earnings season terminando, el acuerdo China ya descontado, y sin catalistas positivos en el horizonte cercano, el próximo movimiento grande es mas probable a la baja que al alza. Cita datos históricos del VIX que coinciden con los de The Daily Shot. Tono bearish, pero con datos solidos.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-zinc-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="@sentimentrader" type="x" />
-                <span className="text-xs text-muted">Viernes</span>
-              </div>
-              <p>
-                Su indicador compuesto de sentimiento esta en zona de &quot;optimismo elevado&quot; (no extremo todavia). Históricamente, este nivel produce retornos mediocres a 1 mes (+0.3% medio) pero buenos a 3 meses (+4.2% medio). Traduccion: no es momento de comprar agresivamente, pero tampoco de vender.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-amber-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="Informe BBVA" type="bank" />
-                <span className="text-xs text-muted">Informe semanal — viernes</span>
-              </div>
-              <p>
-                BBVA Research revisa al alza PIB eurozona 2026 (de 1.1% a 1.4%). Destacan la mejora de las condiciones financieras y la confianza empresarial como motores. Mantienen previsión de 2 recortes del BCE (junio y septiembre). Ven riesgos al alza para la inflacion en Q4 si el petróleo rebota, pero lo consideran &quot;un escenario de baja probabilidad dado el contexto Iran.&quot;
-              </p>
-            </div>
-
-            <div className="border-l-2 border-rose-500/40 pl-5">
-              <div className="flex items-center gap-2 mb-2">
-                <SourceBadge name="Financial Times" type="news" />
-                <span className="text-xs text-muted">Jueves</span>
-              </div>
-              <p>
-                Articulo exclusivo con las actas filtradas del BCE. Lo mas relevante: 19 de 26 miembros del consejo apoyaron explicitamente un recorte en junio durante la última reunion. Solo 4 se opusieron citando &quot;incertidumbre sobre los salarios negociados en Q2.&quot; El dato de salarios del 30 de mayo despejara esta última duda.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 6. Paralelos históricos */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=250&fit=crop" alt="Historical data" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Lecciones del pasado para el presente</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Paralelos históricos</h2>
-            </div>
-          </div>
-          <div className="space-y-6 text-sm leading-7 text-muted">
-
-            <div className="bg-card border border-card-border rounded-xl p-6">
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Acuerdo comercial EEUU-China: 2019 vs 2026</h3>
-              <p>
-                En diciembre 2019, el anuncio del acuerdo fase 1 impulso al S&P 500 un +3.2% en las dos semanas siguientes. El rally fue amplio — todos los sectores subieron, liderados por industriales y tecnologia. Los mercados emergentes asiaticos fueron los mayores beneficiarios.
-              </p>
-              <p className="mt-3">
-                Sin embargo, los aranceles clave nunca se eliminaron realmente. El acuerdo establecio compromisos de compra que China nunca cumplio plenamente. El rally se agoto en febrero 2020 (antes de que el COVID cambiara todo).
-              </p>
-              <p className="mt-3">
-                <span className="text-accent-light font-medium">Patron aplicable hoy:</span> El mercado celebra la reduccion de incertidumbre, no los terminos especificos. La euforia inicial puede durar 2-3 semanas, pero sin progreso real en los temas pendientes (aranceles tech), el impulso se desvanecera. Recomendación: disfrutar el rally pero no perseguirlo. Si el S&P sube un +3% adicional desde aqui, considerar tomar beneficios parciales en VUAA.
-              </p>
-            </div>
-
-            <div className="bg-card border border-card-border rounded-xl p-6">
-              <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground mb-3">Iran volviendo al mercado: 2015-2016</h3>
-              <p>
-                Cuando se firmo el JCPOA (acuerdo nuclear con Iran) en julio 2015, el Brent estaba en $65. En los 6 meses siguientes cayo hasta $45 — una caida del 30%. La produccion iraniana aumento en aproximadamente 1 millon de barriles diarios.
-              </p>
-              <p className="mt-3">
-                El factor agravante fue Arabia Saudi: en vez de recortar produccion para defender el precio, mantuvo su nivel para defender cuota de mercado. Esto creo una guerra de precios que hundio al sector energetico global.
-              </p>
-              <p className="mt-3">
-                <span className="text-foreground font-medium">Diferencias con 2026:</span> La demanda global es significativamente mayor hoy. La OPEC+ tiene una estructura de coordinacion mas solida que en 2015. Y las energias renovables absorben parte de la demanda incremental, lo que podria amortiguar el impacto.
-              </p>
-              <p className="mt-3">
-                <span className="text-red font-medium">Similitudes preocupantes:</span> El lenguaje diplomatico es casi identico al de 2015. La velocidad de las negociaciones es mayor de lo esperado. Y Arabia Saudi aun no se ha pronunciado sobre como reaccionara.
-              </p>
-              <p className="mt-3">
-                <span className="text-accent-light">Conclusion:</span> El riesgo bajista para el Brent es real y significativo. Incluso si el escenario no es tan extremo como 2015, una caida del 10-15% es plausible si el acuerdo avanza. Tu posición actual de 1.200 podria bajar a 1.020-1.080.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* 7. Recomendaciones */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=250&fit=crop" alt="Investment strategy" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">2 acciones sugeridas hoy</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Recomendaciones</h2>
-            </div>
-          </div>
-          <div className="space-y-6 text-sm leading-7">
-
-            <div className="bg-card border border-red/20 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">1. Reducir Brent un 50%</h3>
-                <span className="text-sm px-3 py-1 rounded-full bg-accent/15 text-accent-light font-medium">Convicción: 8/10</span>
-              </div>
-              <p className="text-muted">
-                Las negociaciones Iran-EEUU, el paralelo histórico de 2015, Polymarket al 58% de acuerdo antes de agosto, y tu nivel actual de perdidas apuntan en la misma direccion: reducir exposición. Vender la mitad (600) limita el daño si la caida continua, pero te mantiene posicionado por si la OPEC+ reacciona con recortes en la reunion del 1 de junio.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-xs text-green font-medium mb-2">Caso a favor (reducir)</p>
-                  <ul className="text-xs text-muted space-y-1">
-                    <li>Paralelo 2015: Brent cayo 30% tras JCPOA</li>
-                    <li>Iran puede añadir 1.5M bbl/dia al mercado</li>
-                    <li>Polymarket: 58% probabilidad de acuerdo</li>
-                    <li>Dolar fuerte presiona commodities</li>
-                    <li>Ya pierdes 45,60 esta semana</li>
-                  </ul>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-xs text-red font-medium mb-2">Caso en contra (mantener)</p>
-                  <ul className="text-xs text-muted space-y-1">
-                    <li>OPEC+ tiene mas disciplina que en 2015</li>
-                    <li>Demanda global es mayor</li>
-                    <li>Arabia Saudi podria recortar produccion</li>
-                    <li>El acuerdo puede retrasarse o fracasar</li>
-                    <li>9.3% del portfolio es exposición moderada</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-card border border-green/20 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 text-foreground">2. Añadir SEMI en próxima caida (&gt;2%)</h3>
-                <span className="text-sm px-3 py-1 rounded-full bg-accent/15 text-accent-light font-medium">Convicción: 7/10</span>
-              </div>
-              <p className="text-muted">
-                El ciclo de semiconductores es expansivo y confirmado por multiples fuentes (Nvidia, TSMC, ASML). Tu posición actual es relativamente pequena (14.5%) para un tema tan fuerte. Pero el sector ya sube +25% YTD y las valoraciones estan estiradas. No perseguir el precio — esperar un retroceso del 2-3% para mejorar el punto de entrada.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-xs text-green font-medium mb-2">Caso a favor (comprar en caida)</p>
-                  <ul className="text-xs text-muted space-y-1">
-                    <li>Ciclo expansivo 12-18 meses</li>
-                    <li>Nvidia Blackwell Ultra confirma demanda</li>
-                    <li>TSMC capex +15%</li>
-                    <li>Tu posición actual es pequena (14.5%)</li>
-                    <li>IA como megatendencia estructural</li>
-                  </ul>
-                </div>
-                <div className="bg-background rounded-lg p-4 border border-card-border">
-                  <p className="text-xs text-red font-medium mb-2">Caso en contra (esperar)</p>
-                  <ul className="text-xs text-muted space-y-1">
-                    <li>Sector +25% YTD, valoraciones estiradas</li>
-                    <li>Aranceles tech EEUU-China sin resolver</li>
-                    <li>P/E sector en 32x (históricamente alto)</li>
-                    <li>VIX bajo sugiere posible correccion general</li>
-                    <li>Concentrar mas en tech aumenta riesgo</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <Link href="/recomendaciones" className="mt-8 flex items-center justify-center gap-2 text-[11px] uppercase tracking-[0.3em] font-semibold text-foreground border border-white/[0.15] rounded-xl py-4 hover:bg-white hover:text-black transition-all duration-500">
-            Ver todas las recomendaciones
-          </Link>
-        </section>
-
-        <SectionDivider />
-
-        {/* 8. Alertas */}
-        <section className="py-10">
-          <div className="relative rounded-2xl overflow-hidden mb-10 h-48">
-            <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=250&fit=crop" alt="Calendar events" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">3 alertas activas — 6 eventos esta semana</p>
-              <h2 className="text-2xl font-extralight text-white tracking-wide">Alertas y próximos eventos</h2>
-            </div>
-          </div>
-          <div className="space-y-4 text-sm leading-7">
-            <div className="flex items-start gap-4 bg-card border border-red/20 rounded-xl p-5">
-              <div className="w-3 h-3 rounded-full bg-red mt-1.5 shrink-0" />
-              <div>
-                <p className="text-foreground font-medium">VIX en zona de complacencia (13.2)</p>
-                <p className="text-muted mt-1">Históricamente, VIX sub-14 durante mas de 2 semanas precede correcciones del 3-5%. Ya llevamos 8 sesiones. No es señal de venta, pero si de no añadir riesgo agresivamente. Tu S&P 500 es la posición mas expuesta a una correccion tecnica.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 bg-card border border-amber-500/20 rounded-xl p-5">
-              <div className="w-3 h-3 rounded-full bg-[#ffd60a] mt-1.5 shrink-0" />
-              <div>
-                <p className="text-foreground font-medium">Brent — vigilar nivel $72</p>
-                <p className="text-muted mt-1">Soporte tecnico clave. Si el Brent cierra por debajo de $72 en las próximas sesiones, el siguiente soporte esta en $68. Esto representaria una caida adicional del 5-8% desde el nivel actual. Si tienes intencion de reducir posicion, mejor hacerlo antes de que rompa ese soporte.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 bg-card border border-card-border rounded-xl p-5">
-              <div className="w-3 h-3 rounded-full bg-accent mt-1.5 shrink-0" />
-              <div>
-                <p className="text-foreground font-medium">Calendario de eventos clave</p>
-                <div className="mt-3 space-y-2">
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">13 mayo</span>
-                    <span>IPC EEUU — dato clave para la Fed. Si sale alto, frena el rally.</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">22 mayo</span>
-                    <span>Earnings TSMC — confirmara (o no) el ciclo de semiconductores.</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">28 mayo</span>
-                    <span>Guidance ASML — segunda confirmacion del ciclo semi.</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">30 mayo</span>
-                    <span>Inflacion eurozona — último dato antes de la reunion del BCE.</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">1 junio</span>
-                    <span>Reunion OPEC+ — reaccion de Arabia Saudi al contexto Iran.</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted">
-                    <span className="text-xs text-foreground font-mono w-20 shrink-0">5 junio</span>
-                    <span>Reunion BCE — decisión sobre recorte de tipos.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Final note */}
-        <div className="py-10 border-t border-card-border text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-medium mb-2">Resumen generado a las 9:00 AM del 11 de mayo de 2026</p>
-          <p className="text-xs text-muted mt-1">14 fuentes procesadas — 247 noticias analizadas — 12 vinculadas a tu portfolio</p>
-          <div className="flex items-center justify-center gap-8 mt-6">
-            <Link href="/" className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
-              ← Volver al dashboard
-            </Link>
-            <Link href="/semanal" className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300">
-              Ver resumen semanal →
-            </Link>
-          </div>
-        </div>
-
       </div>
     </main>
   );

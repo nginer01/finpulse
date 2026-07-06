@@ -119,6 +119,8 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
   - `Sparkline` — mini linea inline para sidebars/tablas
 - `article/ArticleBits.tsx` — Icon (set SVG stroke 1.5, no emojis), Kicker, PullQuote, InlineImage, VideoCard (placeholder), DataTip (dato con tooltip), ShareBar (Guardar en localStorage via useSyncExternalStore + Compartir), Breadcrumb, SectionDivider
 - `article/Typography.tsx` — P/Lead/H2/Strong server-safe para articulos
+- `article/SourceLink.tsx` — SourceLink (dato inline clickeable), SourceChip (badge) y SourceModal (tipo, fecha, snippet, link original). Fuentes en src/lib/sources.ts (registro mock; en real vendra de Supabase)
+- `documents/` — DocumentsPanel (seccion "Mis documentos" de /resumen + DocModal) y DocumentsManager (gestion completa en /ajustes). Datos en src/lib/documents.ts: MOCK_DOCS + persistencia localStorage (finpulse-docs-v1) + sortDocs (relevancia, desempate por fecha)
 - `Reveal`, `AnimatedCounter`, `Tooltip`, `ScrollProgress`, `BorderCard` — preexistentes, reutilizables
 
 ## Design system landing (estilo Rolex + cinematico)
@@ -139,17 +141,17 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
 - `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
 - `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
-- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky con indices/portfolio/Polymarket), 6 secciones con kickers SVG, tooltips en datos, Guardar/Compartir (mock)
+- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky con indices/portfolio/Polymarket), 6 secciones con kickers SVG, datos/citas clickeables (SourceLink → modal de fuente), seccion "Mis documentos" (top 6 por relevancia, modal expandir), Guardar/Compartir (mock)
 - `/noticia` — Deep-dive (mock)
 - `/portfolio` — TradingView chart, heatmap (mock)
 - `/aprendizaje` — Investor DNA radar SVG (mock)
 - `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
 - `/semanal/resumen` — Reportaje semanal largo (~1800 palabras): timeline dia a dia, noticias mayores, sectores, tecnico con velas, perspectiva (mock)
-- `/recomendaciones` — Recomendaciones IA (mock)
+- `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip) (mock)
 - `/stress-test` — Simulacion crisis (mock)
 - `/comparador` — Comparacion activos (mock)
 - `/onboarding` — Wizard 5 pasos (mock)
-- `/ajustes` — Configuracion (mock)
+- `/ajustes` — Configuracion + seccion "Mis Documentos" (#documentos): conectar Gmail (OAuth simulado), drag&drop con progress, procesar URL, carpeta Synpulse (File System Access API con fallback), tabla con borrar/re-procesar (mock)
 
 ## Backend endpoints
 ### Auth (funcionando en prod):
@@ -261,6 +263,12 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - PENDIENTE: comprimir a ~5-10MB con ffmpeg para produccion
 - PENDIENTE: las imagenes de los dividers deberian cambiar segun las noticias del dia (dinamicas con IA)
 
+## Pipeline de documentos (frontend hecho, backend pendiente)
+- Frontend completo con mock (jul 2026): fuentes clickeables, gestion de documentos en /ajustes, resumenes en /resumen
+- Contrato backend COMPLETO en docs/documentos-pipeline.md: esquema Supabase (documents, email_connections), 10 endpoints FastAPI, prompt de Claude (resumen 200-300 palabras + tags + relevance 0-100 vs portfolio)
+- Gmail: la UI simula OAuth; para el MVP personal la via recomendada es cuenta dedicada + app password + IMAP (sin Google Cloud)
+- Carpeta Synpulse: escaneo bajo demanda ya funciona (File System Access API, Chrome/Edge); monitoreo automatico requiere servicio local (watchdog) o Electron
+
 ## Pendiente — FUNCIONALIDAD (prioridad)
 1. **BLOQUEANTE**: Crear Gmail dedicado + app password
 2. **BLOQUEANTE**: Obtener ANTHROPIC_API_KEY
@@ -293,6 +301,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Hero video en dashboard
 - Design Bible documentada
 - Rediseño periodico premium de /resumen, /semanal y /semanal/resumen (jul 2026): articulos extensos con charts SVG animados, dashboard asimetrico con modales, mock data coherente entre las 3 paginas (semana 29 jun - 3 jul 2026)
+- Fuentes clickeables + sistema de documentos (7 jul 2026): SourceLink/SourceModal en 4 paginas, "Mis Documentos" en /ajustes (Gmail mock, drag&drop, URL, Synpulse), "Mis documentos" en /resumen, contrato backend en docs/documentos-pipeline.md
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

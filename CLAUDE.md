@@ -109,6 +109,17 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - Titulos h1: font-extralight tracking-wide
 - Section labels h2/h3: text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80
 - NO hay seccion de marketing/features en el dashboard (eliminada)
+- Cuerpo de articulo largo: 17px leading-[1.85] color #c8c8cd (mas claro que muted para legibilidad), max ~75 chars/linea
+
+## Componentes compartidos (frontend/src/components/)
+- `charts/` — SVG a medida, sin librerias (encajan con la Design Bible: marcas finas, gridlines hairline solidas, verde/rojo SOLO como direccion + siempre con signo):
+  - `LineChart` — linea 2px con area wash 10%, draw-in animado, crosshair + tooltip hover, dot final con anillo
+  - `BarsChart` — barras divergentes desde eje central (max 42% por lado para que quepan las etiquetas de valor)
+  - `CandleChart` — velas OHLC animadas con tooltip por vela
+  - `Sparkline` — mini linea inline para sidebars/tablas
+- `article/ArticleBits.tsx` — Icon (set SVG stroke 1.5, no emojis), Kicker, PullQuote, InlineImage, VideoCard (placeholder), DataTip (dato con tooltip), ShareBar (Guardar en localStorage via useSyncExternalStore + Compartir), Breadcrumb, SectionDivider
+- `article/Typography.tsx` — P/Lead/H2/Strong server-safe para articulos
+- `Reveal`, `AnimatedCounter`, `Tooltip`, `ScrollProgress`, `BorderCard` — preexistentes, reutilizables
 
 ## Design system landing (estilo Rolex + cinematico)
 - Fondo: #faf8f5 (crema calido)
@@ -128,12 +139,12 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
 - `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
 - `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
-- `/resumen` — Briefing diario (mock, con LoginGate teaser)
+- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky con indices/portfolio/Polymarket), 6 secciones con kickers SVG, tooltips en datos, Guardar/Compartir (mock)
 - `/noticia` — Deep-dive (mock)
 - `/portfolio` — TradingView chart, heatmap (mock)
 - `/aprendizaje` — Investor DNA radar SVG (mock)
-- `/semanal` — Timeline semana (mock)
-- `/semanal/resumen` — Articulo columna (mock)
+- `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
+- `/semanal/resumen` — Reportaje semanal largo (~1800 palabras): timeline dia a dia, noticias mayores, sectores, tecnico con velas, perspectiva (mock)
 - `/recomendaciones` — Recomendaciones IA (mock)
 - `/stress-test` — Simulacion crisis (mock)
 - `/comparador` — Comparacion activos (mock)
@@ -266,7 +277,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Eliminar /debug/db endpoint temporal del backend
 - Quitar error details del login endpoint (solo para debug)
 - Configurar Vercel auto-deploy desde GitHub
-- LoginGate temporalmente desactivado en /resumen — reactivar
+- LoginGate eliminado de /resumen en el rediseño jul 2026 — reintroducir si se quiere teaser para no logueados
 - Comprimir hero-video.mp4 para produccion
 - Imagenes dinamicas por noticias del dia
 - Video marketing con Runway (prompts listos)
@@ -281,6 +292,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Resumen page cinematica
 - Hero video en dashboard
 - Design Bible documentada
+- Rediseño periodico premium de /resumen, /semanal y /semanal/resumen (jul 2026): articulos extensos con charts SVG animados, dashboard asimetrico con modales, mock data coherente entre las 3 paginas (semana 29 jun - 3 jul 2026)
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

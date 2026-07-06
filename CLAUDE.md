@@ -119,7 +119,8 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
   - `Sparkline` — mini linea inline para sidebars/tablas
 - `article/ArticleBits.tsx` — Icon (set SVG stroke 1.5, no emojis), Kicker, PullQuote, InlineImage, VideoCard (placeholder), DataTip (dato con tooltip), ShareBar (Guardar en localStorage via useSyncExternalStore + Compartir), Breadcrumb, SectionDivider
 - `article/Typography.tsx` — P/Lead/H2/Strong server-safe para articulos
-- `article/SourceLink.tsx` — SourceLink (dato inline clickeable), SourceChip (badge) y SourceModal (tipo, fecha, snippet, link original). Fuentes en src/lib/sources.ts (registro mock; en real vendra de Supabase)
+- `article/SourceLink.tsx` — SourceLink (dato inline clickeable), SourceChip (badge) y SourceModal (monograma, tipo, fecha, snippet, "Leer articulo completo"). Estilo premium: SIN dotted/subrayado en reposo; hover azul #6cb2ff + bg rgba(0,102,204,0.12) + borde inferior 1px + icono fade-in, 300ms. Fuentes en src/lib/sources.ts
+- `article/ReadingTime.tsx` — tiempo de lectura calculado sobre el contenido real del main (palabras/200); NO hardcodear tiempos de lectura
 - `documents/` — DocumentsPanel (seccion "Mis documentos" de /resumen + DocModal) y DocumentsManager (gestion completa en /ajustes). Datos en src/lib/documents.ts: MOCK_DOCS + persistencia localStorage (finpulse-docs-v1) + sortDocs (relevancia, desempate por fecha)
 - `Reveal`, `AnimatedCounter`, `Tooltip`, `ScrollProgress`, `BorderCard` — preexistentes, reutilizables
 
@@ -137,21 +138,21 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - Botones magneticos (siguen cursor)
 - Stats animados con contadores
 
-## Paginas frontend (18 rutas + 404)
+## Paginas frontend (28 rutas + 404)
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
 - `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
 - `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
-- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky con indices/portfolio/Polymarket), 6 secciones con kickers SVG, datos/citas clickeables (SourceLink → modal de fuente), seccion "Mis documentos" (top 6 por relevancia, modal expandir), Guardar/Compartir (mock)
+- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky), 9 secciones con kickers SVG (incl. Politica & Economia Global, Portfolio Impact, Perspectivas Alternativas), datos/citas clickeables (SourceLink), "Mis documentos", ReadingTime dinamico, Guardar/Compartir (mock)
 - `/noticia` — Deep-dive (mock)
 - `/portfolio` — TradingView chart, heatmap (mock)
 - `/aprendizaje` — Investor DNA radar SVG (mock)
 - `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
-- `/semanal/resumen` — Reportaje semanal largo (~1800 palabras): timeline dia a dia, noticias mayores, sectores, tecnico con velas, perspectiva (mock)
+- `/semanal/resumen` — Reportaje semanal largo: timeline dia a dia, noticias mayores, sectores, analisis geografico, politica monetaria & dividendos, tecnico con velas, deep dive, perspectiva, ReadingTime dinamico (mock)
 - `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip) (mock)
 - `/stress-test` — Simulacion crisis (mock)
 - `/comparador` — Comparacion activos (mock)
 - `/onboarding` — Wizard 5 pasos (mock)
-- `/ajustes` — Configuracion + seccion "Mis Documentos" (#documentos): conectar Gmail (OAuth simulado), drag&drop con progress, procesar URL, carpeta Synpulse (File System Access API con fallback), tabla con borrar/re-procesar (mock)
+- `/ajustes` — MODULAR: overview con 8 cards + layout con sidebar (desktop) / pills 44px (mobile) + breadcrumb dinamico. Sub-paginas: /perfil (2FA, password), /fuentes (DocumentsManager: Gmail mock, drag&drop, URL, Synpulse + suscripciones + temas + hora briefing), /notificaciones, /tema (toggle claro/oscuro + preview en vivo), /privacidad (export GDPR, danger zone), /integraciones (broker, API key, logs), /facturacion, /ayuda (FAQs). Registro en sections.ts, kit UI en ui.tsx, SettingsHero por seccion (split light/dark en tema, collage prensa en fuentes, icono SVG + patron en el resto)
 
 ## Backend endpoints
 ### Auth (funcionando en prod):
@@ -175,7 +176,8 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 ### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):
 - POST /api/chat/ask — Chat libre con CIO, soporta conversation_history (ultimos 10 msgs) y context
 - POST /api/chat/recommend — 3 recomendaciones con conviccion 1-10, pro/contra, paralelos historicos, timeframe
-- POST /api/chat/briefing — Briefing diario completo: macro, mercados, impacto por posicion
+- POST /api/chat/briefing — Briefing diario ADAPTATIVO (~1h lectura, 10 secciones flexibles segun fuentes+portfolio, max_tokens 16k)
+- POST /api/chat/briefing-semanal — Resumen semanal ADAPTATIVO (~2h+ lectura, 17 secciones, max_tokens 32k)
 - POST /api/chat/analyze — Analiza noticia concreta + impacto en portfolio
 - System prompt: CIO de elite, directo, fundamentado, anti sesgo confirmacion, paralelos historicos
 - Model: claude-sonnet-4-20250514, max_tokens 2048-4000
@@ -302,6 +304,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Design Bible documentada
 - Rediseño periodico premium de /resumen, /semanal y /semanal/resumen (jul 2026): articulos extensos con charts SVG animados, dashboard asimetrico con modales, mock data coherente entre las 3 paginas (semana 29 jun - 3 jul 2026)
 - Fuentes clickeables + sistema de documentos (7 jul 2026): SourceLink/SourceModal en 4 paginas, "Mis Documentos" en /ajustes (Gmail mock, drag&drop, URL, Synpulse), "Mis documentos" en /resumen, contrato backend en docs/documentos-pipeline.md
+- Rediseno integral 7 jul 2026: resumenes adaptativos (prompts backend ~1h/~2h+ + endpoint briefing-semanal + ReadingTime dinamico + 6 secciones nuevas entre ambos articulos), /ajustes modular con 8 sub-paginas y heroes intencionales, SourceLink hover azul premium
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

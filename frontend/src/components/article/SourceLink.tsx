@@ -48,6 +48,10 @@ export function SourceModal({ source, onClose }: { source: SourceRef; onClose: (
         </button>
 
         <div className="flex items-center gap-3 mb-5">
+          {/* monograma de la fuente */}
+          <span className="w-10 h-10 shrink-0 rounded-full border border-white/[0.15] bg-white/[0.04] flex items-center justify-center text-[13px] font-semibold tracking-wide text-foreground">
+            {source.name.replace("@", "").slice(0, 2).toUpperCase()}
+          </span>
           <span className={`text-[10px] uppercase tracking-[0.2em] font-semibold px-3 py-1 rounded-full border ${typeColor[source.type]}`}>
             {SOURCE_TYPE_LABEL[source.type]}
           </span>
@@ -72,7 +76,7 @@ export function SourceModal({ source, onClose }: { source: SourceRef; onClose: (
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white text-black rounded-full px-6 py-3 hover:tracking-[0.3em] transition-all duration-500"
             >
-              Leer original
+              Leer artículo completo
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 17L17 7M9 7h8v8" />
               </svg>
@@ -116,12 +120,12 @@ export default function SourceLink({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className={`inline items-baseline text-left cursor-pointer text-foreground font-medium border-b border-dotted border-white/40 hover:border-white hover:text-white transition-colors duration-300 ${className}`}
+        className={`group/sl inline text-left cursor-pointer text-foreground font-medium rounded-[3px] border-b border-transparent px-0.5 -mx-0.5 transition-all duration-300 ease-out hover:text-[#6cb2ff] hover:bg-[rgba(0,102,204,0.12)] hover:border-[#6cb2ff] ${className}`}
         title={`Ver fuente: ${source.name}`}
       >
         {children}
         <svg
-          className="inline-block ml-1 mb-0.5 opacity-50"
+          className="inline-block ml-1 mb-0.5 opacity-0 -translate-x-0.5 transition-all duration-300 group-hover/sl:opacity-100 group-hover/sl:translate-x-0"
           width="9"
           height="9"
           viewBox="0 0 24 24"
@@ -163,7 +167,7 @@ export function SourceChip({ name, sourceId }: { name: string; sourceId?: string
           e.stopPropagation();
           setOpen(true);
         }}
-        className={`text-[10px] uppercase tracking-[0.1em] font-medium px-3 py-1 rounded-full border cursor-pointer hover:bg-white/[0.06] transition-colors duration-300 ${cls}`}
+        className={`text-[10px] uppercase tracking-[0.1em] font-medium px-3 py-1 rounded-full border cursor-pointer transition-all duration-300 hover:text-[#6cb2ff] hover:border-[#6cb2ff]/60 hover:bg-[rgba(0,102,204,0.1)] ${cls}`}
         title={`Ver fuente: ${source.name}`}
       >
         {name}

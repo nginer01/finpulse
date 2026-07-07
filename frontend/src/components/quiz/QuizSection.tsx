@@ -56,7 +56,7 @@ export default function QuizSection() {
   };
 
   return (
-    <section className="max-w-[760px] mx-auto mt-16 mb-4" data-track-topic="quiz">
+    <section className="max-w-[760px] mx-auto mt-16 mb-4" data-track-topic="quiz" data-quiz>
       <div className="rounded-2xl border border-card-border bg-[#1d1d1f]/50 p-7 sm:p-9">
         {/* Kicker */}
         <div className="flex items-center gap-4 mb-6">

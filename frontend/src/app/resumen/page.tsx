@@ -22,6 +22,7 @@ import ReadingTime from "@/components/article/ReadingTime";
 import { DwellTracker, SundayCheckin, TopicPulse } from "@/components/tracking/Trackers";
 import QuizSection from "@/components/quiz/QuizSection";
 import Term from "@/components/article/Term";
+import AudioBriefing from "@/components/audio/AudioBriefing";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -649,6 +650,9 @@ export default function ResumenDiario() {
         {/* Modo quiz opcional — 3 flashcards post-briefing con repetición espaciada */}
         <QuizSection />
       </div>
+
+      {/* Audio briefing opcional — el briefing como podcast */}
+      <AudioBriefing title="Briefing diario — FinPulse" />
     </main>
   );
 }

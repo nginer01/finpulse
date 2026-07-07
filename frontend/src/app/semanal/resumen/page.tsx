@@ -19,6 +19,7 @@ import { P, Lead, H2, Strong } from "@/components/article/Typography";
 import SourceLink from "@/components/article/SourceLink";
 import Term from "@/components/article/Term";
 import ReadingTime from "@/components/article/ReadingTime";
+import AudioBriefing from "@/components/audio/AudioBriefing";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Semana del 29 de junio al 3 de julio de 2026           */
@@ -598,6 +599,9 @@ export default function ResumenSemanalCompleto() {
           </div>
         </div>
       </div>
+
+      {/* Audio briefing opcional — la columna semanal como podcast */}
+      <AudioBriefing title="Columna semanal — FinPulse" />
     </main>
   );
 }

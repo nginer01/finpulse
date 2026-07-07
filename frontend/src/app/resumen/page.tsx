@@ -21,6 +21,7 @@ import DocumentsPanel from "@/components/documents/DocumentsPanel";
 import ReadingTime from "@/components/article/ReadingTime";
 import { DwellTracker, SundayCheckin, TopicPulse } from "@/components/tracking/Trackers";
 import QuizSection from "@/components/quiz/QuizSection";
+import Term from "@/components/article/Term";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -215,10 +216,10 @@ export default function ResumenDiario() {
                 </div>
 
                 <P>
-                  La volatilidad sigue comprimida: el VIX cerró en <DataTip value="16,38" tip="Mínimo de cinco meses. Por debajo de 17 el mercado descuenta un verano tranquilo — históricamente un aviso." direction="down" />,
+                  La volatilidad sigue comprimida: el <Term k="vix">VIX</Term> cerró en <DataTip value="16,38" tip="Mínimo de cinco meses. Por debajo de 17 el mercado descuenta un verano tranquilo — históricamente un aviso." direction="down" />,
                   mínimos de febrero. Con el deadline arancelario a tres días vista, <SourceLink sourceId="zerohedge-vix">ese nivel de complacencia es la lectura más
-                  incómoda del tablero</SourceLink>: o el mercado sabe algo (que habrá prórrogas y acuerdos), o está infravalorando el único
-                  evento binario de la semana.
+                  incómoda del tablero</SourceLink>: o el mercado sabe algo (que habrá prórrogas y acuerdos), o está infravalorando el único{" "}
+                  <Term k="evento-binario">evento binario</Term> de la semana.
                 </P>
 
                 <VideoCard
@@ -240,11 +241,11 @@ export default function ResumenDiario() {
                   La dispersión sectorial de la semana cuenta la historia completa del mercado en una sola imagen. En un extremo,
                   los <Strong>semiconductores (+2,8%)</Strong>: <SourceLink sourceId="bloomberg-nvda">Nvidia rozó los 4 billones de dólares de capitalización</SourceLink> — sería la
                   primera empresa de la historia en alcanzarlos — y <SourceLink sourceId="tsmc-ventas">TSMC publicó unas ventas de junio un 26% superiores</SourceLink> al año
-                  pasado. El ciclo de inversión en infraestructura de IA no da señales de fatiga, y la cadena entera (ASML, SK Hynix,
+                  pasado. El <Term k="capex">ciclo de inversión</Term> en infraestructura de IA no da señales de fatiga, y la cadena entera (ASML, SK Hynix,
                   Micron) subió en bloque.
                 </P>
                 <P className="mt-5">
-                  En el otro extremo, la <Strong>energía (-2,1%)</Strong> fue el único sector en rojo claro. La decisión de la OPEC+
+                  En el otro extremo, la <Strong>energía (-2,1%)</Strong> fue el único sector en rojo claro. La decisión de la <Term k="opec">OPEC+</Term>
                   de devolver 548.000 barriles diarios en agosto — más rápido de lo que descontaba el mercado — confirma que Arabia
                   Saudí prioriza cuota de mercado sobre precio. Exxon y Chevron cayeron más de un 2% y el sector acumula ya un -8%
                   en el año, el peor del S&P 500.
@@ -373,7 +374,7 @@ export default function ResumenDiario() {
                 <P className="mt-5">
                   El tercer frente es fiscal: el paquete presupuestario aprobado la semana pasada en EEUU añade estímulo a una
                   economía que no lo pide, y el Tesoro anunciará el miércoles el calendario de emisiones del trimestre. Más papel
-                  con la Fed en pausa es presión estructural al alza para el tramo largo de la curva — el 10 años en 4,34% puede
+                  con la Fed en pausa es presión estructural al alza para el tramo largo de la <Term k="curva-de-tipos">curva</Term> — el 10 años en 4,34% puede
                   parecer alto, pero el suelo de esa cifra lo pone la oferta, no solo la inflación.
                 </P>
                 <div className="mt-8">
@@ -443,7 +444,7 @@ export default function ResumenDiario() {
                 <P>
                   La semana se decide entre el miércoles y el jueves: actas de la Fed el día 8 y vencimiento de la pausa arancelaria
                   el día 9. El escenario base del mercado — prórrogas selectivas y un acuerdo marco con la UE — dejaría vía libre
-                  hasta el IPC del 15. El escenario alternativo, cartas con aranceles del 25-40% y sin prórroga, encontraría a un
+                  hasta el IPC del 15. El escenario alternativo, cartas con <Term k="arancel">aranceles</Term> del 25-40% y sin prórroga, encontraría a un
                   mercado en máximos, con volatilidad en mínimos y posicionamiento largo. No hace falta explicar cómo termina esa
                   combinación si sale mal.
                 </P>
@@ -482,12 +483,12 @@ export default function ResumenDiario() {
                 <P>
                   Todo lo anterior es el consenso, y el consenso está muy cómodo. El caso bajista honesto tiene tres patas. La
                   primera es mecánica: <SourceLink sourceId="daily-shot">el posicionamiento especulativo largo en S&P está en máximos del año</SourceLink> con
-                  la volatilidad en mínimos — cuando todo el mundo está del mismo lado, el movimiento contrario no necesita una
+                  la <Term k="vol-implicita">volatilidad</Term> en mínimos — cuando todo el mundo está del mismo lado, el movimiento contrario no necesita una
                   gran excusa, solo un empujón. Un jueves arancelario sin prórrogas sería ese empujón.
                 </P>
                 <P className="mt-5">
                   La segunda es de fondo: el mercado laboral es menos sólido de lo que dice el titular. El ADP privado fue
-                  negativo por primera vez en dos años y la mitad de las nóminas de junio las puso el empleo público estatal.
+                  negativo por primera vez en dos años y la mitad de las <Term k="nominas">nóminas</Term> de junio las puso el empleo público estatal.
                   Si esa divergencia se confirma en julio, el recorte de septiembre dejará de ser "por normalización" y empezará
                   a oler a "por debilidad" — y ese matiz, como vimos en 2024, vale un 5% de índice.
                 </P>
@@ -496,7 +497,7 @@ export default function ResumenDiario() {
                   <SourceLink sourceId="zerohedge-vix"> la historia de los últimos veranos</SourceLink> dice que agosto no perdona
                   a los mercados estrechos. Nada de esto es una predicción — es el precio de lista del escenario en el que la
                   semana que viene alguien no renueva la música. Tu cartera lo tiene parcialmente cubierto con EUNA; la mitad
-                  restante de BRT, en cambio, no es cobertura para este riesgo: es riesgo adicional.
+                  restante de BRT, en cambio, no es <Term k="cobertura">cobertura</Term> para este riesgo: es riesgo adicional.
                 </P>
               </section>
             </Reveal>

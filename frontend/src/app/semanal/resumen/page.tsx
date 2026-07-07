@@ -17,6 +17,7 @@ import {
 } from "@/components/article/ArticleBits";
 import { P, Lead, H2, Strong } from "@/components/article/Typography";
 import SourceLink from "@/components/article/SourceLink";
+import Term from "@/components/article/Term";
 import ReadingTime from "@/components/article/ReadingTime";
 
 /* ------------------------------------------------------------------ */
@@ -196,8 +197,8 @@ export default function ResumenSemanalCompleto() {
               <Lead>
                 Hay semanas que se explican con un dato y semanas que se explican con una actitud. Esta fue de las segundas. El
                 S&P 500 firmó <Strong>cuatro cierres récord en cinco sesiones</Strong> y selló el mejor primer semestre desde 2023
-                (+10,6%), en una semana acortada por el 4 de julio en la que hubo de todo: un dato de empleo privado negativo, la
-                OPEC+ devolviendo producción a un mercado ya bien abastecido, y un deadline arancelario a tres días vista. El
+                (+10,6%), en una semana acortada por el 4 de julio en la que hubo de todo: un dato de empleo privado negativo, la{" "}
+                <Term k="opec">OPEC+</Term> devolviendo producción a un mercado ya bien abastecido, y un deadline arancelario a tres días vista. El
                 mercado lo miró todo, lo sopesó — y decidió creer en el escenario bueno.
               </Lead>
               <P className="mt-5">
@@ -309,8 +310,8 @@ export default function ResumenSemanalCompleto() {
               <P>
                 La pausa de 90 días vence el <Strong>9 de julio</Strong> y las cartas con los nuevos tipos empiezan a salir el lunes.
                 Bruselas negocia un acuerdo marco (<SourceLink sourceId="polymarket-aranceles">42% de probabilidad en Polymarket, +11 en la semana</SourceLink>); Japón e India están más
-                lejos. El mercado descuenta prórrogas y acuerdos de mínimos — probablemente con razón. Pero un VIX en 16,4 con un
-                evento binario a tres días es la definición técnica de complacencia, y las opciones de cobertura sobre el Stoxx
+                lejos. El mercado descuenta prórrogas y acuerdos de mínimos — probablemente con razón. Pero un <Term k="vix">VIX</Term> en 16,4 con un{" "}
+                <Term k="evento-binario">evento binario</Term> a tres días es la definición técnica de <Term k="complacencia">complacencia</Term>, y las opciones de cobertura sobre el Stoxx
                 están históricamente baratas para quien quiera dormir tranquilo.
               </P>
 
@@ -456,8 +457,8 @@ export default function ResumenSemanalCompleto() {
               <H2>Máximos sin euforia en el volumen</H2>
               <P>
                 La estructura técnica del S&P sigue siendo constructiva: la ruptura de los <Strong>6.250</Strong> del viernes se
-                produjo con el índice claramente por encima de sus medias de 20 y 50 sesiones, y el antiguo techo se convierte en
-                el primer soporte. Por abajo, la zona de <Strong>6.150-6.170</Strong> (máximos de febrero y hueco alcista del lunes)
+                produjo con el índice claramente por encima de sus <Term k="media-movil">medias de 20 y 50 sesiones</Term>, y el antiguo techo se convierte en
+                el primer <Term k="soporte">soporte</Term>. Por abajo, la zona de <Strong>6.150-6.170</Strong> (máximos de febrero y hueco alcista del lunes)
                 es el nivel que separa la tendencia sana de la primera corrección seria. Por arriba, la extensión natural del
                 movimiento apunta a la zona psicológica de <Strong>6.300-6.350</Strong>.
               </P>
@@ -496,7 +497,7 @@ export default function ResumenSemanalCompleto() {
               <P>
                 El hito de <SourceLink sourceId="bloomberg-nvda">los 4 billones de dólares</SourceLink> merece pararse un momento,
                 porque es la variable que más explica tu cartera este año. La pregunta correcta no es si Nvidia "vale" esa cifra,
-                sino qué tiene que pasar para justificarla: a 32 veces beneficios estimados, el mercado descuenta que el capex de
+                sino qué tiene que pasar para justificarla: a 32 veces beneficios estimados, el mercado descuenta que el <Term k="capex">capex</Term> de
                 los hyperscalers — <SourceLink sourceId="tsmc-ventas">que crece al 34% interanual</SourceLink> — no solo se
                 mantiene, sino que se convierte en gasto recurrente. La evidencia de la semana apoya la tesis: ventas de TSMC
                 +26%, capacidad de Blackwell comprometida hasta 2027, y la restricción desplazándose de chips a potencia
@@ -530,7 +531,7 @@ export default function ResumenSemanalCompleto() {
                 Para tu cartera, el plan es el mismo que cerró la semana pasada: <Strong>no añadir riesgo antes del jueves 9</Strong>.
                 Si TSMC confirma el viernes la fortaleza del ciclo, la eventual caída del 2-3% en SEMI que llevas semanas esperando
                 para ampliar podría no llegar — y no pasa nada: no perseguir precio también es una decisión. En el Brent, el nivel
-                a vigilar sigue siendo el soporte de $66; perderlo abriría la puerta a los $62 y a replantear la mitad restante de
+                a vigilar sigue siendo el <Term k="soporte">soporte</Term> de $66; perderlo abriría la puerta a los $62 y a replantear la mitad restante de
                 la posición.
               </P>
 

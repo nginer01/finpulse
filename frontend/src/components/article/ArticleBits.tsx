@@ -68,6 +68,15 @@ export function Icon({ name, className = "w-4 h-4" }: { name: string; className?
           <path d="M12 10v4M12 17.5v.5" />
         </svg>
       );
+    case "thread":
+      return (
+        <svg {...common}>
+          <circle cx="6" cy="5" r="2" />
+          <circle cx="6" cy="12" r="2" />
+          <circle cx="6" cy="19" r="2" />
+          <path d="M6 7v3M6 14v3M12 5h8M12 12h8M12 19h8" />
+        </svg>
+      );
     case "bookmark":
       return (
         <svg {...common}>

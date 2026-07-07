@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api import portfolio, chat, news, market, auth, journal, tracking, alerts, paths, quiz
+from app.api import portfolio, chat, news, market, auth, journal, tracking, alerts, paths, quiz, threads
 
 app = FastAPI(
     title=settings.app_name,
@@ -28,6 +28,7 @@ app.include_router(tracking.router, prefix="/api")
 app.include_router(alerts.router, prefix="/api")
 app.include_router(paths.router, prefix="/api")
 app.include_router(quiz.router, prefix="/api")
+app.include_router(threads.router, prefix="/api")
 
 
 @app.get("/")

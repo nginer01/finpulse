@@ -203,6 +203,13 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - Columnas nuevas en recommendations: name, price_at_decision, decided_at, fiction_amount (scripts/migrate_paths.py, aplicada 7 jul 2026)
 - OJO: status es SAEnum — asignar RecommendationStatus(valor), no el string
 
+### Hilos temporales (app/api/threads.py) — memoria acumulativa:
+- GET /api/threads?status=active|all — hilos con su evolución completa (entries ordenadas por fecha)
+- POST /api/threads/ingest — LA PIEZA CLAVE para el pipeline: upsert del hilo por (user, slug) + entry del día con dedupe (fecha+headline); summary/outlook se REEMPLAZAN (estado actual, no acumulación de texto); un hilo dormant que recibe entry revive. El briefing real la llamará cada mañana con los desarrollos
+- PATCH /api/threads/{id} — active/resolved/dormant
+- Tablas threads (slug UNIQUE por user) + thread_entries (scripts/migrate_threads.py, aplicada 7 jul 2026)
+- Frontend: src/lib/threads.ts (mock de 4 hilos: aranceles desde 9 abr, ciclo IA, OPEC+, BCE dovish — con entries que referencian el journal del usuario) + components/threads/ThreadsSection.tsx (sección "Hilos abiertos" en /resumen entre Lo que viene y Perspectivas: card por hilo con Semana N/tickers/summary, timeline vertical expandible con dots por significance — clave ámbar/positivo verde/negativo rojo/neutral gris — fuentes [FT] y bloque "Qué puede pasar"). Lleva data-audio-skip (fuera del audio briefing)
+
 ### Modo quiz opcional (app/api/quiz.py):
 - GET /api/quiz/session?limit=3 — repasos vencidos primero (is_review=true), después preguntas nuevas
 - POST /api/quiz/cards/{id}/answer {correct} — repetición espaciada: intervalos 1/3/7/14 días; acierto avanza (nueva acertada a la primera = dominada, superar 14d = dominada), fallo reinicia a 1 día y suma lapse

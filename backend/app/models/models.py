@@ -159,6 +159,41 @@ class Recommendation(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
+# ── Hilos temporales (memoria acumulativa de temas recurrentes) ──
+
+class Thread(Base):
+    __tablename__ = "threads"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    slug: Mapped[str] = mapped_column(String(80))  # clave estable del tema (ej "aranceles-eeuu")
+    title: Mapped[str] = mapped_column(String(200))
+    status: Mapped[str] = mapped_column(String(20), default="active")  # active / resolved / dormant
+    summary: Mapped[str] = mapped_column(Text, default="")  # dónde estamos HOY (se actualiza, no se acumula)
+    outlook: Mapped[str] = mapped_column(Text, default="")  # qué puede pasar (predicción/escenarios)
+    tickers: Mapped[str] = mapped_column(String(100), default="")  # coma-separados
+    first_seen: Mapped[date] = mapped_column(Date)
+    last_updated: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    entries: Mapped[list["ThreadEntry"]] = relationship(back_populates="thread", order_by="ThreadEntry.date")
+
+
+class ThreadEntry(Base):
+    __tablename__ = "thread_entries"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    thread_id: Mapped[int] = mapped_column(ForeignKey("threads.id"))
+    date: Mapped[date] = mapped_column(Date)
+    headline: Mapped[str] = mapped_column(String(300))
+    detail: Mapped[str] = mapped_column(Text, default="")
+    significance: Mapped[str] = mapped_column(String(20), default="neutral")  # positivo / negativo / clave / neutral
+    source: Mapped[str] = mapped_column(String(100), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    thread: Mapped["Thread"] = relationship(back_populates="entries")
+
+
 # ── Quiz (modo quiz opcional post-briefing, repetición espaciada) ──
 
 class QuizCard(Base):

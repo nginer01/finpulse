@@ -23,6 +23,7 @@ import { DwellTracker, SundayCheckin, TopicPulse } from "@/components/tracking/T
 import QuizSection from "@/components/quiz/QuizSection";
 import Term from "@/components/article/Term";
 import AudioBriefing from "@/components/audio/AudioBriefing";
+import ThreadsSection from "@/components/threads/ThreadsSection";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -472,6 +473,13 @@ export default function ResumenDiario() {
                   ))}
                 </div>
               </section>
+            </Reveal>
+
+            <SectionDivider />
+
+            {/* ---------- HILOS TEMPORALES — memoria acumulativa ---------- */}
+            <Reveal>
+              <ThreadsSection />
             </Reveal>
 
             <SectionDivider />

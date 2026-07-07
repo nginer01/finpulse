@@ -78,7 +78,8 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - DB password: FinPulseDB2026abc
 - Driver: asyncpg con NullPool (pgbouncer compatible)
 - IMPORTANTE: usar port 5432 (session mode), NO 6543 (transaction mode)
-- Tablas: users (con supabase_id), positions, operations, news_articles, daily_summaries, decisions, recommendations, tracking_topics
+- Tablas: users (con supabase_id), positions, operations (con source/external_id), news_articles, daily_summaries, decisions (con operation_id/price_after_90d), recommendations (con price_at_decision/decided_at/fiction_amount), tracking_topics, behavior_events, interest_profile, thesis_alerts, quiz_cards, threads, thread_entries
+- Migraciones aplicadas via scripts en backend/scripts/ (asyncpg con statement_cache_size=0): migrate_journal, migrate_thesis_alerts, migrate_paths, migrate_quiz, migrate_threads
 
 ### Auth (Supabase Auth)
 - Supabase URL: https://vbmvjxourxmtnmlmuomu.supabase.co
@@ -141,7 +142,7 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - Botones magneticos (siguen cursor)
 - Stats animados con contadores
 
-## Paginas frontend (28 rutas + 404)
+## Paginas frontend (31 rutas + 404)
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
 - `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
 - `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
@@ -260,13 +261,14 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Tono: CEO de JP Morgan hablando a su cliente VIP
 
 ## Funcionalidades diferenciales (lo que nadie mas hace)
-1. **Decision Journal**: al comprar/vender, tags rapidos obligatorios (2s) + texto libre opcional. La IA analiza retrospectivamente si acertaste y por que.
-2. **El camino no tomado**: registra oportunidades descartadas y muestra que habria pasado.
-3. **Briefing que aprende de ti**: se adapta al portfolio, prioriza por tus intereses, profundiza en tus temas.
-4. **Anti sesgo confirmacion**: SIEMPRE caso a favor Y en contra con la misma fuerza.
-5. **Investor DNA evolutivo**: score de disciplina, timing, diversificacion, control emocional. Sube/baja con decisiones.
-6. **Alertas predictivas**: avisa ANTES de que algo pase (volumen institucional, Polymarket, correlaciones historicas).
-7. **Noticias → Portfolio → Accion**: cadena completa con paralelos historicos y recomendacion concreta.
+1. **Decision Journal** — HECHO (roadmap #1): broker auto-sync Revolut, tags rapidos 2s + tesis opcional, evaluacion IA a 7/30/90d centrada en el proceso.
+2. **El camino no tomado** — HECHO (roadmap #3): Seguir/Ignorar/ficcion se registran con precio real; contrafactual con coste de la inaccion.
+3. **Briefing que aprende de ti** — tracking + perfil adaptativo HECHOS; briefing real pendiente del #0.
+4. **Anti sesgo confirmacion**: SIEMPRE caso a favor Y en contra con la misma fuerza (en prompts y en /recomendaciones).
+5. **Investor DNA evolutivo**: radar mock en /aprendizaje; ya lo alimentan journal (disciplina/emocional) y quiz (comprension) — falta consolidarlo.
+6. **Tesis → alertas de invalidacion** — HECHO (roadmap #2): la IA extrae niveles de las tesis y los vigila con precios reales. Las alertas predictivas (volumen, correlaciones) siguen pendientes.
+7. **Noticias → Portfolio → Accion**: cadena completa con paralelos historicos y recomendacion concreta (pendiente del pipeline real).
+8. **Hilos temporales** — HECHO (roadmap #7): memoria acumulativa de temas recurrentes, evolucion fecha a fecha sin re-explicar.
 
 ## Fuentes de informacion
 ### Newsletters (reenviar al Gmail news.FinPulse@gmail.com):
@@ -326,16 +328,14 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Carpeta Synpulse: escaneo bajo demanda ya funciona (File System Access API, Chrome/Edge); monitoreo automatico requiere servicio local (watchdog) o Electron
 
 ## Pendiente — FUNCIONALIDAD (prioridad)
-1. **BLOQUEANTE**: Crear Gmail dedicado + app password
-2. **BLOQUEANTE**: Obtener ANTHROPIC_API_KEY
-3. Gmail reader: leer y procesar todos los emails del correo dedicado
-4. Polymarket API: integrar datos de probabilidades
-5. Generador de briefing: Claude recibe TODO (emails + Polymarket + mercado + portfolio) y genera briefing
-6. Memoria acumulativa: guardar noticias procesadas en Supabase, no repetir
-7. Alertas predictivas: detectar senales antes de que el mercado reaccione
-8. Posiciones en Supabase (no hardcoded)
-9. Conectar mas paginas a datos reales
-10. Tesis → alertas automaticas (siguiente del roadmap tras el Decision Journal)
+ROADMAP jul 2026 (#1-#7) COMPLETO y en produccion. Lo que queda:
+1. **BLOQUEANTE #0**: Crear Gmail dedicado + app password y ANTHROPIC_API_KEY → pegar GMAIL_ADDRESS/GMAIL_APP_PASSWORD/ANTHROPIC_API_KEY en Railway. Activa automaticamente: briefing real, sync journal por email, extraccion IA de alertas, reviews IA del journal, generacion de quiz y motor IA de recomendaciones.
+2. **Pipeline mañanero (cron)** — el orquestador post-#0: leer Gmail → generar briefing (con deepen_topics del tracking) → ingest de hilos (POST /threads/ingest) → generar quiz (POST /quiz/generate) → check de alertas (POST /alerts/check) → reviews del journal a 30/90d → persistir briefing. Railway cron o GitHub Actions.
+3. Conectar /resumen y /semanal al briefing real persistido (ahora mock coherente)
+4. Posiciones en Supabase (no hardcoded) + user_id real en tracking
+5. Alertas predictivas (volumen institucional, correlaciones) — mas alla de las de tesis
+6. Consolidar Investor DNA en /aprendizaje con datos reales de journal + quiz + tracking
+7. Backend del pipeline de documentos (contrato en docs/documentos-pipeline.md)
 
 ## Pendiente — TECNICO
 - Eliminar /debug/db endpoint temporal del backend
@@ -361,6 +361,13 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Rediseno integral 7 jul 2026: resumenes adaptativos (prompts backend ~1h/~2h+ + endpoint briefing-semanal + ReadingTime dinamico + 6 secciones nuevas entre ambos articulos), /ajustes modular con 8 sub-paginas y heroes intencionales, SourceLink hover azul premium
 - Personalizacion adaptativa (7 jul 2026): tracking implicito (clicks fuentes, dwell, save, expand) + explicito opcional (SundayCheckin, TopicPulse), perfil interes/cartera con decay, inyeccion en prompts del briefing, transparencia y toggle en /ajustes/intereses. Tablas Supabase creadas y verificadas E2E en prod. Pendiente: user_id real, cron nocturno, frontend pasando profileForPrompt() al briefing real
 - Decision Journal con broker auto-sync (7 jul 2026, roadmap #1): parser Revolut (CSV + emails de confirmacion EN/ES) con dedupe por external_id, endpoints sync/pending/review, evaluacion retrospectiva IA a 7/30/90d (proceso vs resultado), pagina /journal (stats, cola de etiquetado, timeline, DNA), QuickTagModal 2s con señal de tracking (portfolio_view, concern si tags emocionales), migracion Supabase aplicada. Pendiente: Gmail dedicado para que el sync por email funcione en prod
+- Tesis → alertas automaticas (7 jul 2026, roadmap #2): extraccion IA/heuristica de niveles de invalidacion, motor /alerts/check con yfinance, /alertas con barras de margen, campana del Navbar conectada con badge real, "Vigilar tesis" en el journal
+- El camino no tomado (7 jul 2026, roadmap #3): Seguir/Ignorar/ficcion persisten con snapshot de precio real, seccion en /recomendaciones con coste de la inaccion vs ahorrado, veredictos y cartera de ficcion valorada
+- Modo quiz opcional (7 jul 2026, roadmap #4): 3 flashcards post-briefing en /resumen, repeticion espaciada 1/3/7/14d (backend + espejo local), generacion Claude lista, fallos → señal deepen, toggle en /ajustes/fuentes
+- Glosario contextual (7 jul 2026, roadmap #5): ~30 terminos con 3 niveles de profundidad, Term.tsx con popover en portal (hover dorado), integrado en ambos articulos
+- Audio briefing (7 jul 2026, roadmap #6): Web Speech API sin keys, player flotante con secciones/velocidad/saltar, guion extraido del DOM
+- Hilos temporales (7 jul 2026, roadmap #7): tablas threads+thread_entries, POST /threads/ingest idempotente para el pipeline, seccion "Hilos abiertos" en /resumen con timeline expandible
+- ROADMAP jul 2026 COMPLETO: las 7 features verificadas (Playwright + E2E prod) y desplegadas el mismo dia 7 jul 2026
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

@@ -20,6 +20,7 @@ import SourceLink from "@/components/article/SourceLink";
 import DocumentsPanel from "@/components/documents/DocumentsPanel";
 import ReadingTime from "@/components/article/ReadingTime";
 import { DwellTracker, SundayCheckin, TopicPulse } from "@/components/tracking/Trackers";
+import QuizSection from "@/components/quiz/QuizSection";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -643,6 +644,9 @@ export default function ResumenDiario() {
             </Reveal>
           </aside>
         </div>
+
+        {/* Modo quiz opcional — 3 flashcards post-briefing con repetición espaciada */}
+        <QuizSection />
       </div>
     </main>
   );

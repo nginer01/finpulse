@@ -159,6 +159,28 @@ class Recommendation(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
+# ── Quiz (modo quiz opcional post-briefing, repetición espaciada) ──
+
+class QuizCard(Base):
+    __tablename__ = "quiz_cards"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    question: Mapped[str] = mapped_column(Text)
+    options: Mapped[str] = mapped_column(Text)  # JSON array de 3-4 opciones
+    correct_index: Mapped[int] = mapped_column(Integer)
+    explanation: Mapped[str] = mapped_column(Text, default="")
+    topic: Mapped[str] = mapped_column(String(100), default="")  # tema de tracking
+    # Repetición espaciada: intervalos 1/3/7/14 días
+    step: Mapped[int] = mapped_column(Integer, default=0)
+    lapses: Mapped[int] = mapped_column(Integer, default=0)
+    mastered: Mapped[bool] = mapped_column(Boolean, default=False)
+    next_review_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)  # null = nueva
+    last_answered_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    source_date: Mapped[date | None] = mapped_column(Date, nullable=True)  # briefing del que salió
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
 # ── Thesis Alerts (tesis → alertas de invalidación) ──
 
 class ThesisAlert(Base):

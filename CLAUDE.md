@@ -143,7 +143,7 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/` Dashboard — CONECTADO a datos reales (portfolio, precios, TradingChart OHLCV)
 - `/landing` — Landing cinematica (punto de entrada para usuarios no logueados)
 - `/login` — Login/registro con Supabase Auth (validacion, password strength, social login UI)
-- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky), 9 secciones con kickers SVG (incl. Politica & Economia Global, Portfolio Impact, Perspectivas Alternativas), datos/citas clickeables (SourceLink), "Mis documentos", ReadingTime dinamico, Guardar/Compartir (mock)
+- `/resumen` — Briefing diario estilo articulo de periodico: hero cinematico + 2 columnas (articulo 17px/1.85 + sidebar sticky), 9 secciones con kickers SVG (incl. Politica & Economia Global, Portfolio Impact, Perspectivas Alternativas), datos/citas clickeables (SourceLink), "Mis documentos", ReadingTime dinamico, Guardar/Compartir (mock), QuizSection opcional al final (3 flashcards con repetición espaciada)
 - `/noticia` — Deep-dive (mock)
 - `/portfolio` — TradingView chart, heatmap (mock)
 - `/aprendizaje` — Investor DNA radar SVG (mock)
@@ -200,6 +200,14 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - PATCH /api/paths/{id}/fiction — añade/ajusta inversión ficticia; DELETE /api/paths/{id} — deshacer
 - Columnas nuevas en recommendations: name, price_at_decision, decided_at, fiction_amount (scripts/migrate_paths.py, aplicada 7 jul 2026)
 - OJO: status es SAEnum — asignar RecommendationStatus(valor), no el string
+
+### Modo quiz opcional (app/api/quiz.py):
+- GET /api/quiz/session?limit=3 — repasos vencidos primero (is_review=true), después preguntas nuevas
+- POST /api/quiz/cards/{id}/answer {correct} — repetición espaciada: intervalos 1/3/7/14 días; acierto avanza (nueva acertada a la primera = dominada, superar 14d = dominada), fallo reinicia a 1 día y suma lapse
+- POST /api/quiz/generate {content} — Claude crea 3 MCQs del briefing (persiste como nuevas); sin API key devuelve vacío y el frontend usa su banco local
+- POST /api/quiz/cards (bulk) + GET /api/quiz/stats (para Investor DNA)
+- Tabla quiz_cards creada (scripts/migrate_quiz.py, aplicada 7 jul 2026)
+- Frontend: src/lib/quiz.ts (motor ESPEJO del backend en localStorage finpulse-quiz-v1 + banco de 8 preguntas de la semana mock; toggle finpulse-quiz-enabled, default ON) + components/quiz/QuizSection.tsx (flashcards al final de /resumen: intro → opciones con feedback+explicación → resumen con nota DNA). Toggle en /ajustes/fuentes. Fallo → track explicit_interest del tema (señal deepen para el briefing)
 - Los 21 tags del journal y los grupos TAG_GROUPS del frontend deben mantenerse sincronizados; ídem la heurística clientExtract de src/lib/alerts.ts con _heuristic_extract del backend
 
 ### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):

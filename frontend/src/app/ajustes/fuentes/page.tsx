@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DocumentsManager from "@/components/documents/DocumentsManager";
 import { SettingsHero, SectionCard, ToggleRow, InputField, FieldRow, SelectField } from "../ui";
 import { sectionBySlug } from "../sections";
+import { isQuizEnabled, setQuizEnabled } from "@/lib/quiz";
 
 type Priority = "ALTA" | "MEDIA" | "BAJA";
 const priorityColor: Record<Priority, string> = {
@@ -35,6 +36,16 @@ export default function FuentesPage() {
   const [polymarket, setPolymarket] = useState(true);
   const [resumenHora, setResumenHora] = useState("09:00");
   const [semanalDomingos, setSemanalDomingos] = useState(true);
+  const [quizOn, setQuizOn] = useState(true);
+
+  useEffect(() => {
+    setQuizOn(isQuizEnabled());
+  }, []);
+
+  const toggleQuiz = (v: boolean) => {
+    setQuizOn(v);
+    setQuizEnabled(v);
+  };
 
   const addTopic = () => {
     const t = newTopic.trim();
@@ -110,6 +121,7 @@ export default function FuentesPage() {
           <InputField value={resumenHora} onChange={setResumenHora} type="time" className="w-full sm:w-40" />
         </FieldRow>
         <ToggleRow label="Resumen semanal los domingos" checked={semanalDomingos} onChange={setSemanalDomingos} />
+        <ToggleRow label="Quiz post-briefing (3 preguntas, repetición espaciada de fallos)" checked={quizOn} onChange={toggleQuiz} />
         <p className="text-[12px] text-muted leading-relaxed mt-4">
           La extensión de los resúmenes es adaptativa: el diario apunta a ~1 hora de lectura y el semanal a 2+ horas, expandiendo
           cada sección según tus fuentes suscritas y la relevancia para tu portfolio.

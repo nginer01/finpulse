@@ -24,6 +24,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Portfolio",
     href: "/portfolio",
     children: [
+      { label: "Journal", href: "/journal" },
       { label: "Comparador", href: "/comparador" },
       { label: "Stress Test", href: "/stress-test" },
     ],

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { SettingsHero, SectionCard, FieldRow, SelectField, ToggleRow, ActionButton } from "../ui";
+import Link from "next/link";
+import { SettingsHero, SectionCard, FieldRow, SelectField, ActionButton } from "../ui";
 import { sectionBySlug } from "../sections";
 
 const CONNECTED = [
@@ -60,7 +61,20 @@ export default function IntegracionesPage() {
             className="w-full sm:w-64"
           />
         </FieldRow>
-        <ToggleRow label="Sincronización automática de posiciones" checked={false} onChange={() => {}} disabled badge="Próximamente" />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 border-t border-card-border">
+          <div>
+            <p className="text-sm text-foreground">Sincronización automática de operaciones</p>
+            <p className="text-xs text-muted mt-0.5">
+              Las compras/ventas entran solas al Decision Journal — por email de confirmación (Gmail dedicado) o CSV del historial.
+            </p>
+          </div>
+          <Link
+            href="/journal"
+            className="shrink-0 text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/20 text-foreground rounded-full px-4 py-2 hover:bg-white hover:text-black transition-all duration-500"
+          >
+            Abrir Journal
+          </Link>
+        </div>
         <FieldRow label="Divisa principal">
           <SelectField value={divisa} onChange={setDivisa} options={["EUR", "USD", "GBP"].map((v) => ({ value: v, label: v }))} className="w-full sm:w-40" />
         </FieldRow>

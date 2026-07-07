@@ -74,6 +74,8 @@ class Operation(Base):
     price: Mapped[float] = mapped_column(Float)
     date: Mapped[date] = mapped_column(Date)
     broker: Mapped[str] = mapped_column(String(50), default="Revolut")
+    source: Mapped[str] = mapped_column(String(20), default="manual")  # manual / csv / email
+    external_id: Mapped[str | None] = mapped_column(String(64), unique=True, nullable=True)  # dedupe key
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
@@ -127,6 +129,8 @@ class Decision(Base):
     ai_review: Mapped[str | None] = mapped_column(Text, nullable=True)  # IA retrospective analysis
     price_after_7d: Mapped[float | None] = mapped_column(Float, nullable=True)  # price 7 days later
     price_after_30d: Mapped[float | None] = mapped_column(Float, nullable=True)  # price 30 days later
+    price_after_90d: Mapped[float | None] = mapped_column(Float, nullable=True)  # price 90 days later
+    operation_id: Mapped[int | None] = mapped_column(ForeignKey("operations.id"), nullable=True)  # broker auto-sync link
     date: Mapped[date] = mapped_column(Date)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 

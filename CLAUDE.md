@@ -150,6 +150,7 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
 - `/semanal/resumen` — Reportaje semanal largo: timeline dia a dia, noticias mayores, sectores, analisis geografico, politica monetaria & dividendos, tecnico con velas, deep dive, perspectiva, ReadingTime dinamico (mock)
 - `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip) (mock)
+- `/journal` — Decision Journal con broker auto-sync: stats (acierto, convicción, % emocional), operaciones detectadas sin etiquetar (banner), QuickTagModal (tags 2s + convicción + tesis opcional), timeline de decisiones con evolución +7/30/90d y evaluación retrospectiva IA, sección sync Revolut (email/CSV/manual), bloque Investor DNA. API real con fallback demo (localStorage finpulse-journal-local-v1). Lib: src/lib/journal.ts; modal: components/journal/QuickTagModal.tsx
 - `/stress-test` — Simulacion crisis (mock)
 - `/comparador` — Comparacion activos (mock)
 - `/onboarding` — Wizard 5 pasos (mock)
@@ -173,6 +174,17 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 ### Portfolio:
 - GET/POST/DELETE /api/portfolio/positions
 - POST /api/portfolio/import-csv
+
+### Decision Journal (broker auto-sync Revolut):
+- GET /api/journal/tags — 21 tags rápidos (espejo en frontend TAG_GROUPS de src/lib/journal.ts; mantener sincronizados)
+- POST/GET /api/journal/decisions — crear (acepta operation_id para heredar datos de la operación) / listar
+- GET/PATCH /api/journal/decisions/{id} — detalle / actualizar result+lesson
+- POST /api/journal/decisions/{id}/review — evaluación retrospectiva: precios reales a 7/30/90d (yfinance), result heurístico (±2% ajustado por buy/sell) + review IA de Claude centrada en el PROCESO (fallback sin API key: solo precios)
+- POST /api/journal/sync/email — escanea el Gmail dedicado buscando confirmaciones de orden de Revolut (app/services/revolut.py, patrones EN/ES) y crea operations dedupe por external_id. Requiere GMAIL_ADDRESS+GMAIL_APP_PASSWORD
+- POST /api/journal/sync/csv — importa extracto CSV de Revolut como operations (mismo dedupe)
+- GET /api/journal/pending — operaciones sin decisión etiquetada (cola del QuickTagModal)
+- GET /api/journal/stats — total/acierto/convicción media/tags más usados/mejor-peor ticker
+- Modelo: operations tiene source (manual/csv/email) + external_id UNIQUE (hash ticker|tipo|qty|precio|fecha); decisions tiene operation_id FK + price_after_90d. Migración: backend/scripts/migrate_journal.py (aplicada 7 jul 2026)
 
 ### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):
 - POST /api/chat/ask — Chat libre con CIO, soporta conversation_history (ultimos 10 msgs) y context
@@ -287,10 +299,10 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 4. Polymarket API: integrar datos de probabilidades
 5. Generador de briefing: Claude recibe TODO (emails + Polymarket + mercado + portfolio) y genera briefing
 6. Memoria acumulativa: guardar noticias procesadas en Supabase, no repetir
-7. Decision Journal: tags rapidos + texto libre al operar
-8. Alertas predictivas: detectar senales antes de que el mercado reaccione
-9. Posiciones en Supabase (no hardcoded)
-10. Conectar mas paginas a datos reales
+7. Alertas predictivas: detectar senales antes de que el mercado reaccione
+8. Posiciones en Supabase (no hardcoded)
+9. Conectar mas paginas a datos reales
+10. Tesis → alertas automaticas (siguiente del roadmap tras el Decision Journal)
 
 ## Pendiente — TECNICO
 - Eliminar /debug/db endpoint temporal del backend
@@ -315,6 +327,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Fuentes clickeables + sistema de documentos (7 jul 2026): SourceLink/SourceModal en 4 paginas, "Mis Documentos" en /ajustes (Gmail mock, drag&drop, URL, Synpulse), "Mis documentos" en /resumen, contrato backend en docs/documentos-pipeline.md
 - Rediseno integral 7 jul 2026: resumenes adaptativos (prompts backend ~1h/~2h+ + endpoint briefing-semanal + ReadingTime dinamico + 6 secciones nuevas entre ambos articulos), /ajustes modular con 8 sub-paginas y heroes intencionales, SourceLink hover azul premium
 - Personalizacion adaptativa (7 jul 2026): tracking implicito (clicks fuentes, dwell, save, expand) + explicito opcional (SundayCheckin, TopicPulse), perfil interes/cartera con decay, inyeccion en prompts del briefing, transparencia y toggle en /ajustes/intereses. Tablas Supabase creadas y verificadas E2E en prod. Pendiente: user_id real, cron nocturno, frontend pasando profileForPrompt() al briefing real
+- Decision Journal con broker auto-sync (7 jul 2026, roadmap #1): parser Revolut (CSV + emails de confirmacion EN/ES) con dedupe por external_id, endpoints sync/pending/review, evaluacion retrospectiva IA a 7/30/90d (proceso vs resultado), pagina /journal (stats, cola de etiquetado, timeline, DNA), QuickTagModal 2s con señal de tracking (portfolio_view, concern si tags emocionales), migracion Supabase aplicada. Pendiente: Gmail dedicado para que el sync por email funcione en prod
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

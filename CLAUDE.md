@@ -184,7 +184,9 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 ### Tracking (personalizacion adaptativa):
 - POST /api/tracking/events — ingesta batch de eventos de comportamiento (best-effort si no existen tablas)
 - GET /api/tracking/profile — perfil interes/concern por tema con recency decay (14d half-life)
-- SQL de behavior_events + interest_profile en el docstring de app/api/tracking.py; cron nocturno PENDIENTE
+- Tablas behavior_events + interest_profile YA CREADAS en Supabase (7 jul 2026, SQL de referencia en el docstring de app/api/tracking.py). Verificado E2E en prod: POST events → stored, GET /profile → scores
+- Cron nocturno PENDIENTE — mientras tanto GET /profile recalcula al vuelo; user_id aun null (sin auth en el endpoint)
+- Nota asyncpg + pooler Supabase: usar statement_cache_size=0 (pgbouncer)
 - POST /api/chat/analyze — Analiza noticia concreta + impacto en portfolio
 - System prompt: CIO de elite, directo, fundamentado, anti sesgo confirmacion, paralelos historicos
 - Model: claude-sonnet-4-20250514, max_tokens 2048-4000
@@ -312,7 +314,7 @@ La INFORMACION es el core de la app. Todo lo demas es secundario. Si la informac
 - Rediseño periodico premium de /resumen, /semanal y /semanal/resumen (jul 2026): articulos extensos con charts SVG animados, dashboard asimetrico con modales, mock data coherente entre las 3 paginas (semana 29 jun - 3 jul 2026)
 - Fuentes clickeables + sistema de documentos (7 jul 2026): SourceLink/SourceModal en 4 paginas, "Mis Documentos" en /ajustes (Gmail mock, drag&drop, URL, Synpulse), "Mis documentos" en /resumen, contrato backend en docs/documentos-pipeline.md
 - Rediseno integral 7 jul 2026: resumenes adaptativos (prompts backend ~1h/~2h+ + endpoint briefing-semanal + ReadingTime dinamico + 6 secciones nuevas entre ambos articulos), /ajustes modular con 8 sub-paginas y heroes intencionales, SourceLink hover azul premium
-- Personalizacion adaptativa (7 jul 2026): tracking implicito (clicks fuentes, dwell, save, expand) + explicito opcional (SundayCheckin, TopicPulse), perfil interes/cartera con decay, inyeccion en prompts del briefing, transparencia y toggle en /ajustes/intereses. Pendiente: tablas Supabase (SQL en tracking.py), user_id real, cron nocturno
+- Personalizacion adaptativa (7 jul 2026): tracking implicito (clicks fuentes, dwell, save, expand) + explicito opcional (SundayCheckin, TopicPulse), perfil interes/cartera con decay, inyeccion en prompts del briefing, transparencia y toggle en /ajustes/intereses. Tablas Supabase creadas y verificadas E2E en prod. Pendiente: user_id real, cron nocturno, frontend pasando profileForPrompt() al briefing real
 
 ## Notas Windows
 - Shell: Git Bash (usar sintaxis Unix)

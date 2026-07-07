@@ -149,7 +149,7 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/aprendizaje` — Investor DNA radar SVG (mock)
 - `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
 - `/semanal/resumen` — Reportaje semanal largo: timeline dia a dia, noticias mayores, sectores, analisis geografico, politica monetaria & dividendos, tecnico con velas, deep dive, perspectiva, ReadingTime dinamico (mock)
-- `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip) (mock)
+- `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip); Seguir/Ignorar/Invertir-en-ficción PERSISTEN via /api/paths (registro automático con precio real del momento) y la sección "El camino no tomado" evalúa qué habría pasado: coste de la inacción vs ahorrado (1.000€ hipotéticos por ignorada), veredictos por decisión, ficción valorada con precios reales. Lib src/lib/paths.ts (fallback demo finpulse-paths-local-v1). Las 5 recomendaciones siguen siendo mock hasta el pipeline real
 - `/journal` — Decision Journal con broker auto-sync: stats (acierto, convicción, % emocional), operaciones detectadas sin etiquetar (banner), QuickTagModal (tags 2s + convicción + tesis opcional), timeline de decisiones con evolución +7/30/90d y evaluación retrospectiva IA, sección sync Revolut (email/CSV/manual), bloque Investor DNA, botón "Vigilar tesis" por decisión (extrae niveles → crea alertas). API real con fallback demo (localStorage finpulse-journal-local-v1). Lib: src/lib/journal.ts; modal: components/journal/QuickTagModal.tsx
 - `/alertas` — Tesis → alertas automáticas: la IA lee tesis (journal/manual), extrae niveles de invalidación y los vigila con precios reales. Stats, alertas disparadas (tesis tocada/rota), tesis bajo vigilancia con barra de margen por color (verde >10% / ámbar 3-10% / rojo <3%), escanear journal, NewThesisModal (analizar tesis → proposals seleccionables → vigilar). AlertsPanel (campana Navbar) conectado: disparadas + activas con margen, badge dinámico = disparadas. Lib: src/lib/alerts.ts (fallback demo localStorage finpulse-alerts-local-v1 + clientExtract heurístico)
 - `/stress-test` — Simulacion crisis (mock)
@@ -193,6 +193,13 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - POST /api/alerts/check — EL VIGILANTE: evalúa activas contra get_quotes (yfinance), dispara las cruzadas (status=triggered + triggered_price/at), actualiza last_price/last_checked_at. Cron PENDIENTE — el frontend lo llama al cargar (loadAlerts)
 - POST /api/alerts/scan-journal — recorre tesis del Decision Journal sin alertas y las crea (una extracción por tesis, dedupe por source_type=journal+source_id)
 - Tabla thesis_alerts creada en Supabase (backend/scripts/migrate_thesis_alerts.py, aplicada 7 jul 2026)
+
+### El camino no tomado (app/api/paths.py):
+- POST /api/paths/decide — registra Seguir/Ignorar con snapshot del precio real (get_quote) en la tabla recommendations (status followed/ignored + price_at_decision + decided_at; fiction_amount opcional)
+- GET /api/paths — decisiones evaluadas live: change_pct desde el snapshot y effect_pct = qué habría dado SEGUIRLA (signo orientado: Vender/Reducir invierten; Comprar/Mantener/Vigilar long)
+- PATCH /api/paths/{id}/fiction — añade/ajusta inversión ficticia; DELETE /api/paths/{id} — deshacer
+- Columnas nuevas en recommendations: name, price_at_decision, decided_at, fiction_amount (scripts/migrate_paths.py, aplicada 7 jul 2026)
+- OJO: status es SAEnum — asignar RecommendationStatus(valor), no el string
 - Los 21 tags del journal y los grupos TAG_GROUPS del frontend deben mantenerse sincronizados; ídem la heurística clientExtract de src/lib/alerts.ts con _heuristic_extract del backend
 
 ### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):

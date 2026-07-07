@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BorderCard from "@/components/BorderCard";
 import Tooltip from "@/components/Tooltip";
 import ImageCarousel from "@/components/ImageCarousel";
 import { SourceChip } from "@/components/article/SourceLink";
+import {
+  loadPaths,
+  decidePath,
+  setPathFiction,
+  undoPath,
+  pathVerdict,
+  type PathDecision,
+} from "@/lib/paths";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -26,16 +34,6 @@ type Recommendation = {
   date: string;
   status: "active" | "followed" | "ignored";
   category: "portfolio" | "opportunity" | "defensive";
-};
-
-type FictionInvestment = {
-  id: string;
-  ticker: string;
-  name: string;
-  entryPrice: number;
-  currentPrice: number;
-  date: string;
-  amount: number;
 };
 
 /* ──────────────────────────────────────────────
@@ -196,11 +194,6 @@ const recommendations: Recommendation[] = [
   },
 ];
 
-const fictionInvestments: FictionInvestment[] = [
-  { id: "f1", ticker: "IBIT", name: "Bitcoin ETF", entryPrice: 42000, currentPrice: 68500, date: "15 enero 2026", amount: 500 },
-  { id: "f2", ticker: "GLD", name: "SPDR Gold Trust", entryPrice: 2050, currentPrice: 2340, date: "1 marzo 2026", amount: 300 },
-];
-
 /* ──────────────────────────────────────────────
    HELPERS
    ────────────────────────────────────────────── */
@@ -245,10 +238,32 @@ function ConvictionDots({ value }: { value: number }) {
    COMPONENTS
    ────────────────────────────────────────────── */
 
-function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r: Recommendation) => void }) {
+function RecommendationCard({
+  r,
+  decidedPath,
+  onFiction,
+  onDecide,
+  onUndo,
+}: {
+  r: Recommendation;
+  decidedPath: PathDecision | null;
+  onFiction: (r: Recommendation) => void;
+  onDecide: (r: Recommendation, decision: "followed" | "ignored") => Promise<void>;
+  onUndo: (path: PathDecision) => Promise<void>;
+}) {
   const [expanded, setExpanded] = useState(false);
-  const [decision, setDecision] = useState<"followed" | "ignored" | null>(null);
+  const [busy, setBusy] = useState(false);
+  const decision = decidedPath?.status ?? null;
   const cat = categoryLabels[r.category];
+
+  const act = async (fn: () => Promise<void>) => {
+    setBusy(true);
+    try {
+      await fn();
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
     <BorderCard padding="p-0" className="cursor-pointer">
@@ -349,14 +364,16 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
               {decision === null ? (
                 <>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setDecision("followed"); }}
-                    className="px-4 py-2 rounded-xl text-xs font-medium bg-[#30d158]/15 text-[#30d158] hover:bg-[#30d158]/25 transition-colors"
+                    disabled={busy}
+                    onClick={(e) => { e.stopPropagation(); act(() => onDecide(r, "followed")); }}
+                    className="px-4 py-2 rounded-xl text-xs font-medium bg-[#30d158]/15 text-[#30d158] hover:bg-[#30d158]/25 transition-colors disabled:opacity-50"
                   >
-                    Seguir recomendación
+                    {busy ? "Registrando…" : "Seguir recomendación"}
                   </button>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setDecision("ignored"); }}
-                    className="px-4 py-2 rounded-xl text-xs font-medium text-[#48484a] hover:text-[#86868b] transition-colors"
+                    disabled={busy}
+                    onClick={(e) => { e.stopPropagation(); act(() => onDecide(r, "ignored")); }}
+                    className="px-4 py-2 rounded-xl text-xs font-medium text-[#48484a] hover:text-[#86868b] transition-colors disabled:opacity-50"
                   >
                     Ignorar
                   </button>
@@ -365,10 +382,14 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
                 <div className="flex items-center gap-3">
                   <span className={`px-4 py-2 rounded-xl text-xs font-semibold ${decision === "followed" ? "bg-[#30d158]/15 text-[#30d158]" : "bg-white/[0.04] text-[#86868b]"}`}>
                     {decision === "followed" ? "✓ Siguiendo esta recomendación" : "Recomendación ignorada"}
+                    {decidedPath?.price_at_decision ? (
+                      <span className="text-[#48484a] font-normal"> · registrada a {decidedPath.price_at_decision.toFixed(2)}</span>
+                    ) : null}
                   </span>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setDecision(null); }}
-                    className="text-xs text-[#48484a] hover:text-[#86868b] transition-colors underline underline-offset-4"
+                    disabled={busy}
+                    onClick={(e) => { e.stopPropagation(); if (decidedPath) act(() => onUndo(decidedPath)); }}
+                    className="text-xs text-[#48484a] hover:text-[#86868b] transition-colors underline underline-offset-4 disabled:opacity-50"
                   >
                     Deshacer
                   </button>
@@ -388,40 +409,95 @@ function RecommendationCard({ r, onFiction }: { r: Recommendation; onFiction: (r
 
 export default function RecomendacionesPage() {
   const [filter, setFilter] = useState<"all" | "portfolio" | "opportunity" | "defensive">("all");
-  const [fictions, setFictions] = useState<FictionInvestment[]>(fictionInvestments);
+  const [paths, setPaths] = useState<PathDecision[]>([]);
+  const [demo, setDemo] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const [showFictionModal, setShowFictionModal] = useState(false);
   const [fictionTarget, setFictionTarget] = useState<Recommendation | null>(null);
   const [fictionAmount, setFictionAmount] = useState("500");
 
   const filtered = filter === "all" ? recommendations : recommendations.filter((r) => r.category === filter);
 
+  const refresh = useCallback(async () => {
+    const data = await loadPaths();
+    setPaths(data.paths);
+    setDemo(data.demo);
+  }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  /** Decisión registrada para una recomendación de la lista (match ticker+acción). */
+  const pathFor = (r: Recommendation): PathDecision | null =>
+    paths.find((p) => p.ticker === r.ticker && p.action === r.action) ?? null;
+
+  const handleDecide = async (r: Recommendation, decision: "followed" | "ignored") => {
+    const { path, demo: isDemo } = await decidePath({
+      ticker: r.ticker,
+      name: r.name,
+      action: r.action,
+      conviction: r.conviction,
+      reasoning: r.thesis,
+      decision,
+    });
+    setNotice(
+      path.price_at_decision
+        ? `Decisión registrada con ${r.ticker} a ${path.price_at_decision.toFixed(2)} — el camino no tomado la evaluará con precios reales.`
+        : `Decisión registrada${isDemo ? " en local (modo demo)" : ""} — se evaluará cuando haya precios.`
+    );
+    await refresh();
+  };
+
+  const handleUndo = async (path: PathDecision) => {
+    await undoPath(path.id);
+    await refresh();
+  };
+
   const handleAddFiction = (r: Recommendation) => {
     setFictionTarget(r);
     setShowFictionModal(true);
   };
 
-  const confirmFiction = () => {
+  const confirmFiction = async () => {
     if (!fictionTarget) return;
-    setFictions((prev) => [
-      ...prev,
-      {
-        id: `f${Date.now()}`,
+    const amount = parseFloat(fictionAmount) || 500;
+    const existing = pathFor(fictionTarget);
+    if (existing) {
+      await setPathFiction(existing.id, amount);
+    } else {
+      // Simular sin hacerlo en real = camino no tomado con dinero de ficción
+      await decidePath({
         ticker: fictionTarget.ticker,
         name: fictionTarget.name,
-        entryPrice: 100,
-        currentPrice: 100,
-        date: "12 mayo 2026",
-        amount: parseFloat(fictionAmount) || 500,
-      },
-    ]);
+        action: fictionTarget.action,
+        conviction: fictionTarget.conviction,
+        reasoning: fictionTarget.thesis,
+        decision: "ignored",
+        fiction_amount: amount,
+      });
+    }
     setShowFictionModal(false);
     setFictionTarget(null);
     setFictionAmount("500");
+    setNotice(`${amount} € en ficción sobre ${fictionTarget.ticker} — su evolución usa precios reales.`);
+    await refresh();
   };
 
-  const totalFictionValue = fictions.reduce((s, f) => s + f.amount * (f.currentPrice / f.entryPrice), 0);
-  const totalFictionInvested = fictions.reduce((s, f) => s + f.amount, 0);
+  const fictionPaths = paths.filter((p) => p.fiction_amount);
+  const totalFictionInvested = fictionPaths.reduce((s, p) => s + (p.fiction_amount || 0), 0);
+  const totalFictionValue = fictionPaths.reduce((s, p) => s + (p.fiction_value ?? p.fiction_amount ?? 0), 0);
   const fictionPnL = totalFictionValue - totalFictionInvested;
+
+  // El coste de la inacción: 1.000 € hipotéticos por cada recomendación ignorada
+  const HYPOTHETICAL = 1000;
+  const evaluated = paths.filter((p) => p.status === "ignored" && p.effect_pct !== null);
+  const costOfInaction = evaluated
+    .filter((p) => (p.effect_pct || 0) > 0)
+    .reduce((s, p) => s + (HYPOTHETICAL * (p.effect_pct || 0)) / 100, 0);
+  const savedByIgnoring = evaluated
+    .filter((p) => (p.effect_pct || 0) < 0)
+    .reduce((s, p) => s + (HYPOTHETICAL * Math.abs(p.effect_pct || 0)) / 100, 0);
 
   return (
     <main className="min-h-screen overflow-x-hidden">
@@ -493,76 +569,165 @@ export default function RecomendacionesPage() {
           ))}
         </div>
 
+        {/* Aviso */}
+        {notice && (
+          <div className="mb-6 flex items-center justify-between gap-4 bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3">
+            <p className="text-xs text-[#c8c8cd]">{notice}</p>
+            <button onClick={() => setNotice(null)} className="text-[10px] uppercase tracking-[0.15em] font-semibold text-[#48484a] hover:text-[#86868b] shrink-0">
+              Cerrar
+            </button>
+          </div>
+        )}
+
         {/* Recommendations list */}
         <div className="space-y-4 mb-16">
           {filtered.map((r) => (
-            <RecommendationCard key={r.id} r={r} onFiction={handleAddFiction} />
+            <RecommendationCard
+              key={r.id}
+              r={r}
+              decidedPath={pathFor(r)}
+              onFiction={handleAddFiction}
+              onDecide={handleDecide}
+              onUndo={handleUndo}
+            />
           ))}
         </div>
 
-        {/* Fiction investments section */}
+        {/* El camino no tomado */}
         <div className="border-t border-white/[0.04] pt-10">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
             <div>
-              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-1">Inversiones en ficción</h2>
-              <p className="text-xs text-[#86868b]">Seguimiento de inversiones simuladas — sin dinero real</p>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80 mb-1">El camino no tomado</h2>
+              <p className="text-xs text-[#86868b]">
+                Cada Seguir/Ignorar queda registrado con el precio real del momento. Esto es lo que habría pasado.
+                {demo && <span className="text-[#ffd60a]"> · Modo demo</span>}
+              </p>
             </div>
-            <BorderCard padding="p-3">
-              <div className="flex items-center gap-4">
-                <div>
-                  <p className="text-[10px] text-[#48484a] uppercase tracking-wider">Invertido</p>
-                  <p className="text-sm font-semibold">{totalFictionInvested.toLocaleString("es-ES")} €</p>
+            {(costOfInaction > 0 || savedByIgnoring > 0) && (
+              <BorderCard padding="p-3">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <Tooltip text="Con 1.000 € hipotéticos por cada recomendación ignorada que luego funcionó.">
+                      <p className="text-[10px] text-[#48484a] uppercase tracking-wider border-b border-dashed border-[#48484a]/30">Coste de la inacción</p>
+                    </Tooltip>
+                    <p className="text-sm font-semibold text-[#ff453a]">−{costOfInaction.toFixed(0)} €</p>
+                  </div>
+                  <div className="w-[1px] h-6 bg-white/[0.06]" />
+                  <div>
+                    <Tooltip text="Con 1.000 € hipotéticos por cada recomendación ignorada que habría salido mal.">
+                      <p className="text-[10px] text-[#48484a] uppercase tracking-wider border-b border-dashed border-[#48484a]/30">Ahorrado al ignorar</p>
+                    </Tooltip>
+                    <p className="text-sm font-semibold text-[#30d158]">+{savedByIgnoring.toFixed(0)} €</p>
+                  </div>
                 </div>
-                <div className="w-[1px] h-6 bg-white/[0.06]" />
-                <div>
-                  <p className="text-[10px] text-[#48484a] uppercase tracking-wider">P&L</p>
-                  <p className={`text-sm font-semibold ${fictionPnL >= 0 ? "text-[#30d158]" : "text-[#ff453a]"}`}>
-                    {fictionPnL >= 0 ? "+" : ""}{fictionPnL.toFixed(2)} €
-                  </p>
-                </div>
-              </div>
-            </BorderCard>
+              </BorderCard>
+            )}
           </div>
 
-          <div className="space-y-3">
-            {fictions.map((f) => {
-              const pnl = ((f.currentPrice - f.entryPrice) / f.entryPrice) * 100;
-              const profit = f.amount * (f.currentPrice / f.entryPrice) - f.amount;
+          <div className="space-y-3 mt-6">
+            {paths.map((p) => {
+              const verdict = pathVerdict(p);
+              const isBuy = !p.action.toLowerCase().startsWith("vender") && !p.action.toLowerCase().startsWith("reducir");
               return (
-                <BorderCard key={f.id} padding="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-white/[0.04] flex items-center justify-center border border-dashed border-white/[0.15]">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <circle cx="6" cy="6" r="5" stroke="#86868b" strokeWidth="1" strokeDasharray="2 1.5" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium">{f.ticker}</p>
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-[#48484a] border border-dashed border-white/[0.1]">ficción</span>
-                        </div>
-                        <p className="text-xs text-[#48484a]">{f.name} — desde {f.date}</p>
-                      </div>
+                <BorderCard key={p.id} padding="p-4">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${p.status === "followed" ? "bg-[#30d158]/10 text-[#30d158]" : "bg-white/[0.05] text-[#86868b]"}`}>
+                      {p.status === "followed" ? "Seguida" : "Ignorada"}
+                    </span>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-lg ${actionColors[p.action] || "bg-white/5 text-[#f5f5f7]"}`}>{p.action}</span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium">{p.ticker}</p>
+                      <p className="text-[11px] text-[#48484a] truncate">{p.name || p.reasoning.slice(0, 60)}</p>
                     </div>
-                    <div className="text-right">
-                      <p className={`text-sm font-semibold ${pnl >= 0 ? "text-[#30d158]" : "text-[#ff453a]"}`}>
-                        {pnl >= 0 ? "+" : ""}{pnl.toFixed(1)}%
-                      </p>
-                      <p className="text-xs text-[#48484a]">
-                        {profit >= 0 ? "+" : ""}{profit.toFixed(2)} € de {f.amount} €
-                      </p>
+                    <div className="text-xs text-[#86868b]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                      {p.price_at_decision ? (
+                        <>
+                          {p.price_at_decision.toFixed(2)} <span className="text-[#48484a]">→</span>{" "}
+                          {p.current_price ? p.current_price.toFixed(2) : "…"}
+                        </>
+                      ) : (
+                        <span className="text-[#48484a]">sin precio de referencia</span>
+                      )}
+                    </div>
+                    <div className="ml-auto flex items-center gap-4">
+                      {p.effect_pct !== null && (
+                        <div className="text-right">
+                          <p className={`text-sm font-semibold ${p.effect_pct >= 0 ? "text-[#30d158]" : "text-[#ff453a]"}`} style={{ fontVariantNumeric: "tabular-nums" }}>
+                            {p.effect_pct >= 0 ? "+" : ""}{p.effect_pct.toFixed(1)}%
+                          </p>
+                          <p className="text-[10px] text-[#48484a]">seguirla habría dado</p>
+                        </div>
+                      )}
+                      <span
+                        className={`text-[10px] px-2.5 py-1 rounded-full font-semibold ${
+                          verdict.good === true
+                            ? "bg-[#30d158]/10 text-[#30d158]"
+                            : verdict.good === false
+                            ? "bg-[#ff453a]/10 text-[#ff453a]"
+                            : "bg-white/[0.04] text-[#86868b]"
+                        }`}
+                      >
+                        {verdict.label}
+                      </span>
+                      <button
+                        onClick={() => handleUndo(p)}
+                        aria-label="Eliminar registro"
+                        title="Eliminar registro"
+                        className="w-6 h-6 rounded-full border border-white/[0.1] flex items-center justify-center text-[#48484a] hover:text-[#f5f5f7] hover:border-white/30 transition-all"
+                      >
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <path d="M6 6l12 12M18 6L6 18" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
+                  {p.fiction_amount ? (
+                    <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center gap-3">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-[#48484a] border border-dashed border-white/[0.1]">ficción</span>
+                      <p className="text-xs text-[#86868b]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {p.fiction_amount.toLocaleString("es-ES")} € simulados{" "}
+                        {p.fiction_value !== null && (
+                          <>
+                            → <span className={p.fiction_value >= p.fiction_amount ? "text-[#30d158]" : "text-[#ff453a]"}>
+                              {p.fiction_value.toLocaleString("es-ES")} €
+                            </span>{" "}
+                            {isBuy ? "hoy" : "hoy (posición corta simulada)"}
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  ) : null}
                 </BorderCard>
               );
             })}
           </div>
 
-          {fictions.length === 0 && (
+          {paths.length === 0 && (
             <div className="text-center py-12 text-[#48484a]">
-              <p className="text-sm">No tienes inversiones en ficción</p>
-              <p className="text-xs mt-1">Pulsa &ldquo;Invertir en ficción&rdquo; en cualquier recomendación</p>
+              <p className="text-sm">Aún no hay decisiones registradas</p>
+              <p className="text-xs mt-1">Pulsa Seguir, Ignorar o &ldquo;Invertir en ficción&rdquo; en cualquier recomendación</p>
+            </div>
+          )}
+
+          {/* Resumen ficción */}
+          {fictionPaths.length > 0 && (
+            <div className="mt-8 flex items-center justify-between">
+              <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-muted/80">Cartera de ficción</p>
+              <BorderCard padding="p-3">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="text-[10px] text-[#48484a] uppercase tracking-wider">Invertido</p>
+                    <p className="text-sm font-semibold">{totalFictionInvested.toLocaleString("es-ES")} €</p>
+                  </div>
+                  <div className="w-[1px] h-6 bg-white/[0.06]" />
+                  <div>
+                    <p className="text-[10px] text-[#48484a] uppercase tracking-wider">P&L</p>
+                    <p className={`text-sm font-semibold ${fictionPnL >= 0 ? "text-[#30d158]" : "text-[#ff453a]"}`}>
+                      {fictionPnL >= 0 ? "+" : ""}{fictionPnL.toFixed(2)} €
+                    </p>
+                  </div>
+                </div>
+              </BorderCard>
             </div>
           )}
         </div>

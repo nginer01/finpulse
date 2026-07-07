@@ -143,6 +143,7 @@ class Recommendation(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     ticker: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    name: Mapped[str | None] = mapped_column(String(200), nullable=True)
     action: Mapped[str] = mapped_column(String(100))
     conviction: Mapped[int] = mapped_column(Integer)  # 1-10
     reasoning: Mapped[str] = mapped_column(Text)
@@ -150,6 +151,10 @@ class Recommendation(Base):
     contra_arguments: Mapped[str] = mapped_column(Text)
     status: Mapped[str] = mapped_column(SAEnum(RecommendationStatus), default=RecommendationStatus.PENDING)
     outcome: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # El camino no tomado: snapshot al decidir para evaluar "qué habría pasado"
+    price_at_decision: Mapped[float | None] = mapped_column(Float, nullable=True)
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    fiction_amount: Mapped[float | None] = mapped_column(Float, nullable=True)  # € simulados si "invertir en ficción"
     date: Mapped[date] = mapped_column(Date)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 

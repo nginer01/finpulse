@@ -148,7 +148,8 @@ async def ingest(
         )
         db.add(thread)
         await db.flush()  # id para la entry
-        thread.entries = []
+        # OJO: no asignar thread.entries — dispararía un lazy load síncrono (MissingGreenlet)
+        existing_entries: list[ThreadEntry] = []
     else:
         # El estado actual se REEMPLAZA (no se acumula texto viejo)
         thread.title = data.title.strip()
@@ -160,11 +161,12 @@ async def ingest(
             thread.tickers = data.tickers
         if thread.status == "dormant":
             thread.status = "active"  # un tema dormido que vuelve, revive
+        existing_entries = list(thread.entries)  # cargadas via selectinload
 
     if data.entry:
         dup = any(
             e.date == data.entry.date and e.headline.strip() == data.entry.headline.strip()
-            for e in thread.entries
+            for e in existing_entries
         )
         if not dup:
             db.add(ThreadEntry(
@@ -181,9 +183,13 @@ async def ingest(
 
     await db.commit()
 
-    # Recargar con entries frescas
+    # Recargar con entries frescas (populate_existing: el identity map devolvería
+    # la colección cacheada de antes del commit, sin la entry nueva)
     result = await db.execute(
-        select(Thread).where(Thread.id == thread.id).options(selectinload(Thread.entries))
+        select(Thread)
+        .where(Thread.id == thread.id)
+        .options(selectinload(Thread.entries))
+        .execution_options(populate_existing=True)
     )
     return _to_out(result.scalar_one())
 

@@ -168,6 +168,28 @@ class RecommendationRequest(BaseModel):
 
 class BriefingRequest(BaseModel):
     news_context: str | None = None
+    # Perfil adaptativo (de GET /api/tracking/profile o del agregado local del frontend)
+    deepen_topics: list[str] | None = None      # alto interestScore → profundizar
+    portfolio_topics: list[str] | None = None   # alto concernScore → cubrir SIEMPRE primero
+
+
+def _personalization_block(data: "BriefingRequest") -> str:
+    """Inyecta el perfil de intereses del usuario en el prompt del briefing."""
+    if not data.deepen_topics and not data.portfolio_topics:
+        return ""
+    lines = ["\nPERFIL ADAPTATIVO DEL USUARIO (aprendido de su comportamiento):"]
+    if data.deepen_topics:
+        lines.append(
+            f"- PROFUNDIZA especialmente en estos temas de alto interés: {', '.join(data.deepen_topics)}. "
+            "Más análisis, más contexto, más fuentes en ellos."
+        )
+    if data.portfolio_topics:
+        lines.append(
+            f"- Cubre SIEMPRE con detalle y prioridad lo que afecta a su cartera: {', '.join(data.portfolio_topics)} "
+            "(aunque su interés de aprendizaje sea bajo — afecta a su dinero)."
+        )
+    lines.append("- El resto de temas: resúmelos brevemente. Nunca omitas algo crítico de su cartera.")
+    return "\n".join(lines)
 
 
 def _get_client():
@@ -243,6 +265,7 @@ async def generate_briefing(data: BriefingRequest):
     content = "Genera el briefing diario de mercados para hoy."
     if data.news_context:
         content = f"Noticias y datos del día:\n{data.news_context}\n\nCon esta información, genera el briefing diario completo."
+    content += _personalization_block(data)
 
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
@@ -264,6 +287,7 @@ async def generate_weekly_briefing(data: BriefingRequest):
     content = "Genera el resumen semanal completo de mercados."
     if data.news_context:
         content = f"Noticias y datos de la semana:\n{data.news_context}\n\nCon esta información, genera el resumen semanal completo."
+    content += _personalization_block(data)
 
     response = client.messages.create(
         model="claude-sonnet-4-20250514",

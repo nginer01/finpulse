@@ -11,6 +11,7 @@ export interface SettingsSection {
 export const SETTINGS_SECTIONS: SettingsSection[] = [
   { slug: "perfil", title: "Perfil & Cuenta", short: "Perfil", desc: "Identidad, credenciales y seguridad de acceso", icon: "user" },
   { slug: "fuentes", title: "Fuentes de Información", short: "Fuentes", desc: "Gmail, documentos, carpeta Synpulse y suscripciones", icon: "mail" },
+  { slug: "intereses", title: "Perfil de Intereses", short: "Intereses", desc: "Qué aprende la IA de ti — transparente y desactivable", icon: "lens" },
   { slug: "notificaciones", title: "Notificaciones", short: "Notificaciones", desc: "Alertas, emails y frecuencia de avisos", icon: "bell" },
   { slug: "tema", title: "Tema Visual", short: "Tema", desc: "Modo claro/oscuro, contraste y tamaño de lectura", icon: "theme" },
   { slug: "privacidad", title: "Privacidad & Datos", short: "Privacidad", desc: "Permisos, exportación GDPR y zona de peligro", icon: "shield" },

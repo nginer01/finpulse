@@ -19,6 +19,7 @@ import { P, H2, Strong } from "@/components/article/Typography";
 import SourceLink from "@/components/article/SourceLink";
 import DocumentsPanel from "@/components/documents/DocumentsPanel";
 import ReadingTime from "@/components/article/ReadingTime";
+import { DwellTracker, SundayCheckin, TopicPulse } from "@/components/tracking/Trackers";
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -128,10 +129,12 @@ export default function ResumenDiario() {
 
           {/* ==================== COLUMNA ARTÍCULO ==================== */}
           <article className="max-w-[760px] min-w-0">
+            <DwellTracker />
+            <SundayCheckin />
 
             {/* ---------- 1. TOP STORY ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="macro EEUU">
                 <Kicker icon="newspaper">Top Story</Kicker>
                 <H2>El mercado laboral entierra el recorte de julio — y a nadie le importa</H2>
                 <P className="first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground">
@@ -181,7 +184,7 @@ export default function ResumenDiario() {
 
             {/* ---------- 2. MERCADOS ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="renta variable EEUU" data-track-tickers="VUAA,IWDA">
                 <Kicker icon="trend">Mercados</Kicker>
                 <H2>Récords en Nueva York, calma tensa en Europa</H2>
                 <P>
@@ -229,7 +232,7 @@ export default function ResumenDiario() {
 
             {/* ---------- 3. SECTORES ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="semiconductores" data-track-tickers="SEMI">
                 <Kicker icon="sectors">Sectores en movimiento</Kicker>
                 <H2>Los chips tiran del carro, la energía se queda sola</H2>
                 <P>
@@ -261,6 +264,9 @@ export default function ResumenDiario() {
                   clásico de un mercado en máximos con volatilidad baja: el dinero sale de lo aburrido y persigue lo que ya sube.
                   Funciona — hasta que deja de hacerlo.
                 </P>
+                <div className="mt-8">
+                  <TopicPulse topic="semiconductores" />
+                </div>
               </section>
             </Reveal>
 
@@ -309,7 +315,7 @@ export default function ResumenDiario() {
 
             {/* ---------- 5. ANÁLISIS ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="política monetaria">
                 <Kicker icon="lens">Análisis</Kicker>
                 <H2>Por qué el mercado celebra malas noticias para los recortes</H2>
                 <P>
@@ -345,7 +351,7 @@ export default function ResumenDiario() {
 
             {/* ---------- 6. POLÍTICA & ECONOMÍA GLOBAL ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="aranceles" data-track-tickers="IWDA,VUAA">
                 <Kicker icon="compass">Política &amp; economía global</Kicker>
                 <H2>Washington marca el paso, Fráncfort respira</H2>
                 <P>
@@ -369,6 +375,9 @@ export default function ResumenDiario() {
                   con la Fed en pausa es presión estructural al alza para el tramo largo de la curva — el 10 años en 4,34% puede
                   parecer alto, pero el suelo de esa cifra lo pone la oferta, no solo la inflación.
                 </P>
+                <div className="mt-8">
+                  <TopicPulse topic="aranceles" />
+                </div>
               </section>
             </Reveal>
 
@@ -466,7 +475,7 @@ export default function ResumenDiario() {
 
             {/* ---------- 9. PERSPECTIVAS ALTERNATIVAS ---------- */}
             <Reveal>
-              <section>
+              <section data-track-topic="volatilidad" data-track-tickers="VUAA" data-track-negative="1">
                 <Kicker icon="alert">Perspectivas alternativas</Kicker>
                 <H2>El caso contrarian: qué tendría que pasar para que esto salga mal</H2>
                 <P>

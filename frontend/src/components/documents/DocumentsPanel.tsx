@@ -155,7 +155,10 @@ export default function DocumentsPanel({ limit = 6 }: { limit?: number }) {
           <button
             key={d.id}
             type="button"
-            onClick={() => setOpen(d)}
+            onClick={() => {
+              setOpen(d);
+              import("@/lib/tracking").then(({ track }) => track({ eventType: "expand", topic: d.tags[0] || d.title, tickers: d.tickers }));
+            }}
             className={`w-full text-left flex items-start gap-4 sm:gap-5 px-5 sm:px-7 py-5 hover:bg-white/[0.03] transition-colors duration-300 cursor-pointer ${
               i > 0 ? "border-t border-white/[0.06]" : ""
             }`}

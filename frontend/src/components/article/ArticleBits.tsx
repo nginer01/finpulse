@@ -392,7 +392,10 @@ export function ShareBar({ title, storageKey }: { title: string; storageKey: str
   const toggleSave = () => {
     try {
       if (saved) localStorage.removeItem(`finpulse-saved-${storageKey}`);
-      else localStorage.setItem(`finpulse-saved-${storageKey}`, "1");
+      else {
+        localStorage.setItem(`finpulse-saved-${storageKey}`, "1");
+        import("@/lib/tracking").then(({ track }) => track({ eventType: "save", topic: storageKey.startsWith("semanal") ? "resumen semanal" : "briefing diario" }));
+      }
       window.dispatchEvent(new Event(SAVED_EVENT));
     } catch {}
   };

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { SOURCES, SOURCE_TYPE_LABEL, findSourceByName, type SourceRef, type SourceType } from "@/lib/sources";
+import { trackSourceClick } from "@/lib/tracking";
 
 const typeColor: Record<SourceType, string> = {
   newsletter: "border-blue-400/30 text-blue-300",
@@ -119,7 +120,10 @@ export default function SourceLink({
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          trackSourceClick(sourceId, source.name);
+          setOpen(true);
+        }}
         className={`group/sl inline text-left cursor-pointer text-foreground font-medium rounded-[3px] border-b border-transparent px-0.5 -mx-0.5 transition-all duration-300 ease-out hover:text-[#6cb2ff] hover:bg-[rgba(0,102,204,0.12)] hover:border-[#6cb2ff] ${className}`}
         title={`Ver fuente: ${source.name}`}
       >
@@ -165,6 +169,7 @@ export function SourceChip({ name, sourceId }: { name: string; sourceId?: string
         type="button"
         onClick={(e) => {
           e.stopPropagation();
+          trackSourceClick(source.id, source.name);
           setOpen(true);
         }}
         className={`text-[10px] uppercase tracking-[0.1em] font-medium px-3 py-1 rounded-full border cursor-pointer transition-all duration-300 hover:text-[#6cb2ff] hover:border-[#6cb2ff]/60 hover:bg-[rgba(0,102,204,0.1)] ${cls}`}

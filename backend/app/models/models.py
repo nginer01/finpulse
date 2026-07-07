@@ -154,6 +154,29 @@ class Recommendation(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
+# ── Thesis Alerts (tesis → alertas de invalidación) ──
+
+class ThesisAlert(Base):
+    __tablename__ = "thesis_alerts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    ticker: Mapped[str] = mapped_column(String(20))
+    thesis_summary: Mapped[str] = mapped_column(Text)  # la tesis que se vigila, resumida
+    source_type: Mapped[str] = mapped_column(String(20), default="manual")  # journal / document / manual
+    source_id: Mapped[int | None] = mapped_column(Integer, nullable=True)  # decision.id si source_type=journal
+    condition: Mapped[str] = mapped_column(String(20))  # price_below / price_above
+    level: Mapped[float] = mapped_column(Float)
+    severity: Mapped[str] = mapped_column(String(20), default="invalidacion")  # aviso / invalidacion
+    rationale: Mapped[str] = mapped_column(Text, default="")  # por qué este nivel toca la tesis
+    status: Mapped[str] = mapped_column(String(20), default="active")  # active / triggered / dismissed
+    triggered_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    triggered_price: Mapped[float | None] = mapped_column(Float, nullable=True)
+    last_price: Mapped[float | None] = mapped_column(Float, nullable=True)
+    last_checked_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
 # ── Tracking Topics ──
 
 class TrackingTopic(Base):

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import AlertsPanel, { AlertsBadge } from "./AlertsPanel";
 import SearchModal from "./SearchModal";
+import { loadAlerts } from "@/lib/alerts";
 
 type NavChild = { label: string; href: string };
 type NavGroup = { label: string; href: string; children?: NavChild[] };
@@ -25,6 +26,7 @@ const NAV_GROUPS: NavGroup[] = [
     href: "/portfolio",
     children: [
       { label: "Journal", href: "/journal" },
+      { label: "Alertas", href: "/alertas" },
       { label: "Comparador", href: "/comparador" },
       { label: "Stress Test", href: "/stress-test" },
     ],
@@ -50,6 +52,15 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [alertCount, setAlertCount] = useState(0);
+
+  // Badge: alertas de tesis disparadas pendientes de revisar
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    loadAlerts()
+      .then((d) => setAlertCount(d.alerts.filter((a) => a.status === "triggered").length))
+      .catch(() => {});
+  }, [isLoggedIn]);
 
   // Close the mobile menu on navigation
   useEffect(() => {
@@ -163,7 +174,7 @@ export default function Navbar() {
                 <path d="M12.5 12.5L16 16" stroke="#86868b" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
-            <AlertsBadge count={3} onClick={() => setAlertsOpen(!alertsOpen)} />
+            <AlertsBadge count={alertCount} onClick={() => setAlertsOpen(!alertsOpen)} />
             <Link
               href="/ajustes"
               className={`hidden lg:block p-1.5 rounded-lg transition-colors ${

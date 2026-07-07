@@ -150,7 +150,8 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - `/semanal` — Dashboard semanal: grid asimetrico 12-col, hero card con contadores animados, cards clickables con modal de detalle, selector de semana con 2 datasets (mock)
 - `/semanal/resumen` — Reportaje semanal largo: timeline dia a dia, noticias mayores, sectores, analisis geografico, politica monetaria & dividendos, tecnico con velas, deep dive, perspectiva, ReadingTime dinamico (mock)
 - `/recomendaciones` — Recomendaciones IA con fuentes clickeables (SourceChip) (mock)
-- `/journal` — Decision Journal con broker auto-sync: stats (acierto, convicción, % emocional), operaciones detectadas sin etiquetar (banner), QuickTagModal (tags 2s + convicción + tesis opcional), timeline de decisiones con evolución +7/30/90d y evaluación retrospectiva IA, sección sync Revolut (email/CSV/manual), bloque Investor DNA. API real con fallback demo (localStorage finpulse-journal-local-v1). Lib: src/lib/journal.ts; modal: components/journal/QuickTagModal.tsx
+- `/journal` — Decision Journal con broker auto-sync: stats (acierto, convicción, % emocional), operaciones detectadas sin etiquetar (banner), QuickTagModal (tags 2s + convicción + tesis opcional), timeline de decisiones con evolución +7/30/90d y evaluación retrospectiva IA, sección sync Revolut (email/CSV/manual), bloque Investor DNA, botón "Vigilar tesis" por decisión (extrae niveles → crea alertas). API real con fallback demo (localStorage finpulse-journal-local-v1). Lib: src/lib/journal.ts; modal: components/journal/QuickTagModal.tsx
+- `/alertas` — Tesis → alertas automáticas: la IA lee tesis (journal/manual), extrae niveles de invalidación y los vigila con precios reales. Stats, alertas disparadas (tesis tocada/rota), tesis bajo vigilancia con barra de margen por color (verde >10% / ámbar 3-10% / rojo <3%), escanear journal, NewThesisModal (analizar tesis → proposals seleccionables → vigilar). AlertsPanel (campana Navbar) conectado: disparadas + activas con margen, badge dinámico = disparadas. Lib: src/lib/alerts.ts (fallback demo localStorage finpulse-alerts-local-v1 + clientExtract heurístico)
 - `/stress-test` — Simulacion crisis (mock)
 - `/comparador` — Comparacion activos (mock)
 - `/onboarding` — Wizard 5 pasos (mock)
@@ -185,6 +186,14 @@ This project uses Next.js 16 which has breaking changes vs training data. ALWAYS
 - GET /api/journal/pending — operaciones sin decisión etiquetada (cola del QuickTagModal)
 - GET /api/journal/stats — total/acierto/convicción media/tags más usados/mejor-peor ticker
 - Modelo: operations tiene source (manual/csv/email) + external_id UNIQUE (hash ticker|tipo|qty|precio|fecha); decisions tiene operation_id FK + price_after_90d. Migración: backend/scripts/migrate_journal.py (aplicada 7 jul 2026)
+
+### Tesis → alertas automáticas (app/api/alerts.py):
+- POST /api/alerts/extract — la IA (Claude, fallback heurística regex) lee una tesis y propone condiciones de invalidación: {condition: price_below/above, level, severity: aviso/invalidacion, rationale}. Sin niveles explícitos y con precio actual: defaults ±8% aviso / ±15% invalidación (invertido para tesis bajistas)
+- POST /api/alerts — persistir alertas (lista); GET /api/alerts?status=all|active|triggered|dismissed; PATCH /api/alerts/{id} (dismiss/reactivate)
+- POST /api/alerts/check — EL VIGILANTE: evalúa activas contra get_quotes (yfinance), dispara las cruzadas (status=triggered + triggered_price/at), actualiza last_price/last_checked_at. Cron PENDIENTE — el frontend lo llama al cargar (loadAlerts)
+- POST /api/alerts/scan-journal — recorre tesis del Decision Journal sin alertas y las crea (una extracción por tesis, dedupe por source_type=journal+source_id)
+- Tabla thesis_alerts creada en Supabase (backend/scripts/migrate_thesis_alerts.py, aplicada 7 jul 2026)
+- Los 21 tags del journal y los grupos TAG_GROUPS del frontend deben mantenerse sincronizados; ídem la heurística clientExtract de src/lib/alerts.ts con _heuristic_extract del backend
 
 ### Chat IA — "CEO de JP Morgan" (necesita ANTHROPIC_API_KEY):
 - POST /api/chat/ask — Chat libre con CIO, soporta conversation_history (ultimos 10 msgs) y context

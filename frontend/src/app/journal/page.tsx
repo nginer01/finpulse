@@ -15,6 +15,7 @@ import {
   type JournalDecision,
   type PendingOperation,
 } from "@/lib/journal";
+import { extractFromThesis, createAlerts, clientExtract } from "@/lib/alerts";
 
 /* ── Helpers de presentación ── */
 
@@ -88,6 +89,8 @@ export default function JournalPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [reviewing, setReviewing] = useState<number | null>(null);
+  const [watching, setWatching] = useState<number | null>(null);
+  const [watched, setWatched] = useState<Set<number>>(new Set());
   const [openReview, setOpenReview] = useState<Set<number>>(new Set());
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -145,6 +148,44 @@ export default function JournalPage() {
       setNotice(e instanceof Error ? e.message : "La evaluación IA requiere sesión backend y precios posteriores a la decisión.");
     } finally {
       setReviewing(null);
+    }
+  };
+
+  const handleWatchThesis = async (d: JournalDecision) => {
+    setWatching(d.id);
+    setNotice(null);
+    try {
+      let proposals, summary;
+      try {
+        const res = await extractFromThesis(d.ticker, d.thesis, d.action);
+        proposals = res.proposals;
+        summary = res.thesis_summary;
+      } catch {
+        proposals = clientExtract(d.thesis, d.action);
+        summary = d.thesis.trim().slice(0, 180);
+      }
+      if (!proposals.length) {
+        setNotice("La tesis no contiene niveles de precio claros. Añádelos en Alertas → Nueva tesis vigilada.");
+        return;
+      }
+      const { demo } = await createAlerts(
+        proposals.map((p) => ({
+          ticker: d.ticker,
+          thesis_summary: summary,
+          source_type: "journal" as const,
+          source_id: d.id,
+          condition: p.condition,
+          level: p.level,
+          severity: p.severity,
+          rationale: p.rationale,
+        }))
+      );
+      setWatched((prev) => new Set(prev).add(d.id));
+      setNotice(
+        `${proposals.length} ${proposals.length === 1 ? "nivel de invalidación" : "niveles de invalidación"} bajo vigilancia${demo ? " (modo demo)" : ""} — míralos en Alertas.`
+      );
+    } finally {
+      setWatching(null);
     }
   };
 
@@ -391,6 +432,24 @@ export default function JournalPage() {
                           <Pct entry={d.price} after={d.price_after_30d} horizon="+30d" />
                           <Pct entry={d.price} after={d.price_after_90d} horizon="+90d" />
                           <span className="ml-auto flex items-center gap-4">
+                            {d.thesis && (
+                              watched.has(d.id) ? (
+                                <Link
+                                  href="/alertas"
+                                  className="text-[10px] uppercase tracking-[0.2em] font-semibold text-green transition-colors duration-300"
+                                >
+                                  ✓ Tesis vigilada
+                                </Link>
+                              ) : (
+                                <button
+                                  onClick={() => handleWatchThesis(d)}
+                                  disabled={watching === d.id}
+                                  className="text-[10px] uppercase tracking-[0.2em] font-semibold text-muted hover:text-foreground transition-colors duration-300 cursor-pointer disabled:opacity-50"
+                                >
+                                  {watching === d.id ? "Extrayendo niveles…" : "Vigilar tesis"}
+                                </button>
+                              )
+                            )}
                             {d.ai_review ? (
                               <button
                                 onClick={() => toggleReview(d.id)}

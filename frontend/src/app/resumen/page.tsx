@@ -1,11 +1,12 @@
 import Link from "next/link";
 import ScrollProgress from "@/components/ScrollProgress";
 import Reveal from "@/components/Reveal";
+import LineReveal from "@/components/LineReveal";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import LineChart from "@/components/charts/LineChart";
 import BarsChart from "@/components/charts/BarsChart";
 import Sparkline from "@/components/charts/Sparkline";
 import {
-  Kicker,
   PullQuote,
   InlineImage,
   VideoCard,
@@ -24,6 +25,25 @@ import QuizSection from "@/components/quiz/QuizSection";
 import Term from "@/components/article/Term";
 import AudioBriefing from "@/components/audio/AudioBriefing";
 import ThreadsSection from "@/components/threads/ThreadsSection";
+
+/* ------------------------------------------------------------------ */
+/*  Eyebrow de sección — (paréntesis) + índice, estilo editorial       */
+/* ------------------------------------------------------------------ */
+
+function SectionEyebrow({ icon, index, children }: { icon: string; index: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-4 mb-7">
+      <span className="w-9 h-9 shrink-0 rounded-full border border-[color:var(--art-ring)] flex items-center justify-center text-muted">
+        <Icon name={icon} className="w-[15px] h-[15px]" />
+      </span>
+      <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-muted whitespace-nowrap">({children})</span>
+      <div className="flex-1 h-[1px] bg-[color:var(--art-hairline)]" />
+      <span className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted shrink-0" style={{ fontVariantNumeric: "tabular-nums" }}>
+        {index}
+      </span>
+    </div>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Mock data — Lunes, 6 de julio de 2026                              */
@@ -87,37 +107,86 @@ const eventos = [
 
 export default function ResumenDiario() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen article-light">
       <ScrollProgress />
 
-      {/* ============ HERO — portada de periódico ============ */}
-      <section className="relative h-[68vh] min-h-[480px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1920&h=1080&fit=crop&q=90"
-          alt="Wall Street en máximos históricos"
-          className="absolute inset-0 w-full h-full object-cover animate-ken-burns"
-        />
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 film-grain opacity-[0.03] pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30" />
+      {/* ============ HERO — portada editorial clara ============ */}
+      <section className="border-b border-[#e5e5e5]">
+        <div className="max-w-[1360px] mx-auto px-6 pt-14 pb-16 sm:pt-20 sm:pb-24">
+          {/* eyebrow + índice */}
+          <div className="flex items-center justify-between mb-10">
+            <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.4em] text-[#5f5f66] font-semibold">
+              (Briefing diario)
+            </span>
+            <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.3em] text-[#86868b] font-semibold" style={{ fontVariantNumeric: "tabular-nums" }}>
+              01 / 10
+            </span>
+          </div>
 
-        <div className="absolute inset-0 flex items-end">
-          <div className="w-full max-w-[1360px] mx-auto px-6 pb-14 sm:pb-20">
-            <div className="animate-fade-in-up">
-              <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.5em] text-white/60 font-semibold mb-6">
-                Briefing diario — Lunes, 6 de julio de 2026
+          <div className="grid lg:grid-cols-[1fr_minmax(0,440px)] gap-12 lg:gap-16 items-end">
+            {/* ---- editorial ---- */}
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#86868b] font-semibold mb-6">
+                Lunes, 6 de julio de 2026
               </p>
-              <h1 className="max-w-[1000px] text-[2.6rem] sm:text-[3.4rem] md:text-[3.8rem] font-extralight text-white tracking-tight leading-[1.08]">
-                Wall Street toca máximos con el empleo de junio; el crudo cede ante la OPEC+
-              </h1>
-              <p className="max-w-[720px] mt-6 text-[15px] sm:text-[16px] text-white/65 leading-[1.7] tracking-wide font-light">
+
+              <LineReveal
+                as="h1"
+                lines={["Wall Street toca máximos", "con el empleo de junio;", "el crudo cede ante la OPEC+"]}
+                className="text-[clamp(30px,4.7vw,48px)] font-medium text-[#1d1d1f] tracking-[-0.01em] leading-[1.12]"
+                lineClassName="pb-[0.06em]"
+              />
+
+              <p className="max-w-[640px] mt-8 text-[19px] sm:text-[20px] leading-[1.7] text-[#33333a]">
                 El S&P 500 cierra la semana en 6.284 puntos tras unas nóminas más fuertes de lo previsto. La Fed gana margen,
                 el petróleo pierde soporte y los aranceles del 9 de julio marcan la agenda.
               </p>
-              <p className="mt-6 text-[12px] text-white/45 tracking-wide">
+
+              <div className="mt-7 text-[12px] text-[#5f5f66] tracking-wide">
                 14 fuentes procesadas · 231 noticias analizadas · <ReadingTime />
-              </p>
+              </div>
+
+              {/* CTAs píldora + enlace con flecha */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-4 mt-10">
+                <a
+                  href="#top-story"
+                  className="inline-flex items-center rounded-full bg-[#1d1d1f] text-white text-[11px] uppercase tracking-[0.25em] font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-px hover:bg-[#333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d1d1f]"
+                >
+                  Leer briefing
+                </a>
+                <a
+                  href="#lo-que-viene"
+                  className="inline-flex items-center rounded-full border border-[#e5e5e5] text-[#1d1d1f] text-[11px] uppercase tracking-[0.25em] font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-px hover:border-[#1d1d1f]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d1d1f]"
+                >
+                  Agenda de la semana
+                </a>
+                <a
+                  href="#analisis"
+                  className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] font-semibold text-[#1d1d1f] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d1d1f]"
+                >
+                  Ver análisis
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    <Icon name="arrow-right" className="w-3.5 h-3.5" />
+                  </span>
+                </a>
+              </div>
             </div>
+
+            {/* ---- chart del día como héroe (tarjeta oscura) ---- */}
+            <Reveal delay={120} direction="scale">
+              <div className="data-card rounded-2xl p-6 sm:p-7">
+                <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-2">S&P 500 · cierre viernes</p>
+                <p className="text-[40px] sm:text-[46px] font-extralight tracking-tight leading-none text-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  <AnimatedCounter value={6284.65} decimals={2} />
+                </p>
+                <p className="text-[13px] font-semibold mt-2.5 text-[color:var(--pnl-up)]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  +0,83% · nuevo máximo histórico
+                </p>
+                <div className="mt-6">
+                  <LineChart data={spWeek} height={170} decimals={0} ariaLabel="Evolución del S&P 500 en la última semana" />
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -125,23 +194,23 @@ export default function ResumenDiario() {
       {/* ============ CUERPO — artículo + sidebar ============ */}
       <div className="max-w-[1360px] mx-auto px-6">
         {/* Breadcrumb */}
-        <div className="py-8 border-b border-white/[0.06]">
+        <div className="py-8 border-b border-[#e5e5e5]">
           <Breadcrumb items={[{ label: "Dashboard", href: "/" }, { label: "Resumen", href: "/resumen" }, { label: "6 julio 2026" }]} />
         </div>
 
         <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-14 xl:gap-20 pt-14 pb-10">
 
           {/* ==================== COLUMNA ARTÍCULO ==================== */}
-          <article className="max-w-[760px] min-w-0">
+          <article className="max-w-[720px] min-w-0">
             <DwellTracker />
             <SundayCheckin />
 
             {/* ---------- 1. TOP STORY ---------- */}
             <Reveal>
-              <section data-track-topic="macro EEUU">
-                <Kicker icon="newspaper">Top Story</Kicker>
+              <section id="top-story" data-track-topic="macro EEUU">
+                <SectionEyebrow icon="newspaper" index="01 / 10">Top Story</SectionEyebrow>
                 <H2>El mercado laboral entierra el recorte de julio — y a nadie le importa</H2>
-                <P className="first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground">
+                <P className="first-letter:text-[64px] first-letter:font-normal first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-[#1d1d1f]">
                   La economía estadounidense creó <SourceLink sourceId="ft-empleo">147.000 empleos</SourceLink> en
                   junio, muy por encima de las 110.000 que esperaba el consenso, y la tasa de paro bajó al 4,1%. En cualquier otro
                   contexto, un dato así habría enfriado a la renta variable — empleo fuerte significa Fed paciente, y Fed paciente
@@ -189,7 +258,7 @@ export default function ResumenDiario() {
             {/* ---------- 2. MERCADOS ---------- */}
             <Reveal>
               <section data-track-topic="renta variable EEUU" data-track-tickers="VUAA,IWDA">
-                <Kicker icon="trend">Mercados</Kicker>
+                <SectionEyebrow icon="trend" index="02 / 10">Mercados</SectionEyebrow>
                 <H2>Récords en Nueva York, calma tensa en Europa</H2>
                 <P>
                   La semana corta por el 4 de julio dejó al <Strong>S&P 500 con un +1,7% semanal</Strong> y al Nasdaq con un +1,6%.
@@ -206,13 +275,13 @@ export default function ResumenDiario() {
                   países que recibirán carta arancelaria esta semana.
                 </P>
 
-                <div className="my-10 rounded-2xl border border-card-border bg-card/40 p-6 sm:p-8">
+                <div className="my-10 rounded-2xl data-card p-6 sm:p-8">
                   <div className="flex items-baseline justify-between mb-5">
                     <div>
                       <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-1.5">S&P 500 — última semana</p>
                       <p className="text-[13px] text-muted">Cierre diario, puntos</p>
                     </div>
-                    <p className="text-[22px] font-extralight text-[#30d158] tracking-tight" style={{ fontVariantNumeric: "tabular-nums" }}>+1,7%</p>
+                    <p className="text-[22px] font-extralight text-[color:var(--pnl-up)] tracking-tight" style={{ fontVariantNumeric: "tabular-nums" }}>+1,7%</p>
                   </div>
                   <LineChart data={spWeek} height={240} decimals={0} ariaLabel="Evolución del S&P 500 en la última semana" />
                 </div>
@@ -237,7 +306,7 @@ export default function ResumenDiario() {
             {/* ---------- 3. SECTORES ---------- */}
             <Reveal>
               <section data-track-topic="semiconductores" data-track-tickers="SEMI">
-                <Kicker icon="sectors">Sectores en movimiento</Kicker>
+                <SectionEyebrow icon="sectors" index="03 / 10">Sectores en movimiento</SectionEyebrow>
                 <H2>Los chips tiran del carro, la energía se queda sola</H2>
                 <P>
                   La dispersión sectorial de la semana cuenta la historia completa del mercado en una sola imagen. En un extremo,
@@ -253,7 +322,7 @@ export default function ResumenDiario() {
                   en el año, el peor del S&P 500.
                 </P>
 
-                <div className="my-10 rounded-2xl border border-card-border bg-card/40 p-6 sm:p-8">
+                <div className="my-10 rounded-2xl data-card p-6 sm:p-8">
                   <div className="flex items-baseline justify-between mb-6">
                     <div>
                       <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-1.5">Performance sectorial — semana</p>
@@ -279,9 +348,9 @@ export default function ResumenDiario() {
             {/* ---------- 4. ACTIVOS DESTACADOS ---------- */}
             <Reveal>
               <section>
-                <Kicker icon="star">Activos destacados</Kicker>
+                <SectionEyebrow icon="star" index="04 / 10">Activos destacados</SectionEyebrow>
                 <H2>Cinco valores que movieron la sesión</H2>
-                <div className="mt-8 rounded-2xl border border-card-border overflow-hidden">
+                <div className="mt-8 rounded-2xl data-card overflow-hidden">
                   {movers.map((m, i) => (
                     <div
                       key={m.ticker}
@@ -319,8 +388,8 @@ export default function ResumenDiario() {
 
             {/* ---------- 5. ANÁLISIS ---------- */}
             <Reveal>
-              <section data-track-topic="política monetaria">
-                <Kicker icon="lens">Análisis</Kicker>
+              <section id="analisis" data-track-topic="política monetaria">
+                <SectionEyebrow icon="lens" index="05 / 10">Análisis</SectionEyebrow>
                 <H2>Por qué el mercado celebra malas noticias para los recortes</H2>
                 <P>
                   Hay una aparente contradicción en la reacción del viernes: el dato de empleo retrasa los recortes de la Fed y aun
@@ -356,7 +425,7 @@ export default function ResumenDiario() {
             {/* ---------- 6. POLÍTICA & ECONOMÍA GLOBAL ---------- */}
             <Reveal>
               <section data-track-topic="aranceles" data-track-tickers="IWDA,VUAA">
-                <Kicker icon="compass">Política &amp; economía global</Kicker>
+                <SectionEyebrow icon="compass" index="06 / 10">Política &amp; economía global</SectionEyebrow>
                 <H2>Washington marca el paso, Fráncfort respira</H2>
                 <P>
                   La semana geopolítica tiene un solo epicentro: las <SourceLink sourceId="polymarket-aranceles">cartas arancelarias que empiezan a salir hoy</SourceLink> de
@@ -390,7 +459,7 @@ export default function ResumenDiario() {
             {/* ---------- 7. PORTFOLIO IMPACT ---------- */}
             <Reveal>
               <section>
-                <Kicker icon="check">Portfolio impact</Kicker>
+                <SectionEyebrow icon="check" index="07 / 10">Portfolio impact</SectionEyebrow>
                 <H2>Qué significa hoy para cada posición</H2>
                 <div className="mt-8 space-y-6">
                   {[
@@ -423,12 +492,12 @@ export default function ResumenDiario() {
                     <div key={p.t} className="flex gap-4">
                       <span
                         className={`mt-2 w-2 h-2 shrink-0 rounded-full ${
-                          p.c === "up" ? "bg-[#30d158]" : p.c === "down" ? "bg-[#ff453a]" : "bg-[#ffd60a]"
+                          p.c === "up" ? "bg-[color:var(--pnl-up)]" : p.c === "down" ? "bg-[color:var(--pnl-down)]" : "bg-[#b8860b]"
                         }`}
                       />
                       <div>
                         <p className="text-[15px] font-medium text-foreground tracking-wide mb-1.5">{p.t}</p>
-                        <p className="text-[15px] leading-[1.8] text-[#b8b8bd] tracking-wide">{p.txt}</p>
+                        <p className="text-[15px] leading-[1.8] text-[color:var(--art-body)] tracking-wide">{p.txt}</p>
                       </div>
                     </div>
                   ))}
@@ -440,8 +509,8 @@ export default function ResumenDiario() {
 
             {/* ---------- 8. LO QUE VIENE ---------- */}
             <Reveal>
-              <section>
-                <Kicker icon="calendar">Lo que viene</Kicker>
+              <section id="lo-que-viene">
+                <SectionEyebrow icon="calendar" index="08 / 10">Lo que viene</SectionEyebrow>
                 <H2>Tres días para el deadline arancelario</H2>
                 <P>
                   La semana se decide entre el miércoles y el jueves: actas de la Fed el día 8 y vencimiento de la pausa arancelaria
@@ -450,7 +519,7 @@ export default function ResumenDiario() {
                   mercado en máximos, con volatilidad en mínimos y posicionamiento largo. No hace falta explicar cómo termina esa
                   combinación si sale mal.
                 </P>
-                <div className="mt-9 space-y-0 rounded-2xl border border-card-border overflow-hidden">
+                <div className="mt-9 space-y-0 rounded-2xl data-card overflow-hidden">
                   {eventos.map((e, i) => (
                     <div
                       key={i}
@@ -487,7 +556,7 @@ export default function ResumenDiario() {
             {/* ---------- 9. PERSPECTIVAS ALTERNATIVAS ---------- */}
             <Reveal>
               <section data-track-topic="volatilidad" data-track-tickers="VUAA" data-track-negative="1">
-                <Kicker icon="alert">Perspectivas alternativas</Kicker>
+                <SectionEyebrow icon="alert" index="09 / 10">Perspectivas alternativas</SectionEyebrow>
                 <H2>El caso contrarian: qué tendría que pasar para que esto salga mal</H2>
                 <P>
                   Todo lo anterior es el consenso, y el consenso está muy cómodo. El caso bajista honesto tiene tres patas. La
@@ -498,8 +567,8 @@ export default function ResumenDiario() {
                 <P className="mt-5">
                   La segunda es de fondo: el mercado laboral es menos sólido de lo que dice el titular. El ADP privado fue
                   negativo por primera vez en dos años y la mitad de las <Term k="nominas">nóminas</Term> de junio las puso el empleo público estatal.
-                  Si esa divergencia se confirma en julio, el recorte de septiembre dejará de ser "por normalización" y empezará
-                  a oler a "por debilidad" — y ese matiz, como vimos en 2024, vale un 5% de índice.
+                  Si esa divergencia se confirma en julio, el recorte de septiembre dejará de ser «por normalización» y empezará
+                  a oler a «por debilidad» — y ese matiz, como vimos en 2024, vale un 5% de índice.
                 </P>
                 <P className="mt-5">
                   La tercera es la concentración: dos tercios de la subida del semestre la explican los mismos diez valores, y
@@ -516,22 +585,26 @@ export default function ResumenDiario() {
             {/* ---------- 10. MIS DOCUMENTOS ---------- */}
             <Reveal>
               <section>
-                <Kicker icon="folder">Mis documentos</Kicker>
+                <SectionEyebrow icon="folder" index="10 / 10">Mis documentos</SectionEyebrow>
                 <H2>Lo que ha llegado a tu bandeja</H2>
                 <P className="mb-9">
                   Newsletters, informes subidos, artículos y notas de tu carpeta Synpulse — procesados por la IA y ordenados por
                   relevancia para tu portfolio. Haz clic en cualquiera para leer el resumen completo.
                 </P>
-                <DocumentsPanel limit={6} />
+                <div className="data-card rounded-2xl p-5 sm:p-6">
+                  <DocumentsPanel limit={6} />
+                </div>
               </section>
             </Reveal>
 
             {/* ---------- CIERRE + ACCIONES ---------- */}
-            <div className="mt-20 pt-10 border-t border-white/[0.06]">
-              <p className="text-[12px] text-muted leading-relaxed mb-8">
+            <div className="mt-20 pt-10 border-t border-[#e5e5e5]">
+              <div className="text-[12px] text-muted leading-relaxed mb-8">
                 Resumen generado a las 9:00 AM del 6 de julio de 2026 · 14 fuentes procesadas · 231 noticias analizadas · 11 vinculadas a tu portfolio
-              </p>
-              <ShareBar title="FinPulse — Briefing del 6 de julio de 2026" storageKey="resumen-2026-07-06" />
+              </div>
+              <div className="sharebar-light">
+                <ShareBar title="FinPulse — Briefing del 6 de julio de 2026" storageKey="resumen-2026-07-06" />
+              </div>
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-12">
                 <Link href="/semanal" className="group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] font-semibold text-muted hover:text-foreground transition-all duration-500">
                   Ver resumen semanal
@@ -554,7 +627,7 @@ export default function ResumenDiario() {
 
             {/* Índices */}
             <Reveal delay={100}>
-              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+              <div className="rounded-2xl data-card p-6">
                 <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-5">Índices — cierre viernes</p>
                 <div className="space-y-4">
                   {indices.map((idx) => (
@@ -582,7 +655,7 @@ export default function ResumenDiario() {
 
             {/* Tu portfolio */}
             <Reveal delay={200}>
-              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+              <div className="rounded-2xl data-card p-6">
                 <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-4">Tu portfolio</p>
                 <p className="text-[34px] font-extralight tracking-tight text-foreground leading-none">
                   13.091<span className="text-[20px] text-muted">,47 €</span>
@@ -618,7 +691,7 @@ export default function ResumenDiario() {
 
             {/* Polymarket */}
             <Reveal delay={300}>
-              <div className="rounded-2xl border border-card-border bg-card/40 p-6">
+              <div className="rounded-2xl data-card p-6">
                 <p className="text-[11px] uppercase tracking-[0.25em] font-semibold text-muted/80 mb-5">Polymarket — probabilidades</p>
                 <div className="space-y-5">
                   {polymarket.map((pm) => (
@@ -640,7 +713,7 @@ export default function ResumenDiario() {
 
             {/* Alerta */}
             <Reveal delay={400}>
-              <div className="rounded-2xl border border-[#ffd60a]/25 bg-card/40 p-6">
+              <div className="rounded-2xl data-card p-6" style={{ borderColor: "rgba(255,214,10,0.25)" }}>
                 <div className="flex items-center gap-3 mb-3 text-[#ffd60a]">
                   <Icon name="alert" className="w-4 h-4" />
                   <p className="text-[11px] uppercase tracking-[0.25em] font-semibold">Alerta activa</p>

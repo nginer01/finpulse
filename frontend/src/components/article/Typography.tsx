@@ -1,13 +1,13 @@
 /* Tipografía de artículo — server-safe, sin hooks */
 
 export function P({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <p className={`text-[17px] leading-[1.85] text-[#c8c8cd] tracking-wide ${className}`}>{children}</p>;
+  return <p className={`text-[17px] leading-[1.85] text-[color:var(--art-body)] tracking-wide ${className}`}>{children}</p>;
 }
 
 export function Lead({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <p
-      className={`text-[17px] leading-[1.85] text-[#c8c8cd] tracking-wide first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground ${className}`}
+      className={`text-[17px] leading-[1.85] text-[color:var(--art-body)] tracking-wide first-letter:text-[64px] first-letter:font-extralight first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1 first-letter:text-foreground ${className}`}
     >
       {children}
     </p>

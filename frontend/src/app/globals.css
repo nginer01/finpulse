@@ -10,6 +10,22 @@
   --card: #1d1d1f;
   --card-border: rgba(255, 255, 255, 0.08);
   --muted: #86868b;
+
+  /* Tokens de artículo — defaults OSCUROS (app). /resumen los reescribe en
+     .article-light; las islas de datos los restauran en .data-card. Cambiar
+     estos defaults romperia el resto de articulos (p.ej. /semanal/resumen). */
+  --art-body: #c8c8cd;
+  --art-bright: #e8e8ed;
+  --art-ring: rgba(255, 255, 255, 0.12);
+  --art-hairline: rgba(255, 255, 255, 0.06);
+  --art-rule: rgba(255, 255, 255, 0.08);
+  --art-rule-strong: rgba(255, 255, 255, 0.25);
+  --pnl-up: #30d158;
+  --pnl-down: #ff453a;
+
+  /* Barra de progreso de scroll — blanco por defecto (sobre app oscura) */
+  --scroll-a: rgba(255, 255, 255, 0.6);
+  --scroll-b: rgba(255, 255, 255, 0.85);
 }
 
 @theme inline {
@@ -123,3 +139,100 @@ h1, h2, h3 {
   100% { opacity: 1; }
 }
 .animate-carousel-fade { animation: carousel-fade 1.2s ease-in-out forwards; }
+
+/* ============================================================
+   /resumen — piel de lectura clara (near-white), local scope
+   ------------------------------------------------------------
+   Reescribe los tokens SOLO dentro de .article-light, de modo
+   que los componentes de artículo compartidos (P, H2, Kicker,
+   PullQuote, DataTip, SectionDivider…) se re-pintan claros aquí
+   sin afectar a /semanal ni al resto de la app.
+   ============================================================ */
+.article-light {
+  /* paleta de lectura */
+  --paper: #f5f5f7;
+  --surface: #ffffff;
+  --hairline: #e5e5e5;
+  --ink: #1d1d1f;
+  --ink-2: #86868b;
+
+  /* re-skin de tokens de la app dentro del artículo claro */
+  --foreground: #1d1d1f;
+  --muted: #5f5f66;
+  --card: #ffffff;
+  --card-border: #e5e5e5;
+
+  /* re-skin de los tokens de artículo */
+  --art-body: #2b2b30;
+  --art-bright: #1d1d1f;
+  --art-ring: rgba(29, 29, 31, 0.14);
+  --art-hairline: rgba(29, 29, 31, 0.09);
+  --art-rule: rgba(29, 29, 31, 0.10);
+  --art-rule-strong: rgba(29, 29, 31, 0.22);
+
+  /* P&L sobre claro: verde/rojo de la landing (mejor contraste) */
+  --pnl-up: #006039;
+  --pnl-down: #c4001a;
+
+  /* barra de progreso en tinta para que se vea sobre el paper */
+  --scroll-a: rgba(29, 29, 31, 0.55);
+  --scroll-b: rgba(29, 29, 31, 0.9);
+
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Voz serif SOLO para las piezas de lectura de /resumen (cuerpo + titulares
+   editoriales). La UI (kickers, breadcrumb, píldoras, labels) sigue en sans. */
+.article-light h1,
+.article-light h2,
+.article-light p,
+.article-light blockquote {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+/* Islas de datos oscuras incrustadas en el lienzo claro. Restauran los tokens
+   oscuros para que charts, cifras y P&L luzcan como en el resto de la app. */
+.data-card {
+  --foreground: #f5f5f7;
+  --muted: #86868b;
+  --card: #1d1d1f;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --art-body: #c8c8cd;
+  --art-bright: #e8e8ed;
+  --art-ring: rgba(255, 255, 255, 0.12);
+  --art-hairline: rgba(255, 255, 255, 0.06);
+  --art-rule: rgba(255, 255, 255, 0.08);
+  --art-rule-strong: rgba(255, 255, 255, 0.25);
+  --pnl-up: #30d158;
+  --pnl-down: #ff453a;
+
+  background: #0b0d11;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f7;
+}
+
+/* Dentro de una isla de datos la tipografía vuelve a sans (cifras tabulares). */
+.data-card,
+.data-card * {
+  font-family: var(--font-sans);
+}
+
+/* ShareBar sobre claro: dale contorno visible a los botones (borde blanco/α
+   es invisible sobre el paper). Solo dentro de /resumen. */
+.article-light .sharebar-light button {
+  border-color: rgba(29, 29, 31, 0.18);
+}
+
+/* Accesibilidad — respeta prefers-reduced-motion en toda la app: neutraliza
+   animaciones y transiciones (Ken Burns, reveals, count-ups, line-reveal). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

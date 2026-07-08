@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 /**
  * Fade-in + translate al entrar en viewport — mismo easing que la landing.
- * Reutilizable en cualquier página de la app.
+ * Reutilizable en cualquier página de la app. Respeta prefers-reduced-motion.
  */
 export default function Reveal({
   children,
@@ -19,8 +20,13 @@ export default function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
+    if (reduce) {
+      const raf = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(raf);
+    }
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -34,7 +40,7 @@ export default function Reveal({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [reduce]);
 
   const transforms: Record<string, string> = {
     up: "translate-y-10",

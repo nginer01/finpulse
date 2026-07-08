@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 export default function AnimatedCounter({
   value,
@@ -20,9 +21,15 @@ export default function AnimatedCounter({
   const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (hasAnimated.current) return;
+    if (reduce) {
+      hasAnimated.current = true;
+      const raf = requestAnimationFrame(() => setDisplay(value));
+      return () => cancelAnimationFrame(raf);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -44,7 +51,7 @@ export default function AnimatedCounter({
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [value, duration]);
+  }, [value, duration, reduce]);
 
   const formatted = display.toLocaleString("es-ES", {
     minimumFractionDigits: decimals,

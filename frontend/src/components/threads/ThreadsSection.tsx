@@ -115,7 +115,7 @@ export default function ThreadsSection() {
   if (!threads || threads.length === 0) return null;
 
   return (
-    <section data-track-topic="hilos" data-audio-skip>
+    <section data-track-topic="hilos" data-audio-skip className="data-card rounded-2xl p-6 sm:p-8">
       <Kicker icon="thread">Hilos abiertos</Kicker>
       <H2>La memoria de tu briefing</H2>
       <P className="mb-8">

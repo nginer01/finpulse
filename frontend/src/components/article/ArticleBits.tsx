@@ -264,11 +264,11 @@ export function Icon({ name, className = "w-4 h-4" }: { name: string; className?
 export function Kicker({ icon, children }: { icon: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 mb-7">
-      <span className="w-9 h-9 shrink-0 rounded-full border border-white/[0.12] flex items-center justify-center text-[#86868b]">
+      <span className="w-9 h-9 shrink-0 rounded-full border border-[color:var(--art-ring)] flex items-center justify-center text-muted">
         <Icon name={icon} className="w-[15px] h-[15px]" />
       </span>
       <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-muted/80 whitespace-nowrap">{children}</span>
-      <div className="flex-1 h-[1px] bg-white/[0.06]" />
+      <div className="flex-1 h-[1px] bg-[color:var(--art-hairline)]" />
     </div>
   );
 }
@@ -279,8 +279,8 @@ export function Kicker({ icon, children }: { icon: string; children: React.React
 
 export function PullQuote({ quote, source, meta, sourceId }: { quote: string; source: string; meta?: string; sourceId?: string }) {
   return (
-    <blockquote className="border-l-2 border-white/25 pl-6 sm:pl-8 my-10">
-      <p className="text-[19px] sm:text-[21px] font-extralight italic leading-[1.7] text-[#e8e8ed] tracking-wide">&ldquo;{quote}&rdquo;</p>
+    <blockquote className="border-l-2 border-[color:var(--art-rule-strong)] pl-6 sm:pl-8 my-10">
+      <p className="text-[19px] sm:text-[21px] font-extralight italic leading-[1.7] text-[color:var(--art-bright)] tracking-wide">&ldquo;{quote}&rdquo;</p>
       <footer className="mt-4 flex items-baseline gap-3">
         {sourceId ? (
           <SourceLink sourceId={sourceId} className="text-[12px] uppercase tracking-[0.2em] font-semibold">
@@ -359,10 +359,11 @@ export function VideoCard({ poster, title, duration }: { poster: string; title: 
 /* ------------------------------------------------------------------ */
 
 export function DataTip({ value, tip, direction }: { value: string; tip: string; direction?: "up" | "down" | "flat" }) {
-  const color = direction === "up" ? "text-[#30d158]" : direction === "down" ? "text-[#ff453a]" : "text-foreground";
+  const color =
+    direction === "up" ? "text-[color:var(--pnl-up)]" : direction === "down" ? "text-[color:var(--pnl-down)]" : "text-foreground";
   return (
     <Tooltip text={tip}>
-      <span className={`font-semibold border-b border-dotted border-white/30 ${color}`} style={{ fontVariantNumeric: "tabular-nums" }}>
+      <span className={`font-semibold border-b border-dotted border-[color:var(--art-rule-strong)] ${color}`} style={{ fontVariantNumeric: "tabular-nums" }}>
         {value}
       </span>
     </Tooltip>
@@ -473,9 +474,9 @@ export function Breadcrumb({ items }: { items: { label: string; href?: string }[
 export function SectionDivider({ className = "my-20" }: { className?: string }) {
   return (
     <div className={`flex items-center justify-center gap-3 ${className}`}>
-      <div className="w-14 h-[1px] bg-white/[0.08]" />
-      <div className="w-1.5 h-1.5 rounded-full border border-white/[0.12]" />
-      <div className="w-14 h-[1px] bg-white/[0.08]" />
+      <div className="w-14 h-[1px] bg-[color:var(--art-rule)]" />
+      <div className="w-1.5 h-1.5 rounded-full border border-[color:var(--art-ring)]" />
+      <div className="w-14 h-[1px] bg-[color:var(--art-rule)]" />
     </div>
   );
 }
